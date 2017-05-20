@@ -8,15 +8,12 @@
   <link rel="dns-prefetch" href="http://blog.yl-online.top">
   <title>Forever杨的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="桂林理工大学，现就职于Tisson。擅长各项Java、前端技能。">
-<meta property="og:type" content="website">
+  <meta property="og:type" content="website">
 <meta property="og:title" content="Forever杨的博客">
 <meta property="og:url" content="http://blog.yl-online.top/index.html">
 <meta property="og:site_name" content="Forever杨的博客">
-<meta property="og:description" content="桂林理工大学，现就职于Tisson。擅长各项Java、前端技能。">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Forever杨的博客">
-<meta name="twitter:description" content="桂林理工大学，现就职于Tisson。擅长各项Java、前端技能。">
   
     <link rel="alternative" href="/atom.xml" title="Forever杨的博客" type="application/atom+xml">
   
@@ -58,8 +55,6 @@
 			<ul>
 			
 				<li><a href="/">主页</a></li>
-	        
-				<li><a href="/tags/随笔/">随笔</a></li>
 	        
 			</ul>
 		</nav>
@@ -109,8 +104,6 @@
 			
 				
 			
-				
-			
 			
 			
 			<nav class="header-nav">
@@ -127,9 +120,7 @@
 				<ul style="width: 50%">
 				
 				
-					<li style="width: 50%"><a href="/">主页</a></li>
-		        
-					<li style="width: 50%"><a href="/tags/随笔/">随笔</a></li>
+					<li style="width: 100%"><a href="/">主页</a></li>
 		        
 				</ul>
 			</nav>
@@ -146,35 +137,43 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Elasticsearch-issue" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/20/hello-world/">Hello World</a>
+      <a class="article-title" href="/2017/05/20/Elasticsearch-issue/">elasticsearch踩坑</a>
     </h1>
   
 
         
-        <a href="/2017/05/20/hello-world/" class="archive-article-date">
-  	<time datetime="2017-05-20T02:51:51.707Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-20</time>
+        <a href="/2017/05/20/Elasticsearch-issue/" class="archive-article-date">
+  	<time datetime="2017-05-20T07:48:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-20</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <ul>
+<li>问题一  </li>
+</ul>
+<p>max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]<br>配置 <code>/etc/sysctl.conf</code><br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ vi /etc/sysctl.conf</div><div class="line">vm.max_map_count=262144</div></pre></td></tr></table></figure></p>
+<p>生效<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sysctl -p</div></pre></td></tr></table></figure></p>
+<p>验证<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sysctl <span class="_">-a</span>|grep vm.max_map_count</div></pre></td></tr></table></figure></p>
+<ul>
+<li>问题二  </li>
+</ul>
+<p>max file descriptors [4096] for elasticsearch process is too low, increase to at least [65536]<br>max number of threads [1024] for user [XXX] is too low，increase to least [2048]<br>1、修改 <code>nofile</code> 时候，需要在 <code>/etc/sysctl.conf</code> 和 <code>/etc/security/limits.conf</code> 配置，其中 <code>/etc/sysctl.conf</code> 中配置的值需要比 <code>/etc/security/limits.conf</code> 的值大<br>配置 <code>/etc/sysctl.conf</code><br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ vi /etc/sysctl.conf </div><div class="line">fs.file-max = 512000</div></pre></td></tr></table></figure></p>
+<p>生效<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sysctl -p</div></pre></td></tr></table></figure></p>
+<p>配置 <code>/etc/security/limits.conf</code><br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ vi /etc/security/limits.conf</div><div class="line">elasticsearch - nofile 65536</div></pre></td></tr></table></figure></p>
+<p>或者<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">* - nofile 65536</div></pre></td></tr></table></figure></p>
+<p>2、修改 <code>nofile</code> 和 <code>nproc</code><br><code>CentOS 7</code> 的 <code>nproc</code> 的修改在 <code>/etc/security/limits.d/20-nproc.conf</code>，为了方便在 <code>/etc/security/limits.conf</code> 和 <code>/etc/security/limits.d/20-nproc.conf</code> 文件里面同时都添加了<br>配置 <code>/etc/security/limits.conf</code><br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ vi /etc/security/limits.conf</div><div class="line">* - nproc 65536</div></pre></td></tr></table></figure></p>
+<p>配置 <code>/etc/security/limits.d/20-nproc.conf</code><br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ vi /etc/security/limits.d/20-nproc.conf</div><div class="line">* - nofile 65536</div><div class="line">* - nproc 65536</div></pre></td></tr></table></figure></p>
+<p>重启系统，验证<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">ulimit</span> -Hn</div></pre></td></tr></table></figure></p>
+<p>总结：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">$ vi /etc/sysctl.conf</div><div class="line">vm.max_map_count=262144</div><div class="line">fs.file-max=512000</div><div class="line"></div><div class="line">$ vi /etc/security/limits.conf</div><div class="line">elasticsearch - nofile 65536</div><div class="line">* - nproc 65536</div><div class="line"></div><div class="line">$ vi /etc/security/limits.d/20-nproc.conf</div><div class="line">* - nofile 65536</div><div class="line">* - nproc 65536</div></pre></td></tr></table></figure></p>
 
       
 
@@ -188,7 +187,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ELK</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">elaticsearch</a>
         		</li>
       		
 		</ul>
@@ -200,7 +203,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/学习笔记/" class="article-tag-list-link color5">学习笔记</a>
+        			<a href="/categories/ELK/" class="article-tag-list-link color4">ELK</a>
         		</li>
       		
 		</ul>
@@ -209,7 +212,663 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/05/20/hello-world/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/05/20/Elasticsearch-issue/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
+    <article id="post-Elasticsearch-install" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/20/Elasticsearch-install/">elasticsearch安装配置</a>
+    </h1>
+  
+
+        
+        <a href="/2017/05/20/Elasticsearch-install/" class="archive-article-date">
+  	<time datetime="2017-05-20T07:47:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="一、安装Elasticsearch"><a href="#一、安装Elasticsearch" class="headerlink" title="一、安装Elasticsearch"></a>一、安装Elasticsearch</h3><ul>
+<li><p>下载并安装 .zip 包</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wget https://artifacts.elastic.cn/downloads/elasticsearch/elasticsearch-5.0.2.zip</div><div class="line">sha1sum elasticsearch-5.0.2.zip</div><div class="line">unzip elasticsearch-5.0.2.zip</div><div class="line"><span class="built_in">cd</span> elasticsearch-5.0.2/</div></pre></td></tr></table></figure>
+</li>
+<li><p>下载并安装 .tar.gz 包</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wget https://artifacts.elastic.cn/downloads/elasticsearch/elasticsearch-5.0.2.tar.gz</div><div class="line">sha1sum elasticsearch-5.0.2.tar.gz</div><div class="line">tar -zxvf elasticsearch-5.0.2.tar.gz</div><div class="line"><span class="built_in">cd</span> elasticsearch-5.0.2/</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="二、运行-Elasticsearch"><a href="#二、运行-Elasticsearch" class="headerlink" title="二、运行 Elasticsearch"></a>二、运行 Elasticsearch</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./bin/elasticsearch</div></pre></td></tr></table></figure>
+<p>Window 系统也是一样。默认的，Elasticsearch 运行在前台，并且打印日志，可以通过 ctrl+c 来停止它的运行。Windows 系统还可以通过 elasticsearch-service.bat 命令来将 Elasticsearch 注册为一个服务。<br>你可以在浏览器打开 localhost:9200，来查看 Elasticsearch 是否运行。<br>日志输出可以通过 -q 或者 -quiet 选项来禁止。<br>将 Elasticsearch 当做守护进程来运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./bin/elasticsearch -d -p pid</div></pre></td></tr></table></figure></p>
+<p>日志信息记录在 $ES_HOME/logs/，proces id 会记录在 pid 文件。<br>停止 Elasticsearch 使用如下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">kill &apos;cat pid&apos;</div></pre></td></tr></table></figure></p>
+<h3 id="三、配置-Elasticsearch"><a href="#三、配置-Elasticsearch" class="headerlink" title="三、配置 Elasticsearch"></a>三、配置 Elasticsearch</h3><p>Elasticsearch 默认从 $ES_HOME/config/elasticsearch.yml 加载配置文件。<br>配置文件中的配置都可以通过命令来设定，使用 -E 语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./bin/elasticsearch -d -Ecluster.name=my_cluster -Enode.name=node_1</div></pre></td></tr></table></figure></p>
+<p>如果值中带有空格，在值必须使用””包囊起来。<br>一般，集群层面的配置（例如：cluster.name）应该添加到 elasticsearch.yml 文件，近点层面的设置（例如：node.name）可以通过命令来设置。</p>
+<h4 id="3-1-重要的系统配置"><a href="#3-1-重要的系统配置" class="headerlink" title="3.1 重要的系统配置"></a>3.1 重要的系统配置</h4><p>启动 <code>elasticsearch</code> 时候遇到 <code>nofile</code>、<code>nproc</code>、<code>jvm</code> 等报错</p>
+<h4 id="3-2-设置-JVM-参数"><a href="#3-2-设置-JVM-参数" class="headerlink" title="3.2 设置 JVM 参数"></a>3.2 设置 JVM 参数</h4><p>首选的设置JVM参数的方法是通过 config/jvm.options 配置文件（使用 .zip 或者 .tar.gz 安装包时），/etc/elasticsearch/jvm.options（当使用 Debian 或者 RPM 安装包时）。JVM 参数必须以 - 开始，你可以添加自定义JVM标识并且把这个配置上传到你的版本控制系统。</p>
+<p>默认的 Elasticsearch 设置的 JVM 内存大小为2GB，当向生产环境部署时要确定 Elasticsearch 有足够的内存可用。好的规则是：</p>
+<ul>
+<li>设置-Xms与-Xmx相等</li>
+<li>注意太大的内存容易产生长的垃圾回收停顿</li>
+<li>-Xmx不要超过你物理内存的50%</li>
+<li>不要设置-Xmx超过JVM用来压缩对象指针的大小，精确的临界值不是固定的，但是接近于32GB。  </li>
+</ul>
+<p>下面是设置JVM内存大小的例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-Xms2g </div><div class="line">-Xmx2g</div></pre></td></tr></table></figure></p>
+<h4 id="3-3-禁止内存交换"><a href="#3-3-禁止内存交换" class="headerlink" title="3.3 禁止内存交换"></a>3.3 禁止内存交换</h4><p>大多数操作系统会用尽可能多的内存用于文件系统缓存和及早换出无用的应用内存。这可能导致一部分JVM内存被交换到硬盘上。</p>
+<p>这种内存交换非常不利于性能和节点的稳定性。应该竭尽所能来避免这种情况。它能引起垃圾回收持续长达数分钟而不是几毫秒并且能导致节点响应缓慢甚至与集群失去联系。</p>
+<p>这里有三种方法来禁止内存交换：  </p>
+<h5 id="启用-bootstrap-memory-lock"><a href="#启用-bootstrap-memory-lock" class="headerlink" title="启用 bootstrap.memory_lock"></a>启用 bootstrap.memory_lock</h5><p>通过使用 Linux/Unix 系统的 mlockall 或者 Windows 系统的 VirtualLock 尝试锁定 RAM 中的进程地址空间，防止任何 Elasticsearch 内存被交换。可以通过向 config/elasticsearch.yml 文件中添加以下语句来实现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bootstrap.memory_lock: true</div></pre></td></tr></table></figure></p>
+<p>警告：mlockall 如果尝试分配超过了可用的内存，可能会引起 JVM 或者 shell session 退出。在启动E lasticsearch 后，你可以检查下设置是否生效了，可以通过检查下面请求响应中的 mlockall 值：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET _nodes?filter_path=**.mlockall</div></pre></td></tr></table></figure></p>
+<p>如果你看到 mlockall 是 false，那说明禁止内存交换失败了。并且日志里会看到类似下面的话：Unable to lock JVM Memory.</p>
+<p>最可能的原因是，在Linux/Unix操作系统，用户运行的Elasticsearch没有锁定内存的权限。可以通过下面的方法来解决：</p>
+<p>使用 .zip 和 .tar.gz 这种安装包时，在 /etc/security/limits.conf 文件中设置 memlock 为 unlimited。</p>
+<p>其他方式就不翻译了。</p>
+<p>RPM and Debian<br>Set MAX_LOCKED_MEMORY to unlimited in the system configuration file (or see below for systems using systemd).<br>Systems using systemd<br>Set LimitMEMLOCK to infinity in the systemd configuration.</p>
+<p>还有一种 mlockall 可能失败的情况是临时文件夹（通常是 /tmp ）挂载时设定了 noexec 选项。这种情况可以通过指定一个新的临时文件夹来解决，使用 ES_JAVA_OPTS 环境变量：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export ES_JAVA_OPTS=&quot;$ES_JAVA_OPTS -Djava.io.tmpdir=/path/to/temp/dir&quot;</div><div class="line">./bin/elasticsearch</div></pre></td></tr></table></figure></p>
+<p>或者在 jvm.options 配置文件里设置。  </p>
+<h5 id="禁止所有文件交换"><a href="#禁止所有文件交换" class="headerlink" title="禁止所有文件交换"></a>禁止所有文件交换</h5><p>第二种禁止内存交换的方式是完全禁止交换。通常 Elasticsearch 是一台服务器唯一运行的服务，它的内存使用被JVM控制着，所以没有必要允许交换。</p>
+<p>在 Linux 系统你可以通过运行以下代码禁止内存交换：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo swapoff -a</div></pre></td></tr></table></figure></p>
+<p>如果要永久禁用，则需要编辑 /etc/fstab 文件，然后注释掉所有包含 swap 的行。</p>
+<p>在 Windows 系统可以通过系统属性 → 高级系统设置 → 性能 → 高级选项卡 → 虚拟内存 然后设置为无分页文件。（Windows 7）</p>
+<h4 id="3-4-文件描述符"><a href="#3-4-文件描述符" class="headerlink" title="3.4 文件描述符"></a>3.4 文件描述符</h4><p>这个设置只针对 Linux 和 macOS 操作系统，如果运行在 Windows 系统则可以安全的被忽略。</p>
+<p>Elasticsearch 使用了大量的文件描述符或者文件句柄。文件描述符将要被用完时会导致灾难性的后果，并且非常可能引起数据丢失。确保增加运行 Elasticsearch 的用户打开文件描述符的数量至少为65,536或者更高。</p>
+<p>对于 .zip 和 .tar.gz 安装包，在启动 Elasticsearch 前以root身份设置ulimit -n 65536，或者修改 /etc/security/limits.conf 文件，设置 nofile 参数为65536或更高。</p>
+<p>RPM 和 Debian 的安装包已经设置了默认最大文件描述符数为65536，不需要额外配置。</p>
+<p>你可以检查每个节点的 max_file_descriptors 配置情况：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET _nodes/stats/process?filter_path=**.max_file_descriptors</div></pre></td></tr></table></figure></p>
+<h4 id="3-5-虚拟内存"><a href="#3-5-虚拟内存" class="headerlink" title="3.5 虚拟内存"></a>3.5 虚拟内存</h4><p>Elasticsearch 默认使用一个 hybrid mmapfs/niofs 来存储它的索引。操作系统默认限制的内存映射数是比较低的，可能会引起内存溢出异常。</p>
+<p>在 Linux，你可以用 root 身份通过以下命令来增加这个限制：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sysctl -w vm.max_map_count=262144</div></pre></td></tr></table></figure></p>
+<p>要想永久的增加 vm.max_map_count 设置，需要编辑 /etc/sysctl.conf 文件。重启后通过：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sysctl vm.max_map_count</div></pre></td></tr></table></figure></p>
+<p>来检验设置是否生效</p>
+<p>RPM 和 Debian安装包将会自动设置这个配置。不需要额外的操作。</p>
+<h4 id="3-6-线程数"><a href="#3-6-线程数" class="headerlink" title="3.6 线程数"></a>3.6 线程数</h4><p>Elasticsearch 使用多个线程池来进行不同类型的操作。当需要时能够创建新线程是很重要的。确保 Elasticsearch 用户能创建的线程数最少为2048个。</p>
+<p>可以在启动前通过设置 ulimit -u 2048，或者在 /etc/security/limits.conf 文件里设置 nproc 为2048。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ELK</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">elaticsearch</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/ELK/" class="article-tag-list-link color4">ELK</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/05/20/Elasticsearch-install/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
+    <article id="post-kibana-install" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/20/kibana-install/">kibana安装配置</a>
+    </h1>
+  
+
+        
+        <a href="/2017/05/20/kibana-install/" class="archive-article-date">
+  	<time datetime="2017-05-20T07:46:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><code>Kibana</code> 是一个基于浏览器页面的 <code>Elasticsearch</code> 前端展示工具。<code>Kibana</code> 全部使用 <code>HTML</code> 语言和 <code>JavaScript</code> 编写的。<br><code>Kibana</code> 是一个为 <code>Logstash</code> 和 <code>ElasticSearch</code> 提供的日志分析的 <code>Web</code> 接口。可使用它对日志进行高效的搜索、可视化、分析等各种操作。</p>
+<h3 id="1、配置"><a href="#1、配置" class="headerlink" title="1、配置"></a>1、配置</h3><p>编辑<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi config/kibana.yml</div></pre></td></tr></table></figure></p>
+<p>按照要求修改为<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">elasticsearch.url: <span class="string">"http://192.168.56.101:9200"</span></div></pre></td></tr></table></figure></p>
+<p>其他部分参数不修改</p>
+<p>如果只允许本机可以访问，在 <code>kibana.yml</code> 中加入：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">host: <span class="string">"127.0.0.1"</span></div></pre></td></tr></table></figure></p>
+<h3 id="2、启动"><a href="#2、启动" class="headerlink" title="2、启动"></a>2、启动</h3><p><code>kibana 5.2.1</code> 可以单独启动，命令<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bin/kibana</div></pre></td></tr></table></figure></p>
+<p>后台运行<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nohup bin/kibana &amp;</div></pre></td></tr></table></figure></p>
+<p>访问<br><a href="http://localhost:5601" target="_blank" rel="external">http://localhost:5601</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ELK</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">kibana</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/ELK/" class="article-tag-list-link color4">ELK</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/05/20/kibana-install/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
+    <article id="post-spring-boot-mybatis" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/20/spring-boot-mybatis/">mybatis整合spring boot</a>
+    </h1>
+  
+
+        
+        <a href="/2017/05/20/spring-boot-mybatis/" class="archive-article-date">
+  	<time datetime="2017-05-20T07:44:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li><p>在pom.xml加入如下内容</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis.spring.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>mybatis-config.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</div><div class="line"><span class="meta">&lt;!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd"&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">typeAliases</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">typeAlias</span> <span class="attr">alias</span>=<span class="string">"Integer"</span> <span class="attr">type</span>=<span class="string">"java.lang.Integer"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">typeAlias</span> <span class="attr">alias</span>=<span class="string">"Long"</span> <span class="attr">type</span>=<span class="string">"java.lang.Long"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">typeAlias</span> <span class="attr">alias</span>=<span class="string">"HashMap"</span> <span class="attr">type</span>=<span class="string">"java.util.HashMap"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">typeAlias</span> <span class="attr">alias</span>=<span class="string">"LinkedHashMap"</span> <span class="attr">type</span>=<span class="string">"java.util.LinkedHashMap"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">typeAlias</span> <span class="attr">alias</span>=<span class="string">"ArrayList"</span> <span class="attr">type</span>=<span class="string">"java.util.ArrayList"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">typeAlias</span> <span class="attr">alias</span>=<span class="string">"LinkedList"</span> <span class="attr">type</span>=<span class="string">"java.util.LinkedList"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">typeAliases</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">typeAliases</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">"cn.tisson.wechat.job.pojo"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">typeAliases</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">mappers</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">mapper</span> <span class="attr">resource</span>=<span class="string">"cn/tisson/wechat/job/mapper/UserMapper.xml"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">mappers</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>或者使用在application.yml中加入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mybatis:</div><div class="line">  config-location: classpath:mybatis/mybatis-config.xml</div><div class="line">  type-aliases-package: cn.tisson.wechat.job.pojo</div><div class="line">#  mapper-locations这个配置参数仅当mapper xml与mapper class不在同一个目录下时有效。所以一般可以忽略。</div><div class="line">#  mapper-locations: classpath:cn/tisson/wechat/job/mapper/*.xml</div></pre></td></tr></table></figure></p>
+<p>在Mapper类上面使用 <code>@Mapper</code> 注解<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Mapper</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">long</span> <span class="title">count</span><span class="params">(User user)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Mapper.xml配置<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</div><div class="line"><span class="meta">&lt;!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" &gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">"cn.tisson.wechat.job.mapper.UserMapper"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">"BaseResultMap"</span> <span class="attr">type</span>=<span class="string">"cn.tisson.wechat.job.pojo.User"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">constructor</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">arg</span> <span class="attr">column</span>=<span class="string">"ID"</span> <span class="attr">javaType</span>=<span class="string">"java.math.BigDecimal"</span> <span class="attr">jdbcType</span>=<span class="string">"DECIMAL"</span>/&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">arg</span> <span class="attr">column</span>=<span class="string">"AGE"</span> <span class="attr">javaType</span>=<span class="string">"java.math.BigDecimal"</span> <span class="attr">jdbcType</span>=<span class="string">"DECIMAL"</span>/&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">arg</span> <span class="attr">column</span>=<span class="string">"CITYID"</span> <span class="attr">javaType</span>=<span class="string">"java.math.BigDecimal"</span> <span class="attr">jdbcType</span>=<span class="string">"DECIMAL"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">constructor</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"count"</span> <span class="attr">parameterType</span>=<span class="string">"cn.tisson.wechat.job.pojo.User"</span> <span class="attr">resultType</span>=<span class="string">"java.lang.Long"</span>&gt;</span></div><div class="line">        select count(*) from user where cityid = #&#123;user.cityid&#125;</div><div class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></div></pre></td></tr></table></figure></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">spring-boot</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">mybatis</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/spring-boot/" class="article-tag-list-link color2">spring-boot</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/05/20/spring-boot-mybatis/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
+    <article id="post-spring-boot-logback" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/20/spring-boot-logback/">spring boot logback多环境配置</a>
+    </h1>
+  
+
+        
+        <a href="/2017/05/20/spring-boot-logback/" class="archive-article-date">
+  	<time datetime="2017-05-20T07:39:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><code>application.yml</code> 配置 <code>profiles</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">spring:</div><div class="line">  profiles:</div><div class="line">    active: dev</div></pre></td></tr></table></figure></p>
+<p>在使用 <code>logback-spring.xml</code> 中使用 <code>springProfile</code> 配置，使用 <code>logback-spring.xml</code> 可以获得更多spring boot个性化配置<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="comment">&lt;!-- For assistance related to logback-translator or configuration --&gt;</span></div><div class="line"><span class="comment">&lt;!-- files in general, please contact the logback user mailing list --&gt;</span></div><div class="line"><span class="comment">&lt;!-- at http://www.qos.ch/mailman/listinfo/logback-user --&gt;</span></div><div class="line"><span class="comment">&lt;!-- --&gt;</span></div><div class="line"><span class="comment">&lt;!-- For professional support please see --&gt;</span></div><div class="line"><span class="comment">&lt;!-- http://www.qos.ch/shop/products/professionalSupport --&gt;</span></div><div class="line"><span class="comment">&lt;!-- --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">configuration</span> <span class="attr">scan</span>=<span class="string">"true"</span> <span class="attr">scanPeriod</span>=<span class="string">"60 seconds"</span> <span class="attr">debug</span>=<span class="string">"false"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"logger.charset"</span> <span class="attr">value</span>=<span class="string">"UTF-8"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"logger.path"</span> <span class="attr">value</span>=<span class="string">"$&#123;catalina.home&#125;/logs"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"logger.pattern"</span> <span class="attr">value</span>=<span class="string">"[%d&#123;yyyy-MM-dd HH:mm:ss&#125; %highlight(%-5p)] %yellow(%t) %cyan(%c.%M\\(%L\\)) | %m%n"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"logger.maxHistory"</span> <span class="attr">value</span>=<span class="string">"15"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!--&amp;lt;!&amp;ndash; https://logback.qos.ch/manual/layouts.html#coloring &amp;ndash;&amp;gt;</span></div><div class="line">    &amp;lt;!&amp;ndash; 彩色日志依赖的渲染类 &amp;ndash;&amp;gt;</div><div class="line">    &lt;conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" /&gt;</div><div class="line">    &lt;conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" /&gt;</div><div class="line">    &lt;conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" /&gt;</div><div class="line">    &amp;lt;!&amp;ndash; 彩色日志格式 &amp;ndash;&amp;gt;</div><div class="line">    &lt;property name="logger.pattern" value="$&#123;CONSOLE_LOG_PATTERN:-%clr([%d&#123;yyyy-MM-dd HH:mm:ss&#125; %clr($&#123;LOG_LEVEL_PATTERN:-%5p&#125;)])&#123;faint&#125; %clr(%c.%M\\(%L\\))&#123;cyan&#125; | %m%n&#125;" /&gt;--&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">springProfile</span> <span class="attr">name</span>=<span class="string">"dev"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">appender</span> <span class="attr">name</span>=<span class="string">"stdout"</span> <span class="attr">class</span>=<span class="string">"ch.qos.logback.core.ConsoleAppender"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">encoder</span> <span class="attr">charset</span>=<span class="string">"$&#123;logger.charset&#125;"</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">pattern</span>&gt;</span>$&#123;logger.pattern&#125;<span class="tag">&lt;/<span class="name">pattern</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">encoder</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">appender</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">root</span> <span class="attr">level</span>=<span class="string">"info"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">appender-ref</span> <span class="attr">ref</span>=<span class="string">"stdout"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">root</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">springProfile</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">springProfile</span> <span class="attr">name</span>=<span class="string">"prod"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">appender</span> <span class="attr">name</span>=<span class="string">"stdout"</span></span></div><div class="line">                  <span class="attr">class</span>=<span class="string">"ch.qos.logback.core.rolling.RollingFileAppender"</span>&gt;</div><div class="line">            <span class="tag">&lt;<span class="name">File</span>&gt;</span>$&#123;logger.path&#125;/info.log<span class="tag">&lt;/<span class="name">File</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">encoder</span> <span class="attr">charset</span>=<span class="string">"$&#123;logger.charset&#125;"</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">pattern</span>&gt;</span>$&#123;logger.pattern&#125;<span class="tag">&lt;/<span class="name">pattern</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">encoder</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">rollingPolicy</span> <span class="attr">class</span>=<span class="string">"ch.qos.logback.core.rolling.TimeBasedRollingPolicy"</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">fileNamePattern</span>&gt;</span></div><div class="line">                    $&#123;logger.path&#125;/info.log.%d&#123;yyyy.MM.dd&#125;</div><div class="line">                <span class="tag">&lt;/<span class="name">fileNamePattern</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">maxHistory</span>&gt;</span>$&#123;logger.maxHistory&#125;<span class="tag">&lt;/<span class="name">maxHistory</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">rollingPolicy</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">appender</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">root</span> <span class="attr">level</span>=<span class="string">"info"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">appender-ref</span> <span class="attr">ref</span>=<span class="string">"stdout"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">root</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">springProfile</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></div></pre></td></tr></table></figure></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">spring-boot</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">logback</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/spring-boot/" class="article-tag-list-link color2">spring-boot</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/05/20/spring-boot-logback/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
+    <article id="post-spring-boot-scheduled" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/20/spring-boot-scheduled/">spring boot 定时器</a>
+    </h1>
+  
+
+        
+        <a href="/2017/05/20/spring-boot-scheduled/" class="archive-article-date">
+  	<time datetime="2017-05-20T07:37:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在pom.xml中加入<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.5.2.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>定时器类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArticleSummaryScheduled</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">//  等同于fixedRate</span></div><div class="line">    <span class="meta">@Scheduled</span>(cron = <span class="string">"0/15 * * * * ?"</span>)</div><div class="line">    <span class="comment">// 上一次开始执行时间点之后6s再次执行</span></div><div class="line">    <span class="comment">//    @Scheduled(fixedRate = 6000)</span></div><div class="line">    <span class="comment">// 上一次执行完毕时间点之后6s再次执行</span></div><div class="line">    <span class="comment">//    @Scheduled(fixedDelay = 6000)</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">process</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="keyword">new</span> Date());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在main方法类上面使用 <code>@EnableScheduling</code> 注解<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@SpringBootApplication</span></div><div class="line"><span class="comment">// 定时器启动类</span></div><div class="line"><span class="meta">@EnableScheduling</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        SpringApplication.run(Application.class, args);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>只要上面的配置，就可以启动一个定时器了</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">spring-boot</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">task</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">schedule</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/spring-boot/" class="article-tag-list-link color2">spring-boot</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/05/20/spring-boot-scheduled/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
+    <article id="post-CentOS-7-Firewall防火墙配置" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/20/CentOS-7-Firewall防火墙配置/">CentOS 7 Firewall防火墙配置</a>
+    </h1>
+  
+
+        
+        <a href="/2017/05/20/CentOS-7-Firewall防火墙配置/" class="archive-article-date">
+  	<time datetime="2017-05-20T07:34:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="一、firewall介绍"><a href="#一、firewall介绍" class="headerlink" title="一、firewall介绍"></a>一、firewall介绍</h3><p><code>CentOS 7</code>中防火墙是一个非常的强大的功能，对<code>CentOS 6.5</code>中的<code>iptables</code>防火墙进行了升级了。</p>
+<h3 id="二、firewall配置"><a href="#二、firewall配置" class="headerlink" title="二、firewall配置"></a>二、firewall配置</h3><h4 id="1、系统配置目录"><a href="#1、系统配置目录" class="headerlink" title="1、系统配置目录"></a>1、系统配置目录</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/lib/firewalld/services</div></pre></td></tr></table></figure>
+<p>目录中存放定义好的网络服务和端口参数，系统参数，不能修改。</p>
+<h4 id="2、用户配置目录"><a href="#2、用户配置目录" class="headerlink" title="2、用户配置目录"></a>2、用户配置目录</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/firewalld/</div></pre></td></tr></table></figure>
+<h4 id="3、如何自定义添加端口"><a href="#3、如何自定义添加端口" class="headerlink" title="3、如何自定义添加端口"></a>3、如何自定义添加端口</h4><p>用户可以通过修改配置文件的方式添加端口，也可以通过命令的方式添加端口，注意，修改的内容会在<code>/etc/firewalld/</code>目录下的配置文件中还体现。  </p>
+<ul>
+<li>3.1、命令的方式<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">firewall-cmd --permanent --add-port=9527/tcp</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>参数介绍：<br>1、firewall-cmd：是Linux提供的操作<code>firewall</code>的一个工具<br>2、–permanent：表示设置为持久<br>3、–add-port：标识添加的端口  </p>
+<p>另外，<code>firewall</code> 中有 <code>Zone</code> 的概念，可以将具体的端口制定到具体的 <code>zone</code> 配置文件中。</p>
+<p>例如：添加 <code>8010</code> 端口<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">firewall-cmd --zone=public --permanent --add-port=8010/tcp</div></pre></td></tr></table></figure></p>
+<p><code>--zone=public</code>指定的zone为public  </p>
+<p>添加规则<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ firewall-cmd --permanent \ </div><div class="line">--zone=public \ </div><div class="line">--add-rich-rule=<span class="string">"rule family="</span>ipv4<span class="string">" source \ </span></div><div class="line">address="192.168.0.4/24<span class="string">" \ </span></div><div class="line">service name="http<span class="string">" accept"</span></div></pre></td></tr></table></figure></p>
+<p>删除上面配置的规则<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ firewall-cmd --permanent \ </div><div class="line">--zone=public \ </div><div class="line">--remove-rich-rule=<span class="string">"rule family="</span>ipv4<span class="string">" source \ </span></div><div class="line">address="192.168.0.4/24<span class="string">" \ </span></div><div class="line">service name="http<span class="string">" accept"</span></div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>You can check if the port has actually be opened by running<br>firewall-cmd –zone=<zone> –query-port=80/tcp<br>firewall-cmd –zone=<zone> –query-service=http</zone></zone></p>
+</blockquote>
+<ul>
+<li>3.2、文件的方式<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">zone</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">short</span>&gt;</span>Public<span class="tag">&lt;/<span class="name">short</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span>For use in public areas. You do not trust the other computers on networks to not harm your computer. Only selected incoming connections are accepted.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></div><div class="line">  <span class="comment">&lt;!-- 放通指定ip，指定端口、协议 --&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">rule</span> <span class="attr">family</span>=<span class="string">"ipv4"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">source</span> <span class="attr">address</span>=<span class="string">"192.168.56.101"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">port</span> <span class="attr">protocol</span>=<span class="string">"udp"</span> <span class="attr">port</span>=<span class="string">"555"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">accept</span>/&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">rule</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">rule</span> <span class="attr">family</span>=<span class="string">"ipv4"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">source</span> <span class="attr">address</span>=<span class="string">"192.168.56.101"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">port</span> <span class="attr">protocol</span>=<span class="string">"tcp"</span> <span class="attr">port</span>=<span class="string">"9200-9300"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">accept</span>/&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">rule</span>&gt;</span></div><div class="line">  <span class="comment">&lt;!-- 放通任意ip访问服务器的8081端口 --&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">rule</span> <span class="attr">family</span>=<span class="string">"ipv4"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">port</span> <span class="attr">protocol</span>=<span class="string">"tcp"</span> <span class="attr">port</span>=<span class="string">"8081"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">accept</span>/&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">rule</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">zone</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>上述的一个配置文件可以很好的看出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1、添加需要的规则，开放通源ip为192.168.56.101，端口555，协议tcp</div><div class="line">2、开放通源ip为192.168.56.101，端口9200-9300，协议tcp</div><div class="line">3、开放通源ip为任意，端口8081，协议tcp</div></pre></td></tr></table></figure></p>
+<h3 id="三、firewall常用命令"><a href="#三、firewall常用命令" class="headerlink" title="三、firewall常用命令"></a>三、firewall常用命令</h3><p>常用命令介绍<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">firewall-cmd --state                           <span class="comment">##查看防火墙状态，是否是running</span></div><div class="line">firewall-cmd --reload                          <span class="comment">##重新载入配置，比如添加规则之后，需要执行此命令</span></div><div class="line">firewall-cmd --get-zones                       <span class="comment">##列出支持的zone</span></div><div class="line">firewall-cmd --get-services                    <span class="comment">##列出支持的服务，在列表中的服务是放行的</span></div><div class="line">firewall-cmd --query-service ftp               <span class="comment">##查看ftp服务是否支持，返回yes或者no</span></div><div class="line">firewall-cmd --add-service=ftp                 <span class="comment">##临时开放ftp服务</span></div><div class="line">firewall-cmd --add-service=ftp --permanent     <span class="comment">##永久开放ftp服务</span></div><div class="line">firewall-cmd --remove-service=ftp --permanent  <span class="comment">##永久移除ftp服务</span></div><div class="line">firewall-cmd --add-port=80/tcp --permanent     <span class="comment">##永久添加80端口 </span></div><div class="line">iptables -L -n                                 <span class="comment">##查看规则，这个命令是和iptables的相同的</span></div><div class="line">man firewall-cmd                               <span class="comment">##查看帮助</span></div></pre></td></tr></table></figure></p>
+<p>重启、关闭、开启<code>firewalld</code>服务<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">systemctl restart firewalld <span class="comment">#重启</span></div><div class="line">systemctl start firewalld <span class="comment">#开启</span></div><div class="line">systemctl stop firewalld <span class="comment">#关闭</span></div></pre></td></tr></table></figure></p>
+<h3 id="四、CentOS切换为iptables防火墙"><a href="#四、CentOS切换为iptables防火墙" class="headerlink" title="四、CentOS切换为iptables防火墙"></a>四、CentOS切换为iptables防火墙</h3><p>本节略</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">CentOS</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Firewall</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iptables</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Linux/" class="article-tag-list-link color1">Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/05/20/CentOS-7-Firewall防火墙配置/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
+    <article id="post-CentOS安装JDK" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/20/CentOS安装JDK/">CentOS安装JDK</a>
+    </h1>
+  
+
+        
+        <a href="/2017/05/20/CentOS安装JDK/" class="archive-article-date">
+  	<time datetime="2017-05-20T07:25:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1、准备"><a href="#1、准备" class="headerlink" title="1、准备"></a>1、准备</h2><p>创建目录<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ mkdir /usr/java</div><div class="line">$ <span class="built_in">cd</span> /usr/java</div></pre></td></tr></table></figure></p>
+<p>下载 <code>jdk-8u73-linux-x64.tar.gz</code>，解压<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ tar -zxvf jdk-8u73-linux-x64.tar.gz</div></pre></td></tr></table></figure></p>
+<p>会解压到 <code>/usr/java/jdk1.8.0_73</code> 下</p>
+<h2 id="2、配置环境变量-两种方式二选一配置即可"><a href="#2、配置环境变量-两种方式二选一配置即可" class="headerlink" title="2、配置环境变量(两种方式二选一配置即可)"></a>2、配置环境变量(两种方式二选一配置即可)</h2><h3 id="2-1-编辑-etc-profile-文件"><a href="#2-1-编辑-etc-profile-文件" class="headerlink" title="2.1 编辑 /etc/profile 文件"></a>2.1 编辑 <code>/etc/profile</code> 文件</h3><p>修改 <code>/etc/profile</code> 文件当本机仅仅作为开发使用时推荐使用这种方法，因为此种配置时所有用户的 <code>shell</code> 都有权使用这些环境变量，可能会给系统带来安全性问题。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ vi /etc/profile</div></pre></td></tr></table></figure></p>
+<p>增加如下内容<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> JAVA_HOME=/usr/java/jdk</div><div class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></div><div class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar:<span class="variable">$CLASSPATH</span></div></pre></td></tr></table></figure></p>
+<p>保存退出 <code>:wq</code><br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ . /etc/profile</div><div class="line">$ <span class="built_in">echo</span> <span class="variable">$JAVA_HOME</span></div></pre></td></tr></table></figure></p>
+<h3 id="2-2-编辑用户目录下的-bash-profile"><a href="#2-2-编辑用户目录下的-bash-profile" class="headerlink" title="2.2 编辑用户目录下的 .bash_profile"></a>2.2 编辑用户目录下的 <code>.bash_profile</code></h3><p>修改 <code>.bash_profile</code> 文件这种方法更为安全，它可以把使用这些环境变量的权限控制到用户级别，如果需要给某个用户权限使用这些环境变量，只需要修改其个人用户主目录下的 <code>.bash_profile</code> 文件就可以了<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> JAVA_HOME=/usr/java/jdk</div><div class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></div><div class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar:<span class="variable">$CLASSPATH</span></div></pre></td></tr></table></figure></p>
+<p>然后执行使之生效<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">source</span> .bash_profile</div></pre></td></tr></table></figure></p>
+<p>可以看到 <code>JAVA_HOME</code> 不是指向真实的 <code>jdk</code> 目录 <code>/usr/java/jdk1.8.0_73</code>，而是指向 <code>/usr/java/jdk</code></p>
+<h1 id="3、创建软链接"><a href="#3、创建软链接" class="headerlink" title="3、创建软链接"></a>3、创建软链接</h1><p>为jdk真实目录创建一个命名更加间洁快捷方式<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ ln <span class="_">-s</span> /usr/java/jdk1.8.0_73 /usr/java/jdk</div><div class="line">$ <span class="built_in">source</span> /etc/profile</div><div class="line"><span class="comment">#$ source .bash_profile</span></div></pre></td></tr></table></figure></p>
+<p>至此，配置完成</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">CentOS</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JDK</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Java/" class="article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/05/20/CentOS安装JDK/">展开全文 >></a>
         </p>
       
 
@@ -254,7 +913,7 @@
 		open_in_new: false,
 		root: "/",
 		innerArchive: true,
-		showTags: true
+		showTags: false
 	}
 </script>
 
@@ -308,7 +967,59 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">CentOS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Firewall</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">iptables</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ELK</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">elaticsearch</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">JDK</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">kibana</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">spring-boot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">logback</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">task</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">schedule</a>
               </li>
             
             <div class="clearfix"></div>
