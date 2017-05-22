@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[elasticsearch踩坑]]></title>
+    <url>%2F2017%2F03%2F21%2FElasticsearch-issue.html</url>
+    <content type="text"><![CDATA[问题一 max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]配置 /etc/sysctl.conf12$ vi /etc/sysctl.confvm.max_map_count=262144 生效1$ sysctl -p 验证1$ sysctl -a|grep vm.max_map_count 问题二 max file descriptors [4096] for elasticsearch process is too low, increase to at least [65536]max number of threads [1024] for user [XXX] is too low，increase to least [2048]1、修改 nofile 时候，需要在 /etc/sysctl.conf 和 /etc/security/limits.conf 配置，其中 /etc/sysctl.conf 中配置的值需要比 /etc/security/limits.conf 的值大配置 /etc/sysctl.conf12$ vi /etc/sysctl.conf fs.file-max = 512000 生效1$ sysctl -p 配置 /etc/security/limits.conf12$ vi /etc/security/limits.confelasticsearch - nofile 65536 或者1* - nofile 65536 2、修改 nofile 和 nprocCentOS 7 的 nproc 的修改在 /etc/security/limits.d/20-nproc.conf，为了方便在 /etc/security/limits.conf 和 /etc/security/limits.d/20-nproc.conf 文件里面同时都添加了配置 /etc/security/limits.conf12$ vi /etc/security/limits.conf* - nproc 65536 配置 /etc/security/limits.d/20-nproc.conf123$ vi /etc/security/limits.d/20-nproc.conf* - nofile 65536* - nproc 65536 重启系统，验证1$ ulimit -Hn 总结：1234567891011$ vi /etc/sysctl.confvm.max_map_count=262144fs.file-max=512000$ vi /etc/security/limits.confelasticsearch - nofile 65536* - nproc 65536$ vi /etc/security/limits.d/20-nproc.conf* - nofile 65536* - nproc 65536]]></content>
+      <categories>
+        <category>ELK</category>
+      </categories>
+      <tags>
+        <tag>ELK</tag>
+        <tag>elaticsearch</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[elasticsearch安装配置]]></title>
+    <url>%2F2017%2F03%2F21%2FElasticsearch-install.html</url>
+    <content type="text"><![CDATA[一、安装Elasticsearch 下载并安装 .zip 包 1234wget https://artifacts.elastic.cn/downloads/elasticsearch/elasticsearch-5.0.2.zipsha1sum elasticsearch-5.0.2.zipunzip elasticsearch-5.0.2.zipcd elasticsearch-5.0.2/ 下载并安装 .tar.gz 包 1234wget https://artifacts.elastic.cn/downloads/elasticsearch/elasticsearch-5.0.2.tar.gzsha1sum elasticsearch-5.0.2.tar.gztar -zxvf elasticsearch-5.0.2.tar.gzcd elasticsearch-5.0.2/ 二、运行 Elasticsearch1./bin/elasticsearch Window 系统也是一样。默认的，Elasticsearch 运行在前台，并且打印日志，可以通过 ctrl+c 来停止它的运行。Windows 系统还可以通过 elasticsearch-service.bat 命令来将 Elasticsearch 注册为一个服务。你可以在浏览器打开 localhost:9200，来查看 Elasticsearch 是否运行。日志输出可以通过 -q 或者 -quiet 选项来禁止。将 Elasticsearch 当做守护进程来运行1./bin/elasticsearch -d -p pid 日志信息记录在 $ES_HOME/logs/，proces id 会记录在 pid 文件。停止 Elasticsearch 使用如下命令：1kill &apos;cat pid&apos; 三、配置 ElasticsearchElasticsearch 默认从 $ES_HOME/config/elasticsearch.yml 加载配置文件。配置文件中的配置都可以通过命令来设定，使用 -E 语法：1./bin/elasticsearch -d -Ecluster.name=my_cluster -Enode.name=node_1 如果值中带有空格，在值必须使用””包囊起来。一般，集群层面的配置（例如：cluster.name）应该添加到 elasticsearch.yml 文件，近点层面的设置（例如：node.name）可以通过命令来设置。 3.1 重要的系统配置启动 elasticsearch 时候遇到 nofile、nproc、jvm 等报错 3.2 设置 JVM 参数首选的设置JVM参数的方法是通过 config/jvm.options 配置文件（使用 .zip 或者 .tar.gz 安装包时），/etc/elasticsearch/jvm.options（当使用 Debian 或者 RPM 安装包时）。JVM 参数必须以 - 开始，你可以添加自定义JVM标识并且把这个配置上传到你的版本控制系统。 默认的 Elasticsearch 设置的 JVM 内存大小为2GB，当向生产环境部署时要确定 Elasticsearch 有足够的内存可用。好的规则是： 设置-Xms与-Xmx相等 注意太大的内存容易产生长的垃圾回收停顿 -Xmx不要超过你物理内存的50% 不要设置-Xmx超过JVM用来压缩对象指针的大小，精确的临界值不是固定的，但是接近于32GB。 下面是设置JVM内存大小的例子：12-Xms2g -Xmx2g 3.3 禁止内存交换大多数操作系统会用尽可能多的内存用于文件系统缓存和及早换出无用的应用内存。这可能导致一部分JVM内存被交换到硬盘上。 这种内存交换非常不利于性能和节点的稳定性。应该竭尽所能来避免这种情况。它能引起垃圾回收持续长达数分钟而不是几毫秒并且能导致节点响应缓慢甚至与集群失去联系。 这里有三种方法来禁止内存交换： 启用 bootstrap.memory_lock通过使用 Linux/Unix 系统的 mlockall 或者 Windows 系统的 VirtualLock 尝试锁定 RAM 中的进程地址空间，防止任何 Elasticsearch 内存被交换。可以通过向 config/elasticsearch.yml 文件中添加以下语句来实现：1bootstrap.memory_lock: true 警告：mlockall 如果尝试分配超过了可用的内存，可能会引起 JVM 或者 shell session 退出。在启动E lasticsearch 后，你可以检查下设置是否生效了，可以通过检查下面请求响应中的 mlockall 值：1GET _nodes?filter_path=**.mlockall 如果你看到 mlockall 是 false，那说明禁止内存交换失败了。并且日志里会看到类似下面的话：Unable to lock JVM Memory. 最可能的原因是，在Linux/Unix操作系统，用户运行的Elasticsearch没有锁定内存的权限。可以通过下面的方法来解决： 使用 .zip 和 .tar.gz 这种安装包时，在 /etc/security/limits.conf 文件中设置 memlock 为 unlimited。 其他方式就不翻译了。 RPM and DebianSet MAX_LOCKED_MEMORY to unlimited in the system configuration file (or see below for systems using systemd).Systems using systemdSet LimitMEMLOCK to infinity in the systemd configuration. 还有一种 mlockall 可能失败的情况是临时文件夹（通常是 /tmp ）挂载时设定了 noexec 选项。这种情况可以通过指定一个新的临时文件夹来解决，使用 ES_JAVA_OPTS 环境变量：12export ES_JAVA_OPTS=&quot;$ES_JAVA_OPTS -Djava.io.tmpdir=/path/to/temp/dir&quot;./bin/elasticsearch 或者在 jvm.options 配置文件里设置。 禁止所有文件交换第二种禁止内存交换的方式是完全禁止交换。通常 Elasticsearch 是一台服务器唯一运行的服务，它的内存使用被JVM控制着，所以没有必要允许交换。 在 Linux 系统你可以通过运行以下代码禁止内存交换：1sudo swapoff -a 如果要永久禁用，则需要编辑 /etc/fstab 文件，然后注释掉所有包含 swap 的行。 在 Windows 系统可以通过系统属性 → 高级系统设置 → 性能 → 高级选项卡 → 虚拟内存 然后设置为无分页文件。（Windows 7） 3.4 文件描述符这个设置只针对 Linux 和 macOS 操作系统，如果运行在 Windows 系统则可以安全的被忽略。 Elasticsearch 使用了大量的文件描述符或者文件句柄。文件描述符将要被用完时会导致灾难性的后果，并且非常可能引起数据丢失。确保增加运行 Elasticsearch 的用户打开文件描述符的数量至少为65,536或者更高。 对于 .zip 和 .tar.gz 安装包，在启动 Elasticsearch 前以root身份设置ulimit -n 65536，或者修改 /etc/security/limits.conf 文件，设置 nofile 参数为65536或更高。 RPM 和 Debian 的安装包已经设置了默认最大文件描述符数为65536，不需要额外配置。 你可以检查每个节点的 max_file_descriptors 配置情况：1GET _nodes/stats/process?filter_path=**.max_file_descriptors 3.5 虚拟内存Elasticsearch 默认使用一个 hybrid mmapfs/niofs 来存储它的索引。操作系统默认限制的内存映射数是比较低的，可能会引起内存溢出异常。 在 Linux，你可以用 root 身份通过以下命令来增加这个限制：1sysctl -w vm.max_map_count=262144 要想永久的增加 vm.max_map_count 设置，需要编辑 /etc/sysctl.conf 文件。重启后通过：1sysctl vm.max_map_count 来检验设置是否生效 RPM 和 Debian安装包将会自动设置这个配置。不需要额外的操作。 3.6 线程数Elasticsearch 使用多个线程池来进行不同类型的操作。当需要时能够创建新线程是很重要的。确保 Elasticsearch 用户能创建的线程数最少为2048个。 可以在启动前通过设置 ulimit -u 2048，或者在 /etc/security/limits.conf 文件里设置 nproc 为2048。]]></content>
+      <categories>
+        <category>ELK</category>
+      </categories>
+      <tags>
+        <tag>ELK</tag>
+        <tag>elaticsearch</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[kibana安装配置]]></title>
+    <url>%2F2017%2F03%2F21%2Fkibana-install.html</url>
+    <content type="text"><![CDATA[Kibana 是一个基于浏览器页面的 Elasticsearch 前端展示工具。Kibana 全部使用 HTML 语言和 JavaScript 编写的。Kibana 是一个为 Logstash 和 ElasticSearch 提供的日志分析的 Web 接口。可使用它对日志进行高效的搜索、可视化、分析等各种操作。 1、配置编辑1vi config/kibana.yml 按照要求修改为1elasticsearch.url: "http://192.168.56.101:9200" 其他部分参数不修改 如果只允许本机可以访问，在 kibana.yml 中加入：1host: "127.0.0.1" 2、启动kibana 5.2.1 可以单独启动，命令1bin/kibana 后台运行1nohup bin/kibana &amp; 访问http://localhost:5601]]></content>
+      <categories>
+        <category>ELK</category>
+      </categories>
+      <tags>
+        <tag>ELK</tag>
+        <tag>kibana</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[mybatis整合spring boot]]></title>
+    <url>%2F2017%2F03%2F21%2Fspring-boot-mybatis.html</url>
+    <content type="text"><![CDATA[在pom.xml加入如下内容12345&lt;dependency&gt; &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt; &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt; &lt;version&gt;1.3.0&lt;/version&gt;&lt;/dependency&gt; mybatis-config.xml123456789101112131415161718&lt;?xml version="1.0" encoding="UTF-8" ?&gt;&lt;!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd"&gt;&lt;configuration&gt; &lt;typeAliases&gt; &lt;typeAlias alias="Integer" type="java.lang.Integer"/&gt; &lt;typeAlias alias="Long" type="java.lang.Long"/&gt; &lt;typeAlias alias="HashMap" type="java.util.HashMap"/&gt; &lt;typeAlias alias="LinkedHashMap" type="java.util.LinkedHashMap"/&gt; &lt;typeAlias alias="ArrayList" type="java.util.ArrayList"/&gt; &lt;typeAlias alias="LinkedList" type="java.util.LinkedList"/&gt; &lt;/typeAliases&gt; &lt;typeAliases&gt; &lt;package name="cn.tisson.wechat.job.pojo"/&gt; &lt;/typeAliases&gt; &lt;mappers&gt; &lt;mapper resource="cn/tisson/wechat/job/mapper/UserMapper.xml"/&gt; &lt;/mappers&gt;&lt;/configuration&gt; 或者使用在application.yml中加入12345mybatis: config-location: classpath:mybatis/mybatis-config.xml type-aliases-package: cn.tisson.wechat.job.pojo# mapper-locations这个配置参数仅当mapper xml与mapper class不在同一个目录下时有效。所以一般可以忽略。# mapper-locations: classpath:cn/tisson/wechat/job/mapper/*.xml 在Mapper类上面使用 @Mapper 注解1234@Mapperpublic interface UserMapper &#123; long count(User user);&#125; Mapper.xml配置123456789101112131415&lt;?xml version="1.0" encoding="UTF-8" ?&gt;&lt;!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" &gt;&lt;mapper namespace="cn.tisson.wechat.job.mapper.UserMapper"&gt; &lt;resultMap id="BaseResultMap" type="cn.tisson.wechat.job.pojo.User"&gt; &lt;constructor&gt; &lt;arg column="ID" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/&gt; &lt;arg column="AGE" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/&gt; &lt;arg column="CITYID" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/&gt; &lt;/constructor&gt; &lt;/resultMap&gt; &lt;select id="count" parameterType="cn.tisson.wechat.job.pojo.User" resultType="java.lang.Long"&gt; select count(*) from user where cityid = #&#123;user.cityid&#125; &lt;/select&gt;&lt;/mapper&gt;]]></content>
+      <categories>
+        <category>spring-boot</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>spring-boot</tag>
+        <tag>mybatis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[spring boot logback多环境配置]]></title>
+    <url>%2F2017%2F03%2F21%2Fspring-boot-logback.html</url>
+    <content type="text"><![CDATA[application.yml 配置 profiles123spring: profiles: active: dev 在使用 logback-spring.xml 中使用 springProfile 配置，使用 logback-spring.xml 可以获得更多spring boot个性化配置123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;!-- For assistance related to logback-translator or configuration --&gt;&lt;!-- files in general, please contact the logback user mailing list --&gt;&lt;!-- at http://www.qos.ch/mailman/listinfo/logback-user --&gt;&lt;!-- --&gt;&lt;!-- For professional support please see --&gt;&lt;!-- http://www.qos.ch/shop/products/professionalSupport --&gt;&lt;!-- --&gt;&lt;configuration scan="true" scanPeriod="60 seconds" debug="false"&gt; &lt;property name="logger.charset" value="UTF-8"/&gt; &lt;property name="logger.path" value="$&#123;catalina.home&#125;/logs"/&gt; &lt;property name="logger.pattern" value="[%d&#123;yyyy-MM-dd HH:mm:ss&#125; %highlight(%-5p)] %yellow(%t) %cyan(%c.%M\\(%L\\)) | %m%n"/&gt; &lt;property name="logger.maxHistory" value="15"/&gt; &lt;!--&amp;lt;!&amp;ndash; https://logback.qos.ch/manual/layouts.html#coloring &amp;ndash;&amp;gt; &amp;lt;!&amp;ndash; 彩色日志依赖的渲染类 &amp;ndash;&amp;gt; &lt;conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" /&gt; &lt;conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" /&gt; &lt;conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" /&gt; &amp;lt;!&amp;ndash; 彩色日志格式 &amp;ndash;&amp;gt; &lt;property name="logger.pattern" value="$&#123;CONSOLE_LOG_PATTERN:-%clr([%d&#123;yyyy-MM-dd HH:mm:ss&#125; %clr($&#123;LOG_LEVEL_PATTERN:-%5p&#125;)])&#123;faint&#125; %clr(%c.%M\\(%L\\))&#123;cyan&#125; | %m%n&#125;" /&gt;--&gt; &lt;springProfile name="dev"&gt; &lt;appender name="stdout" class="ch.qos.logback.core.ConsoleAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;/appender&gt; &lt;root level="info"&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt; &lt;springProfile name="prod"&gt; &lt;appender name="stdout" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;File&gt;$&#123;logger.path&#125;/info.log&lt;/File&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/info.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;root level="info"&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt;&lt;/configuration&gt;]]></content>
+      <categories>
+        <category>spring-boot</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>spring-boot</tag>
+        <tag>logback</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[spring boot 定时器]]></title>
+    <url>%2F2017%2F03%2F21%2Fspring-boot-scheduled.html</url>
+    <content type="text"><![CDATA[在pom.xml中加入12345&lt;dependency&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-starter&lt;/artifactId&gt; &lt;version&gt;1.5.2.RELEASE&lt;/version&gt;&lt;/dependency&gt; 定时器类12345678910111213@Componentpublic class ArticleSummaryScheduled &#123; // 等同于fixedRate @Scheduled(cron = "0/15 * * * * ?") // 上一次开始执行时间点之后6s再次执行 // @Scheduled(fixedRate = 6000) // 上一次执行完毕时间点之后6s再次执行 // @Scheduled(fixedDelay = 6000) public void process() &#123; System.out.println(new Date()); &#125;&#125; 在main方法类上面使用 @EnableScheduling 注解12345678@SpringBootApplication// 定时器启动类@EnableSchedulingpublic class Application &#123; public static void main(String[] args) &#123; SpringApplication.run(Application.class, args); &#125;&#125; 只要上面的配置，就可以启动一个定时器了]]></content>
+      <categories>
+        <category>spring-boot</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>spring-boot</tag>
+        <tag>task</tag>
+        <tag>schedule</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[CentOS 7 Firewall防火墙配置]]></title>
+    <url>%2F2017%2F03%2F21%2FCentOS-7-Firewall%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE.html</url>
+    <content type="text"><![CDATA[一、firewall介绍CentOS 7中防火墙是一个非常的强大的功能，对CentOS 6.5中的iptables防火墙进行了升级了。 二、firewall配置1、系统配置目录1/usr/lib/firewalld/services 目录中存放定义好的网络服务和端口参数，系统参数，不能修改。 2、用户配置目录1/etc/firewalld/ 3、如何自定义添加端口用户可以通过修改配置文件的方式添加端口，也可以通过命令的方式添加端口，注意，修改的内容会在/etc/firewalld/目录下的配置文件中还体现。 3.1、命令的方式1firewall-cmd --permanent --add-port=9527/tcp 参数介绍：1、firewall-cmd：是Linux提供的操作firewall的一个工具2、–permanent：表示设置为持久3、–add-port：标识添加的端口 另外，firewall 中有 Zone 的概念，可以将具体的端口制定到具体的 zone 配置文件中。 例如：添加 8010 端口1firewall-cmd --zone=public --permanent --add-port=8010/tcp --zone=public指定的zone为public 添加规则12345$ firewall-cmd --permanent \ --zone=public \ --add-rich-rule="rule family="ipv4" source \ address="192.168.0.4/24" \ service name="http" accept" 删除上面配置的规则12345$ firewall-cmd --permanent \ --zone=public \ --remove-rich-rule="rule family="ipv4" source \ address="192.168.0.4/24" \ service name="http" accept" You can check if the port has actually be opened by runningfirewall-cmd –zone= –query-port=80/tcpfirewall-cmd –zone= –query-service=http 3.2、文件的方式123456789101112131415161718192021&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;zone&gt; &lt;short&gt;Public&lt;/short&gt; &lt;description&gt;For use in public areas. You do not trust the other computers on networks to not harm your computer. Only selected incoming connections are accepted.&lt;/description&gt; &lt;!-- 放通指定ip，指定端口、协议 --&gt; &lt;rule family="ipv4"&gt; &lt;source address="192.168.56.101"/&gt; &lt;port protocol="udp" port="555"/&gt; &lt;accept/&gt; &lt;/rule&gt; &lt;rule family="ipv4"&gt; &lt;source address="192.168.56.101"/&gt; &lt;port protocol="tcp" port="9200-9300"/&gt; &lt;accept/&gt; &lt;/rule&gt; &lt;!-- 放通任意ip访问服务器的8081端口 --&gt; &lt;rule family="ipv4"&gt; &lt;port protocol="tcp" port="8081"/&gt; &lt;accept/&gt; &lt;/rule&gt;&lt;/zone&gt; 上述的一个配置文件可以很好的看出：1231、添加需要的规则，开放通源ip为192.168.56.101，端口555，协议tcp2、开放通源ip为192.168.56.101，端口9200-9300，协议tcp3、开放通源ip为任意，端口8081，协议tcp 三、firewall常用命令常用命令介绍1234567891011firewall-cmd --state ##查看防火墙状态，是否是runningfirewall-cmd --reload ##重新载入配置，比如添加规则之后，需要执行此命令firewall-cmd --get-zones ##列出支持的zonefirewall-cmd --get-services ##列出支持的服务，在列表中的服务是放行的firewall-cmd --query-service ftp ##查看ftp服务是否支持，返回yes或者nofirewall-cmd --add-service=ftp ##临时开放ftp服务firewall-cmd --add-service=ftp --permanent ##永久开放ftp服务firewall-cmd --remove-service=ftp --permanent ##永久移除ftp服务firewall-cmd --add-port=80/tcp --permanent ##永久添加80端口 iptables -L -n ##查看规则，这个命令是和iptables的相同的man firewall-cmd ##查看帮助 重启、关闭、开启firewalld服务123systemctl restart firewalld #重启systemctl start firewalld #开启systemctl stop firewalld #关闭 四、CentOS切换为iptables防火墙本节略]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>CentOS</tag>
+        <tag>Firewall</tag>
+        <tag>iptables</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[CentOS安装JDK]]></title>
+    <url>%2F2017%2F03%2F21%2FCentOS%E5%AE%89%E8%A3%85JDK.html</url>
+    <content type="text"><![CDATA[1、准备创建目录12$ mkdir /usr/java$ cd /usr/java 下载 jdk-8u73-linux-x64.tar.gz，解压1$ tar -zxvf jdk-8u73-linux-x64.tar.gz 会解压到 /usr/java/jdk1.8.0_73 下 2、配置环境变量(两种方式二选一配置即可)2.1 编辑 /etc/profile 文件修改 /etc/profile 文件当本机仅仅作为开发使用时推荐使用这种方法，因为此种配置时所有用户的 shell 都有权使用这些环境变量，可能会给系统带来安全性问题。1$ vi /etc/profile 增加如下内容123export JAVA_HOME=/usr/java/jdkexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH 保存退出 :wq12$ . /etc/profile$ echo $JAVA_HOME 2.2 编辑用户目录下的 .bash_profile修改 .bash_profile 文件这种方法更为安全，它可以把使用这些环境变量的权限控制到用户级别，如果需要给某个用户权限使用这些环境变量，只需要修改其个人用户主目录下的 .bash_profile 文件就可以了123export JAVA_HOME=/usr/java/jdkexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH 然后执行使之生效1source .bash_profile 可以看到 JAVA_HOME 不是指向真实的 jdk 目录 /usr/java/jdk1.8.0_73，而是指向 /usr/java/jdk 3、创建软链接为jdk真实目录创建一个命名更加间洁快捷方式123$ ln -s /usr/java/jdk1.8.0_73 /usr/java/jdk$ source /etc/profile#$ source .bash_profile 至此，配置完成]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>CentOS</tag>
+        <tag>JDK</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+</search>
