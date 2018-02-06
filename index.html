@@ -1450,7 +1450,7 @@
   
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Linux/linux-shell-curl.html">
+    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Linux/linux-shell-grep.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="力Li">
@@ -1469,7 +1469,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/Linux/linux-shell-curl.html" itemprop="url">Linux curl 命令</a></h2>
+                <a class="post-title-link" href="/2018/02/Linux/linux-shell-grep.html" itemprop="url">Linux grep 命令</a></h2>
         
 
         <div class="post-meta">
@@ -1535,7 +1535,7 @@
                   <span class="post-meta-item-text">字数</span>
                 
                 <span title="字数">
-                  118
+                  139
                 </span>
               
               
@@ -1567,7 +1567,7 @@
               
                 <a href="/tags/shell/" rel="tag" class="color1">shell</a>
               
-                <a href="/tags/curl/" rel="tag" class="color2">curl</a>
+                <a href="/tags/grep/" rel="tag" class="color2">grep</a>
               
             </div>
           </div>
@@ -1583,11 +1583,10 @@
       
         
           
-            <h1 id="curl"><a href="#curl" class="headerlink" title="curl"></a>curl</h1><h1 id="GET-请求"><a href="#GET-请求" class="headerlink" title="GET 请求"></a>GET 请求</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://www.baidu.com?q=xxxx</span><br></pre></td></tr></table></figure>
-<h2 id="POST-请求"><a href="#POST-请求" class="headerlink" title="POST 请求"></a>POST 请求</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://10.121.2.35/weixin_v3/w?urlToken=wxmanager -XPOST -d <span class="string">"send message..."</span></span><br></pre></td></tr></table></figure>
-<h2 id="发送-POST-JSON-请求"><a href="#发送-POST-JSON-请求" class="headerlink" title="发送 POST JSON 请求"></a>发送 POST JSON 请求</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -H <span class="string">"Content-Type: application/json"</span> -X POST  --data <span class="string">'&#123;"data":"1"&#125;'</span> http://127.0.0.1/</span><br></pre></td></tr></table></figure>
-<h2 id="使用代理"><a href="#使用代理" class="headerlink" title="使用代理"></a>使用代理</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -x 192.168.2.5:3128 http://www.baidu.com?q=xxxx</span><br></pre></td></tr></table></figure>
-<h2 id="输出请求信息"><a href="#输出请求信息" class="headerlink" title="输出请求信息"></a>输出请求信息</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># http_code</span></span><br><span class="line"><span class="comment"># time_connect</span></span><br><span class="line"><span class="comment"># time_starttransfer</span></span><br><span class="line"><span class="comment"># time_total</span></span><br><span class="line"><span class="comment"># size_download</span></span><br><span class="line"><span class="comment"># speed_download</span></span><br><span class="line"><span class="comment"># 参考地址：</span></span><br><span class="line">curl http://www.baidu.com?q=xxxx -so /dev/null -w <span class="string">"%&#123;http_code&#125;\t%&#123;time_connect&#125;\t%&#123;time_starttransfer&#125;\t%&#123;time_total&#125;\t%&#123;size_download&#125;\t%&#123;speed_download&#125;\t"</span></span><br></pre></td></tr></table></figure>
+            <h1 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h1><h2 id="统计出现次数"><a href="#统计出现次数" class="headerlink" title="统计出现次数"></a>统计出现次数</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep <span class="string">'sign.*time.*openid'</span> access_p80_weixinv3.log | awk <span class="string">'&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;'</span> | sort -n</span><br></pre></td></tr></table></figure>
+<h2 id="统计某些字符出现次数"><a href="#统计某些字符出现次数" class="headerlink" title="统计某些字符出现次数"></a>统计某些字符出现次数</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep <span class="string">'sign.*time.*openid'</span> access_p80_weixinv3.log | awk <span class="string">'&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;'</span> | sort -n</span><br></pre></td></tr></table></figure>
+<p>4       183.3.234.45<br>10      183.3.234.57<br>20      183.3.234.58</p>
+<h2 id="查询前后日志"><a href="#查询前后日志" class="headerlink" title="查询前后日志"></a>查询前后日志</h2><p>grep -5 ‘parttern’ inputfile //打印匹配行的前后5行<br>grep -C 5 ‘parttern’ inputfile //打印匹配行的前后5行<br>grep -A 5 ‘parttern’ inputfile //打印匹配行的后5行<br>grep -B 5 ‘parttern’ inputfile //打印匹配行的前5行</p>
           
         
       
