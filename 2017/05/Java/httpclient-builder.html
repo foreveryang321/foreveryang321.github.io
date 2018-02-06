@@ -1,0 +1,668 @@
+<!doctype html><html class="theme-next pisces" lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css"><meta name="keywords" content="apache,httpclient,httpcore,"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1"><meta name="description" content="依赖包12345678910111213141516171819202122232425&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;org.apache.httpcomponents&amp;lt;/groupId&amp;gt;    &amp;lt;artifactId&amp;gt;httpclient&amp;lt;/artifactId&amp;gt;    &amp;lt;version&amp;gt;4.5&amp;lt;/"><meta name="keywords" content="apache,httpclient,httpcore"><meta property="og:type" content="article"><meta property="og:title" content="通过Builder模式封装httpclient工具类"><meta property="og:url" content="http://blog.yl-online.top/2017/05/Java/httpclient-builder.html"><meta property="og:site_name" content="力Li的博客"><meta property="og:description" content="依赖包12345678910111213141516171819202122232425&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;org.apache.httpcomponents&amp;lt;/groupId&amp;gt;    &amp;lt;artifactId&amp;gt;httpclient&amp;lt;/artifactId&amp;gt;    &amp;lt;version&amp;gt;4.5&amp;lt;/"><meta property="og:locale" content="zh-Hans"><meta property="og:updated_time" content="2017-05-23T09:54:24.389Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="通过Builder模式封装httpclient工具类"><meta name="twitter:description" content="依赖包12345678910111213141516171819202122232425&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;org.apache.httpcomponents&amp;lt;/groupId&amp;gt;    &amp;lt;artifactId&amp;gt;httpclient&amp;lt;/artifactId&amp;gt;    &amp;lt;version&amp;gt;4.5&amp;lt;/"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Pisces",sidebar:{position:"left",display:"post",offset:12,offset_float:0,b2t:!1,scrollpercent:!1},fancybox:!1,motion:!1,duoshuo:{userId:"0",author:"作者"},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><link rel="canonical" href="http://blog.yl-online.top/2017/05/Java/httpclient-builder.html"><title>通过Builder模式封装httpclient工具类 | 力Li的博客</title></head><body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans"><div class="container sidebar-position-left page-post-detail"><div class="headband"></div><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span> <span class="site-title">力Li的博客</span> <span class="logo-line-after"><i></i></span></a></div><h1 class="site-subtitle" itemprop="description">码农，程序猿</h1></div><div class="site-nav-toggle"><button><span class="btn-bar"></span> <span class="btn-bar"></span> <span class="btn-bar"></span></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i><br>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i><br>文章</a></li><li class="menu-item menu-item-categories"><a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i><br>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br>标签</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i><br>公益</a></li><li class="menu-item menu-item-about"><a href="/about/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i><br>关于我</a></li><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i><br>搜索</a></li></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"><i class="fa fa-search"></i> </span><span class="popup-btn-close"><i class="fa fa-times-circle"></i></span><div class="local-search-input-wrapper"><input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input"></div></div><div id="local-search-result"></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal" itemscope itemtype="http://schema.org/Article"><link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2017/05/Java/httpclient-builder.html"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="力Li"><meta itemprop="description" content="开心又过一日，唔开心又系过一日"><meta itemprop="image" content="http://tva4.sinaimg.cn/crop.0.0.180.180.180/691a7477jw1e8qgp5bmzyj2050050aa8.jpg"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="力Li的博客"></span><header class="post-header"><h2 class="post-title" itemprop="name headline">通过Builder模式封装httpclient工具类</h2><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i> </span><span class="post-meta-item-text">发表于</span> <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-23T15:22:01+08:00">2017-05-23 </time></span><span class="post-category"><span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-th"></i> </span><span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span></span><div class="post-wordcount"><span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-file-word-o"></i> </span><span class="post-meta-item-text">字数</span> <span title="字数">2,529 </span><span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i> </span><span class="post-meta-item-text">时长</span> <span title="时长">14min</span></div></div><div style="margin:3px 0 20px 0"><div class="post-tags"><span class="post-meta-item-icon"><i class="fa fa-tags"></i> </span><span class="post-meta-item-text">标签</span> <a href="/tags/apache/" rel="tag" class="color1">apache</a> <a href="/tags/httpclient/" rel="tag" class="color2">httpclient</a> <a href="/tags/httpcore/" rel="tag" class="color0">httpcore</a></div></div></header><div class="post-body" itemprop="articleBody"><p>依赖包<br></p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.httpcomponents<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>httpclient<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.5<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.httpcomponents<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>httpcore<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.4.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-codec<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-codec<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.9<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-logging<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-logging<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.slf4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>slf4j-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.7.21<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure><p></p>
+<a id="more"></a>
+<p>具体代码实现<br></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.http.HttpEntity;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.HttpStatus;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.NameValuePair;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.ParseException;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.ClientProtocolException;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.config.CookieSpecs;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.config.RequestConfig;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.entity.UrlEncodedFormEntity;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.CloseableHttpResponse;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.HttpGet;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.HttpPost;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.HttpUriRequest;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.config.ConnectionConfig;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.config.MessageConstraints;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.config.Registry;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.config.RegistryBuilder;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.config.SocketConfig;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.conn.HttpConnectionFactory;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.conn.ManagedHttpClientConnection;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.conn.routing.HttpRoute;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.conn.socket.ConnectionSocketFactory;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.conn.socket.PlainConnectionSocketFactory;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.conn.ssl.SSLConnectionSocketFactory;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.entity.ContentType;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.entity.StringEntity;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.CloseableHttpClient;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.HttpClientBuilder;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.HttpClients;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.conn.ManagedHttpClientConnectionFactory;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.conn.PoolingHttpClientConnectionManager;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.ssl.SSLContexts;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.util.Args;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.util.EntityUtils;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.net.ssl.SSLContext;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.UnsupportedEncodingException;</span><br><span class="line"><span class="keyword">import</span> java.nio.charset.Charset;</span><br><span class="line"><span class="keyword">import</span> java.nio.charset.CodingErrorAction;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * http client工具类</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;推荐使用成员变量，或者spring bean的方式初始化对象，这样可以有效的使用到连接池管理器</span></span><br><span class="line"><span class="comment"> * &lt;pre&gt;</span></span><br><span class="line"><span class="comment"> * socketTimeout：socketTimeout超时时间。默认：8000（单位：ms）</span></span><br><span class="line"><span class="comment"> * connectTimeout：connectTimeout超时时间。默认：8000（单位：ms）</span></span><br><span class="line"><span class="comment"> * connectionRequestTimeout：connectionRequestTimeout超时时间。默认：10*1000（单位：ms）</span></span><br><span class="line"><span class="comment"> * ignoreCookies：是否忽略cookies。默认：true</span></span><br><span class="line"><span class="comment"> * tcpNoDelay：是否使用套接字配置。默认：true</span></span><br><span class="line"><span class="comment"> * validateAfterInactivity：在不活动时验证连接间隔。默认：30 * 1000（单位：ms）</span></span><br><span class="line"><span class="comment"> * maxHeaderCount：最大header信息条数。默认：200</span></span><br><span class="line"><span class="comment"> * setMaxLineLength：最大头部每行长度。默认：2000</span></span><br><span class="line"><span class="comment"> * maxTotal：配置连接池最大连接数。默认：150</span></span><br><span class="line"><span class="comment"> * defaultMaxPerRoute：每个路由最大租用连接数量。默认：10</span></span><br><span class="line"><span class="comment"> * charset：编码格式。默认：UTF-8</span></span><br><span class="line"><span class="comment"> * &lt;/pre&gt;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Created by YL on 2017/5/23.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> socketTimeout;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> connectTimeout;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> connectionRequestTimeout;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">boolean</span> ignoreCookies;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">boolean</span> tcpNoDelay;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> validateAfterInactivity;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> maxHeaderCount;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> setMaxLineLength;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> maxTotal;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> defaultMaxPerRoute;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String charset;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Logger logger = LoggerFactory.getLogger(Client.class);</span><br><span class="line">    <span class="keyword">private</span> CloseableHttpClient client;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Client</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> socketTimeout, <span class="keyword">final</span> <span class="keyword">int</span> connectTimeout, <span class="keyword">final</span> <span class="keyword">int</span> connectionRequestTimeout, <span class="keyword">final</span></span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="keyword">boolean</span> ignoreCookies, <span class="keyword">final</span> <span class="keyword">boolean</span> tcpNoDelay, <span class="keyword">final</span> <span class="keyword">int</span> validateAfterInactivity, <span class="keyword">final</span> <span class="keyword">int</span> maxHeaderCount,</span></span></span><br><span class="line"><span class="function"><span class="params">                   <span class="keyword">final</span> <span class="keyword">int</span> setMaxLineLength, <span class="keyword">final</span> <span class="keyword">int</span> maxTotal, <span class="keyword">final</span> <span class="keyword">int</span> defaultMaxPerRoute, <span class="keyword">final</span> String charset)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        <span class="keyword">this</span>.socketTimeout = socketTimeout;</span><br><span class="line">        <span class="keyword">this</span>.connectTimeout = connectTimeout;</span><br><span class="line">        <span class="keyword">this</span>.connectionRequestTimeout = connectionRequestTimeout;</span><br><span class="line">        <span class="keyword">this</span>.ignoreCookies = ignoreCookies;</span><br><span class="line">        <span class="keyword">this</span>.tcpNoDelay = tcpNoDelay;</span><br><span class="line">        <span class="keyword">this</span>.validateAfterInactivity = validateAfterInactivity;</span><br><span class="line">        <span class="keyword">this</span>.maxHeaderCount = maxHeaderCount;</span><br><span class="line">        <span class="keyword">this</span>.setMaxLineLength = setMaxLineLength;</span><br><span class="line">        <span class="keyword">this</span>.maxTotal = maxTotal;</span><br><span class="line">        <span class="keyword">this</span>.defaultMaxPerRoute = defaultMaxPerRoute;</span><br><span class="line">        <span class="keyword">this</span>.charset = charset;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">         * RequestConfig</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        RequestConfig.Builder builder = RequestConfig.custom();</span><br><span class="line">        builder.setSocketTimeout(<span class="keyword">this</span>.getSocketTimeout());</span><br><span class="line">        builder.setConnectTimeout(<span class="keyword">this</span>.getConnectTimeout());</span><br><span class="line">        builder.setConnectionRequestTimeout(<span class="keyword">this</span>.getConnectionRequestTimeout());</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.isIgnoreCookies()) &#123;</span><br><span class="line">            builder.setCookieSpec(CookieSpecs.IGNORE_COOKIES);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// builder.setExpectContinueEnabled(true);</span></span><br><span class="line">        <span class="comment">// builder.setTargetPreferredAuthSchemes(Arrays.asList(AuthSchemes.NTLM,</span></span><br><span class="line">        <span class="comment">// AuthSchemes.DIGEST));</span></span><br><span class="line">        <span class="comment">// builder.setProxyPreferredAuthSchemes(Arrays.asList(AuthSchemes.BASIC));</span></span><br><span class="line">        <span class="comment">// HttpHost proxy = new HttpHost("10.121.2.5", 3128);</span></span><br><span class="line">        <span class="comment">// builder.setProxy(proxy);</span></span><br><span class="line">        RequestConfig rc = builder.build();</span><br><span class="line"></span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">         * Use a custom connection factory to customize the process of</span></span><br><span class="line"><span class="comment">         * initialization of outgoing HTTP connections. Beside standard</span></span><br><span class="line"><span class="comment">         * connection configuration parameters HTTP connection factory can</span></span><br><span class="line"><span class="comment">         * define message parser / writer routines to be employed by individual</span></span><br><span class="line"><span class="comment">         * connections.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        HttpConnectionFactory&lt;HttpRoute, ManagedHttpClientConnection&gt; cf = <span class="keyword">new</span> ManagedHttpClientConnectionFactory();</span><br><span class="line"></span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">         * SSL context for secure connections can be created either based on</span></span><br><span class="line"><span class="comment">         * system or application specific properties.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        SSLContext sslc = SSLContexts.createSystemDefault();</span><br><span class="line"></span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">         * Create a registry of custom connection socket factories for supported</span></span><br><span class="line"><span class="comment">         * protocol schemes.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        Registry&lt;ConnectionSocketFactory&gt; sfr = RegistryBuilder.&lt;ConnectionSocketFactory&gt;create().register(<span class="string">"http"</span>,</span><br><span class="line">                PlainConnectionSocketFactory.INSTANCE).register(<span class="string">"https"</span>, <span class="keyword">new</span> SSLConnectionSocketFactory(sslc)).build();</span><br><span class="line"></span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">         * Create socket configuration</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        SocketConfig sc = SocketConfig.custom().setTcpNoDelay(<span class="keyword">this</span>.isTcpNoDelay()).build();</span><br><span class="line"></span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">         * Create a connection manager with custom configuration.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        PoolingHttpClientConnectionManager manager = <span class="keyword">new</span> PoolingHttpClientConnectionManager(sfr, cf);</span><br><span class="line">        <span class="comment">// 将连接管理器配置为使用套接字配置（默认情况下或特定主机）。</span></span><br><span class="line">        manager.setDefaultSocketConfig(sc);</span><br><span class="line">        <span class="comment">// manager.setSocketConfig(new HttpHost("somehost", 80),</span></span><br><span class="line">        <span class="comment">// socketConfig);</span></span><br><span class="line">        <span class="comment">// 在不活动30秒后验证连接</span></span><br><span class="line">        manager.setValidateAfterInactivity(<span class="keyword">this</span>.getValidateAfterInactivity());</span><br><span class="line"></span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">         * Create message constraints</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        MessageConstraints mc = MessageConstraints.custom().setMaxHeaderCount(<span class="keyword">this</span>.getMaxHeaderCount())</span><br><span class="line">                .setMaxLineLength(<span class="keyword">this</span>.getSetMaxLineLength()).build();</span><br><span class="line"></span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">         * Create connection configuration</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        ConnectionConfig cc = ConnectionConfig.custom().setMalformedInputAction(CodingErrorAction.IGNORE)</span><br><span class="line">                .setUnmappableInputAction(CodingErrorAction.IGNORE).setCharset(Charset.forName(<span class="keyword">this</span>.getCharset()))</span><br><span class="line">                .setMessageConstraints(mc).build();</span><br><span class="line">        <span class="comment">// 将连接管理器配置为使用默认情况下或特定主机的连接配置。</span></span><br><span class="line">        manager.setDefaultConnectionConfig(cc);</span><br><span class="line">        <span class="comment">// manager.setConnectionConfig(new HttpHost("somehost", 80),</span></span><br><span class="line">        <span class="comment">// ConnectionConfig.DEFAULT);</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 配置连接池最大连接数，和每个路由最大租用连接数量</span></span><br><span class="line">        manager.setMaxTotal(<span class="keyword">this</span>.getMaxTotal());</span><br><span class="line">        manager.setDefaultMaxPerRoute(<span class="keyword">this</span>.getDefaultMaxPerRoute());</span><br><span class="line"></span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">         * 4.3以上版本推荐使用HttpClientBuilder来创建client</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        HttpClientBuilder clientBuilder = HttpClients.custom();</span><br><span class="line">        clientBuilder.setConnectionManager(manager);</span><br><span class="line">        <span class="comment">// clientBuilder.setDefaultCookieStore(cookieStore);</span></span><br><span class="line">        <span class="comment">// clientBuilder.setDefaultCredentialsProvider(credentialsProvider);</span></span><br><span class="line">        <span class="comment">// clientBuilder.setProxy(new HttpHost("myproxy", 8080));</span></span><br><span class="line">        clientBuilder.setDefaultRequestConfig(rc);</span><br><span class="line">        client = clientBuilder.build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Builder <span class="title">custom</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Builder();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Builder <span class="title">copy</span><span class="params">(<span class="keyword">final</span> Client copy)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Builder().socketTimeout(copy.socketTimeout).connectTimeout(copy.connectTimeout)</span><br><span class="line">                .connectionRequestTimeout(copy.connectionRequestTimeout).ignoreCookies(copy.ignoreCookies).tcpNoDelay</span><br><span class="line">                        (copy.tcpNoDelay).validateAfterInactivity(copy.validateAfterInactivity).maxHeaderCount(copy</span><br><span class="line">                        .maxHeaderCount).setMaxLineLength(copy.setMaxLineLength).maxTotal(copy.maxTotal)</span><br><span class="line">                .defaultMaxPerRoute(copy.defaultMaxPerRoute).charset(copy.charset);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getSocketTimeout</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> socketTimeout;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getConnectTimeout</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> connectTimeout;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getConnectionRequestTimeout</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> connectionRequestTimeout;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isIgnoreCookies</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ignoreCookies;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isTcpNoDelay</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> tcpNoDelay;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getValidateAfterInactivity</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> validateAfterInactivity;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getMaxHeaderCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> maxHeaderCount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getSetMaxLineLength</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> setMaxLineLength;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getMaxTotal</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> maxTotal;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getDefaultMaxPerRoute</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> defaultMaxPerRoute;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getCharset</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> charset;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        StringBuilder builder = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        builder.append(<span class="string">"TSHttpClient [socketTimeout="</span>).append(socketTimeout).append(<span class="string">", connectTimeout="</span>).append</span><br><span class="line">                (connectTimeout).append(<span class="string">", connectionRequestTimeout="</span>).append(connectionRequestTimeout).append(<span class="string">", "</span> +</span><br><span class="line">                <span class="string">"ignoreCookies="</span>).append(ignoreCookies).append(<span class="string">", tcpNoDelay="</span>).append(tcpNoDelay).append(<span class="string">", "</span> +</span><br><span class="line">                <span class="string">"validateAfterInactivity="</span>).append(validateAfterInactivity).append(<span class="string">", maxHeaderCount="</span>).append</span><br><span class="line">                (maxHeaderCount).append(<span class="string">", setMaxLineLength="</span>).append(setMaxLineLength).append(<span class="string">", maxTotal="</span>).append</span><br><span class="line">                (maxTotal).append(<span class="string">", defaultMaxPerRoute="</span>).append(defaultMaxPerRoute).append(<span class="string">", charset="</span>).append</span><br><span class="line">                (charset).append(<span class="string">"]"</span>);</span><br><span class="line">        <span class="keyword">return</span> builder.toString();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Builder</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> socketTimeout = <span class="number">8000</span>;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> connectTimeout = <span class="number">8000</span>;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> connectionRequestTimeout = <span class="number">10</span> * <span class="number">1000</span>;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">boolean</span> ignoreCookies = <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">boolean</span> tcpNoDelay = <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> validateAfterInactivity = <span class="number">30</span> * <span class="number">1000</span>;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> maxHeaderCount = <span class="number">200</span>;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> setMaxLineLength = <span class="number">2000</span>;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> maxTotal = <span class="number">150</span>;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> defaultMaxPerRoute = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">private</span> String charset = <span class="string">"UTF-8"</span>;</span><br><span class="line"></span><br><span class="line">        Builder() &#123;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">socketTimeout</span><span class="params">(<span class="keyword">int</span> socketTimeout)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.socketTimeout = socketTimeout;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">connectTimeout</span><span class="params">(<span class="keyword">int</span> connectTimeout)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.connectTimeout = connectTimeout;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">connectionRequestTimeout</span><span class="params">(<span class="keyword">int</span> connectionRequestTimeout)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.connectionRequestTimeout = connectionRequestTimeout;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">ignoreCookies</span><span class="params">(<span class="keyword">boolean</span> ignoreCookies)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.ignoreCookies = ignoreCookies;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">tcpNoDelay</span><span class="params">(<span class="keyword">boolean</span> tcpNoDelay)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.tcpNoDelay = tcpNoDelay;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">validateAfterInactivity</span><span class="params">(<span class="keyword">int</span> validateAfterInactivity)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.validateAfterInactivity = validateAfterInactivity;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">maxHeaderCount</span><span class="params">(<span class="keyword">int</span> maxHeaderCount)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.maxHeaderCount = maxHeaderCount;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">setMaxLineLength</span><span class="params">(<span class="keyword">int</span> setMaxLineLength)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.setMaxLineLength = setMaxLineLength;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">maxTotal</span><span class="params">(<span class="keyword">int</span> maxTotal)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.maxTotal = maxTotal;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">defaultMaxPerRoute</span><span class="params">(<span class="keyword">int</span> defaultMaxPerRoute)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.defaultMaxPerRoute = defaultMaxPerRoute;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">charset</span><span class="params">(String charset)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.charset = charset;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Client <span class="title">build</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> Client(socketTimeout, connectTimeout, connectionRequestTimeout, ignoreCookies, tcpNoDelay,</span><br><span class="line">                    validateAfterInactivity, maxHeaderCount, setMaxLineLength, maxTotal, defaultMaxPerRoute, charset);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 发送get请求</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@author</span> YangLi : 2015年12月16日</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Response <span class="title">get</span><span class="params">(String url)</span> <span class="keyword">throws</span> HttpException </span>&#123;</span><br><span class="line">        HttpGet httpGet = <span class="keyword">new</span> HttpGet(url);</span><br><span class="line">        <span class="keyword">return</span> get(httpGet);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 发送get请求</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@author</span> YangLi : 2015年12月16日</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Response <span class="title">get</span><span class="params">(HttpGet httpGet)</span> <span class="keyword">throws</span> HttpException </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> execute(httpGet);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 发送post请求：不带输入数据</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> url 地址</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> HttpException</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@author</span> YangLi : 2016年3月24日</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Response <span class="title">post</span><span class="params">(String url)</span> <span class="keyword">throws</span> HttpException </span>&#123;</span><br><span class="line">        HttpPost httpPost = <span class="keyword">new</span> HttpPost(url);</span><br><span class="line">        <span class="keyword">return</span> post(httpPost);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 发送post请求：使用UrlEncodedFormEntity模拟表单提交，K-V形式参数</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> url     地址</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> nvpList 传值示例：&lt;br/&gt;</span></span><br><span class="line"><span class="comment">     *                List&amp;lt;NameValuePair&gt; nvpList = new ArrayList</span></span><br><span class="line"><span class="comment">     *                &amp;lt;NameValuePair&gt;();&lt;br/&gt;</span></span><br><span class="line"><span class="comment">     *                nvpList.add(new BasicNameValuePair(key, value));</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> HttpException</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@author</span> YangLi : 2016年3月24日</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Response <span class="title">post</span><span class="params">(String url, List&lt;NameValuePair&gt; nvpList)</span> <span class="keyword">throws</span> HttpException </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> post(url, <span class="keyword">new</span> UrlEncodedFormEntity(nvpList, <span class="keyword">this</span>.getCharset()));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> HttpException(<span class="string">"不支持的编码格式："</span> + <span class="keyword">this</span>.getCharset(), e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 发送post请求：使用StringEntity提交application/json格式，JSON形式</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@author</span> YangLi : 2016年2月24日</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Response <span class="title">post</span><span class="params">(String url, String json)</span> <span class="keyword">throws</span> HttpException </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> post(url, <span class="keyword">new</span> StringEntity(json, ContentType.APPLICATION_JSON));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 发送post请求</span></span><br><span class="line"><span class="comment">     * &lt;p&gt;</span></span><br><span class="line"><span class="comment">     * 1、发送json格式字符串（默认UTF-8编码）：new StringEntity(text, ContentType.APPLICATION_JSON)</span></span><br><span class="line"><span class="comment">     * &lt;p&gt;</span></span><br><span class="line"><span class="comment">     * 2、post提交表单：new UrlEncodedFormEntity(nvpList, this.getCharset())</span></span><br><span class="line"><span class="comment">     * &lt;p&gt;</span></span><br><span class="line"><span class="comment">     * 3、上传文件：</span></span><br><span class="line"><span class="comment">     * &lt;pre&gt;</span></span><br><span class="line"><span class="comment">     * MultipartEntityBuilder meBuilder = MultipartEntityBuilder.create();</span></span><br><span class="line"><span class="comment">     * // 带其他参数</span></span><br><span class="line"><span class="comment">     * for (NameValuePair nameValuePair : nvpList) &#123;</span></span><br><span class="line"><span class="comment">     *  meBuilder.addPart(nameValuePair.getName(), new StringBody(nameValuePair.getValue(), ContentType.TEXT_PLAIN));</span></span><br><span class="line"><span class="comment">     * &#125;</span></span><br><span class="line"><span class="comment">     * // 多个文件使用for循环，单个文件不需要for循环</span></span><br><span class="line"><span class="comment">     * for (File file : files) &#123;</span></span><br><span class="line"><span class="comment">     *  FileBody fileBody = new FileBody(file);</span></span><br><span class="line"><span class="comment">     *  meBuilder.addPart("files", fileBody);</span></span><br><span class="line"><span class="comment">     * &#125;</span></span><br><span class="line"><span class="comment">     * HttpEntity httpEntity = meBuilder.build();</span></span><br><span class="line"><span class="comment">     * &lt;/pre&gt;</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@author</span> YangLi : 2016年2月24日</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Response <span class="title">post</span><span class="params">(String url, HttpEntity entity)</span> <span class="keyword">throws</span> HttpException </span>&#123;</span><br><span class="line">        HttpPost httpPost = <span class="keyword">new</span> HttpPost(url);</span><br><span class="line">        httpPost.setEntity(entity);</span><br><span class="line">        <span class="keyword">return</span> post(httpPost);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 发送post请求</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@author</span> YangLi : 2015年12月16日</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> Response <span class="title">post</span><span class="params">(HttpPost httpPost)</span> <span class="keyword">throws</span> HttpException </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> execute(httpPost);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> Response <span class="title">execute</span><span class="params">(HttpUriRequest request)</span> <span class="keyword">throws</span> HttpException </span>&#123;</span><br><span class="line">        Args.notNull(request, <span class="string">"HTTP request"</span>);</span><br><span class="line">        logDebug(<span class="string">"method: &#123;&#125;, uri: &#123;&#125;"</span>, request.getMethod(), request.getURI());</span><br><span class="line">        CloseableHttpResponse httpResponse = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// HttpClientContext context = HttpClientContext.create();</span></span><br><span class="line">            <span class="comment">// httpResponse = client.execute(request, context);</span></span><br><span class="line">            httpResponse = client.execute(request);</span><br><span class="line">            <span class="keyword">int</span> statusCode = httpResponse.getStatusLine().getStatusCode();</span><br><span class="line">            logDebug(<span class="string">"method: &#123;&#125;, uri: &#123;&#125;, statusCode: &#123;&#125;"</span>, request.getMethod(), request.getURI(), statusCode);</span><br><span class="line">            <span class="keyword">if</span> (statusCode != HttpStatus.SC_OK) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> HttpException(getCause(statusCode), statusCode);</span><br><span class="line">            &#125;</span><br><span class="line">            HttpEntity entity = httpResponse.getEntity();</span><br><span class="line">            String result = EntityUtils.toString(entity, <span class="keyword">this</span>.getCharset());</span><br><span class="line">            logDebug(<span class="string">"method: &#123;&#125;, uri: &#123;&#125;, response: &#123;&#125;"</span>, request.getMethod(), request.getURI(), result);</span><br><span class="line">            Response response = <span class="keyword">new</span> Response();</span><br><span class="line">            response.setResponseAsString(result);</span><br><span class="line">            <span class="keyword">return</span> response;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ParseException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> HttpException(<span class="string">"解析错误"</span>, e);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClientProtocolException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> HttpException(<span class="string">"HTTP协议错误"</span>, e);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> HttpException(<span class="string">"I/O操作异常"</span>, e);</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (httpResponse != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    httpResponse.close();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 通过statusCode获取错误信息</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@author</span> YangLi : 2015年12月16日</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">getCause</span><span class="params">(<span class="keyword">int</span> statusCode)</span> </span>&#123;</span><br><span class="line">        String message = <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">switch</span> (statusCode) &#123;</span><br><span class="line">            <span class="keyword">case</span> HttpStatus.SC_NOT_MODIFIED:</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> HttpStatus.SC_BAD_REQUEST:</span><br><span class="line">                message = <span class="string">"请求出错"</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> HttpStatus.SC_UNAUTHORIZED:</span><br><span class="line">                message = <span class="string">"未授权"</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> HttpStatus.SC_FORBIDDEN:</span><br><span class="line">                message = <span class="string">"拒绝访问"</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> HttpStatus.SC_NOT_FOUND:</span><br><span class="line">                message = <span class="string">"请求的URI是无效的或者所请求的资源不存在"</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> HttpStatus.SC_NOT_ACCEPTABLE:</span><br><span class="line">                message = <span class="string">"不接受请求"</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> HttpStatus.SC_INTERNAL_SERVER_ERROR:</span><br><span class="line">                message = <span class="string">"内部服务器错误"</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> HttpStatus.SC_BAD_GATEWAY:</span><br><span class="line">                message = <span class="string">"错误的网关"</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> HttpStatus.SC_SERVICE_UNAVAILABLE:</span><br><span class="line">                message = <span class="string">"暂停服务"</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                message = <span class="string">"其他错误"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"[ "</span> + statusCode + <span class="string">" ] "</span> + message;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">logDebug</span><span class="params">(String format, Object... arguments)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</span><br><span class="line">            logger.debug(format, arguments);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p></p>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      力Li
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://blog.yl-online.top/2017/05/Java/httpclient-builder.html" title="通过Builder模式封装httpclient工具类">http://blog.yl-online.top/2017/05/Java/httpclient-builder.html</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>服务声明： </strong>
+      本博客站点随时会停止服务，请不要收藏、转载！如果文章内容对你有用，请记录到你的笔记中。
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/ELK/elasticsearch-issue.html" rel="next" title="elasticsearch踩坑">
+                <i class="fa fa-chevron-left"></i> elasticsearch踩坑
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/Java/rsa.html" rel="prev" title="使用RSA注意事项">
+                使用RSA注意事项 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="http://tva4.sinaimg.cn/crop.0.0.180.180.180/691a7477jw1e8qgp5bmzyj2050050aa8.jpg" alt="力Li">
+          <p class="site-author-name" itemprop="name">力Li</p>
+           
+              <p class="site-description motion-element" itemprop="description">开心又过一日，唔开心又系过一日</p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/index.html">
+                <span class="site-state-item-count">66</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+          
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  
+  <span class="author" itemprop="copyrightHolder">力Li</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (search_path.endsWith("json")) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });</script></body></html>
