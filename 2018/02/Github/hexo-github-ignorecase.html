@@ -84,18 +84,18 @@
 
 
 
-<meta name="description" content="Hexo 部署到 Github Pages 文件夹大小写问题问题使用 Hexo 部署博客到 Github Pages 时经常会遇到文件夹大小写问题导致的 404问题。 例如 Hexo 生成了一个 javasccript Category文件夹，但是我后来把它改成了 Javasccript，即 javasccript 的首字母大写了。Hexo会生成正确，但部署到 Github 上却老是不正确。 原因">
+<meta name="description" content="Hexo 部署到 Github Pages 文件夹大小写问题问题使用 Hexo 部署博客到 Github Pages 时经常会遇到文件夹大小写问题导致的 404问题。 例如 Hexo 生成了一个 javasccript Category文件夹，但是我后来把它改成了 Javasccript，即 javasccript 的首字母大写了。Hexo会生成正确，但部署到 Github 上却老是不正确。">
 <meta name="keywords" content="Github,hexo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hexo github ignorecase">
 <meta property="og:url" content="http://blog.yl-online.top/2018/02/Github/hexo-github-ignorecase.html">
 <meta property="og:site_name" content="力Li的博客">
-<meta property="og:description" content="Hexo 部署到 Github Pages 文件夹大小写问题问题使用 Hexo 部署博客到 Github Pages 时经常会遇到文件夹大小写问题导致的 404问题。 例如 Hexo 生成了一个 javasccript Category文件夹，但是我后来把它改成了 Javasccript，即 javasccript 的首字母大写了。Hexo会生成正确，但部署到 Github 上却老是不正确。 原因">
+<meta property="og:description" content="Hexo 部署到 Github Pages 文件夹大小写问题问题使用 Hexo 部署博客到 Github Pages 时经常会遇到文件夹大小写问题导致的 404问题。 例如 Hexo 生成了一个 javasccript Category文件夹，但是我后来把它改成了 Javasccript，即 javasccript 的首字母大写了。Hexo会生成正确，但部署到 Github 上却老是不正确。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-18T06:11:19.318Z">
+<meta property="og:updated_time" content="2018-02-26T06:41:16.425Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo github ignorecase">
-<meta name="twitter:description" content="Hexo 部署到 Github Pages 文件夹大小写问题问题使用 Hexo 部署博客到 Github Pages 时经常会遇到文件夹大小写问题导致的 404问题。 例如 Hexo 生成了一个 javasccript Category文件夹，但是我后来把它改成了 Javasccript，即 javasccript 的首字母大写了。Hexo会生成正确，但部署到 Github 上却老是不正确。 原因">
+<meta name="twitter:description" content="Hexo 部署到 Github Pages 文件夹大小写问题问题使用 Hexo 部署博客到 Github Pages 时经常会遇到文件夹大小写问题导致的 404问题。 例如 Hexo 生成了一个 javasccript Category文件夹，但是我后来把它改成了 Javasccript，即 javasccript 的首字母大写了。Hexo会生成正确，但部署到 Github 上却老是不正确。">
 
 
 
@@ -448,6 +448,7 @@
       
         <h1 id="Hexo-部署到-Github-Pages-文件夹大小写问题"><a href="#Hexo-部署到-Github-Pages-文件夹大小写问题" class="headerlink" title="Hexo 部署到 Github Pages 文件夹大小写问题"></a>Hexo 部署到 Github Pages 文件夹大小写问题</h1><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>使用 Hexo 部署博客到 Github Pages 时经常会遇到文件夹大小写问题导致的 404问题。</p>
 <p>例如 Hexo 生成了一个 javasccript Category文件夹，但是我后来把它改成了 Javasccript，即 javasccript 的首字母大写了。Hexo会生成正确，但部署到 Github 上却老是不正确。</p>
+<a id="more"></a>
 <h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>git 默认忽略文件名大小写，所以即使文件夹大小写变更，git 也检测不到。</p>
 <h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>1、进入到博客项目中 .deploy_git文件夹，修改 .git 下的 config 文件，将 ignorecase=true 改为 ignorecase=false<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ./deploy_git/.git</span><br><span class="line">vi config</span><br></pre></td></tr></table></figure></p>
 <p>2、删除博客项目中 .deploy_git 文件夹下的所有文件，并 push 到 Github 上, 这一步是清空你的 github.io 项目中所有文件。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ./deploy_git/</span><br><span class="line">git rm -rf *</span><br><span class="line">git commit -m <span class="string">'clean'</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure></p>
@@ -516,8 +517,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/02/Zookeeper/zookeeper-clear-shell.html" rel="next" title="Zookeeper 清理日志文件">
-                <i class="fa fa-chevron-left"></i> Zookeeper 清理日志文件
+              <a href="/2018/02/Linux/linux-shell-ls.html" rel="next" title="Linux ls 命令">
+                <i class="fa fa-chevron-left"></i> Linux ls 命令
               </a>
             
           </div>
@@ -526,8 +527,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/02/Java/java-aes-tools.html" rel="prev" title="Java、JS版AES加密算法工具类">
-                Java、JS版AES加密算法工具类 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/02/Java/java-rsa-tools.html" rel="prev" title="Java、JS版RSA加密算法工具类">
+                Java、JS版RSA加密算法工具类 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
