@@ -429,9 +429,9 @@
               </span>
               <span class="post-meta-item-text">标签</span>
               
-                <a href="/tags/Javascript/" rel="tag" class="color1">Javascript</a>
+                <a href="/tags/Java/" rel="tag" class="color1">Java</a>
               
-                <a href="/tags/Java/" rel="tag" class="color2">Java</a>
+                <a href="/tags/Javascript/" rel="tag" class="color2">Javascript</a>
               
                 <a href="/tags/RSA/" rel="tag" class="color0">RSA</a>
               
@@ -582,7 +582,7 @@
                   <span class="post-meta-item-text">字数</span>
                 
                 <span title="字数">
-                  1,275
+                  1,227
                 </span>
               
               <!--
@@ -616,9 +616,9 @@
               </span>
               <span class="post-meta-item-text">标签</span>
               
-                <a href="/tags/Javascript/" rel="tag" class="color1">Javascript</a>
+                <a href="/tags/Java/" rel="tag" class="color1">Java</a>
               
-                <a href="/tags/Java/" rel="tag" class="color2">Java</a>
+                <a href="/tags/Javascript/" rel="tag" class="color2">Javascript</a>
               
                 <a href="/tags/AES/" rel="tag" class="color0">AES</a>
               
@@ -636,10 +636,8 @@
       
         
           
-            <p>[TOC]<br>    本文主要是实现<code>AES</code>算法的<code>Java</code>版本和<code>Javascript</code>版本，并提供测试例子。<br>    AES是一个对称分组密码算法，旨在取代DES成为广泛使用的标准。根据使用的密码长度，AES最常见的有3种方案，用以适应不同的场景要求，分别是AES-128、AES-192和AES-256。本文主要对AES-128进行介绍，另外两种的思路基本一样，只是轮数会适当增加。本篇将介绍如何使用java实现AES加、解密操作。</p>
-<pre><code>Java中的PKCS5Padding和Javascript中的PKCS7Padding的结果是一样
-......
-</code></pre><h2 id="Java-版-AES-工具类"><a href="#Java-版-AES-工具类" class="headerlink" title="Java 版 AES 工具类"></a>Java 版 AES 工具类</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.tisson.wechat.common.util;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.crypto.BadPaddingException;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.Cipher;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.IllegalBlockSizeException;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.NoSuchPaddingException;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.spec.SecretKeySpec;</span><br><span class="line"><span class="keyword">import</span> java.io.UnsupportedEncodingException;</span><br><span class="line"><span class="keyword">import</span> java.security.InvalidKeyException;</span><br><span class="line"><span class="keyword">import</span> java.security.NoSuchAlgorithmException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * AES 加密、解密</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Created by YL on 2018/2/9</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> AESUtils &#123;</span><br><span class="line">    GBK &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getCharset</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"GBK"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    UTF8 &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getCharset</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"UTF-8"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String AES_KEY = <span class="string">"MHYKD5tes6fhkdv9"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取编码</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getCharset</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> AbstractMethodError();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 加密</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str 需要加密的内容</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> key 加密密码</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 加密后的字符串</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">byte</span>[] enc(String str, String key) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            SecretKeySpec skeySpec = <span class="keyword">new</span> SecretKeySpec(key.getBytes(getCharset()), <span class="string">"AES"</span>);</span><br><span class="line">            Cipher cipher = Cipher.getInstance(<span class="string">"AES/ECB/PKCS5Padding"</span>);</span><br><span class="line">            cipher.init(Cipher.ENCRYPT_MODE, skeySpec);</span><br><span class="line">            <span class="keyword">return</span> cipher.doFinal(str.getBytes(getCharset()));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"不支持的编码格式"</span>, e);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"不支持的加密算法"</span>, e);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchPaddingException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"不支持的填充机制"</span>, e);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InvalidKeyException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"无效的Key、错误的长度、未初始化等"</span>, e);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalBlockSizeException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"密码的块大小不匹配"</span>, e);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (BadPaddingException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"输入的数据错误，导致填充机制未能正常填充"</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">byte</span>[] dec(<span class="keyword">byte</span>[] str, String key) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            SecretKeySpec skeySpec = <span class="keyword">new</span> SecretKeySpec(key.getBytes(getCharset()), <span class="string">"AES"</span>);</span><br><span class="line">            Cipher cipher = Cipher.getInstance(<span class="string">"AES/ECB/PKCS5Padding"</span>);</span><br><span class="line">            cipher.init(Cipher.DECRYPT_MODE, skeySpec);</span><br><span class="line">            <span class="keyword">return</span> cipher.doFinal(str);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"不支持的编码格式"</span>, e);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"不支持的加密算法"</span>, e);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchPaddingException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"不支持的填充机制"</span>, e);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InvalidKeyException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"无效的Key、错误的长度、未初始化等"</span>, e);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalBlockSizeException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"密码的块大小不匹配"</span>, e);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (BadPaddingException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"输入的数据错误，导致填充机制未能正常填充"</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * AES 加密，使用默认 key 加密</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str 要加密的明文</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 加密后的密文</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">encrypt</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> encrypt(str, AESUtils.AES_KEY);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * AES加密，使用指定 key 加密</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str 要加密的明文</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> key 加密 key</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 解密后字符串</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">encrypt</span><span class="params">(String str, String key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">byte</span>[] encryptBytes = enc(str, key);</span><br><span class="line">        <span class="keyword">return</span> Base64Utils.UTF8.encode(encryptBytes);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * AES 解密，使用默认 key 解密</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str 要解密的密文</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 解密后的明文</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">decrypt</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> decrypt(str, AESUtils.AES_KEY);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * AES 解密，使用默认 key 解密</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str 要解密的密文</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> key 解密 key</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 解密后的明文</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">decrypt</span><span class="params">(String str, String key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (str == <span class="keyword">null</span> || <span class="string">""</span>.equals(str)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">byte</span>[] bytes = Base64Utils.UTF8.decode2byte(str);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> String(dec(bytes, key), getCharset());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <p>[TOC]<br>    本文主要是实现<code>AES</code>算法的<code>Java</code>版本和<code>Javascript</code>版本，并提供测试例子。<br>    AES是一个对称分组密码算法，旨在取代DES成为广泛使用的标准。根据使用的密码长度，AES最常见的有3种方案，用以适应不同的场景要求，分别是AES-128、AES-192和AES-256。<br>    Java中的PKCS5Padding和Javascript中的PKCS7Padding的结果是一样。<br>    ……</p>
+<h2 id="Java-版-AES-工具类"><a href="#Java-版-AES-工具类" class="headerlink" title="Java 版 AES 工具类"></a>Java 版 AES 工具类</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.tisson.wechat.common.util;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.crypto.BadPaddingException;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.Cipher;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.IllegalBlockSizeException;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.NoSuchPaddingException;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.spec.SecretKeySpec;</span><br><span class="line"><span class="keyword">import</span> java.io.UnsupportedEncodingException;</span><br><span class="line"><span class="keyword">import</span> java.security.InvalidKeyException;</span><br><span class="line"><span class="keyword">import</span> java.security.NoSuchAlgorithmException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * AES 加密、解密</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Created by YL on 2018/2/9</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> AESUtils &#123;</span><br><span class="line">    GBK &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getCharset</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"GBK"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    UTF8 &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getCharset</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"UTF-8"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String AES_KEY = <span class="string">"MHYKD5tes6fhkdv9"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取编码</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getCharset</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> AbstractMethodError();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 加密</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str 需要加密的内容</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> key 加密密码</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 加密后的字符串</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">byte</span>[] enc(String str, String key) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            SecretKeySpec skeySpec = <span class="keyword">new</span> SecretKeySpec(key.getBytes(getCharset()), <span class="string">"AES"</span>);</span><br><span class="line">            Cipher cipher = Cipher.getInstance(<span class="string">"AES/ECB/PKCS5Padding"</span>);</span><br><span class="line">            cipher.init(Cipher.ENCRYPT_MODE, skeySpec);</span><br><span class="line">            <span class="keyword">return</span> cipher.doFinal(str.getBytes(getCharset()));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"不支持的编码格式"</span>, e);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"不支持的加密算法"</span>, e);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchPaddingException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"不支持的填充机制"</span>, e);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InvalidKeyException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"无效的Key、错误的长度、未初始化等"</span>, e);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalBlockSizeException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"密码的块大小不匹配"</span>, e);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (BadPaddingException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"输入的数据错误，导致填充机制未能正常填充"</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">byte</span>[] dec(<span class="keyword">byte</span>[] str, String key) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            SecretKeySpec skeySpec = <span class="keyword">new</span> SecretKeySpec(key.getBytes(getCharset()), <span class="string">"AES"</span>);</span><br><span class="line">            Cipher cipher = Cipher.getInstance(<span class="string">"AES/ECB/PKCS5Padding"</span>);</span><br><span class="line">            cipher.init(Cipher.DECRYPT_MODE, skeySpec);</span><br><span class="line">            <span class="keyword">return</span> cipher.doFinal(str);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"不支持的编码格式"</span>, e);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"不支持的加密算法"</span>, e);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchPaddingException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"不支持的填充机制"</span>, e);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InvalidKeyException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"无效的Key、错误的长度、未初始化等"</span>, e);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalBlockSizeException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"密码的块大小不匹配"</span>, e);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (BadPaddingException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"输入的数据错误，导致填充机制未能正常填充"</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * AES 加密，使用默认 key 加密</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str 要加密的明文</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 加密后的密文</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">encrypt</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> encrypt(str, AESUtils.AES_KEY);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * AES加密，使用指定 key 加密</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str 要加密的明文</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> key 加密 key</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 解密后字符串</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">encrypt</span><span class="params">(String str, String key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">byte</span>[] encryptBytes = enc(str, key);</span><br><span class="line">        <span class="keyword">return</span> Base64Utils.UTF8.encode(encryptBytes);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * AES 解密，使用默认 key 解密</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str 要解密的密文</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 解密后的明文</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">decrypt</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> decrypt(str, AESUtils.AES_KEY);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * AES 解密，使用默认 key 解密</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str 要解密的密文</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> key 解密 key</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 解密后的明文</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">decrypt</span><span class="params">(String str, String key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (str == <span class="keyword">null</span> || <span class="string">""</span>.equals(str)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">byte</span>[] bytes = Base64Utils.UTF8.decode2byte(str);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> String(dec(bytes, key), getCharset());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="Java-版-AES-工具类测试"><a href="#Java-版-AES-工具类测试" class="headerlink" title="Java 版 AES 工具类测试"></a>Java 版 AES 工具类测试</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.tisson.wechat.common.util;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.junit.Assert;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Created by YL on 2018/2/13</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AESUtilsTest</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String KEY = <span class="string">"SYhU9Qf3nmrZAx7D"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String STR = <span class="string">"法拉利_24234slfkjsl《》？：“”｛｝+——"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">aes</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String encrypt = AESUtils.UTF8.encrypt(STR, KEY);</span><br><span class="line">        System.out.println(<span class="string">"encrypt ---&gt; "</span> + encrypt);</span><br><span class="line">        String decrypt = AESUtils.UTF8.decrypt(encrypt, KEY);</span><br><span class="line">        System.out.println(decrypt);</span><br><span class="line">        Assert.assertEquals(STR, decrypt);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="JS-版-AES-工具类"><a href="#JS-版-AES-工具类" class="headerlink" title="JS 版 AES 工具类"></a>JS 版 AES 工具类</h2><p>要引入的 js 文件<br>地址：<a href="https://github.com/brix/crypto-js" target="_blank" rel="noopener">https://github.com/brix/crypto-js</a><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;script th:src=<span class="string">"@&#123;/crypto-js/core.js&#125;"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;script th:src=<span class="string">"@&#123;/crypto-js/enc-base64.js&#125;"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;script th:src=<span class="string">"@&#123;/crypto-js/cipher-core.js&#125;"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;script th:src=<span class="string">"@&#123;/crypto-js/aes.js&#125;"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;script th:src=<span class="string">"@&#123;/crypto-js/mode-ecb.js&#125;"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
 <h2 id="JS-版-AES-工具类扩展"><a href="#JS-版-AES-工具类扩展" class="headerlink" title="JS 版 AES 工具类扩展"></a>JS 版 AES 工具类扩展</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getRandom</span>(<span class="params">len</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a = len || <span class="number">16</span>,</span><br><span class="line">        s = <span class="string">'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'</span>,</span><br><span class="line">        n = s.length;</span><br><span class="line">    <span class="keyword">var</span> r = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; a; i++) &#123;</span><br><span class="line">        r += s.charAt(<span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * n));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">encryptAES</span>(<span class="params">str, key</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> s = CryptoJS.enc.Utf8.parse(str),</span><br><span class="line">        k = CryptoJS.enc.Utf8.parse(key),</span><br><span class="line">        c = CryptoJS.AES.encrypt(s, k, &#123;</span><br><span class="line">            mode: CryptoJS.mode.ECB,</span><br><span class="line">            padding: CryptoJS.pad.Pkcs7</span><br><span class="line">        &#125;),</span><br><span class="line">        <span class="comment">// 转换为字符串</span></span><br><span class="line">        <span class="comment">// return c.toString();</span></span><br><span class="line">        <span class="comment">// Hex 转为十六进制</span></span><br><span class="line">        d = CryptoJS.enc.Hex.parse(c.ciphertext.toString());</span><br><span class="line">    <span class="comment">// Base64 编码</span></span><br><span class="line">    <span class="keyword">return</span> CryptoJS.enc.Base64.stringify(d);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">decryptAES</span>(<span class="params">str, key</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> k = CryptoJS.enc.Utf8.parse(key),</span><br><span class="line">        c = CryptoJS.AES.decrypt(str, k, &#123;</span><br><span class="line">            mode: CryptoJS.mode.ECB,</span><br><span class="line">            padding: CryptoJS.pad.Pkcs7</span><br><span class="line">        &#125;);</span><br><span class="line">    <span class="comment">// 转换为 UTF8 字符串</span></span><br><span class="line">    <span class="keyword">return</span> CryptoJS.enc.Utf8.stringify(c);</span><br><span class="line">    <span class="comment">// return c.toString(CryptoJS.enc.Utf8);</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -873,7 +871,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Tomcat/tomcat-start-shell.html">
+    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Tomcat/tomcat-setenv-shell.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="力Li">
@@ -892,7 +890,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/Tomcat/tomcat-start-shell.html" itemprop="url">Tomcat 启动脚本</a></h2>
+                <a class="post-title-link" href="/2018/02/Tomcat/tomcat-setenv-shell.html" itemprop="url">Tomcat setenv.sh</a></h2>
         
 
         <div class="post-meta">
@@ -958,7 +956,7 @@
                   <span class="post-meta-item-text">字数</span>
                 
                 <span title="字数">
-                  290
+                  78
                 </span>
               
               <!--
@@ -975,7 +973,7 @@
                   <span class="post-meta-item-text">时长</span>
                 
                 <span title="时长">
-                  2min
+                  1min
                 </span>
               
             </div>
@@ -1008,7 +1006,7 @@
       
         
           
-            <h1 id="Tomcat-启动脚本"><a href="#Tomcat-启动脚本" class="headerlink" title="Tomcat 启动脚本"></a>Tomcat 启动脚本</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># @Author: YL</span></span><br><span class="line"><span class="comment"># @Date:   2017-01-25 14:50:43</span></span><br><span class="line"><span class="comment"># @Last Modified by:   YL</span></span><br><span class="line"><span class="comment"># @Last Modified time: 2017-12-18 14:12:23</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> `dirname <span class="variable">$0</span>`</span><br><span class="line">PROJECT_HOME=`<span class="built_in">pwd</span>`</span><br><span class="line"></span><br><span class="line"><span class="comment"># Tomcat 服务器路径</span></span><br><span class="line">TC_HOME=<span class="string">"<span class="variable">$PROJECT_HOME</span>/tomcat"</span></span><br><span class="line"><span class="comment"># crontab 检测日记文件</span></span><br><span class="line">TC_STDOUT_FILE=<span class="string">"<span class="variable">$TC_HOME</span>/logs/stdout.out"</span></span><br><span class="line"><span class="comment"># 检测 Tomcat 是否启动（进程ID）</span></span><br><span class="line">TC_PID=`ps -ef | grep <span class="variable">$TC_HOME</span>/bin | grep -v grep | awk <span class="string">'&#123;print $2&#125;'</span>`</span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行检测的用户IP地址</span></span><br><span class="line">WHO_AM_I=`who am i | awk <span class="string">'&#123;print $5&#125;'</span> | sed <span class="string">'s/(//g'</span> | sed <span class="string">'s/)//g'</span>`</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检测输出的日记格式</span></span><br><span class="line">DATE_PATTERN=<span class="string">"[<span class="variable">$(date '+%Y-%m-%d %H:%M:%S')</span>]-[<span class="variable">$1</span>]-[<span class="variable">$WHO_AM_I</span>] <span class="variable">$TC_HOME</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">operate</span></span>()&#123;</span><br><span class="line">  <span class="keyword">if</span> [[ <span class="string">"<span class="variable">$1</span>"</span> = <span class="string">"kill"</span> ]] ; <span class="keyword">then</span></span><br><span class="line">    <span class="keyword">if</span> [[ <span class="string">"<span class="variable">$TC_PID</span>"</span> = <span class="string">""</span> ]] ; <span class="keyword">then</span></span><br><span class="line">      <span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> is not alive"</span> | tee -a <span class="variable">$TC_STDOUT_FILE</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      <span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> kill <span class="variable">$TC_PID</span> begining"</span> | tee -a <span class="variable">$TC_STDOUT_FILE</span></span><br><span class="line">      <span class="built_in">kill</span> -9 <span class="variable">$TC_PID</span></span><br><span class="line">      <span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> kill <span class="variable">$TC_PID</span> success"</span> | tee -a <span class="variable">$TC_STDOUT_FILE</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">  <span class="keyword">elif</span> [[ <span class="string">"<span class="variable">$1</span>"</span> = <span class="string">"start"</span> ]]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">cd</span> <span class="variable">$TC_HOME</span>/bin</span><br><span class="line">    sh startup.sh</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> is not support <span class="variable">$1</span>"</span> | tee -a <span class="variable">$TC_STDOUT_FILE</span></span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> [[ <span class="string">"<span class="variable">$1</span>"</span> = <span class="string">""</span> || <span class="string">"<span class="variable">$1</span>"</span> = <span class="string">"restart"</span> || <span class="string">"<span class="variable">$1</span>"</span> = <span class="string">"start"</span> ]] ; <span class="keyword">then</span></span><br><span class="line">  operate <span class="built_in">kill</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> starting"</span> | tee -a <span class="variable">$TC_STDOUT_FILE</span></span><br><span class="line">  operate start</span><br><span class="line"><span class="keyword">elif</span> [[ <span class="string">"<span class="variable">$1</span>"</span> = <span class="string">"kill"</span> ]] ; <span class="keyword">then</span></span><br><span class="line">  operate <span class="built_in">kill</span></span><br><span class="line"><span class="keyword">elif</span> [[ <span class="string">"<span class="variable">$1</span>"</span> = <span class="string">"check"</span> ]] ; <span class="keyword">then</span></span><br><span class="line">  <span class="keyword">if</span> [[ <span class="string">"<span class="variable">$TC_PID</span>"</span> = <span class="string">""</span> ]] ; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> starting"</span> &gt;&gt; <span class="variable">$TC_STDOUT_FILE</span></span><br><span class="line">    operate start</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> pid <span class="variable">$TC_PID</span>"</span> &gt;&gt; <span class="variable">$TC_STDOUT_FILE</span></span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> is not support <span class="variable">$1</span>"</span> | tee -a <span class="variable">$TC_STDOUT_FILE</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+            <h1 id="Tomcat-setenv脚本"><a href="#Tomcat-setenv脚本" class="headerlink" title="Tomcat setenv脚本"></a>Tomcat setenv脚本</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># @Author: YL</span></span><br><span class="line"><span class="comment"># @Date:   2017-12-18 12:15:52</span></span><br><span class="line"><span class="comment"># @Last Modified by:   YL</span></span><br><span class="line"><span class="comment"># @Last Modified time: 2017-12-18 12:16:03</span></span><br><span class="line"><span class="comment"># 本文件放到 Tomcat 的 bin 目录下</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> LANG=en_US.UTF-8</span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/java/jdk1.8.0_144</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin</span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar:<span class="variable">$CLASSPATH</span></span><br><span class="line"></span><br><span class="line">JAVA_OPT=<span class="string">""</span></span><br></pre></td></tr></table></figure>
 
           
         
@@ -1232,7 +1230,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Linux/linux-shell-lsof.html">
+    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Linux/linux-shell-vi.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="力Li">
@@ -1251,7 +1249,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/Linux/linux-shell-lsof.html" itemprop="url">Linux lsof 命令</a></h2>
+                <a class="post-title-link" href="/2018/02/Linux/linux-shell-vi.html" itemprop="url">Linux vi 命令</a></h2>
         
 
         <div class="post-meta">
@@ -1317,7 +1315,7 @@
                   <span class="post-meta-item-text">字数</span>
                 
                 <span title="字数">
-                  13
+                  62
                 </span>
               
               <!--
@@ -1353,7 +1351,7 @@
               
                 <a href="/tags/shell/" rel="tag" class="color1">shell</a>
               
-                <a href="/tags/lsof/" rel="tag" class="color2">lsof</a>
+                <a href="/tags/vi/" rel="tag" class="color2">vi</a>
               
             </div>
           </div>
@@ -1369,191 +1367,7 @@
       
         
           
-            <h1 id="lsof"><a href="#lsof" class="headerlink" title="lsof"></a>lsof</h1><h2 id="检测端口未被占用"><a href="#检测端口未被占用" class="headerlink" title="检测端口未被占用"></a>检测端口未被占用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -i:8080</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      <!--  -->
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Linux/linux-shell-grep.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="力Li">
-      <meta itemprop="description" content="开心又过一日，唔开心又系过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="力Li的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/Linux/linux-shell-grep.html" itemprop="url">Linux grep 命令</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-06T09:35:05+08:00">
-                2018-02-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-th"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数</span>
-                
-                <span title="字数">
-                  139
-                </span>
-              
-              <!--
-              
-                <span class="post-meta-divider">|</span>
-              
-              -->
-              
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长</span>
-                
-                <span title="时长">
-                  1min
-                </span>
-              
-            </div>
-          
-
-          
-        </div>
-
-        
-          <div style="margin: 3px 0 20px 0">
-            <div class="post-tags">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-tags"></i>
-              </span>
-              <span class="post-meta-item-text">标签</span>
-              
-                <a href="/tags/shell/" rel="tag" class="color1">shell</a>
-              
-                <a href="/tags/grep/" rel="tag" class="color2">grep</a>
-              
-            </div>
-          </div>
-        
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h1><h2 id="统计出现次数"><a href="#统计出现次数" class="headerlink" title="统计出现次数"></a>统计出现次数</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep <span class="string">'sign.*time.*openid'</span> access_p80_weixinv3.log | awk <span class="string">'&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;'</span> | sort -n</span><br></pre></td></tr></table></figure>
-<h2 id="统计某些字符出现次数"><a href="#统计某些字符出现次数" class="headerlink" title="统计某些字符出现次数"></a>统计某些字符出现次数</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep <span class="string">'sign.*time.*openid'</span> access_p80_weixinv3.log | awk <span class="string">'&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;'</span> | sort -n</span><br></pre></td></tr></table></figure>
-<p>4       183.3.234.45<br>10      183.3.234.57<br>20      183.3.234.58</p>
-<h2 id="查询前后日志"><a href="#查询前后日志" class="headerlink" title="查询前后日志"></a>查询前后日志</h2><p>grep -5 ‘parttern’ inputfile //打印匹配行的前后5行<br>grep -C 5 ‘parttern’ inputfile //打印匹配行的前后5行<br>grep -A 5 ‘parttern’ inputfile //打印匹配行的后5行<br>grep -B 5 ‘parttern’ inputfile //打印匹配行的前5行</p>
+            <h1 id="vi"><a href="#vi" class="headerlink" title="vi"></a>vi</h1><p>linux文件格式的问题（使用unix格式）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看文件格式</span></span><br><span class="line">vi 文件名</span><br><span class="line">:<span class="built_in">set</span> ff</span><br><span class="line"><span class="comment"># 设置文件格式为unix</span></span><br><span class="line">:<span class="built_in">set</span> ff=unix</span><br><span class="line"><span class="comment"># 保存退出</span></span><br><span class="line">:wq</span><br><span class="line"><span class="comment"># 也可以直接使用</span></span><br><span class="line">dos2unix 文件名</span><br></pre></td></tr></table></figure></p>
 
           
         
@@ -1778,187 +1592,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Linux/linux-shell-unzip.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="力Li">
-      <meta itemprop="description" content="开心又过一日，唔开心又系过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="力Li的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/Linux/linux-shell-unzip.html" itemprop="url">Linux unzip 命令</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-06T09:35:05+08:00">
-                2018-02-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-th"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数</span>
-                
-                <span title="字数">
-                  19
-                </span>
-              
-              <!--
-              
-                <span class="post-meta-divider">|</span>
-              
-              -->
-              
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长</span>
-                
-                <span title="时长">
-                  1min
-                </span>
-              
-            </div>
-          
-
-          
-        </div>
-
-        
-          <div style="margin: 3px 0 20px 0">
-            <div class="post-tags">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-tags"></i>
-              </span>
-              <span class="post-meta-item-text">标签</span>
-              
-                <a href="/tags/shell/" rel="tag" class="color1">shell</a>
-              
-                <a href="/tags/unzip/" rel="tag" class="color2">unzip</a>
-              
-            </div>
-          </div>
-        
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="unzip"><a href="#unzip" class="headerlink" title="unzip"></a>unzip</h1><h2 id="解压war、jar、zip、rar等文件"><a href="#解压war、jar、zip、rar等文件" class="headerlink" title="解压war、jar、zip、rar等文件"></a>解压war、jar、zip、rar等文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unzip -oq /opt/xxx.war -d /opt/ddd</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      <!--  -->
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Linux/linux-shell-netstat.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2097,6 +1730,369 @@
         
           
             <h1 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h1><h2 id="查看进程的网络状态"><a href="#查看进程的网络状态" class="headerlink" title="查看进程的网络状态"></a>查看进程的网络状态</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -anp | grep 7646</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      <!--  -->
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Linux/linux-shell-lsof.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="力Li">
+      <meta itemprop="description" content="开心又过一日，唔开心又系过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="力Li的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/Linux/linux-shell-lsof.html" itemprop="url">Linux lsof 命令</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-06T09:35:05+08:00">
+                2018-02-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-th"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数</span>
+                
+                <span title="字数">
+                  13
+                </span>
+              
+              <!--
+              
+                <span class="post-meta-divider">|</span>
+              
+              -->
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长</span>
+                
+                <span title="时长">
+                  1min
+                </span>
+              
+            </div>
+          
+
+          
+        </div>
+
+        
+          <div style="margin: 3px 0 20px 0">
+            <div class="post-tags">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-tags"></i>
+              </span>
+              <span class="post-meta-item-text">标签</span>
+              
+                <a href="/tags/shell/" rel="tag" class="color1">shell</a>
+              
+                <a href="/tags/lsof/" rel="tag" class="color2">lsof</a>
+              
+            </div>
+          </div>
+        
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="lsof"><a href="#lsof" class="headerlink" title="lsof"></a>lsof</h1><h2 id="检测端口未被占用"><a href="#检测端口未被占用" class="headerlink" title="检测端口未被占用"></a>检测端口未被占用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -i:8080</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      <!--  -->
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Linux/linux-shell-ls.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="力Li">
+      <meta itemprop="description" content="开心又过一日，唔开心又系过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="力Li的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/Linux/linux-shell-ls.html" itemprop="url">Linux ls 命令</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-06T09:35:05+08:00">
+                2018-02-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-th"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数</span>
+                
+                <span title="字数">
+                  54
+                </span>
+              
+              <!--
+              
+                <span class="post-meta-divider">|</span>
+              
+              -->
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长</span>
+                
+                <span title="时长">
+                  1min
+                </span>
+              
+            </div>
+          
+
+          
+        </div>
+
+        
+          <div style="margin: 3px 0 20px 0">
+            <div class="post-tags">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-tags"></i>
+              </span>
+              <span class="post-meta-item-text">标签</span>
+              
+                <a href="/tags/shell/" rel="tag" class="color1">shell</a>
+              
+                <a href="/tags/ls/" rel="tag" class="color2">ls</a>
+              
+            </div>
+          </div>
+        
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 统计文件夹中文件数</span></span><br><span class="line">ls -l |grep <span class="string">"^-"</span>|wc -l</span><br></pre></td></tr></table></figure>
+<h2 id="保留最新的1个文件夹，删除其他文件夹（使用-d）"><a href="#保留最新的1个文件夹，删除其他文件夹（使用-d）" class="headerlink" title="保留最新的1个文件夹，删除其他文件夹（使用-d）"></a>保留最新的1个文件夹，删除其他文件夹（使用-d）</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -t -d /home/txrd/tisson-web-open/logs/undertow-* | tail -n +2 | xargs rm -rf</span><br></pre></td></tr></table></figure>
 
           
         
