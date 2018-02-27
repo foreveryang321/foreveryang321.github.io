@@ -1614,193 +1614,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2017/05/Java/rsa.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="力Li">
-      <meta itemprop="description" content="开心又过一日，唔开心又系过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="力Li的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/Java/rsa.html" itemprop="url">使用RSA注意事项</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-23T21:33:43+08:00">
-                2017-05-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-th"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数</span>
-                
-                <span title="字数">
-                  109
-                </span>
-              
-              <!--
-              
-                <span class="post-meta-divider">|</span>
-              
-              -->
-              
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长</span>
-                
-                <span title="时长">
-                  1min
-                </span>
-              
-            </div>
-          
-
-          
-        </div>
-
-        
-          <div style="margin: 3px 0 20px 0">
-            <div class="post-tags">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-tags"></i>
-              </span>
-              <span class="post-meta-item-text">标签</span>
-              
-                <a href="/tags/Java/" rel="tag" class="color1">Java</a>
-              
-                <a href="/tags/RSA/" rel="tag" class="color2">RSA</a>
-              
-            </div>
-          </div>
-        
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="比较以下两种写法"><a href="#比较以下两种写法" class="headerlink" title="比较以下两种写法"></a>比较以下两种写法</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第一种：这种写法会造成内存溢出</span></span><br><span class="line">Cipher cipher = Cipher.getInstance(<span class="string">"RSA"</span>, <span class="keyword">new</span> BouncyCastleProvider());</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第二种：推荐这种写法</span></span><br><span class="line"><span class="comment">// BC可用BouncyCastleProvider.PROVIDER_NAME代替</span></span><br><span class="line"><span class="keyword">if</span> (StringUtils.isNullOrEmpty(Security.getProperty(<span class="string">"BC"</span>))) &#123;</span><br><span class="line">    Security.addProvider(<span class="keyword">new</span> BouncyCastleProvider());</span><br><span class="line">&#125;</span><br><span class="line">Cipher cipher = Cipher.getInstance(<span class="string">"RSA"</span>, <span class="string">"BC"</span>);</span><br></pre></td></tr></table></figure>
-<p>还有一种写法是要替换jdk的jar包，不推荐</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/05/Java/rsa.html" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      <!--  -->
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2017/05/Javascript/storejs.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1943,6 +1756,193 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/05/Javascript/storejs.html" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      <!--  -->
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2017/05/Java/rsa.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="力Li">
+      <meta itemprop="description" content="开心又过一日，唔开心又系过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="力Li的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/Java/rsa.html" itemprop="url">使用RSA注意事项</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-23T21:33:43+08:00">
+                2017-05-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-th"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数</span>
+                
+                <span title="字数">
+                  109
+                </span>
+              
+              <!--
+              
+                <span class="post-meta-divider">|</span>
+              
+              -->
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长</span>
+                
+                <span title="时长">
+                  1min
+                </span>
+              
+            </div>
+          
+
+          
+        </div>
+
+        
+          <div style="margin: 3px 0 20px 0">
+            <div class="post-tags">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-tags"></i>
+              </span>
+              <span class="post-meta-item-text">标签</span>
+              
+                <a href="/tags/Java/" rel="tag" class="color1">Java</a>
+              
+                <a href="/tags/RSA/" rel="tag" class="color2">RSA</a>
+              
+            </div>
+          </div>
+        
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="比较以下两种写法"><a href="#比较以下两种写法" class="headerlink" title="比较以下两种写法"></a>比较以下两种写法</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第一种：这种写法会造成内存溢出</span></span><br><span class="line">Cipher cipher = Cipher.getInstance(<span class="string">"RSA"</span>, <span class="keyword">new</span> BouncyCastleProvider());</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第二种：推荐这种写法</span></span><br><span class="line"><span class="comment">// BC可用BouncyCastleProvider.PROVIDER_NAME代替</span></span><br><span class="line"><span class="keyword">if</span> (StringUtils.isNullOrEmpty(Security.getProperty(<span class="string">"BC"</span>))) &#123;</span><br><span class="line">    Security.addProvider(<span class="keyword">new</span> BouncyCastleProvider());</span><br><span class="line">&#125;</span><br><span class="line">Cipher cipher = Cipher.getInstance(<span class="string">"RSA"</span>, <span class="string">"BC"</span>);</span><br></pre></td></tr></table></figure>
+<p>还有一种写法是要替换jdk的jar包，不推荐</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/Java/rsa.html" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
