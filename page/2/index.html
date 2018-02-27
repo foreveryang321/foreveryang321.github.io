@@ -310,7 +310,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Linux/linux-shell-grep.html">
+    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Linux/linux-shell-vi.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="力Li">
@@ -329,7 +329,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/Linux/linux-shell-grep.html" itemprop="url">Linux grep 命令</a></h2>
+                <a class="post-title-link" href="/2018/02/Linux/linux-shell-vi.html" itemprop="url">Linux vi 命令</a></h2>
         
 
         <div class="post-meta">
@@ -395,7 +395,7 @@
                   <span class="post-meta-item-text">字数</span>
                 
                 <span title="字数">
-                  139
+                  62
                 </span>
               
               <!--
@@ -431,7 +431,7 @@
               
                 <a href="/tags/shell/" rel="tag" class="color1">shell</a>
               
-                <a href="/tags/grep/" rel="tag" class="color2">grep</a>
+                <a href="/tags/vi/" rel="tag" class="color2">vi</a>
               
             </div>
           </div>
@@ -447,10 +447,7 @@
       
         
           
-            <h1 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h1><h2 id="统计出现次数"><a href="#统计出现次数" class="headerlink" title="统计出现次数"></a>统计出现次数</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep <span class="string">'sign.*time.*openid'</span> access_p80_weixinv3.log | awk <span class="string">'&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;'</span> | sort -n</span><br></pre></td></tr></table></figure>
-<h2 id="统计某些字符出现次数"><a href="#统计某些字符出现次数" class="headerlink" title="统计某些字符出现次数"></a>统计某些字符出现次数</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep <span class="string">'sign.*time.*openid'</span> access_p80_weixinv3.log | awk <span class="string">'&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;'</span> | sort -n</span><br></pre></td></tr></table></figure>
-<p>4       183.3.234.45<br>10      183.3.234.57<br>20      183.3.234.58</p>
-<h2 id="查询前后日志"><a href="#查询前后日志" class="headerlink" title="查询前后日志"></a>查询前后日志</h2><p>grep -5 ‘parttern’ inputfile //打印匹配行的前后5行<br>grep -C 5 ‘parttern’ inputfile //打印匹配行的前后5行<br>grep -A 5 ‘parttern’ inputfile //打印匹配行的后5行<br>grep -B 5 ‘parttern’ inputfile //打印匹配行的前5行</p>
+            <h1 id="vi"><a href="#vi" class="headerlink" title="vi"></a>vi</h1><p>linux文件格式的问题（使用unix格式）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看文件格式</span></span><br><span class="line">vi 文件名</span><br><span class="line">:<span class="built_in">set</span> ff</span><br><span class="line"><span class="comment"># 设置文件格式为unix</span></span><br><span class="line">:<span class="built_in">set</span> ff=unix</span><br><span class="line"><span class="comment"># 保存退出</span></span><br><span class="line">:wq</span><br><span class="line"><span class="comment"># 也可以直接使用</span></span><br><span class="line">dos2unix 文件名</span><br></pre></td></tr></table></figure></p>
 
           
         
