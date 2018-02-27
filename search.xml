@@ -50,15 +50,27 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux tail 命令]]></title>
-    <url>%2F2018%2F02%2FLinux%2Flinux-shell-tail.html</url>
-    <content type="text"><![CDATA[tail]]></content>
+    <title><![CDATA[Linux vi 命令]]></title>
+    <url>%2F2018%2F02%2FLinux%2Flinux-shell-vi.html</url>
+    <content type="text"><![CDATA[vilinux文件格式的问题（使用unix格式）123456789# 查看文件格式vi 文件名:set ff# 设置文件格式为unix:set ff=unix# 保存退出:wq# 也可以直接使用dos2unix 文件名]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>tail</tag>
+        <tag>vi</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux tar 命令]]></title>
+    <url>%2F2018%2F02%2FLinux%2Flinux-shell-tar.html</url>
+    <content type="text"><![CDATA[tar1tar -zxvf xxx.tar.gz]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>tar</tag>
       </tags>
   </entry>
   <entry>
@@ -86,6 +98,18 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Linux lsof 命令]]></title>
+    <url>%2F2018%2F02%2FLinux%2Flinux-shell-lsof.html</url>
+    <content type="text"><![CDATA[lsof检测端口未被占用1lsof -i:8080]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>lsof</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Linux ls 命令]]></title>
     <url>%2F2018%2F02%2FLinux%2Flinux-shell-ls.html</url>
     <content type="text"><![CDATA[ls12# 统计文件夹中文件数ls -l |grep "^-"|wc -l 保留最新的1个文件夹，删除其他文件夹（使用-d）1ls -t -d /home/txrd/tisson-web-open/logs/undertow-* | tail -n +2 | xargs rm -rf]]></content>
@@ -107,30 +131,6 @@
       <tags>
         <tag>shell</tag>
         <tag>grep</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux vi 命令]]></title>
-    <url>%2F2018%2F02%2FLinux%2Flinux-shell-vi.html</url>
-    <content type="text"><![CDATA[vilinux文件格式的问题（使用unix格式）123456789# 查看文件格式vi 文件名:set ff# 设置文件格式为unix:set ff=unix# 保存退出:wq# 也可以直接使用dos2unix 文件名]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>vi</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux lsof 命令]]></title>
-    <url>%2F2018%2F02%2FLinux%2Flinux-shell-lsof.html</url>
-    <content type="text"><![CDATA[lsof检测端口未被占用1lsof -i:8080]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>lsof</tag>
       </tags>
   </entry>
   <entry>
@@ -182,18 +182,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux cat 命令]]></title>
-    <url>%2F2018%2F02%2FLinux%2Flinux-shell-cat.html</url>
-    <content type="text"><![CDATA[cat统计出现次数12# linux统计某一文件中字符串“sent ip”出现的次数：cat nohup.log |grep "sent ip" |wc -l 清空默认文件中的内容1cat /dev/null &gt; filename]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>cat</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Linux cp 命令]]></title>
     <url>%2F2018%2F02%2FLinux%2Flinux-shell-cp.html</url>
     <content type="text"><![CDATA[cp复制文件夹1cp -r [old source] -d [new source]]]></content>
@@ -203,6 +191,18 @@
       <tags>
         <tag>shell</tag>
         <tag>cp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux cat 命令]]></title>
+    <url>%2F2018%2F02%2FLinux%2Flinux-shell-cat.html</url>
+    <content type="text"><![CDATA[cat统计出现次数12# linux统计某一文件中字符串“sent ip”出现的次数：cat nohup.log |grep "sent ip" |wc -l 清空默认文件中的内容1cat /dev/null &gt; filename]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>cat</tag>
       </tags>
   </entry>
   <entry>
@@ -218,15 +218,15 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux tar 命令]]></title>
-    <url>%2F2018%2F02%2FLinux%2Flinux-shell-tar.html</url>
-    <content type="text"><![CDATA[tar1tar -zxvf xxx.tar.gz]]></content>
+    <title><![CDATA[Linux tail 命令]]></title>
+    <url>%2F2018%2F02%2FLinux%2Flinux-shell-tail.html</url>
+    <content type="text"><![CDATA[tail]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>tar</tag>
+        <tag>tail</tag>
       </tags>
   </entry>
   <entry>
@@ -254,17 +254,17 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[Zookeeper 重启脚本]]></title>
-    <url>%2F2018%2F02%2FZookeeper%2Fzookeeper-restart-shell.html</url>
-    <content type="text"><![CDATA[restart12345678910111213#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:10# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:30# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stopsleep 3./zkServer.sh start]]></content>
+    <title><![CDATA[Zookeeper 清理日志文件]]></title>
+    <url>%2F2018%2F02%2FZookeeper%2Fzookeeper-clear-shell.html</url>
+    <content type="text"><![CDATA[clear123456789101112131415161718192021222324252627282930#!/usr/bin/env bash# @Author: YL# @Date: 2017-11-01 08:59:34# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:09# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`cd ..NODE_HOME=`pwd`# snapshotNODE_DATA_DIR=$NODE_HOME/data/version-2# snapshot logNODE_LOG_DIR=$NODE_HOME/logs/version-2# zk logNODE_LOGS=$NODE_HOME/logs# 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中count=3count=$[$count+1]ls -t $NODE_LOG_DIR/log.* | tail -n +$count | xargs rm -fls -t $NODE_DATA_DIR/snapshot.* | tail -n +$count | xargs rm -fls -t $NODE_LOGS/zookeeper.log.* | tail -n +$count | xargs rm -f# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"STDOUT_FILE=$NODE_LOGS/stdout.logecho "$DATE_PATTERN clear logs success" | tee -a $STDOUT_FILE]]></content>
       <categories>
         <category>Zookeeper</category>
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[Zookeeper 清理日志文件]]></title>
-    <url>%2F2018%2F02%2FZookeeper%2Fzookeeper-clear-shell.html</url>
-    <content type="text"><![CDATA[clear123456789101112131415161718192021222324252627282930#!/usr/bin/env bash# @Author: YL# @Date: 2017-11-01 08:59:34# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:09# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`cd ..NODE_HOME=`pwd`# snapshotNODE_DATA_DIR=$NODE_HOME/data/version-2# snapshot logNODE_LOG_DIR=$NODE_HOME/logs/version-2# zk logNODE_LOGS=$NODE_HOME/logs# 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中count=3count=$[$count+1]ls -t $NODE_LOG_DIR/log.* | tail -n +$count | xargs rm -fls -t $NODE_DATA_DIR/snapshot.* | tail -n +$count | xargs rm -fls -t $NODE_LOGS/zookeeper.log.* | tail -n +$count | xargs rm -f# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"STDOUT_FILE=$NODE_LOGS/stdout.logecho "$DATE_PATTERN clear logs success" | tee -a $STDOUT_FILE]]></content>
+    <title><![CDATA[Zookeeper 重启脚本]]></title>
+    <url>%2F2018%2F02%2FZookeeper%2Fzookeeper-restart-shell.html</url>
+    <content type="text"><![CDATA[restart12345678910111213#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:10# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:30# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stopsleep 3./zkServer.sh start]]></content>
       <categories>
         <category>Zookeeper</category>
       </categories>
@@ -316,6 +316,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[spring boot issues]]></title>
+    <url>%2F2017%2F09%2FJava%2Fspring-boot-issues.html</url>
+    <content type="text"><![CDATA[兼容问题spring-boot-starter-parent切换回1.5.2.RELEASE版本 因为1.5.4.RELEASE、1.5.5.RELEASE、1.5.6.RELEASE、1.5.7.RELEASE、2.0.0.M1、2.0.0.M2、2.0.0.M3都存在使用spring-boot-starter-data-redis时，会出现异常 java.lang.NoSuchMethodError: org.springframework.data.repository.config.AnnotationRepositoryConfigurationSource.&lt;init&gt;异常 请查看https://github.com/spring-projects/spring-boot/issues/9606]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>spring-boot</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[spring jpa page]]></title>
     <url>%2F2017%2F09%2FJava%2Fspring-jpa-page.html</url>
     <content type="text"><![CDATA[总记录数getTotalElements —&gt; 21 总页数getTotalPages —&gt; 7 查询记录列表getContent —&gt; [User(id=1, name=AAA, age=20, status=DEFAULT, createDate=null, addressId=2), User(id=2, name=AAA, age=20, status=DEFAULT, createDate=null, addressId=null), User(id=3, name=AAA, age=20, status=DEFAULT, createDate=null, addressId=null)] 当前页数，从0开始getNumber —&gt; 0 当前页码中的记录数getNumberOfElements —&gt; 3 每页记录数getSize —&gt; 3]]></content>
@@ -325,17 +336,6 @@
       <tags>
         <tag>spring-boot</tag>
         <tag>jpa</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[spring boot issues]]></title>
-    <url>%2F2017%2F09%2FJava%2Fspring-boot-issues.html</url>
-    <content type="text"><![CDATA[兼容问题spring-boot-starter-parent切换回1.5.2.RELEASE版本 因为1.5.4.RELEASE、1.5.5.RELEASE、1.5.6.RELEASE、1.5.7.RELEASE、2.0.0.M1、2.0.0.M2、2.0.0.M3都存在使用spring-boot-starter-data-redis时，会出现异常 java.lang.NoSuchMethodError: org.springframework.data.repository.config.AnnotationRepositoryConfigurationSource.&lt;init&gt;异常 请查看https://github.com/spring-projects/spring-boot/issues/9606]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>spring-boot</tag>
       </tags>
   </entry>
   <entry>
@@ -427,18 +427,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[hibernate显示sql中的参数值（logback）]]></title>
-    <url>%2F2017%2F07%2FHibernate%2Fhibernate-show-parameters.html</url>
-    <content type="text"><![CDATA[以下是 logback 的日志输出配置，只要是在 logback 的配置文件中添加以下配置12&lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt; &lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt; 完整的 logback 配置如下123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;!-- For assistance related to logback-translator or configuration --&gt;&lt;!-- files in general, please contact the logback user mailing list --&gt;&lt;!-- at http://www.qos.ch/mailman/listinfo/logback-user --&gt;&lt;!-- --&gt;&lt;!-- For professional support please see --&gt;&lt;!-- http://www.qos.ch/shop/products/professionalSupport --&gt;&lt;!-- --&gt;&lt;configuration scan="true" scanPeriod="60 seconds" debug="false"&gt; &lt;property name="logger.charset" value="UTF-8"/&gt; &lt;property name="logger.path" value="$&#123;catalina.home&#125;/logs"/&gt; &lt;property name="logger.pattern" value="[%d&#123;yyyy-MM-dd HH:mm:ss&#125; %highlight(%-5p)] %yellow(%t) %cyan(%c.%M\\(%L\\)) | %m%n"/&gt; &lt;property name="logger.maxHistory" value="15"/&gt; &lt;!--&amp;lt;!&amp;ndash; https://logback.qos.ch/manual/layouts.html#coloring &amp;ndash;&amp;gt; &amp;lt;!&amp;ndash; 彩色日志依赖的渲染类 &amp;ndash;&amp;gt; &lt;conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" /&gt; &lt;conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" /&gt; &lt;conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" /&gt; &amp;lt;!&amp;ndash; 彩色日志格式 &amp;ndash;&amp;gt; &lt;property name="logger.pattern" value="$&#123;CONSOLE_LOG_PATTERN:-%clr([%d&#123;yyyy-MM-dd HH:mm:ss&#125; %clr($&#123;LOG_LEVEL_PATTERN:-%5p&#125;)])&#123;faint&#125; %clr(%c.%M\\(%L\\))&#123;cyan&#125; | %m%n&#125;" /&gt;--&gt; &lt;springProfile name="dev, local"&gt; &lt;appender name="stdout" class="ch.qos.logback.core.ConsoleAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;/appender&gt; &lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt; &lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt; &lt;!--&lt;logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="DEBUG"/&gt; &lt;logger name="org.hibernate.SQL" level="DEBUG"/&gt; &lt;logger name="org.hibernate.type" level="INFO"/&gt; &lt;logger name="org.hibernate.engine.QueryParameters" level="DEBUG"/&gt; &lt;logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG"/&gt;--&gt; &lt;!--&lt;logger name="org.apache.ibatis" level="debug"/&gt; &lt;logger name="java.sql.Connection" level="debug"/&gt; &lt;logger name="java.sql.Statement" level="debug"/&gt; &lt;logger name="java.sql.PreparedStatement" level="debug"/&gt;--&gt; &lt;root level="info"&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt; &lt;springProfile name="prod"&gt; &lt;!--See http://logback.qos.ch/manual/appenders.html#RollingFileAppender --&gt; &lt;!--and http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy --&gt; &lt;!--for further documentation --&gt; &lt;appender name="stdout" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;File&gt;$&#123;logger.path&#125;/info.log&lt;/File&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/info.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="warn" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/warn.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;WARN&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/warn.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/error.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;ERROR&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/error.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;logger name="warn" level="WARN"/&gt; &lt;logger name="error" level="ERROR"/&gt; &lt;root level="info"&gt; &lt;appender-ref ref="warn"/&gt; &lt;appender-ref ref="error"/&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt;&lt;/configuration&gt;]]></content>
-      <categories>
-        <category>Hibernate</category>
-      </categories>
-      <tags>
-        <tag>Hibernate</tag>
-        <tag>sql</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[hibernate格式化输出sql语句（spring-data-jpa）]]></title>
     <url>%2F2017%2F07%2FHibernate%2Fhibernate-format-sql.html</url>
     <content type="text"><![CDATA[以下配置是基于 spring-boot 的 application.yml 配置123456789spring: jpa:# hibernate:# ddl-auto: create show-sql: true# database: mysql properties: hibernate: format_sql: true]]></content>
@@ -455,6 +443,18 @@
     <title><![CDATA[hibernate的DynamicInsert、DynamicUpdate介绍]]></title>
     <url>%2F2017%2F07%2FHibernate%2Fhibernate-dynamic.html</url>
     <content type="text"><![CDATA[作用 使用Dynamic Update 如果使用了 Dynamic Update，需要注意的是，当select后，显式的把某些字段set为NULL，hibernate 会认为你修改了该字段，会生成到 update 语句中。一般先 select 实体出来，再 save 的话，只会 update 该实体被修改的字段。否则会 update 所有表字段。添加Dynamic Update配置可以减少被 update 的字段。 使用Dynamic Insert 如果使用了 Dynamic Insert，并且数据库配置了默认值，当 insert，并且new 实体时，该属性没有 set 值的话，会使用数据库默认值，否则会使用实体的值。 配置方式 第一种：使用注解配置12345678910111213@Entiry(name = "t_user")@DynamicInsert@DynamicUpdatepublic class User &#123; @Id @GeneratedValue private Long id; private Strin name; private Integer age; private Integer status; // getter setter&#125; 第二种：使用.hbm.xml配置12345&lt;hibernate-mapping&gt; &lt;class name="xxx.User" table="t_user" dynamic-insert="true" dynamic-update="true"&gt; &lt;!-- 省略配置 --&gt; &lt;/class&gt;&lt;/hibernate-mapping&gt; 效果主要比较一下insert、update语句的区别，其中update一个已有的实体对象时，hibernate会再执行一次select操作再去update12345678910111213141516171819202122232425262728293031@RunWith(SpringJUnit4ClassRunner.class)@SpringBootTestpublic class ApplicationTests &#123; @Autowired private UserRepository repository; @Test public void test() throws Exception &#123; User user = new User("AAA"); User save = repository.save(user); // 1、插入新记录 // 配置 dynamic insert // insert into user (name) values (?) // 未配置 dynamic insert // insert into user (age, name, status) values (?, ?, ?) save.setName("BBB"); repository.save(save); // 2、更新记录 // 配置 dynamic update // select user0_.id as id1_1_0_, user0_.age as age2_1_0_, user0_.name as name3_1_0_, user0_.status as status4_1_0_ from user user0_ where user0_.id=? // update user set name=? where id=? // 未配置 dynamic update // select user0_.id as id1_1_0_, user0_.age as age2_1_0_, user0_.name as name3_1_0_, user0_.status as status4_1_0_ from user user0_ where user0_.id=? // update user set age=?, name=?, status=? where id=? &#125;&#125;]]></content>
+      <categories>
+        <category>Hibernate</category>
+      </categories>
+      <tags>
+        <tag>Hibernate</tag>
+        <tag>sql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[hibernate显示sql中的参数值（logback）]]></title>
+    <url>%2F2017%2F07%2FHibernate%2Fhibernate-show-parameters.html</url>
+    <content type="text"><![CDATA[以下是 logback 的日志输出配置，只要是在 logback 的配置文件中添加以下配置12&lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt; &lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt; 完整的 logback 配置如下123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;!-- For assistance related to logback-translator or configuration --&gt;&lt;!-- files in general, please contact the logback user mailing list --&gt;&lt;!-- at http://www.qos.ch/mailman/listinfo/logback-user --&gt;&lt;!-- --&gt;&lt;!-- For professional support please see --&gt;&lt;!-- http://www.qos.ch/shop/products/professionalSupport --&gt;&lt;!-- --&gt;&lt;configuration scan="true" scanPeriod="60 seconds" debug="false"&gt; &lt;property name="logger.charset" value="UTF-8"/&gt; &lt;property name="logger.path" value="$&#123;catalina.home&#125;/logs"/&gt; &lt;property name="logger.pattern" value="[%d&#123;yyyy-MM-dd HH:mm:ss&#125; %highlight(%-5p)] %yellow(%t) %cyan(%c.%M\\(%L\\)) | %m%n"/&gt; &lt;property name="logger.maxHistory" value="15"/&gt; &lt;!--&amp;lt;!&amp;ndash; https://logback.qos.ch/manual/layouts.html#coloring &amp;ndash;&amp;gt; &amp;lt;!&amp;ndash; 彩色日志依赖的渲染类 &amp;ndash;&amp;gt; &lt;conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" /&gt; &lt;conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" /&gt; &lt;conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" /&gt; &amp;lt;!&amp;ndash; 彩色日志格式 &amp;ndash;&amp;gt; &lt;property name="logger.pattern" value="$&#123;CONSOLE_LOG_PATTERN:-%clr([%d&#123;yyyy-MM-dd HH:mm:ss&#125; %clr($&#123;LOG_LEVEL_PATTERN:-%5p&#125;)])&#123;faint&#125; %clr(%c.%M\\(%L\\))&#123;cyan&#125; | %m%n&#125;" /&gt;--&gt; &lt;springProfile name="dev, local"&gt; &lt;appender name="stdout" class="ch.qos.logback.core.ConsoleAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;/appender&gt; &lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt; &lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt; &lt;!--&lt;logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="DEBUG"/&gt; &lt;logger name="org.hibernate.SQL" level="DEBUG"/&gt; &lt;logger name="org.hibernate.type" level="INFO"/&gt; &lt;logger name="org.hibernate.engine.QueryParameters" level="DEBUG"/&gt; &lt;logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG"/&gt;--&gt; &lt;!--&lt;logger name="org.apache.ibatis" level="debug"/&gt; &lt;logger name="java.sql.Connection" level="debug"/&gt; &lt;logger name="java.sql.Statement" level="debug"/&gt; &lt;logger name="java.sql.PreparedStatement" level="debug"/&gt;--&gt; &lt;root level="info"&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt; &lt;springProfile name="prod"&gt; &lt;!--See http://logback.qos.ch/manual/appenders.html#RollingFileAppender --&gt; &lt;!--and http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy --&gt; &lt;!--for further documentation --&gt; &lt;appender name="stdout" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;File&gt;$&#123;logger.path&#125;/info.log&lt;/File&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/info.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="warn" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/warn.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;WARN&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/warn.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/error.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;ERROR&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/error.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;logger name="warn" level="WARN"/&gt; &lt;logger name="error" level="ERROR"/&gt; &lt;root level="info"&gt; &lt;appender-ref ref="warn"/&gt; &lt;appender-ref ref="error"/&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt;&lt;/configuration&gt;]]></content>
       <categories>
         <category>Hibernate</category>
       </categories>
@@ -776,6 +776,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Linux安装FTP]]></title>
+    <url>%2F2017%2F03%2FLinux%2Fcentos-jdk.html</url>
+    <content type="text"><![CDATA[Linux安装FTPubuntu开启ftp服务安装vsftpd1、打开”终端窗口”，输入”sudo apt-get install vsftpd”–&gt;回车–&gt;安装完成。 2、判断vsftpd是否安装成功打开”终端窗口”，输入”sudo service vsftpd restart”重启vsftpd服务–&gt;回车–&gt;vsftpd处于运行状态，说明安装成功。 3、使用gedit修改配置文件/etc/vsftpd.conf打开”终端窗口”，输入”sudo gedit /etc/vsftpd.conf”–&gt;回车–&gt;打开了vsftpd.conf文设置：write_enable=YES ubuntu开启SSH服务SSH分客户端openssh-client和openssh-server如果你只是想登陆别的机器的SSH只需要安装openssh-client（ubuntu有默认安装，如果没有则sudo apt-get install openssh-client），如果要使本机开放SSH服务就需要安装openssh-serversudo apt-get install openssh-server然后确认sshserver是否启动了：ps -e |grep ssh如果看到sshd那说明ssh-server已经启动了。如果没有则可以这样启动：sudo /etc/init.d/ssh startssh-server配置文件位于/ etc/ssh/sshd_config，在这里可以定义SSH的服务端口，默认端口是22，你可以自己定义成其他端口号，如222。然后重启SSH服务：sudo /etc/init.d/ssh stopsudo /etc/init.d/ssh start然后使用以下方式登陆SSH：ssh username@192.168.1.112 username为192.168.1.112 机器上的用户，需要输入密码。断开连接：exit 最近一直在Ubuntu下用终端操作，看着他长长的路径名实在不爽， 动手来改改咯～$: sudo gedit ~/.bashrc这个文件记录了用户终端配置找到if [ “$color_prompt “ = yes ]; then PS1 =’${debian_chroot:+($debian_chroot)}[\033[01;32m]\u@\h[\033[00m]:[\033[01;34m]\W [\033[00m]\$ ‘else PS1 =’${debian_chroot:+($debian_chroot)}\u@\h:\W \$ ‘将蓝色的w由小写改成大写，可以表示只显示当前目录名称.]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>FTP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[CentOS安装JDK]]></title>
     <url>%2F2017%2F03%2FLinux%2Fcentos-jdk.html</url>
     <content type="text"><![CDATA[1、准备创建目录12$ mkdir /usr/java$ cd /usr/java 下载 jdk-8u73-linux-x64.tar.gz，解压1$ tar -zxvf jdk-8u73-linux-x64.tar.gz 会解压到 /usr/java/jdk1.8.0_73 下 2、配置环境变量(两种方式二选一配置即可)2.1 编辑 /etc/profile 文件修改 /etc/profile 文件当本机仅仅作为开发使用时推荐使用这种方法，因为此种配置时所有用户的 shell 都有权使用这些环境变量，可能会给系统带来安全性问题。1$ vi /etc/profile 增加如下内容123export JAVA_HOME=/usr/java/jdkexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH 保存退出 :wq12$ . /etc/profile$ echo $JAVA_HOME 2.2 编辑用户目录下的 .bash_profile修改 .bash_profile 文件这种方法更为安全，它可以把使用这些环境变量的权限控制到用户级别，如果需要给某个用户权限使用这些环境变量，只需要修改其个人用户主目录下的 .bash_profile 文件就可以了123export JAVA_HOME=/usr/java/jdkexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH 然后执行使之生效1source .bash_profile 可以看到 JAVA_HOME 不是指向真实的 jdk 目录 /usr/java/jdk1.8.0_73，而是指向 /usr/java/jdk 3、创建软链接为jdk真实目录创建一个命名更加间洁快捷方式123$ ln -s /usr/java/jdk1.8.0_73 /usr/java/jdk$ source /etc/profile#$ source .bash_profile 至此，配置完成]]></content>
@@ -785,17 +796,6 @@
       <tags>
         <tag>Java</tag>
         <tag>JDK</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux安装FTP]]></title>
-    <url>%2F2017%2F03%2FLinux%2Fcentos-jdk.html</url>
-    <content type="text"><![CDATA[Linux安装FTPubuntu开启ftp服务安装vsftpd1、打开”终端窗口”，输入”sudo apt-get install vsftpd”–&gt;回车–&gt;安装完成。 2、判断vsftpd是否安装成功打开”终端窗口”，输入”sudo service vsftpd restart”重启vsftpd服务–&gt;回车–&gt;vsftpd处于运行状态，说明安装成功。 3、使用gedit修改配置文件/etc/vsftpd.conf打开”终端窗口”，输入”sudo gedit /etc/vsftpd.conf”–&gt;回车–&gt;打开了vsftpd.conf文设置：write_enable=YES ubuntu开启SSH服务SSH分客户端openssh-client和openssh-server如果你只是想登陆别的机器的SSH只需要安装openssh-client（ubuntu有默认安装，如果没有则sudo apt-get install openssh-client），如果要使本机开放SSH服务就需要安装openssh-serversudo apt-get install openssh-server然后确认sshserver是否启动了：ps -e |grep ssh如果看到sshd那说明ssh-server已经启动了。如果没有则可以这样启动：sudo /etc/init.d/ssh startssh-server配置文件位于/ etc/ssh/sshd_config，在这里可以定义SSH的服务端口，默认端口是22，你可以自己定义成其他端口号，如222。然后重启SSH服务：sudo /etc/init.d/ssh stopsudo /etc/init.d/ssh start然后使用以下方式登陆SSH：ssh username@192.168.1.112 username为192.168.1.112 机器上的用户，需要输入密码。断开连接：exit 最近一直在Ubuntu下用终端操作，看着他长长的路径名实在不爽， 动手来改改咯～$: sudo gedit ~/.bashrc这个文件记录了用户终端配置找到if [ “$color_prompt “ = yes ]; then PS1 =’${debian_chroot:+($debian_chroot)}[\033[01;32m]\u@\h[\033[00m]:[\033[01;34m]\W [\033[00m]\$ ‘else PS1 =’${debian_chroot:+($debian_chroot)}\u@\h:\W \$ ‘将蓝色的w由小写改成大写，可以表示只显示当前目录名称.]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>FTP</tag>
       </tags>
   </entry>
 </search>

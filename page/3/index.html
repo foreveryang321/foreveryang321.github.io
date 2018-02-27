@@ -644,173 +644,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Zookeeper/zookeeper-restart-shell.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="力Li">
-      <meta itemprop="description" content="开心又过一日，唔开心又系过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="力Li的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/Zookeeper/zookeeper-restart-shell.html" itemprop="url">Zookeeper 重启脚本</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-06T09:35:05+08:00">
-                2018-02-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-th"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Zookeeper/" itemprop="url" rel="index">
-                    <span itemprop="name">Zookeeper</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数</span>
-                
-                <span title="字数">
-                  62
-                </span>
-              
-              <!--
-              
-                <span class="post-meta-divider">|</span>
-              
-              -->
-              
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长</span>
-                
-                <span title="时长">
-                  1min
-                </span>
-              
-            </div>
-          
-
-          
-        </div>
-
-        
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="restart"><a href="#restart" class="headerlink" title="restart"></a>restart</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># @Author: YL</span></span><br><span class="line"><span class="comment"># @Date:   2017-06-29 09:00:10</span></span><br><span class="line"><span class="comment"># @Last Modified by:   YL</span></span><br><span class="line"><span class="comment"># @Last Modified time: 2017-11-01 09:37:30</span></span><br><span class="line"><span class="comment"># 此文件放到 zookeeper 的 bin 目录下</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> `dirname <span class="variable">$0</span>`</span><br><span class="line"></span><br><span class="line">./zkServer.sh stop</span><br><span class="line">sleep 3</span><br><span class="line">./zkServer.sh start</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      <!--  -->
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Zookeeper/zookeeper-clear-shell.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -935,6 +768,173 @@
         
           
             <h1 id="clear"><a href="#clear" class="headerlink" title="clear"></a>clear</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># @Author: YL</span></span><br><span class="line"><span class="comment"># @Date:   2017-11-01 08:59:34</span></span><br><span class="line"><span class="comment"># @Last Modified by:   YL</span></span><br><span class="line"><span class="comment"># @Last Modified time: 2017-11-01 09:36:09</span></span><br><span class="line"><span class="comment"># 此文件放到 zookeeper 的 bin 目录下</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> `dirname <span class="variable">$0</span>`</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line">NODE_HOME=`<span class="built_in">pwd</span>`</span><br><span class="line"></span><br><span class="line"><span class="comment"># snapshot</span></span><br><span class="line">NODE_DATA_DIR=<span class="variable">$NODE_HOME</span>/data/version-2</span><br><span class="line"><span class="comment"># snapshot log</span></span><br><span class="line">NODE_LOG_DIR=<span class="variable">$NODE_HOME</span>/logs/version-2</span><br><span class="line"><span class="comment"># zk log</span></span><br><span class="line">NODE_LOGS=<span class="variable">$NODE_HOME</span>/logs</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中</span></span><br><span class="line">count=3</span><br><span class="line">count=$[<span class="variable">$count</span>+1]</span><br><span class="line">ls -t <span class="variable">$NODE_LOG_DIR</span>/<span class="built_in">log</span>.* | tail -n +<span class="variable">$count</span> | xargs rm -f</span><br><span class="line">ls -t <span class="variable">$NODE_DATA_DIR</span>/snapshot.* | tail -n +<span class="variable">$count</span> | xargs rm -f</span><br><span class="line">ls -t <span class="variable">$NODE_LOGS</span>/zookeeper.log.* | tail -n +<span class="variable">$count</span> | xargs rm -f</span><br><span class="line"></span><br><span class="line"><span class="comment"># date pattern</span></span><br><span class="line">DATE_PATTERN=<span class="string">"[<span class="variable">$(date '+%Y-%m-%d %H:%M:%S')</span>]"</span></span><br><span class="line">STDOUT_FILE=<span class="variable">$NODE_LOGS</span>/stdout.log</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> clear logs success"</span> | tee -a <span class="variable">$STDOUT_FILE</span></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      <!--  -->
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Zookeeper/zookeeper-restart-shell.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="力Li">
+      <meta itemprop="description" content="开心又过一日，唔开心又系过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="力Li的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/Zookeeper/zookeeper-restart-shell.html" itemprop="url">Zookeeper 重启脚本</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-06T09:35:05+08:00">
+                2018-02-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-th"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Zookeeper/" itemprop="url" rel="index">
+                    <span itemprop="name">Zookeeper</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数</span>
+                
+                <span title="字数">
+                  62
+                </span>
+              
+              <!--
+              
+                <span class="post-meta-divider">|</span>
+              
+              -->
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长</span>
+                
+                <span title="时长">
+                  1min
+                </span>
+              
+            </div>
+          
+
+          
+        </div>
+
+        
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="restart"><a href="#restart" class="headerlink" title="restart"></a>restart</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># @Author: YL</span></span><br><span class="line"><span class="comment"># @Date:   2017-06-29 09:00:10</span></span><br><span class="line"><span class="comment"># @Last Modified by:   YL</span></span><br><span class="line"><span class="comment"># @Last Modified time: 2017-11-01 09:37:30</span></span><br><span class="line"><span class="comment"># 此文件放到 zookeeper 的 bin 目录下</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> `dirname <span class="variable">$0</span>`</span><br><span class="line"></span><br><span class="line">./zkServer.sh stop</span><br><span class="line">sleep 3</span><br><span class="line">./zkServer.sh start</span><br></pre></td></tr></table></figure>
 
           
         
@@ -2536,6 +2536,188 @@ RFC 2018 and RFC 2883 for SACK and extensions to SACK.
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2017/09/Java/spring-boot-issues.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="力Li">
+      <meta itemprop="description" content="开心又过一日，唔开心又系过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="力Li的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/Java/spring-boot-issues.html" itemprop="url">spring boot issues</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-11T14:11:20+08:00">
+                2017-09-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-th"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数</span>
+                
+                <span title="字数">
+                  85
+                </span>
+              
+              <!--
+              
+                <span class="post-meta-divider">|</span>
+              
+              -->
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长</span>
+                
+                <span title="时长">
+                  1min
+                </span>
+              
+            </div>
+          
+
+          
+        </div>
+
+        
+          <div style="margin: 3px 0 20px 0">
+            <div class="post-tags">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-tags"></i>
+              </span>
+              <span class="post-meta-item-text">标签</span>
+              
+                <a href="/tags/spring-boot/" rel="tag" class="color1">spring-boot</a>
+              
+            </div>
+          </div>
+        
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="兼容问题"><a href="#兼容问题" class="headerlink" title="兼容问题"></a>兼容问题</h3><p>spring-boot-starter-parent切换回1.5.2.RELEASE版本</p>
+<p>因为1.5.4.RELEASE、1.5.5.RELEASE、1.5.6.RELEASE、1.5.7.RELEASE、2.0.0.M1、2.0.0.M2、2.0.0.M3都存在使用spring-boot-starter-data-redis时，会出现异常</p>
+<p><code>java.lang.NoSuchMethodError: org.springframework.data.repository.config.AnnotationRepositoryConfigurationSource.&lt;init&gt;</code>异常</p>
+<p>请查看<a href="https://github.com/spring-projects/spring-boot/issues/9606" target="_blank" rel="noopener">https://github.com/spring-projects/spring-boot/issues/9606</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      <!--  -->
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2017/09/Java/spring-jpa-page.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2679,188 +2861,6 @@ RFC 2018 and RFC 2883 for SACK and extensions to SACK.
 <p>当前页数，从0开始<br>getNumber —&gt; 0</p>
 <p>当前页码中的记录数<br>getNumberOfElements —&gt; 3</p>
 <p>每页记录数<br>getSize —&gt; 3</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      <!--  -->
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2017/09/Java/spring-boot-issues.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="力Li">
-      <meta itemprop="description" content="开心又过一日，唔开心又系过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="力Li的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/Java/spring-boot-issues.html" itemprop="url">spring boot issues</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-11T14:11:20+08:00">
-                2017-09-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-th"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数</span>
-                
-                <span title="字数">
-                  85
-                </span>
-              
-              <!--
-              
-                <span class="post-meta-divider">|</span>
-              
-              -->
-              
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长</span>
-                
-                <span title="时长">
-                  1min
-                </span>
-              
-            </div>
-          
-
-          
-        </div>
-
-        
-          <div style="margin: 3px 0 20px 0">
-            <div class="post-tags">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-tags"></i>
-              </span>
-              <span class="post-meta-item-text">标签</span>
-              
-                <a href="/tags/spring-boot/" rel="tag" class="color1">spring-boot</a>
-              
-            </div>
-          </div>
-        
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="兼容问题"><a href="#兼容问题" class="headerlink" title="兼容问题"></a>兼容问题</h3><p>spring-boot-starter-parent切换回1.5.2.RELEASE版本</p>
-<p>因为1.5.4.RELEASE、1.5.5.RELEASE、1.5.6.RELEASE、1.5.7.RELEASE、2.0.0.M1、2.0.0.M2、2.0.0.M3都存在使用spring-boot-starter-data-redis时，会出现异常</p>
-<p><code>java.lang.NoSuchMethodError: org.springframework.data.repository.config.AnnotationRepositoryConfigurationSource.&lt;init&gt;</code>异常</p>
-<p>请查看<a href="https://github.com/spring-projects/spring-boot/issues/9606" target="_blank" rel="noopener">https://github.com/spring-projects/spring-boot/issues/9606</a></p>
 
           
         
