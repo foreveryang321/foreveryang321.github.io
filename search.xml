@@ -39,101 +39,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Tomcat setenv.sh]]></title>
-    <url>%2F2018%2F02%2FTomcat%2Ftomcat-setenv-shell.html</url>
-    <content type="text"><![CDATA[Tomcat setenv脚本123456789101112# @Author: YL# @Date: 2017-12-18 12:15:52# @Last Modified by: YL# @Last Modified time: 2017-12-18 12:16:03# 本文件放到 Tomcat 的 bin 目录下export LANG=en_US.UTF-8export JAVA_HOME=/usr/java/jdk1.8.0_144export PATH=$PATH:$JAVA_HOME/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHJAVA_OPT=""]]></content>
-      <categories>
-        <category>Tomcat</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux vi 命令]]></title>
-    <url>%2F2018%2F02%2FLinux%2Flinux-shell-vi.html</url>
-    <content type="text"><![CDATA[vilinux文件格式的问题（使用unix格式）123456789# 查看文件格式vi 文件名:set ff# 设置文件格式为unix:set ff=unix# 保存退出:wq# 也可以直接使用dos2unix 文件名]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>vi</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux tar 命令]]></title>
-    <url>%2F2018%2F02%2FLinux%2Flinux-shell-tar.html</url>
-    <content type="text"><![CDATA[tar1tar -zxvf xxx.tar.gz]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>tar</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux tail 命令]]></title>
-    <url>%2F2018%2F02%2FLinux%2Flinux-shell-tail.html</url>
-    <content type="text"><![CDATA[tail]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>tail</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux ls 命令]]></title>
-    <url>%2F2018%2F02%2FLinux%2Flinux-shell-ls.html</url>
-    <content type="text"><![CDATA[ls12# 统计文件夹中文件数ls -l |grep "^-"|wc -l 保留最新的1个文件夹，删除其他文件夹（使用-d）1ls -t -d /home/txrd/tisson-web-open/logs/undertow-* | tail -n +2 | xargs rm -rf]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>ls</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux netstat 命令]]></title>
-    <url>%2F2018%2F02%2FLinux%2Flinux-shell-netstat.html</url>
-    <content type="text"><![CDATA[netstat查看进程的网络状态1netstat -anp | grep 7646]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>netstat</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux lsof 命令]]></title>
-    <url>%2F2018%2F02%2FLinux%2Flinux-shell-lsof.html</url>
-    <content type="text"><![CDATA[lsof检测端口未被占用1lsof -i:8080]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>lsof</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux grep 命令]]></title>
-    <url>%2F2018%2F02%2FLinux%2Flinux-shell-grep.html</url>
-    <content type="text"><![CDATA[grep统计出现次数1grep 'sign.*time.*openid' access_p80_weixinv3.log | awk '&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;' | sort -n 统计某些字符出现次数1grep 'sign.*time.*openid' access_p80_weixinv3.log | awk '&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;' | sort -n 4 183.3.234.4510 183.3.234.5720 183.3.234.58 查询前后日志grep -5 ‘parttern’ inputfile //打印匹配行的前后5行grep -C 5 ‘parttern’ inputfile //打印匹配行的前后5行grep -A 5 ‘parttern’ inputfile //打印匹配行的后5行grep -B 5 ‘parttern’ inputfile //打印匹配行的前5行]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>grep</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Linux find 命令]]></title>
     <url>%2F2018%2F02%2FLinux%2Flinux-shell-find.html</url>
     <content type="text"><![CDATA[find查找文件并删除12345678# 删除指定时间前的 jpg 文件find /opt/upload/ -mtime +30 -type f -name *.jpg -exec rm -f &#123;&#125; \;# 删除隐藏文件（-fr）find /opt/upload/ -type d -name .svn -exec rm -fr &#123;&#125; \;# 删除30天前的文件find /opt/upload -mtime +30 -type f -name "*.jpg" -exec rm -rf &#123;&#125; \; 打印指定时间前的文件1find project/upload/ -mtime +30 -type f -print]]></content>
@@ -146,78 +51,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux curl 命令]]></title>
-    <url>%2F2018%2F02%2FLinux%2Flinux-shell-curl.html</url>
-    <content type="text"><![CDATA[curlGET 请求1curl http://www.baidu.com?q=xxxx POST 请求1curl http://10.121.2.35/weixin_v3/w?urlToken=wxmanager -XPOST -d "send message..." 发送 POST JSON 请求1curl -H "Content-Type: application/json" -X POST --data '&#123;"data":"1"&#125;' http://127.0.0.1/ 使用代理1curl -x 192.168.2.5:3128 http://www.baidu.com?q=xxxx 输出请求信息12345678# http_code# time_connect# time_starttransfer# time_total# size_download# speed_download# 参考地址：curl http://www.baidu.com?q=xxxx -so /dev/null -w "%&#123;http_code&#125;\t%&#123;time_connect&#125;\t%&#123;time_starttransfer&#125;\t%&#123;time_total&#125;\t%&#123;size_download&#125;\t%&#123;speed_download&#125;\t"]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>curl</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux du 命令]]></title>
-    <url>%2F2018%2F02%2FLinux%2Flinux-shell-du.html</url>
-    <content type="text"><![CDATA[du计算当前文件夹下占用空间，排序1du -sh * | sort -nr]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>du</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux cat 命令]]></title>
-    <url>%2F2018%2F02%2FLinux%2Flinux-shell-cat.html</url>
-    <content type="text"><![CDATA[cat统计出现次数12# linux统计某一文件中字符串“sent ip”出现的次数：cat nohup.log |grep "sent ip" |wc -l 清空默认文件中的内容1cat /dev/null &gt; filename]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>cat</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux cp 命令]]></title>
-    <url>%2F2018%2F02%2FLinux%2Flinux-shell-cp.html</url>
-    <content type="text"><![CDATA[cp复制文件夹1cp -r [old source] -d [new source]]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>cp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux crontab 命令]]></title>
-    <url>%2F2018%2F02%2FLinux%2Flinux-shell-crontab.html</url>
-    <content type="text"><![CDATA[crontab 使用注意事项如果通过 crontab 执行1、crontab 无法获取 jdk 变量，要在 java 命令之前写入jdk绝对路径2、要把路径切换到要执行的 sh 路径下注意：二者缺一不可 查找 jdk 路径的方法 1 12$ echo $JAVA_HOME/usr/java/jdk1.6.0_45/bin/java 2 123456$ which java/usr/bin/java$ ls -lrt /usr/bin/java #/usr/bin/java是which java查出来的路径lrwxrwxrwx. 1 root root 22 Sep 16 2015 /usr/bin/java -&gt; /etc/alternatives/java$ ls -lrt /etc/alternatives/java #/etc/alternatives/java是ls -lrt /usr/bin/java查出来的路径 lrwxrwxrwx. 1 root root 46 Sep 16 2015 /etc/alternatives/java -&gt; /usr/lib/jvm/jre-1.6.0-openjdk.x86_64/bin/java 查询 crontab 定时器配置情况1crontab -l 编辑 crontab 定时器1234567crontab -e# 当 crontab 调用时，错误和标准输出会写成 mail 通知你* * * * * /opt/restart.sh# 标准输出重定向到 /dev/null，输出到这里就找不回来了* * * * * /opt/restart.sh &gt; /dev/null# 标准输出和错误输出都重定向到 /dev/null* * * * * /opt/restart.sh &gt; /dev/null 2&gt;&amp;1]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>crontab</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux unzip 命令]]></title>
-    <url>%2F2018%2F02%2FLinux%2Flinux-shell-unzip.html</url>
-    <content type="text"><![CDATA[unzip解压war、jar、zip、rar等文件1unzip -oq /opt/xxx.war -d /opt/ddd]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>unzip</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Linux sed 命令]]></title>
     <url>%2F2018%2F02%2FLinux%2Flinux-shell-sed.html</url>
     <content type="text"><![CDATA[sed打印指定行数1sed -n '12457431, 12457440p' tomcat/logs/catalina.out]]></content>
@@ -227,6 +60,18 @@
       <tags>
         <tag>shell</tag>
         <tag>sed</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[jar启动脚本]]></title>
+    <url>%2F2018%2F02%2FLinux%2Flinux-shell-jar-start.html</url>
+    <content type="text"><![CDATA[jar启动脚本123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263#!/usr/bin/env bash# @Author: YL# @Date: 2017-08-31 15:52:30# @Last Modified by: YL# @Last Modified time: 2017-12-18 14:12:45export LANG=en_US.UTF-8export JAVA_HOME=/usr/java/jdk1.8.0_144export PATH=$PATH:$JAVA_HOME/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHcd `dirname $0`PROJECT_HOME=`pwd`PROJECT_LIB=$PROJECT_HOME/libPROJECT_LOGS=$PROJECT_HOME/logsSTDOUT_FILE=$PROJECT_HOME/logs/stdout.logPROJECT_JAR=$PROJECT_HOME/tisson-ftp.jar# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $PROJECT_JAR"# pidPROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'`function operate()&#123; if [[ "$1" = "kill" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN kill $PROJECT_PID begining" | tee -a $STDOUT_FILE kill -9 $PROJECT_PID echo "$DATE_PATTERN kill $PROJECT_PID success" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not alive" | tee -a $STDOUT_FILE fi elif [[ "$1" = "start" ]] ; then # cd $PROJECT_HOME # starting nohup java -server -Xms512m -Xmx512m -Xss256k -Dloader.path=$PROJECT_LIB -Djava.io.tmpdir=$PROJECT_LOGS -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$PROJECT_LOGS/$PROJECT_PID.hprof -jar $PROJECT_JAR &gt;&gt; $STDOUT_FILE 2&gt;&amp;1 &amp; PROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'` echo "$DATE_PATTERN The $PROJECT_JAR started OK! pid: $PROJECT_PID" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILE fi&#125;if [[ "$1" = "start" || "$1" = "check" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN already started! pid: $PROJECT_PID" &gt;&gt; $STDOUT_FILE exit 1 fi operate startelif [[ "$1" = "" || "$1" = "restart" ]]; then operate kill echo "$DATE_PATTERN starting" | tee -a $STDOUT_FILE operate startelif [[ "$1" = "kill" ]]; then operate killelse echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILEfi]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>jar</tag>
       </tags>
   </entry>
   <entry>
@@ -254,12 +99,72 @@
       </categories>
   </entry>
   <entry>
+    <title><![CDATA[Linux netstat 命令]]></title>
+    <url>%2F2018%2F02%2FLinux%2Flinux-shell-netstat.html</url>
+    <content type="text"><![CDATA[netstat查看进程的网络状态1netstat -anp | grep 7646]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>netstat</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Zookeeper 重启脚本]]></title>
     <url>%2F2018%2F02%2FZookeeper%2Fzookeeper-restart-shell.html</url>
     <content type="text"><![CDATA[restart12345678910111213#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:10# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:30# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stopsleep 3./zkServer.sh start]]></content>
       <categories>
         <category>Zookeeper</category>
       </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux lsof 命令]]></title>
+    <url>%2F2018%2F02%2FLinux%2Flinux-shell-lsof.html</url>
+    <content type="text"><![CDATA[lsof检测端口未被占用1lsof -i:8080]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>lsof</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux grep 命令]]></title>
+    <url>%2F2018%2F02%2FLinux%2Flinux-shell-grep.html</url>
+    <content type="text"><![CDATA[grep统计出现次数1grep 'sign.*time.*openid' access_p80_weixinv3.log | awk '&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;' | sort -n 统计某些字符出现次数1grep 'sign.*time.*openid' access_p80_weixinv3.log | awk '&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;' | sort -n 4 183.3.234.4510 183.3.234.5720 183.3.234.58 查询前后日志grep -5 ‘parttern’ inputfile //打印匹配行的前后5行grep -C 5 ‘parttern’ inputfile //打印匹配行的前后5行grep -A 5 ‘parttern’ inputfile //打印匹配行的后5行grep -B 5 ‘parttern’ inputfile //打印匹配行的前5行]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>grep</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux ls 命令]]></title>
+    <url>%2F2018%2F02%2FLinux%2Flinux-shell-ls.html</url>
+    <content type="text"><![CDATA[ls12# 统计文件夹中文件数ls -l |grep "^-"|wc -l 保留最新的1个文件夹，删除其他文件夹（使用-d）1ls -t -d /home/txrd/tisson-web-open/logs/undertow-* | tail -n +2 | xargs rm -rf]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>ls</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux tar 命令]]></title>
+    <url>%2F2018%2F02%2FLinux%2Flinux-shell-tar.html</url>
+    <content type="text"><![CDATA[tar1tar -zxvf xxx.tar.gz]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>tar</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[Zookeeper 清理日志文件]]></title>
@@ -281,15 +186,87 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[jar启动脚本]]></title>
-    <url>%2F2018%2F02%2FLinux%2Flinux-shell-jar-start.html</url>
-    <content type="text"><![CDATA[jar启动脚本123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263#!/usr/bin/env bash# @Author: YL# @Date: 2017-08-31 15:52:30# @Last Modified by: YL# @Last Modified time: 2017-12-18 14:12:45export LANG=en_US.UTF-8export JAVA_HOME=/usr/java/jdk1.8.0_144export PATH=$PATH:$JAVA_HOME/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHcd `dirname $0`PROJECT_HOME=`pwd`PROJECT_LIB=$PROJECT_HOME/libPROJECT_LOGS=$PROJECT_HOME/logsSTDOUT_FILE=$PROJECT_HOME/logs/stdout.logPROJECT_JAR=$PROJECT_HOME/tisson-ftp.jar# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $PROJECT_JAR"# pidPROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'`function operate()&#123; if [[ "$1" = "kill" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN kill $PROJECT_PID begining" | tee -a $STDOUT_FILE kill -9 $PROJECT_PID echo "$DATE_PATTERN kill $PROJECT_PID success" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not alive" | tee -a $STDOUT_FILE fi elif [[ "$1" = "start" ]] ; then # cd $PROJECT_HOME # starting nohup java -server -Xms512m -Xmx512m -Xss256k -Dloader.path=$PROJECT_LIB -Djava.io.tmpdir=$PROJECT_LOGS -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$PROJECT_LOGS/$PROJECT_PID.hprof -jar $PROJECT_JAR &gt;&gt; $STDOUT_FILE 2&gt;&amp;1 &amp; PROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'` echo "$DATE_PATTERN The $PROJECT_JAR started OK! pid: $PROJECT_PID" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILE fi&#125;if [[ "$1" = "start" || "$1" = "check" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN already started! pid: $PROJECT_PID" &gt;&gt; $STDOUT_FILE exit 1 fi operate startelif [[ "$1" = "" || "$1" = "restart" ]]; then operate kill echo "$DATE_PATTERN starting" | tee -a $STDOUT_FILE operate startelif [[ "$1" = "kill" ]]; then operate killelse echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILEfi]]></content>
+    <title><![CDATA[Linux du 命令]]></title>
+    <url>%2F2018%2F02%2FLinux%2Flinux-shell-du.html</url>
+    <content type="text"><![CDATA[du计算当前文件夹下占用空间，排序1du -sh * | sort -nr]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>Java</tag>
-        <tag>jar</tag>
+        <tag>shell</tag>
+        <tag>du</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux curl 命令]]></title>
+    <url>%2F2018%2F02%2FLinux%2Flinux-shell-curl.html</url>
+    <content type="text"><![CDATA[curlGET 请求1curl http://www.baidu.com?q=xxxx POST 请求1curl http://10.121.2.35/weixin_v3/w?urlToken=wxmanager -XPOST -d "send message..." 发送 POST JSON 请求1curl -H "Content-Type: application/json" -X POST --data '&#123;"data":"1"&#125;' http://127.0.0.1/ 使用代理1curl -x 192.168.2.5:3128 http://www.baidu.com?q=xxxx 输出请求信息12345678# http_code# time_connect# time_starttransfer# time_total# size_download# speed_download# 参考地址：curl http://www.baidu.com?q=xxxx -so /dev/null -w "%&#123;http_code&#125;\t%&#123;time_connect&#125;\t%&#123;time_starttransfer&#125;\t%&#123;time_total&#125;\t%&#123;size_download&#125;\t%&#123;speed_download&#125;\t"]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>curl</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux crontab 命令]]></title>
+    <url>%2F2018%2F02%2FLinux%2Flinux-shell-crontab.html</url>
+    <content type="text"><![CDATA[crontab 使用注意事项如果通过 crontab 执行1、crontab 无法获取 jdk 变量，要在 java 命令之前写入jdk绝对路径2、要把路径切换到要执行的 sh 路径下注意：二者缺一不可 查找 jdk 路径的方法 1 12$ echo $JAVA_HOME/usr/java/jdk1.6.0_45/bin/java 2 123456$ which java/usr/bin/java$ ls -lrt /usr/bin/java #/usr/bin/java是which java查出来的路径lrwxrwxrwx. 1 root root 22 Sep 16 2015 /usr/bin/java -&gt; /etc/alternatives/java$ ls -lrt /etc/alternatives/java #/etc/alternatives/java是ls -lrt /usr/bin/java查出来的路径 lrwxrwxrwx. 1 root root 46 Sep 16 2015 /etc/alternatives/java -&gt; /usr/lib/jvm/jre-1.6.0-openjdk.x86_64/bin/java 查询 crontab 定时器配置情况1crontab -l 编辑 crontab 定时器1234567crontab -e# 当 crontab 调用时，错误和标准输出会写成 mail 通知你* * * * * /opt/restart.sh# 标准输出重定向到 /dev/null，输出到这里就找不回来了* * * * * /opt/restart.sh &gt; /dev/null# 标准输出和错误输出都重定向到 /dev/null* * * * * /opt/restart.sh &gt; /dev/null 2&gt;&amp;1]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>crontab</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux cp 命令]]></title>
+    <url>%2F2018%2F02%2FLinux%2Flinux-shell-cp.html</url>
+    <content type="text"><![CDATA[cp复制文件夹1cp -r [old source] -d [new source]]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>cp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux unzip 命令]]></title>
+    <url>%2F2018%2F02%2FLinux%2Flinux-shell-unzip.html</url>
+    <content type="text"><![CDATA[unzip解压war、jar、zip、rar等文件1unzip -oq /opt/xxx.war -d /opt/ddd]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>unzip</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux cat 命令]]></title>
+    <url>%2F2018%2F02%2FLinux%2Flinux-shell-cat.html</url>
+    <content type="text"><![CDATA[cat统计出现次数12# linux统计某一文件中字符串“sent ip”出现的次数：cat nohup.log |grep "sent ip" |wc -l 清空默认文件中的内容1cat /dev/null &gt; filename]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>cat</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux tail 命令]]></title>
+    <url>%2F2018%2F02%2FLinux%2Flinux-shell-tail.html</url>
+    <content type="text"><![CDATA[tail]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>tail</tag>
       </tags>
   </entry>
   <entry>
@@ -301,6 +278,29 @@
       </categories>
       <tags>
         <tag>TCP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux vi 命令]]></title>
+    <url>%2F2018%2F02%2FLinux%2Flinux-shell-vi.html</url>
+    <content type="text"><![CDATA[vilinux文件格式的问题（使用unix格式）123456789# 查看文件格式vi 文件名:set ff# 设置文件格式为unix:set ff=unix# 保存退出:wq# 也可以直接使用dos2unix 文件名]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>vi</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Tomcat setenv.sh]]></title>
+    <url>%2F2018%2F02%2FTomcat%2Ftomcat-setenv-shell.html</url>
+    <content type="text"><![CDATA[Tomcat setenv脚本123456789101112# @Author: YL# @Date: 2017-12-18 12:15:52# @Last Modified by: YL# @Last Modified time: 2017-12-18 12:16:03# 本文件放到 Tomcat 的 bin 目录下export LANG=en_US.UTF-8export JAVA_HOME=/usr/java/jdk1.8.0_144export PATH=$PATH:$JAVA_HOME/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHJAVA_OPT=""]]></content>
+      <categories>
+        <category>Tomcat</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
       </tags>
   </entry>
   <entry>
@@ -387,18 +387,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[pagehelper 使用笔记]]></title>
-    <url>%2F2017%2F08%2Fmybatis%2Fmybatis-pagehelper.html</url>
-    <content type="text"><![CDATA[主要是记录一些在使用mybatis + pagehelper过程中遇到的一些问题，和要注意的知识点 PageHelper 分页12345// 获取第1页，10条内容，默认查询总数countPageHelper.startPage(1, 10);// 获取第1页，10条内容，不查询总数countPageHelper.startPage(1, 10, false);]]></content>
-      <categories>
-        <category>mybatis</category>
-      </categories>
-      <tags>
-        <tag>mybatis</tag>
-        <tag>pagehelper</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[spring-data-jpa 使用笔记]]></title>
     <url>%2F2017%2F08%2Fspring-data-jpa%2Fjpa-criteria.html</url>
     <content type="text"><![CDATA[主要是记录一些在使用spring-data-jpa + hibernate过程中遇到的一些问题，和要注意的知识点 Pageable 和 PageRequest 分页在Mysql、Oracle中分页从0开始1Pageable pageable = new PageRequest(0, 10); 查看org.springframework.data.domain.PageRequest源码可知，分页从0开始123public Pageable first() &#123; return new PageRequest(0, this.getPageSize(), this.getSort());&#125;]]></content>
@@ -410,6 +398,18 @@
         <tag>sql</tag>
         <tag>spring-boot</tag>
         <tag>criteria</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[pagehelper 使用笔记]]></title>
+    <url>%2F2017%2F08%2Fmybatis%2Fmybatis-pagehelper.html</url>
+    <content type="text"><![CDATA[主要是记录一些在使用mybatis + pagehelper过程中遇到的一些问题，和要注意的知识点 PageHelper 分页12345// 获取第1页，10条内容，默认查询总数countPageHelper.startPage(1, 10);// 获取第1页，10条内容，不查询总数countPageHelper.startPage(1, 10, false);]]></content>
+      <categories>
+        <category>mybatis</category>
+      </categories>
+      <tags>
+        <tag>mybatis</tag>
+        <tag>pagehelper</tag>
       </tags>
   </entry>
   <entry>
@@ -427,15 +427,16 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[hibernate的DynamicInsert、DynamicUpdate介绍]]></title>
-    <url>%2F2017%2F07%2FHibernate%2Fhibernate-dynamic.html</url>
-    <content type="text"><![CDATA[作用 使用Dynamic Update 如果使用了 Dynamic Update，需要注意的是，当select后，显式的把某些字段set为NULL，hibernate 会认为你修改了该字段，会生成到 update 语句中。一般先 select 实体出来，再 save 的话，只会 update 该实体被修改的字段。否则会 update 所有表字段。添加Dynamic Update配置可以减少被 update 的字段。 使用Dynamic Insert 如果使用了 Dynamic Insert，并且数据库配置了默认值，当 insert，并且new 实体时，该属性没有 set 值的话，会使用数据库默认值，否则会使用实体的值。 配置方式 第一种：使用注解配置12345678910111213@Entiry(name = "t_user")@DynamicInsert@DynamicUpdatepublic class User &#123; @Id @GeneratedValue private Long id; private Strin name; private Integer age; private Integer status; // getter setter&#125; 第二种：使用.hbm.xml配置12345&lt;hibernate-mapping&gt; &lt;class name="xxx.User" table="t_user" dynamic-insert="true" dynamic-update="true"&gt; &lt;!-- 省略配置 --&gt; &lt;/class&gt;&lt;/hibernate-mapping&gt; 效果主要比较一下insert、update语句的区别，其中update一个已有的实体对象时，hibernate会再执行一次select操作再去update12345678910111213141516171819202122232425262728293031@RunWith(SpringJUnit4ClassRunner.class)@SpringBootTestpublic class ApplicationTests &#123; @Autowired private UserRepository repository; @Test public void test() throws Exception &#123; User user = new User("AAA"); User save = repository.save(user); // 1、插入新记录 // 配置 dynamic insert // insert into user (name) values (?) // 未配置 dynamic insert // insert into user (age, name, status) values (?, ?, ?) save.setName("BBB"); repository.save(save); // 2、更新记录 // 配置 dynamic update // select user0_.id as id1_1_0_, user0_.age as age2_1_0_, user0_.name as name3_1_0_, user0_.status as status4_1_0_ from user user0_ where user0_.id=? // update user set name=? where id=? // 未配置 dynamic update // select user0_.id as id1_1_0_, user0_.age as age2_1_0_, user0_.name as name3_1_0_, user0_.status as status4_1_0_ from user user0_ where user0_.id=? // update user set age=?, name=?, status=? where id=? &#125;&#125;]]></content>
+    <title><![CDATA[hibernate格式化输出sql语句（spring-data-jpa）]]></title>
+    <url>%2F2017%2F07%2FHibernate%2Fhibernate-format-sql.html</url>
+    <content type="text"><![CDATA[以下配置是基于 spring-boot 的 application.yml 配置123456789spring: jpa:# hibernate:# ddl-auto: create show-sql: true# database: mysql properties: hibernate: format_sql: true]]></content>
       <categories>
         <category>Hibernate</category>
       </categories>
       <tags>
         <tag>Hibernate</tag>
         <tag>sql</tag>
+        <tag>spring-boot</tag>
       </tags>
   </entry>
   <entry>
@@ -451,16 +452,15 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[hibernate格式化输出sql语句（spring-data-jpa）]]></title>
-    <url>%2F2017%2F07%2FHibernate%2Fhibernate-format-sql.html</url>
-    <content type="text"><![CDATA[以下配置是基于 spring-boot 的 application.yml 配置123456789spring: jpa:# hibernate:# ddl-auto: create show-sql: true# database: mysql properties: hibernate: format_sql: true]]></content>
+    <title><![CDATA[hibernate的DynamicInsert、DynamicUpdate介绍]]></title>
+    <url>%2F2017%2F07%2FHibernate%2Fhibernate-dynamic.html</url>
+    <content type="text"><![CDATA[作用 使用Dynamic Update 如果使用了 Dynamic Update，需要注意的是，当select后，显式的把某些字段set为NULL，hibernate 会认为你修改了该字段，会生成到 update 语句中。一般先 select 实体出来，再 save 的话，只会 update 该实体被修改的字段。否则会 update 所有表字段。添加Dynamic Update配置可以减少被 update 的字段。 使用Dynamic Insert 如果使用了 Dynamic Insert，并且数据库配置了默认值，当 insert，并且new 实体时，该属性没有 set 值的话，会使用数据库默认值，否则会使用实体的值。 配置方式 第一种：使用注解配置12345678910111213@Entiry(name = "t_user")@DynamicInsert@DynamicUpdatepublic class User &#123; @Id @GeneratedValue private Long id; private Strin name; private Integer age; private Integer status; // getter setter&#125; 第二种：使用.hbm.xml配置12345&lt;hibernate-mapping&gt; &lt;class name="xxx.User" table="t_user" dynamic-insert="true" dynamic-update="true"&gt; &lt;!-- 省略配置 --&gt; &lt;/class&gt;&lt;/hibernate-mapping&gt; 效果主要比较一下insert、update语句的区别，其中update一个已有的实体对象时，hibernate会再执行一次select操作再去update12345678910111213141516171819202122232425262728293031@RunWith(SpringJUnit4ClassRunner.class)@SpringBootTestpublic class ApplicationTests &#123; @Autowired private UserRepository repository; @Test public void test() throws Exception &#123; User user = new User("AAA"); User save = repository.save(user); // 1、插入新记录 // 配置 dynamic insert // insert into user (name) values (?) // 未配置 dynamic insert // insert into user (age, name, status) values (?, ?, ?) save.setName("BBB"); repository.save(save); // 2、更新记录 // 配置 dynamic update // select user0_.id as id1_1_0_, user0_.age as age2_1_0_, user0_.name as name3_1_0_, user0_.status as status4_1_0_ from user user0_ where user0_.id=? // update user set name=? where id=? // 未配置 dynamic update // select user0_.id as id1_1_0_, user0_.age as age2_1_0_, user0_.name as name3_1_0_, user0_.status as status4_1_0_ from user user0_ where user0_.id=? // update user set age=?, name=?, status=? where id=? &#125;&#125;]]></content>
       <categories>
         <category>Hibernate</category>
       </categories>
       <tags>
         <tag>Hibernate</tag>
         <tag>sql</tag>
-        <tag>spring-boot</tag>
       </tags>
   </entry>
   <entry>
@@ -566,7 +566,7 @@
   <entry>
     <title><![CDATA[hexo初体验]]></title>
     <url>%2F2017%2F07%2FGithub%2Fhexo.html</url>
-    <content type="text"><![CDATA[安装部署hexo + github page初体验1npm install -g hexo-cli 本地目录 hexo 文件夹，进去这个文件夹，依次执行下面的命令1234cd hexohexo init# Hexo随后会自动在目标文件夹建立网站所需要的文件npm install 启动本地Hexo服务1hexo server Create a new post1hexo new 'blog name' 在hexo new文章时，需要stop server，否则会出现2次这个文章 执行下面的命令，将markdown文件生成静态网页1hexo generate 更换主题12cd themesgit clone https://github.com/litten/hexo-theme-yilia.git 配置主题 _config.yml 文件，修改里面的 theme 为 hexo-theme-yilia 配置github仓库在_config.yml 文件最后添加如下内容12345678# Deployment## Docs: http://hexo.io/docs/deployment.htmldeploy: type: git repository: https://github.com/xxx/xxx.github.io.git # ssh模式 #repository: https://github.com/xxx/xxx.github.io.git branch: master 配置好后，一次执行123hexo cleanhexo ghexo d 出现 Deploy done: git 说明配置成功如果提示 ERROR Deployer not found: git，则要安装 hexo-deployer-git 插件12cd hexonpm install hexo-deployer-git --save 部署到github，每次部署可以执行一下命令123hexo cleanhexo generatehexo deploy 绑定域名在你本地的 hexo 项目根目录的 source 目录下创建 CNAME 文件，并在 CNAME 中输入绑定的域名]]></content>
+    <content type="text"><![CDATA[安装部署hexo + github page初体验1npm install -g hexo-cli 本地目录 hexo 文件夹，进去这个文件夹，依次执行下面的命令1234cd hexohexo init# Hexo随后会自动在目标文件夹建立网站所需要的文件npm install 启动本地Hexo服务1hexo server Create a new post1hexo new 'blog name' 在hexo new文章时，需要stop server，否则会出现2次这个文章 执行下面的命令，将markdown文件生成静态网页1hexo generate 更换主题12cd themesgit clone https://github.com/litten/hexo-theme-yilia.git 配置主题 _config.yml 文件，修改里面的 theme 为 hexo-theme-yilia 配置github仓库在_config.yml 文件最后添加如下内容12345678# Deployment## Docs: http://hexo.io/docs/deployment.htmldeploy: type: git repository: https://github.com/xxx/xxx.github.io.git # ssh模式 #repository: https://github.com/xxx/xxx.github.io.git branch: master 配置好后，一次执行123hexo cleanhexo ghexo d 出现 Deploy done: git 说明配置成功 如果提示 ERROR Deployer not found: git，则要安装 hexo-deployer-git 插件12cd hexonpm install hexo-deployer-git --save 部署到github，每次部署可以执行一下命令123hexo cleanhexo generatehexo deploy 绑定域名在你本地的 hexo 项目根目录的 source 目录下创建 CNAME 文件，并在 CNAME 中输入绑定的域名]]></content>
       <categories>
         <category>Github</category>
       </categories>
