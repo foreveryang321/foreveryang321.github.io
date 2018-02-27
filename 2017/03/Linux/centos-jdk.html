@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="FTP," />
+  <meta name="keywords" content="Java,JDK," />
 
 
 
@@ -84,18 +84,18 @@
 
 
 
-<meta name="description" content="Linux安装FTPubuntu开启ftp服务安装vsftpd1、打开”终端窗口”，输入”sudo apt-get install vsftpd”–&amp;gt;回车–&amp;gt;安装完成。 2、判断vsftpd是否安装成功打开”终端窗口”，输入”sudo service vsftpd restart”重启vsftpd服务–&amp;gt;回车–&amp;gt;vsftpd处于运行状态，说明安装成功。 3、使用gedit修">
-<meta name="keywords" content="FTP">
+<meta name="description" content="1、准备创建目录12$ mkdir /usr/java$ cd /usr/java 下载 jdk-8u73-linux-x64.tar.gz，解压1$ tar -zxvf jdk-8u73-linux-x64.tar.gz 会解压到 /usr/java/jdk1.8.0_73 下">
+<meta name="keywords" content="Java,JDK">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux安装FTP">
+<meta property="og:title" content="CentOS安装JDK">
 <meta property="og:url" content="http://blog.yl-online.top/2017/03/Linux/centos-jdk.html">
 <meta property="og:site_name" content="力Li的博客">
-<meta property="og:description" content="Linux安装FTPubuntu开启ftp服务安装vsftpd1、打开”终端窗口”，输入”sudo apt-get install vsftpd”–&amp;gt;回车–&amp;gt;安装完成。 2、判断vsftpd是否安装成功打开”终端窗口”，输入”sudo service vsftpd restart”重启vsftpd服务–&amp;gt;回车–&amp;gt;vsftpd处于运行状态，说明安装成功。 3、使用gedit修">
+<meta property="og:description" content="1、准备创建目录12$ mkdir /usr/java$ cd /usr/java 下载 jdk-8u73-linux-x64.tar.gz，解压1$ tar -zxvf jdk-8u73-linux-x64.tar.gz 会解压到 /usr/java/jdk1.8.0_73 下">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-06T02:09:43.384Z">
+<meta property="og:updated_time" content="2018-02-06T02:08:26.994Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux安装FTP">
-<meta name="twitter:description" content="Linux安装FTPubuntu开启ftp服务安装vsftpd1、打开”终端窗口”，输入”sudo apt-get install vsftpd”–&amp;gt;回车–&amp;gt;安装完成。 2、判断vsftpd是否安装成功打开”终端窗口”，输入”sudo service vsftpd restart”重启vsftpd服务–&amp;gt;回车–&amp;gt;vsftpd处于运行状态，说明安装成功。 3、使用gedit修">
+<meta name="twitter:title" content="CentOS安装JDK">
+<meta name="twitter:description" content="1、准备创建目录12$ mkdir /usr/java$ cd /usr/java 下载 jdk-8u73-linux-x64.tar.gz，解压1$ tar -zxvf jdk-8u73-linux-x64.tar.gz 会解压到 /usr/java/jdk1.8.0_73 下">
 
 
 
@@ -129,7 +129,7 @@
 
 
 
-  <title>Linux安装FTP | 力Li的博客</title>
+  <title>CentOS安装JDK | 力Li的博客</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -330,7 +330,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Linux安装FTP</h2>
+          <h2 class="post-title" itemprop="name headline">CentOS安装JDK</h2>
         
 
         <div class="post-meta">
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数</span>
                 
                 <span title="字数">
-                  433
+                  377
                 </span>
               
               <!--
@@ -430,7 +430,9 @@
               </span>
               <span class="post-meta-item-text">标签</span>
               
-                <a href="/tags/FTP/" rel="tag" class="color1">FTP</a>
+                <a href="/tags/Java/" rel="tag" class="color1">Java</a>
+              
+                <a href="/tags/JDK/" rel="tag" class="color2">JDK</a>
               
             </div>
           </div>
@@ -444,11 +446,17 @@
       
 
       
-        <h1 id="Linux安装FTP"><a href="#Linux安装FTP" class="headerlink" title="Linux安装FTP"></a>Linux安装FTP</h1><p>ubuntu开启ftp服务<br>安装vsftpd<br>1、打开”终端窗口”，输入”sudo apt-get install vsftpd”–&gt;回车–&gt;安装完成。</p>
-<p>2、判断vsftpd是否安装成功<br>打开”终端窗口”，输入”sudo service vsftpd restart”重启vsftpd服务–&gt;回车–&gt;vsftpd处于运行状态，说明安装成功。</p>
-<p>3、使用gedit修改配置文件/etc/vsftpd.conf<br>打开”终端窗口”，输入”sudo gedit /etc/vsftpd.conf”–&gt;回车–&gt;打开了vsftpd.conf文<br>设置：write_enable=YES</p>
-<p>ubuntu开启SSH服务<br>SSH分客户端openssh-client和openssh-server<br>如果你只是想登陆别的机器的SSH只需要安装openssh-client（ubuntu有默认安装，如果没有则sudo apt-get install openssh-client），如果要使本机开放SSH服务就需要安装openssh-server<br>sudo apt-get install openssh-server<br>然后确认sshserver是否启动了：<br>ps -e |grep ssh<br>如果看到sshd那说明ssh-server已经启动了。<br>如果没有则可以这样启动：sudo /etc/init.d/ssh start<br>ssh-server配置文件位于/ etc/ssh/sshd_config，在这里可以定义SSH的服务端口，默认端口是22，你可以自己定义成其他端口号，如222。<br>然后重启SSH服务：<br>sudo /etc/init.d/ssh stop<br>sudo /etc/init.d/ssh start<br>然后使用以下方式登陆SSH：<br>ssh username@192.168.1.112 username为192.168.1.112 机器上的用户，需要输入密码。<br>断开连接：exit</p>
-<p>最近一直在Ubuntu下用终端操作，看着他长长的路径名实在不爽， 动手来改改咯～<br>$: sudo gedit ~/.bashrc<br>这个文件记录了用户终端配置<br>找到<br>if [ “$color_prompt “ = yes ]; then<br>    PS1 =’${debian_chroot:+($debian_chroot)}[\033[01;32m]\u@\h[\033[00m]:[\033[01;34m]\W [\033[00m]\$ ‘<br>else<br>    PS1 =’${debian_chroot:+($debian_chroot)}\u@\h:\W \$ ‘<br>将蓝色的w由小写改成大写，可以表示只显示当前目录名称.</p>
+        <h2 id="1、准备"><a href="#1、准备" class="headerlink" title="1、准备"></a>1、准备</h2><p>创建目录<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir /usr/java</span><br><span class="line">$ <span class="built_in">cd</span> /usr/java</span><br></pre></td></tr></table></figure></p>
+<p>下载 <code>jdk-8u73-linux-x64.tar.gz</code>，解压<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ tar -zxvf jdk-8u73-linux-x64.tar.gz</span><br></pre></td></tr></table></figure></p>
+<p>会解压到 <code>/usr/java/jdk1.8.0_73</code> 下<br><a id="more"></a></p>
+<h2 id="2、配置环境变量-两种方式二选一配置即可"><a href="#2、配置环境变量-两种方式二选一配置即可" class="headerlink" title="2、配置环境变量(两种方式二选一配置即可)"></a>2、配置环境变量(两种方式二选一配置即可)</h2><h3 id="2-1-编辑-etc-profile-文件"><a href="#2-1-编辑-etc-profile-文件" class="headerlink" title="2.1 编辑 /etc/profile 文件"></a>2.1 编辑 <code>/etc/profile</code> 文件</h3><p>修改 <code>/etc/profile</code> 文件当本机仅仅作为开发使用时推荐使用这种方法，因为此种配置时所有用户的 <code>shell</code> 都有权使用这些环境变量，可能会给系统带来安全性问题。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vi /etc/profile</span><br></pre></td></tr></table></figure></p>
+<p>增加如下内容<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/java/jdk</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar:<span class="variable">$CLASSPATH</span></span><br></pre></td></tr></table></figure></p>
+<p>保存退出 <code>:wq</code><br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ . /etc/profile</span><br><span class="line">$ <span class="built_in">echo</span> <span class="variable">$JAVA_HOME</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="2-2-编辑用户目录下的-bash-profile"><a href="#2-2-编辑用户目录下的-bash-profile" class="headerlink" title="2.2 编辑用户目录下的 .bash_profile"></a>2.2 编辑用户目录下的 <code>.bash_profile</code></h3><p>修改 <code>.bash_profile</code> 文件这种方法更为安全，它可以把使用这些环境变量的权限控制到用户级别，如果需要给某个用户权限使用这些环境变量，只需要修改其个人用户主目录下的 <code>.bash_profile</code> 文件就可以了<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/java/jdk</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar:<span class="variable">$CLASSPATH</span></span><br></pre></td></tr></table></figure></p>
+<p>然后执行使之生效<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> .bash_profile</span><br></pre></td></tr></table></figure></p>
+<p>可以看到 <code>JAVA_HOME</code> 不是指向真实的 <code>jdk</code> 目录 <code>/usr/java/jdk1.8.0_73</code>，而是指向 <code>/usr/java/jdk</code></p>
+<h1 id="3、创建软链接"><a href="#3、创建软链接" class="headerlink" title="3、创建软链接"></a>3、创建软链接</h1><p>为jdk真实目录创建一个命名更加间洁快捷方式<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ln -s /usr/java/jdk1.8.0_73 /usr/java/jdk</span><br><span class="line">$ <span class="built_in">source</span> /etc/profile</span><br><span class="line"><span class="comment">#$ source .bash_profile</span></span><br></pre></td></tr></table></figure></p>
+<p>至此，配置完成</p>
 
       
     </div>
@@ -477,7 +485,7 @@
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="http://blog.yl-online.top/2017/03/Linux/centos-jdk.html" title="Linux安装FTP">http://blog.yl-online.top/2017/03/Linux/centos-jdk.html</a>
+      <a href="http://blog.yl-online.top/2017/03/Linux/centos-jdk.html" title="CentOS安装JDK">http://blog.yl-online.top/2017/03/Linux/centos-jdk.html</a>
     </li>
     <li class="post-copyright-license">
       <strong>服务声明： </strong>
@@ -497,7 +505,9 @@
               <i class="fa fa-tags"></i>&nbsp;标签&nbsp;
             </span>
             
-              <a href="/tags/FTP/" rel="tag" class="color1">FTP</a>
+              <a href="/tags/Java/" rel="tag" class="color1">Java</a>
+            
+              <a href="/tags/JDK/" rel="tag" class="color2">JDK</a>
             
           </div>
         </div>
@@ -517,8 +527,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/03/Linux/centos-jdk.html" rel="prev" title="CentOS安装JDK">
-                CentOS安装JDK <i class="fa fa-chevron-right"></i>
+              <a href="/2017/03/Linux/centos-jdk.html" rel="prev" title="Linux安装FTP">
+                Linux安装FTP <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -661,7 +671,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux安装FTP"><span class="nav-number">1.</span> <span class="nav-text">Linux安装FTP</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、准备"><span class="nav-number">1.</span> <span class="nav-text">1、准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、配置环境变量-两种方式二选一配置即可"><span class="nav-number">2.</span> <span class="nav-text">2、配置环境变量(两种方式二选一配置即可)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-编辑-etc-profile-文件"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 编辑 /etc/profile 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-编辑用户目录下的-bash-profile"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 编辑用户目录下的 .bash_profile</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3、创建软链接"><span class="nav-number"></span> <span class="nav-text">3、创建软链接</span></a></div>
             
 
           </div>
