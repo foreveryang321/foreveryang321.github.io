@@ -310,6 +310,379 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/03/Java/spring-boot-2.0-redis.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="力Li">
+      <meta itemprop="description" content="开心又过一日，唔开心又系过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="力Li的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/Java/spring-boot-2.0-redis.html" itemprop="url">spring boot 2.0 + redis自定义注解</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-23T15:44:18+08:00">
+                2018-03-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-th"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数</span>
+                
+                <span title="字数">
+                  2,093
+                </span>
+              
+              <!--
+              
+                <span class="post-meta-divider">|</span>
+              
+              -->
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长</span>
+                
+                <span title="时长">
+                  12min
+                </span>
+              
+            </div>
+          
+
+          
+        </div>
+
+        
+          <div style="margin: 3px 0 20px 0">
+            <div class="post-tags">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-tags"></i>
+              </span>
+              <span class="post-meta-item-text">标签</span>
+              
+                <a href="/tags/spring-boot/" rel="tag" class="color1">spring-boot</a>
+              
+                <a href="/tags/redis/" rel="tag" class="color2">redis</a>
+              
+            </div>
+          </div>
+        
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="自定义CacheExpire注解"><a href="#自定义CacheExpire注解" class="headerlink" title="自定义CacheExpire注解"></a>自定义CacheExpire注解</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.core.annotation.AliasFor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Documented;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.ElementType;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Inherited;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Target</span>(&#123;ElementType.METHOD, ElementType.TYPE&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CacheExpire &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * expire time, default 60s</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@AliasFor</span>(<span class="string">"expire"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">long</span> <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> 60L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * expire time, default 60s</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@AliasFor</span>(<span class="string">"value"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">long</span> <span class="title">expire</span><span class="params">()</span> <span class="keyword">default</span> 60L</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/Java/spring-boot-2.0-redis.html" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      <!--  -->
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/03/Java/spring-boot-redis.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="力Li">
+      <meta itemprop="description" content="开心又过一日，唔开心又系过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="力Li的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/Java/spring-boot-redis.html" itemprop="url">spring boot + redis自定义注解</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-23T15:34:18+08:00">
+                2018-03-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-th"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数</span>
+                
+                <span title="字数">
+                  2,602
+                </span>
+              
+              <!--
+              
+                <span class="post-meta-divider">|</span>
+              
+              -->
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长</span>
+                
+                <span title="时长">
+                  15min
+                </span>
+              
+            </div>
+          
+
+          
+        </div>
+
+        
+          <div style="margin: 3px 0 20px 0">
+            <div class="post-tags">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-tags"></i>
+              </span>
+              <span class="post-meta-item-text">标签</span>
+              
+                <a href="/tags/spring-boot/" rel="tag" class="color1">spring-boot</a>
+              
+                <a href="/tags/redis/" rel="tag" class="color2">redis</a>
+              
+            </div>
+          </div>
+        
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>注意：该方法，不兼容spring-boot 2.0</p>
+</blockquote>
+<h1 id="自定义CacheExpire注解"><a href="#自定义CacheExpire注解" class="headerlink" title="自定义CacheExpire注解"></a>自定义CacheExpire注解</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123;ElementType.METHOD, ElementType.TYPE&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CacheExpire &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * expire time, default 60s</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@AliasFor</span>(<span class="string">"expire"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">long</span> <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> 60L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * expire time, default 60s</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@AliasFor</span>(<span class="string">"value"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">long</span> <span class="title">expire</span><span class="params">()</span> <span class="keyword">default</span> 60L</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/Java/spring-boot-redis.html" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      <!--  -->
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Java/java-rsa-tools.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -870,7 +1243,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Tomcat/tomcat-setenv-shell.html">
+    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Tomcat/tomcat-start-shell.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="力Li">
@@ -889,7 +1262,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/Tomcat/tomcat-setenv-shell.html" itemprop="url">Tomcat setenv.sh</a></h2>
+                <a class="post-title-link" href="/2018/02/Tomcat/tomcat-start-shell.html" itemprop="url">Tomcat 启动脚本</a></h2>
         
 
         <div class="post-meta">
@@ -955,7 +1328,7 @@
                   <span class="post-meta-item-text">字数</span>
                 
                 <span title="字数">
-                  78
+                  290
                 </span>
               
               <!--
@@ -972,7 +1345,7 @@
                   <span class="post-meta-item-text">时长</span>
                 
                 <span title="时长">
-                  1min
+                  2min
                 </span>
               
             </div>
@@ -1005,369 +1378,7 @@
       
         
           
-            <h1 id="Tomcat-setenv脚本"><a href="#Tomcat-setenv脚本" class="headerlink" title="Tomcat setenv脚本"></a>Tomcat setenv脚本</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># @Author: YL</span></span><br><span class="line"><span class="comment"># @Date:   2017-12-18 12:15:52</span></span><br><span class="line"><span class="comment"># @Last Modified by:   YL</span></span><br><span class="line"><span class="comment"># @Last Modified time: 2017-12-18 12:16:03</span></span><br><span class="line"><span class="comment"># 本文件放到 Tomcat 的 bin 目录下</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> LANG=en_US.UTF-8</span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/java/jdk1.8.0_144</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin</span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar:<span class="variable">$CLASSPATH</span></span><br><span class="line"></span><br><span class="line">JAVA_OPT=<span class="string">""</span></span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      <!--  -->
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Linux/linux-shell-vi.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="力Li">
-      <meta itemprop="description" content="开心又过一日，唔开心又系过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="力Li的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/Linux/linux-shell-vi.html" itemprop="url">Linux vi 命令</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-06T09:35:05+08:00">
-                2018-02-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-th"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数</span>
-                
-                <span title="字数">
-                  62
-                </span>
-              
-              <!--
-              
-                <span class="post-meta-divider">|</span>
-              
-              -->
-              
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长</span>
-                
-                <span title="时长">
-                  1min
-                </span>
-              
-            </div>
-          
-
-          
-        </div>
-
-        
-          <div style="margin: 3px 0 20px 0">
-            <div class="post-tags">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-tags"></i>
-              </span>
-              <span class="post-meta-item-text">标签</span>
-              
-                <a href="/tags/shell/" rel="tag" class="color1">shell</a>
-              
-                <a href="/tags/vi/" rel="tag" class="color2">vi</a>
-              
-            </div>
-          </div>
-        
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="vi"><a href="#vi" class="headerlink" title="vi"></a>vi</h1><p>linux文件格式的问题（使用unix格式）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看文件格式</span></span><br><span class="line">vi 文件名</span><br><span class="line">:<span class="built_in">set</span> ff</span><br><span class="line"><span class="comment"># 设置文件格式为unix</span></span><br><span class="line">:<span class="built_in">set</span> ff=unix</span><br><span class="line"><span class="comment"># 保存退出</span></span><br><span class="line">:wq</span><br><span class="line"><span class="comment"># 也可以直接使用</span></span><br><span class="line">dos2unix 文件名</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      <!--  -->
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Linux/linux-shell-tar.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="力Li">
-      <meta itemprop="description" content="开心又过一日，唔开心又系过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="力Li的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/Linux/linux-shell-tar.html" itemprop="url">Linux tar 命令</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-06T09:35:05+08:00">
-                2018-02-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-th"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数</span>
-                
-                <span title="字数">
-                  7
-                </span>
-              
-              <!--
-              
-                <span class="post-meta-divider">|</span>
-              
-              -->
-              
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长</span>
-                
-                <span title="时长">
-                  1min
-                </span>
-              
-            </div>
-          
-
-          
-        </div>
-
-        
-          <div style="margin: 3px 0 20px 0">
-            <div class="post-tags">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-tags"></i>
-              </span>
-              <span class="post-meta-item-text">标签</span>
-              
-                <a href="/tags/shell/" rel="tag" class="color1">shell</a>
-              
-                <a href="/tags/tar/" rel="tag" class="color2">tar</a>
-              
-            </div>
-          </div>
-        
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf xxx.tar.gz</span><br></pre></td></tr></table></figure>
+            <h1 id="Tomcat-启动脚本"><a href="#Tomcat-启动脚本" class="headerlink" title="Tomcat 启动脚本"></a>Tomcat 启动脚本</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># @Author: YL</span></span><br><span class="line"><span class="comment"># @Date:   2017-01-25 14:50:43</span></span><br><span class="line"><span class="comment"># @Last Modified by:   YL</span></span><br><span class="line"><span class="comment"># @Last Modified time: 2017-12-18 14:12:23</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> `dirname <span class="variable">$0</span>`</span><br><span class="line">PROJECT_HOME=`<span class="built_in">pwd</span>`</span><br><span class="line"></span><br><span class="line"><span class="comment"># Tomcat 服务器路径</span></span><br><span class="line">TC_HOME=<span class="string">"<span class="variable">$PROJECT_HOME</span>/tomcat"</span></span><br><span class="line"><span class="comment"># crontab 检测日记文件</span></span><br><span class="line">TC_STDOUT_FILE=<span class="string">"<span class="variable">$TC_HOME</span>/logs/stdout.out"</span></span><br><span class="line"><span class="comment"># 检测 Tomcat 是否启动（进程ID）</span></span><br><span class="line">TC_PID=`ps -ef | grep <span class="variable">$TC_HOME</span>/bin | grep -v grep | awk <span class="string">'&#123;print $2&#125;'</span>`</span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行检测的用户IP地址</span></span><br><span class="line">WHO_AM_I=`who am i | awk <span class="string">'&#123;print $5&#125;'</span> | sed <span class="string">'s/(//g'</span> | sed <span class="string">'s/)//g'</span>`</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检测输出的日记格式</span></span><br><span class="line">DATE_PATTERN=<span class="string">"[<span class="variable">$(date '+%Y-%m-%d %H:%M:%S')</span>]-[<span class="variable">$1</span>]-[<span class="variable">$WHO_AM_I</span>] <span class="variable">$TC_HOME</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">operate</span></span>()&#123;</span><br><span class="line">  <span class="keyword">if</span> [[ <span class="string">"<span class="variable">$1</span>"</span> = <span class="string">"kill"</span> ]] ; <span class="keyword">then</span></span><br><span class="line">    <span class="keyword">if</span> [[ <span class="string">"<span class="variable">$TC_PID</span>"</span> = <span class="string">""</span> ]] ; <span class="keyword">then</span></span><br><span class="line">      <span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> is not alive"</span> | tee -a <span class="variable">$TC_STDOUT_FILE</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      <span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> kill <span class="variable">$TC_PID</span> begining"</span> | tee -a <span class="variable">$TC_STDOUT_FILE</span></span><br><span class="line">      <span class="built_in">kill</span> -9 <span class="variable">$TC_PID</span></span><br><span class="line">      <span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> kill <span class="variable">$TC_PID</span> success"</span> | tee -a <span class="variable">$TC_STDOUT_FILE</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">  <span class="keyword">elif</span> [[ <span class="string">"<span class="variable">$1</span>"</span> = <span class="string">"start"</span> ]]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">cd</span> <span class="variable">$TC_HOME</span>/bin</span><br><span class="line">    sh startup.sh</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> is not support <span class="variable">$1</span>"</span> | tee -a <span class="variable">$TC_STDOUT_FILE</span></span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> [[ <span class="string">"<span class="variable">$1</span>"</span> = <span class="string">""</span> || <span class="string">"<span class="variable">$1</span>"</span> = <span class="string">"restart"</span> || <span class="string">"<span class="variable">$1</span>"</span> = <span class="string">"start"</span> ]] ; <span class="keyword">then</span></span><br><span class="line">  operate <span class="built_in">kill</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> starting"</span> | tee -a <span class="variable">$TC_STDOUT_FILE</span></span><br><span class="line">  operate start</span><br><span class="line"><span class="keyword">elif</span> [[ <span class="string">"<span class="variable">$1</span>"</span> = <span class="string">"kill"</span> ]] ; <span class="keyword">then</span></span><br><span class="line">  operate <span class="built_in">kill</span></span><br><span class="line"><span class="keyword">elif</span> [[ <span class="string">"<span class="variable">$1</span>"</span> = <span class="string">"check"</span> ]] ; <span class="keyword">then</span></span><br><span class="line">  <span class="keyword">if</span> [[ <span class="string">"<span class="variable">$TC_PID</span>"</span> = <span class="string">""</span> ]] ; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> starting"</span> &gt;&gt; <span class="variable">$TC_STDOUT_FILE</span></span><br><span class="line">    operate start</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> pid <span class="variable">$TC_PID</span>"</span> &gt;&gt; <span class="variable">$TC_STDOUT_FILE</span></span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> is not support <span class="variable">$1</span>"</span> | tee -a <span class="variable">$TC_STDOUT_FILE</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
 
           
         
@@ -2131,7 +2142,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2176,7 +2187,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/index.html">
-                <span class="site-state-item-count">69</span>
+                <span class="site-state-item-count">71</span>
                 <span class="site-state-item-name">文章</span>
               </a>
             </div>
@@ -2198,7 +2209,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">68</span>
+                <span class="site-state-item-count">69</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
