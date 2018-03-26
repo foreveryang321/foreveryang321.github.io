@@ -168,7 +168,7 @@
       </a>
     </div>
       
-        <h1 class="site-subtitle" itemprop="description">i want to be forever young</h1>
+        <h1 class="site-subtitle" itemprop="description">I want to be forever young! Coding make me happy.</h1>
       
   </div>
 
@@ -1983,7 +1983,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2017/07/Hibernate/hibernate-format-sql.html">
+    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2017/07/Hibernate/hibernate-dynamic.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Forever杨">
@@ -2002,7 +2002,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/Hibernate/hibernate-format-sql.html" itemprop="url">hibernate格式化输出sql语句（spring-data-jpa）</a></h2>
+                <a class="post-title-link" href="/2017/07/Hibernate/hibernate-dynamic.html" itemprop="url">hibernate的DynamicInsert、DynamicUpdate介绍</a></h2>
         
 
         <div class="post-meta">
@@ -2068,7 +2068,7 @@
                   <span class="post-meta-item-text">字数</span>
                 
                 <span title="字数">
-                  38
+                  445
                 </span>
               
               <!--
@@ -2085,7 +2085,7 @@
                   <span class="post-meta-item-text">时长</span>
                 
                 <span title="时长">
-                  1min
+                  2min
                 </span>
               
             </div>
@@ -2106,8 +2106,6 @@
               
                 <a href="/tags/sql/" rel="tag" class="color2">sql</a>
               
-                <a href="/tags/spring-boot/" rel="tag" class="color0">spring-boot</a>
-              
             </div>
           </div>
         
@@ -2121,10 +2119,21 @@
 
       
         
-          
-            <p>以下配置是基于 spring-boot 的 application.yml 配置<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  jpa:</span></span><br><span class="line"><span class="comment">#    hibernate:</span></span><br><span class="line"><span class="comment">#      ddl-auto: create</span></span><br><span class="line"><span class="attr">    show-sql:</span> <span class="literal">true</span></span><br><span class="line"><span class="comment">#    database: mysql</span></span><br><span class="line"><span class="attr">    properties:</span></span><br><span class="line"><span class="attr">      hibernate:</span></span><br><span class="line"><span class="attr">        format_sql:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></p>
-
-          
+          <h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><blockquote>
+<p>使用Dynamic Update</p>
+</blockquote>
+<p>如果使用了 Dynamic Update，需要注意的是，当select后，显式的把某些字段set为NULL，hibernate 会认为你修改了该字段，会生成到 update 语句中。一般先 select 实体出来，再 save 的话，只会 update 该实体被修改的字段。否则会 update 所有表字段。<br>添加Dynamic Update配置可以减少被 update 的字段。</p>
+<blockquote>
+<p>使用Dynamic Insert</p>
+</blockquote>
+<p>如果使用了 Dynamic Insert，并且数据库配置了默认值，当 insert，并且new 实体时，该属性没有 set 值的话，会使用数据库默认值，否则会使用实体的值。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/07/Hibernate/hibernate-dynamic.html" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
