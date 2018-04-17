@@ -1948,7 +1948,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Linux/linux-shell-lsof.html">
+    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Linux/linux-shell-ls.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Forever杨">
@@ -1967,7 +1967,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/Linux/linux-shell-lsof.html" itemprop="url">Linux lsof 命令</a></h2>
+                <a class="post-title-link" href="/2018/02/Linux/linux-shell-ls.html" itemprop="url">Linux ls 命令</a></h2>
         
 
         <div class="post-meta">
@@ -2033,7 +2033,7 @@
                   <span class="post-meta-item-text">字数</span>
                 
                 <span title="字数">
-                  13
+                  54
                 </span>
               
               <!--
@@ -2069,7 +2069,7 @@
               
                 <a href="/tags/shell/" rel="tag" class="color1">shell</a>
               
-                <a href="/tags/lsof/" rel="tag" class="color2">lsof</a>
+                <a href="/tags/ls/" rel="tag" class="color2">ls</a>
               
             </div>
           </div>
@@ -2085,7 +2085,8 @@
       
         
           
-            <h1 id="lsof"><a href="#lsof" class="headerlink" title="lsof"></a>lsof</h1><h2 id="检测端口未被占用"><a href="#检测端口未被占用" class="headerlink" title="检测端口未被占用"></a>检测端口未被占用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -i:8080</span><br></pre></td></tr></table></figure>
+            <h1 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 统计文件夹中文件数</span></span><br><span class="line">ls -l |grep <span class="string">"^-"</span>|wc -l</span><br></pre></td></tr></table></figure>
+<h2 id="保留最新的1个文件夹，删除其他文件夹（使用-d）"><a href="#保留最新的1个文件夹，删除其他文件夹（使用-d）" class="headerlink" title="保留最新的1个文件夹，删除其他文件夹（使用-d）"></a>保留最新的1个文件夹，删除其他文件夹（使用-d）</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -t -d /home/txrd/tisson-web-open/logs/undertow-* | tail -n +2 | xargs rm -rf</span><br></pre></td></tr></table></figure>
 
           
         

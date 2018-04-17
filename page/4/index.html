@@ -1962,7 +1962,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2017/08/spring-data-jpa/jpa-criteria.html">
+    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2017/08/mybatis/mybatis-pagehelper.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Forever杨">
@@ -1981,7 +1981,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/08/spring-data-jpa/jpa-criteria.html" itemprop="url">spring-data-jpa 使用笔记</a></h2>
+                <a class="post-title-link" href="/2017/08/mybatis/mybatis-pagehelper.html" itemprop="url">pagehelper 使用笔记</a></h2>
         
 
         <div class="post-meta">
@@ -2016,8 +2016,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/spring-data-jpa/" itemprop="url" rel="index">
-                    <span itemprop="name">spring-data-jpa</span>
+                  <a href="/categories/mybatis/" itemprop="url" rel="index">
+                    <span itemprop="name">mybatis</span>
                   </a>
                 </span>
 
@@ -2047,7 +2047,7 @@
                   <span class="post-meta-item-text">字数</span>
                 
                 <span title="字数">
-                  84
+                  78
                 </span>
               
               <!--
@@ -2081,13 +2081,9 @@
               </span>
               <span class="post-meta-item-text">标签</span>
               
-                <a href="/tags/Hibernate/" rel="tag" class="color1">Hibernate</a>
+                <a href="/tags/mybatis/" rel="tag" class="color1">mybatis</a>
               
-                <a href="/tags/sql/" rel="tag" class="color2">sql</a>
-              
-                <a href="/tags/spring-boot/" rel="tag" class="color0">spring-boot</a>
-              
-                <a href="/tags/criteria/" rel="tag" class="color1">criteria</a>
+                <a href="/tags/pagehelper/" rel="tag" class="color2">pagehelper</a>
               
             </div>
           </div>
@@ -2102,11 +2098,11 @@
 
       
         
-          <p>主要是记录一些在使用<code>spring-data-jpa</code> + <code>Hibernate</code>过程中遇到的一些问题，和要注意的知识点</p>
-<h1 id="Pageable-和-PageRequest-分页"><a href="#Pageable-和-PageRequest-分页" class="headerlink" title="Pageable 和 PageRequest 分页"></a>Pageable 和 PageRequest 分页</h1><p>在Mysql、Oracle中分页从0开始<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Pageable pageable = <span class="keyword">new</span> PageRequest(<span class="number">0</span>, <span class="number">10</span>);</span><br></pre></td></tr></table></figure></p>
+          <p>主要是记录一些在使用<code>mybatis</code> + <code>pagehelper</code>过程中遇到的一些问题，和要注意的知识点</p>
+<h1 id="PageHelper-分页"><a href="#PageHelper-分页" class="headerlink" title="PageHelper 分页"></a>PageHelper 分页</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取第1页，10条内容，默认查询总数count</span></span><br><span class="line">PageHelper.startPage(<span class="number">1</span>, <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取第1页，10条内容，不查询总数count</span></span><br><span class="line">PageHelper.startPage(<span class="number">1</span>, <span class="number">10</span>, <span class="keyword">false</span>);</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/08/spring-data-jpa/jpa-criteria.html" rel="contents">
+            <a class="btn" href="/2017/08/mybatis/mybatis-pagehelper.html" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
