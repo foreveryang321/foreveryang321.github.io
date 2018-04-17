@@ -1781,7 +1781,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Linux/linux-shell-grep.html">
+    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Zookeeper/zookeeper-clear-shell.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Forever杨">
@@ -1800,7 +1800,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/Linux/linux-shell-grep.html" itemprop="url">Linux grep 命令</a></h2>
+                <a class="post-title-link" href="/2018/02/Zookeeper/zookeeper-clear-shell.html" itemprop="url">Zookeeper 清理日志文件</a></h2>
         
 
         <div class="post-meta">
@@ -1835,8 +1835,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
+                  <a href="/categories/Zookeeper/" itemprop="url" rel="index">
+                    <span itemprop="name">Zookeeper</span>
                   </a>
                 </span>
 
@@ -1866,7 +1866,7 @@
                   <span class="post-meta-item-text">字数</span>
                 
                 <span title="字数">
-                  139
+                  180
                 </span>
               
               <!--
@@ -1893,20 +1893,6 @@
         </div>
 
         
-          <div style="margin: 3px 0 20px 0">
-            <div class="post-tags">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-tags"></i>
-              </span>
-              <span class="post-meta-item-text">标签</span>
-              
-                <a href="/tags/shell/" rel="tag" class="color1">shell</a>
-              
-                <a href="/tags/grep/" rel="tag" class="color2">grep</a>
-              
-            </div>
-          </div>
-        
       </header>
     
 
@@ -1918,10 +1904,7 @@
       
         
           
-            <h1 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h1><h2 id="统计出现次数"><a href="#统计出现次数" class="headerlink" title="统计出现次数"></a>统计出现次数</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep <span class="string">'sign.*time.*openid'</span> access_p80_weixinv3.log | awk <span class="string">'&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;'</span> | sort -n</span><br></pre></td></tr></table></figure>
-<h2 id="统计某些字符出现次数"><a href="#统计某些字符出现次数" class="headerlink" title="统计某些字符出现次数"></a>统计某些字符出现次数</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep <span class="string">'sign.*time.*openid'</span> access_p80_weixinv3.log | awk <span class="string">'&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;'</span> | sort -n</span><br></pre></td></tr></table></figure>
-<p>4       183.3.234.45<br>10      183.3.234.57<br>20      183.3.234.58</p>
-<h2 id="查询前后日志"><a href="#查询前后日志" class="headerlink" title="查询前后日志"></a>查询前后日志</h2><p>grep -5 ‘parttern’ inputfile //打印匹配行的前后5行<br>grep -C 5 ‘parttern’ inputfile //打印匹配行的前后5行<br>grep -A 5 ‘parttern’ inputfile //打印匹配行的后5行<br>grep -B 5 ‘parttern’ inputfile //打印匹配行的前5行</p>
+            <h1 id="clear"><a href="#clear" class="headerlink" title="clear"></a>clear</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># @Author: YL</span></span><br><span class="line"><span class="comment"># @Date:   2017-11-01 08:59:34</span></span><br><span class="line"><span class="comment"># @Last Modified by:   YL</span></span><br><span class="line"><span class="comment"># @Last Modified time: 2017-11-01 09:36:09</span></span><br><span class="line"><span class="comment"># 此文件放到 zookeeper 的 bin 目录下</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> `dirname <span class="variable">$0</span>`</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line">NODE_HOME=`<span class="built_in">pwd</span>`</span><br><span class="line"></span><br><span class="line"><span class="comment"># snapshot</span></span><br><span class="line">NODE_DATA_DIR=<span class="variable">$NODE_HOME</span>/data/version-2</span><br><span class="line"><span class="comment"># snapshot log</span></span><br><span class="line">NODE_LOG_DIR=<span class="variable">$NODE_HOME</span>/logs/version-2</span><br><span class="line"><span class="comment"># zk log</span></span><br><span class="line">NODE_LOGS=<span class="variable">$NODE_HOME</span>/logs</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中</span></span><br><span class="line">count=3</span><br><span class="line">count=$[<span class="variable">$count</span>+1]</span><br><span class="line">ls -t <span class="variable">$NODE_LOG_DIR</span>/<span class="built_in">log</span>.* | tail -n +<span class="variable">$count</span> | xargs rm -f</span><br><span class="line">ls -t <span class="variable">$NODE_DATA_DIR</span>/snapshot.* | tail -n +<span class="variable">$count</span> | xargs rm -f</span><br><span class="line">ls -t <span class="variable">$NODE_LOGS</span>/zookeeper.log.* | tail -n +<span class="variable">$count</span> | xargs rm -f</span><br><span class="line"></span><br><span class="line"><span class="comment"># date pattern</span></span><br><span class="line">DATE_PATTERN=<span class="string">"[<span class="variable">$(date '+%Y-%m-%d %H:%M:%S')</span>]"</span></span><br><span class="line">STDOUT_FILE=<span class="variable">$NODE_LOGS</span>/stdout.log</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> clear logs success"</span> | tee -a <span class="variable">$STDOUT_FILE</span></span><br></pre></td></tr></table></figure>
 
           
         
