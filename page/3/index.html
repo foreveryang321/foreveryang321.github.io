@@ -347,7 +347,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-02-06T10:12:02+08:00">
+                2018-02-06
+              </time>
             
           </span>
 
@@ -527,7 +539,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-02-06T10:11:53+08:00">
+                2018-02-06
+              </time>
             
           </span>
 
@@ -708,7 +732,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-02-06T10:11:47+08:00">
+                2018-02-06
+              </time>
             
           </span>
 
@@ -889,7 +925,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-02-06T10:11:41+08:00">
+                2018-02-06
+              </time>
             
           </span>
 
@@ -1033,173 +1081,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Zookeeper/zookeeper-stop-shell.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又系过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Forever杨">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/Zookeeper/zookeeper-stop-shell.html" itemprop="url">Zookeeper stop脚本</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-06T09:35:05+08:00">
-                2018-02-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-th"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Zookeeper/" itemprop="url" rel="index">
-                    <span itemprop="name">Zookeeper</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数</span>
-                
-                <span title="字数">
-                  54
-                </span>
-              
-              <!--
-              
-                <span class="post-meta-divider">|</span>
-              
-              -->
-              
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长</span>
-                
-                <span title="时长">
-                  1min
-                </span>
-              
-            </div>
-          
-
-          
-        </div>
-
-        
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="stop"><a href="#stop" class="headerlink" title="stop"></a>stop</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># @Author: YL</span></span><br><span class="line"><span class="comment"># @Date:   2017-06-29 09:00:00</span></span><br><span class="line"><span class="comment"># @Last Modified by:   YL</span></span><br><span class="line"><span class="comment"># @Last Modified time: 2017-11-01 09:37:49</span></span><br><span class="line"><span class="comment"># 此文件放到 zookeeper 的 bin 目录下</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> `dirname <span class="variable">$0</span>`</span><br><span class="line">./zkServer.sh stop</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      <!--  -->
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Zookeeper/zookeeper-env-shell.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1237,7 +1118,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-02-06T10:21:14+08:00">
+                2018-02-06
+              </time>
             
           </span>
 
@@ -1367,6 +1260,185 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Zookeeper/zookeeper-stop-shell.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又系过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Forever杨">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/Zookeeper/zookeeper-stop-shell.html" itemprop="url">Zookeeper stop脚本</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-06T09:35:05+08:00">
+                2018-02-06
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-02-06T10:21:10+08:00">
+                2018-02-06
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-th"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Zookeeper/" itemprop="url" rel="index">
+                    <span itemprop="name">Zookeeper</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数</span>
+                
+                <span title="字数">
+                  54
+                </span>
+              
+              <!--
+              
+                <span class="post-meta-divider">|</span>
+              
+              -->
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长</span>
+                
+                <span title="时长">
+                  1min
+                </span>
+              
+            </div>
+          
+
+          
+        </div>
+
+        
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="stop"><a href="#stop" class="headerlink" title="stop"></a>stop</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># @Author: YL</span></span><br><span class="line"><span class="comment"># @Date:   2017-06-29 09:00:00</span></span><br><span class="line"><span class="comment"># @Last Modified by:   YL</span></span><br><span class="line"><span class="comment"># @Last Modified time: 2017-11-01 09:37:49</span></span><br><span class="line"><span class="comment"># 此文件放到 zookeeper 的 bin 目录下</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> `dirname <span class="variable">$0</span>`</span><br><span class="line">./zkServer.sh stop</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      <!--  -->
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://blog.yl-online.top/2018/02/Zookeeper/zookeeper-start-shell.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1404,7 +1476,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-02-06T10:21:07+08:00">
+                2018-02-06
+              </time>
             
           </span>
 
@@ -1571,7 +1655,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-02-06T10:21:03+08:00">
+                2018-02-06
+              </time>
             
           </span>
 
@@ -1738,7 +1834,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-04-14T22:01:24+08:00">
+                2018-04-14
+              </time>
             
           </span>
 
@@ -1917,7 +2025,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-02-06T10:10:21+08:00">
+                2018-02-06
+              </time>
             
           </span>
 
