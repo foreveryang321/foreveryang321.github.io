@@ -168,7 +168,7 @@
       </a>
     </div>
       
-        <h1 class="site-subtitle" itemprop="description">I want to be forever young! Coding make me happy.</h1>
+        <h1 class="site-subtitle" itemprop="description">I want to be forever young!<br/>Coding make me happy.</h1>
       
   </div>
 
@@ -549,7 +549,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-05-17T10:52:44+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2018-05-17T18:08:46+08:00">
                 2018-05-17
               </time>
             
@@ -648,29 +648,15 @@
 
       
         
-          
-            <h1 id="setenv-sh"><a href="#setenv-sh" class="headerlink" title="setenv.sh"></a>setenv.sh</h1><p>在<code>Tomcat</code>的<code>bin</code>目录下添加<code>setenv.sh</code>文件，在启动<code>Tomcat</code>的时候，改脚本会被自动执行。一般在改脚本配置一些环境变量、<code>JVM</code>参数等</p>
+          <h1 id="setenv-sh"><a href="#setenv-sh" class="headerlink" title="setenv.sh"></a>setenv.sh</h1><p>在<code>Tomcat</code>的<code>bin</code>目录下添加<code>setenv.sh</code>文件，在启动<code>Tomcat</code>的时候，改脚本会被自动执行。一般在改脚本配置一些环境变量、<code>JVM</code>参数等</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># @Author: YL</span></span><br><span class="line"><span class="comment"># @Date:   2017-12-18 12:15:52</span></span><br><span class="line"><span class="comment"># @Last Modified by:   YL</span></span><br><span class="line"><span class="comment"># @Last Modified time: 2017-12-18 12:16:03</span></span><br><span class="line"><span class="comment"># 本文件放到 Tomcat 的 bin 目录下</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> LANG=en_US.UTF-8</span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/java/jdk1.8.0_144</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin</span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar:<span class="variable">$CLASSPATH</span></span><br><span class="line"></span><br><span class="line">JAVA_OPT=<span class="string">"<span class="variable">$JAVA_OPT</span> -Xss256k"</span></span><br></pre></td></tr></table></figure>
-<h1 id="Tomcat-安全配置相关"><a href="#Tomcat-安全配置相关" class="headerlink" title="Tomcat 安全配置相关"></a>Tomcat 安全配置相关</h1><h2 id="server-xml"><a href="#server-xml" class="headerlink" title="server.xml"></a>server.xml</h2><blockquote>
-<p>port 改成 -1</p>
-</blockquote>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Server</span> <span class="attr">port</span>=<span class="string">"-1"</span> <span class="attr">shutdown</span>=<span class="string">"SHUTDOWN"</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>autoDeploy 改成 false</p>
-</blockquote>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Host</span> <span class="attr">name</span>=<span class="string">"localhost"</span>  <span class="attr">appBase</span>=<span class="string">"webapps"</span> <span class="attr">unpackWARs</span>=<span class="string">"true"</span> <span class="attr">autoDeploy</span>=<span class="string">"false"</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>注释掉 AJP Connector</p>
-</blockquote>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- &lt;Connector port="8009" protocol="AJP/1.3" redirectPort="8443" /&gt; --&gt;</span></span><br></pre></td></tr></table></figure>
-<h1 id="server-xml-Context-配置"><a href="#server-xml-Context-配置" class="headerlink" title="server.xml Context 配置"></a>server.xml Context 配置</h1><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Host</span> <span class="attr">name</span>=<span class="string">"localhost"</span>  <span class="attr">appBase</span>=<span class="string">"webapps"</span> <span class="attr">unpackWARs</span>=<span class="string">"true"</span> <span class="attr">autoDeploy</span>=<span class="string">"false"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">Context</span> <span class="attr">path</span>=<span class="string">"/outserver"</span> <span class="attr">docBase</span>=<span class="string">"../../project/outserver.war"</span> <span class="attr">privileged</span>=<span class="string">"true"</span> <span class="attr">reloadable</span>=<span class="string">"false"</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">Host</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>这样配置，outserver.war会解压到tomcat/webapps下，也就是在webapps下生成outserver文件夹。</p>
-<blockquote>
-<p> docBase应该指定对应的war包全路径，不应该指定路径，比如：../../project/outserver。</p>
-<p>如果指定路径，有可以出现war包不会解压，到时项目没有更新的问题</p>
-</blockquote>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/post/d13f7d34.html" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1321,8 +1307,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-05-17T10:52:11+08:00">
-                2018-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2018-05-22T15:21:23+08:00">
+                2018-05-22
               </time>
             
           </span>
@@ -1371,7 +1357,7 @@
                   <span class="post-meta-item-text">字数</span>
                 
                 <span title="字数">
-                  282
+                  310
                 </span>
               
               <!--
@@ -1913,7 +1899,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-05-17T10:47:26+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2018-05-17T18:07:54+08:00">
                 2018-05-17
               </time>
             
@@ -2016,7 +2002,7 @@
 
       
         
-          <p>[TOC]<br>    本文主要是实现<code>AES</code>算法的<code>Java</code>版本和<code>Javascript</code>版本，并提供测试例子。<br>    AES是一个对称分组密码算法，旨在取代DES成为广泛使用的标准。根据使用的密码长度，AES最常见的有3种方案，用以适应不同的场景要求，分别是AES-128、AES-192和AES-256。<br>    Java中的PKCS5Padding和Javascript中的PKCS7Padding的结果是一样。<br>    ……<br>
+          <p>[TOC]<br>    本文主要是实现<code>AES</code>算法的<code>Java</code>版本和<code>Javascript</code>版本，并提供测试例子。<br>    AES是一个对称分组密码算法，旨在取代DES成为广泛使用的标准。根据使用的密码长度，AES最常见的有3种方案，用以适应不同的场景要求，分别是AES-128、AES-192和AES-256。<br>    Java中的PKCS5Padding和Javascript中的PKCS7Padding的结果是一样。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/post/1f7e0ef5.html" rel="contents">
@@ -2112,7 +2098,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-05-17T10:44:56+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2018-05-17T18:07:57+08:00">
                 2018-05-17
               </time>
             
@@ -2215,7 +2201,7 @@
 
       
         
-          <p>[TOC]<br>    本文主要是实现<code>RSA</code>算法的<code>Java</code>版本和<code>Javascript</code>版本，并提供测试例子。<br>    1、RSA算法可以用于数据加密和数字签名<br>    2、RSA算法相对于DES/AES等对称加密算法，他的速度要慢的多<br>    3、使用原则：公钥加密，私钥解密；私钥加密，公钥解密<br>    ……</p>
+          <p>[TOC]<br>    本文主要是实现<code>RSA</code>算法的<code>Java</code>版本和<code>Javascript</code>版本，并提供测试例子。<br>    1、RSA算法可以用于数据加密和数字签名<br>    2、RSA算法相对于DES/AES等对称加密算法，他的速度要慢的多<br>    3、使用原则：公钥加密，私钥解密；私钥加密，公钥解密</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/post/5314af17.html" rel="contents">
@@ -2340,11 +2326,20 @@
           
             
               <span class="links-of-author-item">
-                <a href="https://github.com/foreveryang321" target="_blank" title="GitHub">
+                <a href="https://github.com/search?q=不告诉你" target="_blank" title="GitHub">
                   
                     <i class="fa fa-fw fa-github"></i>
                   
                   GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://s.weibo.com/weibo/不告诉你" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
                 </a>
               </span>
             
@@ -2388,17 +2383,6 @@
   <span class="author" itemprop="copyrightHolder">Forever杨</span>
 </div>
 
-
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Pisces
-  </a>
-</div>
 
 
         
