@@ -127,27 +127,47 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux lsof 命令]]></title>
-    <url>%2Fpost%2Ffc091577.html</url>
-    <content type="text"><![CDATA[lsof检测端口未被占用1lsof -i:8080]]></content>
+    <title><![CDATA[zookeeper 清理日志文件]]></title>
+    <url>%2Fpost%2Fc0bbcacd.html</url>
+    <content type="text"><![CDATA[clear123456789101112131415161718192021222324252627282930#!/usr/bin/env bash# @Author: YL# @Date: 2017-11-01 08:59:34# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:09# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`cd ..NODE_HOME=`pwd`# snapshotNODE_DATA_DIR=$NODE_HOME/data/version-2# snapshot logNODE_LOG_DIR=$NODE_HOME/logs/version-2# zk logNODE_LOGS=$NODE_HOME/logs# 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中count=3count=$[$count+1]ls -t $NODE_LOG_DIR/log.* | tail -n +$count | xargs rm -fls -t $NODE_DATA_DIR/snapshot.* | tail -n +$count | xargs rm -fls -t $NODE_LOGS/zookeeper.log.* | tail -n +$count | xargs rm -f# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"STDOUT_FILE=$NODE_LOGS/stdout.logecho "$DATE_PATTERN clear logs success" | tee -a $STDOUT_FILE]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux find 命令]]></title>
+    <url>%2Fpost%2F7b744fec.html</url>
+    <content type="text"><![CDATA[find查找文件并删除12345678# 删除指定时间前的 jpg 文件find /opt/upload/ -mtime +30 -type f -name *.jpg -exec rm -f &#123;&#125; \;# 删除隐藏文件（-fr）find /opt/upload/ -type d -name .svn -exec rm -fr &#123;&#125; \;# 删除30天前的文件find /opt/upload -mtime +30 -type f -name "*.jpg" -exec rm -rf &#123;&#125; \; 打印指定时间前的文件1find project/upload/ -mtime +30 -type f -print]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>lsof</tag>
+        <tag>find</tag>
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux ls 命令]]></title>
-    <url>%2Fpost%2F53b5960c.html</url>
-    <content type="text"><![CDATA[ls12# 统计文件夹中文件数ls -l |grep "^-"|wc -l 保留最新的1个文件夹，删除其他文件夹（使用-d）1ls -t -d /home/txrd/tisson-web-open/logs/undertow-* | tail -n +2 | xargs rm -rf]]></content>
+    <title><![CDATA[Linux curl 命令]]></title>
+    <url>%2Fpost%2Faea02818.html</url>
+    <content type="text"><![CDATA[curlGET 请求1curl http://www.baidu.com?q=xxxx POST 请求1curl http://10.121.2.35/weixin_v3/w?urlToken=wxmanager -XPOST -d "send message..." 发送 POST JSON 请求1curl -H "Content-Type: application/json" -X POST --data '&#123;"data":"1"&#125;' http://127.0.0.1/ 使用代理1curl -x 192.168.2.5:3128 http://www.baidu.com?q=xxxx 输出请求信息12345678# http_code# time_connect# time_starttransfer# time_total# size_download# speed_download# 参考地址：curl http://www.baidu.com?q=xxxx -so /dev/null -w "%&#123;http_code&#125;\t%&#123;time_connect&#125;\t%&#123;time_starttransfer&#125;\t%&#123;time_total&#125;\t%&#123;size_download&#125;\t%&#123;speed_download&#125;\t"]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>ls</tag>
+        <tag>curl</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux vi 命令]]></title>
+    <url>%2Fpost%2F87207300.html</url>
+    <content type="text"><![CDATA[vilinux文件格式的问题（使用unix格式）123456789# 查看文件格式vi 文件名:set ff # :set fileencoding# 设置文件格式为unix:set ff=unix# 保存退出:wq# 也可以直接使用dos2unix 文件名]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>vi</tag>
       </tags>
   </entry>
   <entry>
@@ -163,27 +183,15 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux find 命令]]></title>
-    <url>%2Fpost%2F7b744fec.html</url>
-    <content type="text"><![CDATA[find查找文件并删除12345678# 删除指定时间前的 jpg 文件find /opt/upload/ -mtime +30 -type f -name *.jpg -exec rm -f &#123;&#125; \;# 删除隐藏文件（-fr）find /opt/upload/ -type d -name .svn -exec rm -fr &#123;&#125; \;# 删除30天前的文件find /opt/upload -mtime +30 -type f -name "*.jpg" -exec rm -rf &#123;&#125; \; 打印指定时间前的文件1find project/upload/ -mtime +30 -type f -print]]></content>
+    <title><![CDATA[Linux crontab 命令]]></title>
+    <url>%2Fpost%2Fb0b79272.html</url>
+    <content type="text"><![CDATA[crontab 使用注意事项如果通过 crontab 执行1、crontab 无法获取 jdk 变量，要在 java 命令之前写入jdk绝对路径2、要把路径切换到要执行的 sh 路径下注意：二者缺一不可 查找 jdk 路径的方法 1 12$ echo $JAVA_HOME/usr/java/jdk1.6.0_45/bin/java 2 123456$ which java/usr/bin/java$ ls -lrt /usr/bin/java #/usr/bin/java是which java查出来的路径lrwxrwxrwx. 1 root root 22 Sep 16 2015 /usr/bin/java -&gt; /etc/alternatives/java$ ls -lrt /etc/alternatives/java #/etc/alternatives/java是ls -lrt /usr/bin/java查出来的路径 lrwxrwxrwx. 1 root root 46 Sep 16 2015 /etc/alternatives/java -&gt; /usr/lib/jvm/jre-1.6.0-openjdk.x86_64/bin/java 查询 crontab 定时器配置情况1crontab -l 编辑 crontab 定时器1234567crontab -e# 当 crontab 调用时，错误和标准输出会写成 mail 通知你* * * * * /opt/restart.sh# 标准输出重定向到 /dev/null，输出到这里就找不回来了* * * * * /opt/restart.sh &gt; /dev/null# 标准输出和错误输出都重定向到 /dev/null* * * * * /opt/restart.sh &gt; /dev/null 2&gt;&amp;1]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>find</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux grep 命令]]></title>
-    <url>%2Fpost%2F1f104b3f.html</url>
-    <content type="text"><![CDATA[grep统计出现次数1grep 'sign.*time.*openid' access_p80_weixinv3.log | awk '&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;' | sort -n 4 183.3.234.4510 183.3.234.5720 183.3.234.58 查询前后日志grep -5 ‘parttern’ inputfile //打印匹配行的前后5行grep -C 5 ‘parttern’ inputfile //打印匹配行的前后5行grep -A 5 ‘parttern’ inputfile //打印匹配行的后5行grep -B 5 ‘parttern’ inputfile //打印匹配行的前5行]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>grep</tag>
+        <tag>crontab</tag>
       </tags>
   </entry>
   <entry>
@@ -211,15 +219,15 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux vi 命令]]></title>
-    <url>%2Fpost%2F87207300.html</url>
-    <content type="text"><![CDATA[vilinux文件格式的问题（使用unix格式）123456789# 查看文件格式vi 文件名:set ff # :set fileencoding# 设置文件格式为unix:set ff=unix# 保存退出:wq# 也可以直接使用dos2unix 文件名]]></content>
+    <title><![CDATA[Linux tar 命令]]></title>
+    <url>%2Fpost%2Fbd083454.html</url>
+    <content type="text"><![CDATA[tar1tar -zxvf xxx.tar.gz]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>vi</tag>
+        <tag>tar</tag>
       </tags>
   </entry>
   <entry>
@@ -247,18 +255,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux tar 命令]]></title>
-    <url>%2Fpost%2Fbd083454.html</url>
-    <content type="text"><![CDATA[tar1tar -zxvf xxx.tar.gz]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>tar</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Linux sed 命令]]></title>
     <url>%2Fpost%2Fb8ec468d.html</url>
     <content type="text"><![CDATA[sed打印指定行数1sed -n '12457431, 12457440p' tomcat/logs/catalina.out]]></content>
@@ -271,27 +267,39 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux crontab 命令]]></title>
-    <url>%2Fpost%2Fb0b79272.html</url>
-    <content type="text"><![CDATA[crontab 使用注意事项如果通过 crontab 执行1、crontab 无法获取 jdk 变量，要在 java 命令之前写入jdk绝对路径2、要把路径切换到要执行的 sh 路径下注意：二者缺一不可 查找 jdk 路径的方法 1 12$ echo $JAVA_HOME/usr/java/jdk1.6.0_45/bin/java 2 123456$ which java/usr/bin/java$ ls -lrt /usr/bin/java #/usr/bin/java是which java查出来的路径lrwxrwxrwx. 1 root root 22 Sep 16 2015 /usr/bin/java -&gt; /etc/alternatives/java$ ls -lrt /etc/alternatives/java #/etc/alternatives/java是ls -lrt /usr/bin/java查出来的路径 lrwxrwxrwx. 1 root root 46 Sep 16 2015 /etc/alternatives/java -&gt; /usr/lib/jvm/jre-1.6.0-openjdk.x86_64/bin/java 查询 crontab 定时器配置情况1crontab -l 编辑 crontab 定时器1234567crontab -e# 当 crontab 调用时，错误和标准输出会写成 mail 通知你* * * * * /opt/restart.sh# 标准输出重定向到 /dev/null，输出到这里就找不回来了* * * * * /opt/restart.sh &gt; /dev/null# 标准输出和错误输出都重定向到 /dev/null* * * * * /opt/restart.sh &gt; /dev/null 2&gt;&amp;1]]></content>
+    <title><![CDATA[Linux netstat 命令]]></title>
+    <url>%2Fpost%2F6c05ba39.html</url>
+    <content type="text"><![CDATA[netstat查看进程的网络状态1netstat -anp | grep 7646]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>crontab</tag>
+        <tag>netstat</tag>
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux curl 命令]]></title>
-    <url>%2Fpost%2Faea02818.html</url>
-    <content type="text"><![CDATA[curlGET 请求1curl http://www.baidu.com?q=xxxx POST 请求1curl http://10.121.2.35/weixin_v3/w?urlToken=wxmanager -XPOST -d "send message..." 发送 POST JSON 请求1curl -H "Content-Type: application/json" -X POST --data '&#123;"data":"1"&#125;' http://127.0.0.1/ 使用代理1curl -x 192.168.2.5:3128 http://www.baidu.com?q=xxxx 输出请求信息12345678# http_code# time_connect# time_starttransfer# time_total# size_download# speed_download# 参考地址：curl http://www.baidu.com?q=xxxx -so /dev/null -w "%&#123;http_code&#125;\t%&#123;time_connect&#125;\t%&#123;time_starttransfer&#125;\t%&#123;time_total&#125;\t%&#123;size_download&#125;\t%&#123;speed_download&#125;\t"]]></content>
+    <title><![CDATA[Linux lsof 命令]]></title>
+    <url>%2Fpost%2Ffc091577.html</url>
+    <content type="text"><![CDATA[lsof检测端口未被占用1lsof -i:8080]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>curl</tag>
+        <tag>lsof</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux ls 命令]]></title>
+    <url>%2Fpost%2F53b5960c.html</url>
+    <content type="text"><![CDATA[ls12# 统计文件夹中文件数ls -l |grep "^-"|wc -l 保留最新的1个文件夹，删除其他文件夹（使用-d）1ls -t -d /home/txrd/tisson-web-open/logs/undertow-* | tail -n +2 | xargs rm -rf]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>ls</tag>
       </tags>
   </entry>
   <entry>
@@ -311,14 +319,6 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[zookeeper 清理日志文件]]></title>
-    <url>%2Fpost%2Fc0bbcacd.html</url>
-    <content type="text"><![CDATA[clear123456789101112131415161718192021222324252627282930#!/usr/bin/env bash# @Author: YL# @Date: 2017-11-01 08:59:34# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:09# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`cd ..NODE_HOME=`pwd`# snapshotNODE_DATA_DIR=$NODE_HOME/data/version-2# snapshot logNODE_LOG_DIR=$NODE_HOME/logs/version-2# zk logNODE_LOGS=$NODE_HOME/logs# 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中count=3count=$[$count+1]ls -t $NODE_LOG_DIR/log.* | tail -n +$count | xargs rm -fls -t $NODE_DATA_DIR/snapshot.* | tail -n +$count | xargs rm -fls -t $NODE_LOGS/zookeeper.log.* | tail -n +$count | xargs rm -f# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"STDOUT_FILE=$NODE_LOGS/stdout.logecho "$DATE_PATTERN clear logs success" | tee -a $STDOUT_FILE]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
     <title><![CDATA[zookeeper 启动脚本]]></title>
     <url>%2Fpost%2Faf01b9a2.html</url>
     <content type="text"><![CDATA[start12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-28 10:23:20# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:41# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`NODE_BIN_DIR=`pwd`NODE_LIB_DIR=$NODE_BIN_DIR/../lib/cd ..NODE_HOME=`pwd`# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"# mkdir logs dirNODE_DATA_LOG_DIR=`sed '/dataLogDir/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`NODE_LOGS_DIR=""if [ -n "$NODE_DATA_LOG_DIR" ]; then NODE_LOGS_DIR=$NODE_DATA_LOG_DIRelse NODE_LOGS_DIR=$NODE_HOME/logsfiif [ ! -d $NODE_LOGS_DIR ]; then mkdir $NODE_LOGS_DIRfiSTDOUT_FILE=$NODE_LOGS_DIR/stdout.logecho "$DATE_PATTERN NODE_BIN_DIR: $NODE_BIN_DIR" | tee -a $STDOUT_FILE# pidNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`if [ -n "$NODE_PID" ]; then echo "$DATE_PATTERN ERROR: The $NODE_LIB_DIR already started! pid: $NODE_PID" | tee -a $STDOUT_FILE exit 1fi# portNODE_PORT=`sed '/clientPort/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`if [ -n "$NODE_PORT" ]; then NODE_PORT_COUNT=`netstat -tln | grep $NODE_PORT | wc -l` if [ $NODE_PORT_COUNT -gt 0 ]; then echo "$DATE_PATTERN ERROR: The $NODE_LIB_DIR port $NODE_PORT already used!" | tee -a $STDOUT_FILE exit 1 fifi# startingcd $NODE_BIN_DIR./zkServer.sh startNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`echo "$DATE_PATTERN The $NODE_LIB_DIR started OK! pid: $NODE_PID" | tee -a $STDOUT_FILE]]></content>
@@ -327,16 +327,12 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[Linux netstat 命令]]></title>
-    <url>%2Fpost%2F6c05ba39.html</url>
-    <content type="text"><![CDATA[netstat查看进程的网络状态1netstat -anp | grep 7646]]></content>
+    <title><![CDATA[zookeeper重启脚本]]></title>
+    <url>%2Fpost%2F6c1ad93d.html</url>
+    <content type="text"><![CDATA[restart12345678910111213#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:10# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:30# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stopsleep 3./zkServer.sh start]]></content>
       <categories>
-        <category>Linux</category>
+        <category>zookeeper</category>
       </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>netstat</tag>
-      </tags>
   </entry>
   <entry>
     <title><![CDATA[TCP]]></title>
@@ -348,14 +344,6 @@
       <tags>
         <tag>TCP</tag>
       </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[zookeeper重启脚本]]></title>
-    <url>%2Fpost%2F6c1ad93d.html</url>
-    <content type="text"><![CDATA[restart12345678910111213#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:10# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:30# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stopsleep 3./zkServer.sh start]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
   </entry>
   <entry>
     <title><![CDATA[jar启动脚本]]></title>
@@ -378,6 +366,18 @@
       </categories>
       <tags>
         <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux grep 命令]]></title>
+    <url>%2Fpost%2F1f104b3f.html</url>
+    <content type="text"><![CDATA[grep统计出现次数1grep 'sign.*time.*openid' access_p80_weixinv3.log | awk '&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;' | sort -n 4 183.3.234.4510 183.3.234.5720 183.3.234.58 查询前后日志grep -5 ‘parttern’ inputfile //打印匹配行的前后5行grep -C 5 ‘parttern’ inputfile //打印匹配行的前后5行grep -A 5 ‘parttern’ inputfile //打印匹配行的后5行grep -B 5 ‘parttern’ inputfile //打印匹配行的前5行]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>grep</tag>
       </tags>
   </entry>
   <entry>
@@ -464,6 +464,18 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[pagehelper 使用笔记]]></title>
+    <url>%2Fpost%2F4f0d5500.html</url>
+    <content type="text"><![CDATA[主要是记录一些在使用mybatis + pagehelper过程中遇到的一些问题，和要注意的知识点 PageHelper 分页12345// 获取第1页，10条内容，默认查询总数countPageHelper.startPage(1, 10);// 获取第1页，10条内容，不查询总数countPageHelper.startPage(1, 10, false);]]></content>
+      <categories>
+        <category>mybatis</category>
+      </categories>
+      <tags>
+        <tag>mybatis</tag>
+        <tag>pagehelper</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[spring-data-jpa 使用笔记]]></title>
     <url>%2Fpost%2F43f916ea.html</url>
     <content type="text"><![CDATA[主要是记录一些在使用spring-data-jpa + Hibernate过程中遇到的一些问题，和要注意的知识点 Pageable 和 PageRequest 分页在Mysql、Oracle中分页从0开始1Pageable pageable = new PageRequest(0, 10); 查看org.springframework.data.domain.PageRequest源码可知，分页从0开始123public Pageable first() &#123; return new PageRequest(0, this.getPageSize(), this.getSort());&#125;]]></content>
@@ -475,18 +487,6 @@
         <tag>sql</tag>
         <tag>spring-boot</tag>
         <tag>criteria</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[pagehelper 使用笔记]]></title>
-    <url>%2Fpost%2F4f0d5500.html</url>
-    <content type="text"><![CDATA[主要是记录一些在使用mybatis + pagehelper过程中遇到的一些问题，和要注意的知识点 PageHelper 分页12345// 获取第1页，10条内容，默认查询总数countPageHelper.startPage(1, 10);// 获取第1页，10条内容，不查询总数countPageHelper.startPage(1, 10, false);]]></content>
-      <categories>
-        <category>mybatis</category>
-      </categories>
-      <tags>
-        <tag>mybatis</tag>
-        <tag>pagehelper</tag>
       </tags>
   </entry>
   <entry>
@@ -504,6 +504,18 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Hibernate的DynamicInsert、DynamicUpdate介绍]]></title>
+    <url>%2Fpost%2F2ed26d9a.html</url>
+    <content type="text"><![CDATA[作用 使用 Dynamic Update 如果使用了 Dynamic Update，需要注意的是，当select后，显式的把某些字段set为NULL，hibernate 会认为你修改了该字段，会生成到 update 语句中。一般先 select 实体出来，再 save 的话，只会 update 该实体被修改的字段。否则会 update 所有表字段。添加Dynamic Update配置可以减少被 update 的字段。 使用 Dynamic Insert 如果使用了 Dynamic Insert，并且数据库配置了默认值，当 insert，并且new 实体时，该属性没有 set 值的话，会使用数据库默认值，否则会使用实体的值。 配置方式 第一种：使用注解配置12345678910111213@Entiry(name = "t_user")@DynamicInsert@DynamicUpdatepublic class User &#123; @Id @GeneratedValue private Long id; private Strin name; private Integer age; private Integer status; // getter setter&#125; 第二种：使用.hbm.xml配置12345&lt;hibernate-mapping&gt; &lt;class name="xxx.User" table="t_user" dynamic-insert="true" dynamic-update="true"&gt; &lt;!-- 省略配置 --&gt; &lt;/class&gt;&lt;/hibernate-mapping&gt; 效果主要比较一下insert、update语句的区别，其中update一个已有的实体对象时，hibernate会再执行一次select操作再去update123456789101112131415161718192021222324252627282930@RunWith(SpringJUnit4ClassRunner.class)@SpringBootTestpublic class ApplicationTests &#123; @Autowired private UserRepository repository; @Test public void test() throws Exception &#123; // 1、插入新记录 // 配置 dynamic insert // insert into user (name) values (?) // 未配置 dynamic insert // insert into user (age, name, status) values (?, ?, ?) User user = new User("AAA"); User save = repository.save(user); // 2、更新记录 // 配置 dynamic update // select user0_.id as id1_1_0_, user0_.age as age2_1_0_, user0_.name as name3_1_0_, user0_.status as status4_1_0_ from user user0_ where user0_.id=? // update user set name=? where id=? // 未配置 dynamic update // select user0_.id as id1_1_0_, user0_.age as age2_1_0_, user0_.name as name3_1_0_, user0_.status as status4_1_0_ from user user0_ where user0_.id=? // update user set age=?, name=?, status=? where id=? save.setName("BBB"); repository.save(save); &#125;&#125;]]></content>
+      <categories>
+        <category>Hibernate</category>
+      </categories>
+      <tags>
+        <tag>Hibernate</tag>
+        <tag>sql</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[hibernate格式化输出sql语句（spring-data-jpa）]]></title>
     <url>%2Fpost%2F723691b5.html</url>
     <content type="text"><![CDATA[以下配置是基于 spring-boot 的 application.yml 配置123456789spring: jpa:# hibernate:# ddl-auto: create show-sql: true# database: mysql properties: hibernate: format_sql: true]]></content>
@@ -514,18 +526,6 @@
         <tag>Hibernate</tag>
         <tag>sql</tag>
         <tag>spring-boot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Hibernate的DynamicInsert、DynamicUpdate介绍]]></title>
-    <url>%2Fpost%2F2ed26d9a.html</url>
-    <content type="text"><![CDATA[作用 使用 Dynamic Update 如果使用了 Dynamic Update，需要注意的是，当select后，显式的把某些字段set为NULL，hibernate 会认为你修改了该字段，会生成到 update 语句中。一般先 select 实体出来，再 save 的话，只会 update 该实体被修改的字段。否则会 update 所有表字段。添加Dynamic Update配置可以减少被 update 的字段。 使用 Dynamic Insert 如果使用了 Dynamic Insert，并且数据库配置了默认值，当 insert，并且new 实体时，该属性没有 set 值的话，会使用数据库默认值，否则会使用实体的值。 配置方式 第一种：使用注解配置12345678910111213@Entiry(name = "t_user")@DynamicInsert@DynamicUpdatepublic class User &#123; @Id @GeneratedValue private Long id; private Strin name; private Integer age; private Integer status; // getter setter&#125; 第二种：使用.hbm.xml配置12345&lt;hibernate-mapping&gt; &lt;class name="xxx.User" table="t_user" dynamic-insert="true" dynamic-update="true"&gt; &lt;!-- 省略配置 --&gt; &lt;/class&gt;&lt;/hibernate-mapping&gt; 效果主要比较一下insert、update语句的区别，其中update一个已有的实体对象时，hibernate会再执行一次select操作再去update123456789101112131415161718192021222324252627282930@RunWith(SpringJUnit4ClassRunner.class)@SpringBootTestpublic class ApplicationTests &#123; @Autowired private UserRepository repository; @Test public void test() throws Exception &#123; // 1、插入新记录 // 配置 dynamic insert // insert into user (name) values (?) // 未配置 dynamic insert // insert into user (age, name, status) values (?, ?, ?) User user = new User("AAA"); User save = repository.save(user); // 2、更新记录 // 配置 dynamic update // select user0_.id as id1_1_0_, user0_.age as age2_1_0_, user0_.name as name3_1_0_, user0_.status as status4_1_0_ from user user0_ where user0_.id=? // update user set name=? where id=? // 未配置 dynamic update // select user0_.id as id1_1_0_, user0_.age as age2_1_0_, user0_.name as name3_1_0_, user0_.status as status4_1_0_ from user user0_ where user0_.id=? // update user set age=?, name=?, status=? where id=? save.setName("BBB"); repository.save(save); &#125;&#125;]]></content>
-      <categories>
-        <category>Hibernate</category>
-      </categories>
-      <tags>
-        <tag>Hibernate</tag>
-        <tag>sql</tag>
       </tags>
   </entry>
   <entry>
@@ -666,7 +666,7 @@
   <entry>
     <title><![CDATA[Maven 使用]]></title>
     <url>%2Fpost%2Fe3a1de67.html</url>
-    <content type="text"><![CDATA[maven打包jar，并把第三方jar包放到lib中spring-boot插件打包123456789&lt;build&gt; &lt;finalName&gt;$&#123;project.artifactId&#125;&lt;/finalName&gt; &lt;plugins&gt; &lt;plugin&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt; &lt;/plugin&gt; &lt;/plugins&gt;&lt;/build&gt; 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970&lt;!-- 打包 --&gt;&lt;build&gt; &lt;finalName&gt;$&#123;project.artifactId&#125;&lt;/finalName&gt; &lt;resources&gt; &lt;!-- 指定 src/main/resources下所有文件及文件夹为资源文件 --&gt; &lt;resource&gt; &lt;targetPath&gt;$&#123;project.build.directory&#125;/classes&lt;/targetPath&gt; &lt;directory&gt;src/main/resources&lt;/directory&gt; &lt;filtering&gt;true&lt;/filtering&gt; &lt;includes&gt; &lt;include&gt;**/*&lt;/include&gt; &lt;!-- &lt;include&gt;**/*.xml&lt;/include&gt; &lt;include&gt;**/*.properties&lt;/include&gt; --&gt; &lt;/includes&gt; &lt;/resource&gt; &lt;!-- 使用com.alibaba.dubbo.container.Main启动应用的话，要把spring配置放到/META-INF/spring下 --&gt; &lt;resource&gt; &lt;targetPath&gt;$&#123;project.build.directory&#125;/classes/META-INF/spring&lt;/targetPath&gt; &lt;directory&gt;src/main/resources/spring&lt;/directory&gt; &lt;filtering&gt;true&lt;/filtering&gt; &lt;includes&gt; &lt;include&gt;spring-context.xml&lt;/include&gt; &lt;/includes&gt; &lt;/resource&gt; &lt;/resources&gt; &lt;!-- more --&gt; &lt;plugins&gt; &lt;!-- 打包jar文件时，配置manifest文件，加入lib包的jar依赖 --&gt; &lt;plugin&gt; &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt; &lt;artifactId&gt;maven-jar-plugin&lt;/artifactId&gt; &lt;configuration&gt; &lt;classesDirectory&gt;target/classes/&lt;/classesDirectory&gt; &lt;archive&gt; &lt;manifest&gt; &lt;mainClass&gt;com.alibaba.dubbo.container.Main&lt;/mainClass&gt; &lt;!-- 打包时 MANIFEST.MF文件不记录的时间戳版本 --&gt; &lt;useUniqueVersions&gt;false&lt;/useUniqueVersions&gt; &lt;addClasspath&gt;true&lt;/addClasspath&gt; &lt;classpathPrefix&gt;lib/&lt;/classpathPrefix&gt; &lt;/manifest&gt; &lt;manifestEntries&gt; &lt;Class-Path&gt;.&lt;/Class-Path&gt; &lt;/manifestEntries&gt; &lt;/archive&gt; &lt;/configuration&gt; &lt;/plugin&gt; &lt;!-- 打包jar时，把依赖的第三方jar包，放到lib/文件下 --&gt; &lt;plugin&gt; &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt; &lt;artifactId&gt;maven-dependency-plugin&lt;/artifactId&gt; &lt;executions&gt; &lt;execution&gt; &lt;id&gt;copy-dependencies&lt;/id&gt; &lt;phase&gt;package&lt;/phase&gt; &lt;goals&gt; &lt;goal&gt;copy-dependencies&lt;/goal&gt; &lt;/goals&gt; &lt;configuration&gt; &lt;type&gt;jar&lt;/type&gt; &lt;includeTypes&gt;jar&lt;/includeTypes&gt; &lt;useUniqueVersions&gt;false&lt;/useUniqueVersions&gt; &lt;outputDirectory&gt; $&#123;project.build.directory&#125;/lib &lt;/outputDirectory&gt; &lt;/configuration&gt; &lt;/execution&gt; &lt;/executions&gt; &lt;/plugin&gt; &lt;/plugins&gt;&lt;/build&gt; 阿里云私有库123456789101112&lt;mirror&gt; &lt;id&gt;aliyun-nexus&lt;/id&gt; &lt;mirrorOf&gt;central&lt;/mirrorOf&gt; &lt;url&gt;http://maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt;&lt;/mirror&gt;&lt;!--&lt;mirror&gt; &lt;id&gt;aliyun-nexus-public-snapshots&lt;/id&gt; &lt;mirrorOf&gt;public-snapshots&lt;/mirrorOf&gt; &lt;url&gt;http://maven.aliyun.com/nexus/content/repositories/snapshots/&lt;/url&gt;&lt;/mirror&gt;--&gt; 发布 jar 到私有仓库 maven setting.xml 配置 123456789101112131415&lt;server&gt; &lt;id&gt;maven2-weixin-public&lt;/id&gt; &lt;username&gt;weixin&lt;/username&gt; &lt;password&gt;weixin&lt;/password&gt;&lt;/server&gt;&lt;server&gt; &lt;id&gt;maven2-weixin-release&lt;/id&gt; &lt;username&gt;weixin&lt;/username&gt; &lt;password&gt;weixin&lt;/password&gt;&lt;/server&gt;&lt;server&gt; &lt;id&gt;maven2-weixin-snapshots&lt;/id&gt; &lt;username&gt;weixin&lt;/username&gt; &lt;password&gt;weixin&lt;/password&gt;&lt;/server&gt; 在项目 pom.xml 配置 12345678910111213&lt;!-- 发布 jar 到中央仓库 --&gt;&lt;distributionManagement&gt; &lt;repository&gt; &lt;id&gt;maven2-weixin-release&lt;/id&gt; &lt;name&gt;Nexus Release Repository&lt;/name&gt; &lt;url&gt;http://maven.ctim:8081/repository/maven2-weixin-release/&lt;/url&gt; &lt;/repository&gt; &lt;snapshotRepository&gt; &lt;id&gt;maven2-weixin-snapshots&lt;/id&gt; &lt;name&gt;Nexus Snapshot Repository&lt;/name&gt; &lt;url&gt;http://maven.ctim:8081/repository/maven2-weixin-snapshots/&lt;/url&gt; &lt;/snapshotRepository&gt;&lt;/distributionManagement&gt; 注意，pom.xml中的id要和setting.xml中配置的一致 同时发布源码 12345678910111213&lt;plugin&gt; &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt; &lt;artifactId&gt;maven-source-plugin&lt;/artifactId&gt; &lt;version&gt;2.4&lt;/version&gt; &lt;executions&gt; &lt;execution&gt; &lt;id&gt;attach-sources&lt;/id&gt; &lt;goals&gt; &lt;goal&gt;jar&lt;/goal&gt; &lt;/goals&gt; &lt;/execution&gt; &lt;/executions&gt;&lt;/plugin&gt; 如果不发布源码，可以使用如下配置，只打包源码，不发布到私有仓库 123456789101112131415&lt;plugin&gt; &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt; &lt;artifactId&gt;maven-source-plugin&lt;/artifactId&gt; &lt;version&gt;2.4&lt;/version&gt; &lt;executions&gt; &lt;execution&gt; &lt;id&gt;attach-sources&lt;/id&gt; &lt;!-- 只打包源码，不发布元源码到私有仓库 --&gt; &lt;phase&gt;none&lt;/phase&gt; &lt;goals&gt; &lt;goal&gt;jar&lt;/goal&gt; &lt;/goals&gt; &lt;/execution&gt; &lt;/executions&gt;&lt;/plugin&gt; 执行 deploy 发布 jar 到私有仓库 1mvn clean deploy -Dmaven.test.skip=true 注意：release 版本只能上传一次，SNAPSHOT 版本可以无限次上传 使用私有仓库下载 jar 在 setting.xml 配置 mirror 12345&lt;mirror&gt; &lt;id&gt;maven2-weixin-public&lt;/id&gt; &lt;mirrorOf&gt;maven2-weixin-public&lt;/mirrorOf&gt; &lt;url&gt;http://maven.ctim:8081/repository/maven2-weixin-public/&lt;/url&gt;&lt;/mirror&gt; 在 setting.xml 配置 profile 并激活 1234567891011121314151617&lt;profile&gt; &lt;id&gt;wechat&lt;/id&gt; &lt;repositories&gt; &lt;repository&gt; &lt;id&gt;maven2-weixin-public&lt;/id&gt; &lt;name&gt;Nexus Release Repository&lt;/name&gt; &lt;url&gt;http://maven.ctim:8081/repository/maven2-weixin-public/&lt;/url&gt; &lt;releases&gt; &lt;enabled&gt;true&lt;/enabled&gt; &lt;/releases&gt; &lt;snapshots&gt; &lt;enabled&gt;true&lt;/enabled&gt; &lt;updatePolicy&gt;always&lt;/updatePolicy&gt; &lt;/snapshots&gt; &lt;/repository&gt; &lt;/repositories&gt;&lt;/profile&gt; 激活 profile 123&lt;activeProfiles&gt; &lt;activeProfile&gt;wechat&lt;/activeProfile&gt;&lt;/activeProfiles&gt;]]></content>
+    <content type="text"><![CDATA[Maven 打包 jarspring-boot插件打包123456789&lt;build&gt; &lt;finalName&gt;$&#123;project.artifactId&#125;&lt;/finalName&gt; &lt;plugins&gt; &lt;plugin&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt; &lt;/plugin&gt; &lt;/plugins&gt;&lt;/build&gt; 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970&lt;!-- 打包 --&gt;&lt;build&gt; &lt;finalName&gt;$&#123;project.artifactId&#125;&lt;/finalName&gt; &lt;resources&gt; &lt;!-- 指定 src/main/resources下所有文件及文件夹为资源文件 --&gt; &lt;resource&gt; &lt;targetPath&gt;$&#123;project.build.directory&#125;/classes&lt;/targetPath&gt; &lt;directory&gt;src/main/resources&lt;/directory&gt; &lt;filtering&gt;true&lt;/filtering&gt; &lt;includes&gt; &lt;include&gt;**/*&lt;/include&gt; &lt;!-- &lt;include&gt;**/*.xml&lt;/include&gt; &lt;include&gt;**/*.properties&lt;/include&gt; --&gt; &lt;/includes&gt; &lt;/resource&gt; &lt;!-- 使用com.alibaba.dubbo.container.Main启动应用的话，要把spring配置放到/META-INF/spring下 --&gt; &lt;resource&gt; &lt;targetPath&gt;$&#123;project.build.directory&#125;/classes/META-INF/spring&lt;/targetPath&gt; &lt;directory&gt;src/main/resources/spring&lt;/directory&gt; &lt;filtering&gt;true&lt;/filtering&gt; &lt;includes&gt; &lt;include&gt;spring-context.xml&lt;/include&gt; &lt;/includes&gt; &lt;/resource&gt; &lt;/resources&gt; &lt;!-- more --&gt; &lt;plugins&gt; &lt;!-- 打包jar文件时，配置manifest文件，加入lib包的jar依赖 --&gt; &lt;plugin&gt; &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt; &lt;artifactId&gt;maven-jar-plugin&lt;/artifactId&gt; &lt;configuration&gt; &lt;classesDirectory&gt;target/classes/&lt;/classesDirectory&gt; &lt;archive&gt; &lt;manifest&gt; &lt;mainClass&gt;com.alibaba.dubbo.container.Main&lt;/mainClass&gt; &lt;!-- 打包时 MANIFEST.MF文件不记录的时间戳版本 --&gt; &lt;useUniqueVersions&gt;false&lt;/useUniqueVersions&gt; &lt;addClasspath&gt;true&lt;/addClasspath&gt; &lt;classpathPrefix&gt;lib/&lt;/classpathPrefix&gt; &lt;/manifest&gt; &lt;manifestEntries&gt; &lt;Class-Path&gt;.&lt;/Class-Path&gt; &lt;/manifestEntries&gt; &lt;/archive&gt; &lt;/configuration&gt; &lt;/plugin&gt; &lt;!-- 打包jar时，把依赖的第三方jar包，放到lib/文件下 --&gt; &lt;plugin&gt; &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt; &lt;artifactId&gt;maven-dependency-plugin&lt;/artifactId&gt; &lt;executions&gt; &lt;execution&gt; &lt;id&gt;copy-dependencies&lt;/id&gt; &lt;phase&gt;package&lt;/phase&gt; &lt;goals&gt; &lt;goal&gt;copy-dependencies&lt;/goal&gt; &lt;/goals&gt; &lt;configuration&gt; &lt;type&gt;jar&lt;/type&gt; &lt;includeTypes&gt;jar&lt;/includeTypes&gt; &lt;useUniqueVersions&gt;false&lt;/useUniqueVersions&gt; &lt;outputDirectory&gt; $&#123;project.build.directory&#125;/lib &lt;/outputDirectory&gt; &lt;/configuration&gt; &lt;/execution&gt; &lt;/executions&gt; &lt;/plugin&gt; &lt;/plugins&gt;&lt;/build&gt; 配置阿里云私有库123456789101112&lt;mirror&gt; &lt;id&gt;aliyun-nexus&lt;/id&gt; &lt;mirrorOf&gt;central&lt;/mirrorOf&gt; &lt;url&gt;http://maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt;&lt;/mirror&gt;&lt;!--&lt;mirror&gt; &lt;id&gt;aliyun-nexus-public-snapshots&lt;/id&gt; &lt;mirrorOf&gt;public-snapshots&lt;/mirrorOf&gt; &lt;url&gt;http://maven.aliyun.com/nexus/content/repositories/snapshots/&lt;/url&gt;&lt;/mirror&gt;--&gt; 发布 jar 到私有仓库 maven setting.xml 配置 123456789101112131415&lt;server&gt; &lt;id&gt;maven2-weixin-public&lt;/id&gt; &lt;username&gt;weixin&lt;/username&gt; &lt;password&gt;weixin&lt;/password&gt;&lt;/server&gt;&lt;server&gt; &lt;id&gt;maven2-weixin-release&lt;/id&gt; &lt;username&gt;weixin&lt;/username&gt; &lt;password&gt;weixin&lt;/password&gt;&lt;/server&gt;&lt;server&gt; &lt;id&gt;maven2-weixin-snapshots&lt;/id&gt; &lt;username&gt;weixin&lt;/username&gt; &lt;password&gt;weixin&lt;/password&gt;&lt;/server&gt; 在项目 pom.xml 配置 12345678910111213&lt;!-- 发布 jar 到中央仓库 --&gt;&lt;distributionManagement&gt; &lt;repository&gt; &lt;id&gt;maven2-weixin-release&lt;/id&gt; &lt;name&gt;Nexus Release Repository&lt;/name&gt; &lt;url&gt;http://maven.ctim:8081/repository/maven2-weixin-release/&lt;/url&gt; &lt;/repository&gt; &lt;snapshotRepository&gt; &lt;id&gt;maven2-weixin-snapshots&lt;/id&gt; &lt;name&gt;Nexus Snapshot Repository&lt;/name&gt; &lt;url&gt;http://maven.ctim:8081/repository/maven2-weixin-snapshots/&lt;/url&gt; &lt;/snapshotRepository&gt;&lt;/distributionManagement&gt; 注意，pom.xml中的id要和setting.xml中配置的一致 同时发布源码 12345678910111213&lt;plugin&gt; &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt; &lt;artifactId&gt;maven-source-plugin&lt;/artifactId&gt; &lt;version&gt;2.4&lt;/version&gt; &lt;executions&gt; &lt;execution&gt; &lt;id&gt;attach-sources&lt;/id&gt; &lt;goals&gt; &lt;goal&gt;jar&lt;/goal&gt; &lt;/goals&gt; &lt;/execution&gt; &lt;/executions&gt;&lt;/plugin&gt; 如果不发布源码，可以使用如下配置，只打包源码，不发布到私有仓库 123456789101112131415&lt;plugin&gt; &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt; &lt;artifactId&gt;maven-source-plugin&lt;/artifactId&gt; &lt;version&gt;2.4&lt;/version&gt; &lt;executions&gt; &lt;execution&gt; &lt;id&gt;attach-sources&lt;/id&gt; &lt;!-- 只打包源码，不发布元源码到私有仓库 --&gt; &lt;phase&gt;none&lt;/phase&gt; &lt;goals&gt; &lt;goal&gt;jar&lt;/goal&gt; &lt;/goals&gt; &lt;/execution&gt; &lt;/executions&gt;&lt;/plugin&gt; 执行 deploy 发布 jar 到私有仓库 1mvn clean deploy -Dmaven.test.skip=true 注意：release 版本只能上传一次，SNAPSHOT 版本可以无限次上传 使用私有仓库下载 jar 在 setting.xml 配置 mirror 12345&lt;mirror&gt; &lt;id&gt;maven2-weixin-public&lt;/id&gt; &lt;mirrorOf&gt;maven2-weixin-public&lt;/mirrorOf&gt; &lt;url&gt;http://maven.ctim:8081/repository/maven2-weixin-public/&lt;/url&gt;&lt;/mirror&gt; 在 setting.xml 配置 profile 并激活 1234567891011121314151617&lt;profile&gt; &lt;id&gt;wechat&lt;/id&gt; &lt;repositories&gt; &lt;repository&gt; &lt;id&gt;maven2-weixin-public&lt;/id&gt; &lt;name&gt;Nexus Release Repository&lt;/name&gt; &lt;url&gt;http://maven.ctim:8081/repository/maven2-weixin-public/&lt;/url&gt; &lt;releases&gt; &lt;enabled&gt;true&lt;/enabled&gt; &lt;/releases&gt; &lt;snapshots&gt; &lt;enabled&gt;true&lt;/enabled&gt; &lt;updatePolicy&gt;always&lt;/updatePolicy&gt; &lt;/snapshots&gt; &lt;/repository&gt; &lt;/repositories&gt;&lt;/profile&gt; 激活 profile 123&lt;activeProfiles&gt; &lt;activeProfile&gt;wechat&lt;/activeProfile&gt;&lt;/activeProfiles&gt;]]></content>
       <categories>
         <category>Java</category>
       </categories>
@@ -856,17 +856,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux安装FTP]]></title>
-    <url>%2Fpost%2F9c4dd72b.html</url>
-    <content type="text"><![CDATA[Linux安装FTPubuntu开启ftp服务安装vsftpd1、打开”终端窗口”，输入”sudo apt-get install vsftpd”–&gt;回车–&gt;安装完成。 2、判断vsftpd是否安装成功打开”终端窗口”，输入”sudo service vsftpd restart”重启vsftpd服务–&gt;回车–&gt;vsftpd处于运行状态，说明安装成功。 3、使用gedit修改配置文件/etc/vsftpd.conf打开”终端窗口”，输入”sudo gedit /etc/vsftpd.conf”–&gt;回车–&gt;打开了vsftpd.conf文设置：write_enable=YES ubuntu开启SSH服务SSH分客户端openssh-client和openssh-server如果你只是想登陆别的机器的SSH只需要安装openssh-client（ubuntu有默认安装，如果没有则sudo apt-get install openssh-client），如果要使本机开放SSH服务就需要安装openssh-serversudo apt-get install openssh-server然后确认sshserver是否启动了：ps -e |grep ssh如果看到sshd那说明ssh-server已经启动了。如果没有则可以这样启动：sudo /etc/init.d/ssh startssh-server配置文件位于/ etc/ssh/sshd_config，在这里可以定义SSH的服务端口，默认端口是22，你可以自己定义成其他端口号，如222。然后重启SSH服务：sudo /etc/init.d/ssh stopsudo /etc/init.d/ssh start然后使用以下方式登陆SSH：ssh username@192.168.1.112 username为192.168.1.112 机器上的用户，需要输入密码。断开连接：exit 最近一直在Ubuntu下用终端操作，看着他长长的路径名实在不爽， 动手来改改咯～$: sudo gedit ~/.bashrc这个文件记录了用户终端配置找到if [ “$color_prompt “ = yes ]; then PS1 =’${debian_chroot:+($debian_chroot)}[\033[01;32m]\u@\h[\033[00m]:[\033[01;34m]\W [\033[00m]\$ ‘else PS1 =’${debian_chroot:+($debian_chroot)}\u@\h:\W \$ ‘将蓝色的w由小写改成大写，可以表示只显示当前目录名称.]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>FTP</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[CentOS安装JDK]]></title>
     <url>%2Fpost%2Fd08f134.html</url>
     <content type="text"><![CDATA[1、准备创建目录12$ mkdir /usr/java$ cd /usr/java 下载 jdk-8u73-linux-x64.tar.gz，解压1$ tar -zxvf jdk-8u73-linux-x64.tar.gz 会解压到 /usr/java/jdk1.8.0_73 下 2、配置环境变量(两种方式二选一配置即可)2.1 编辑 /etc/profile 文件修改 /etc/profile 文件当本机仅仅作为开发使用时推荐使用这种方法，因为此种配置时所有用户的 shell 都有权使用这些环境变量，可能会给系统带来安全性问题。1$ vi /etc/profile 增加如下内容123export JAVA_HOME=/usr/java/jdkexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH 保存退出 :wq12$ . /etc/profile$ echo $JAVA_HOME 2.2 编辑用户目录下的 .bash_profile修改 .bash_profile 文件这种方法更为安全，它可以把使用这些环境变量的权限控制到用户级别，如果需要给某个用户权限使用这些环境变量，只需要修改其个人用户主目录下的 .bash_profile 文件就可以了123export JAVA_HOME=/usr/java/jdkexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH 然后执行使之生效1source .bash_profile 可以看到 JAVA_HOME 不是指向真实的 jdk 目录 /usr/java/jdk1.8.0_73，而是指向 /usr/java/jdk 3、创建软链接为jdk真实目录创建一个命名更加间洁快捷方式123$ ln -s /usr/java/jdk1.8.0_73 /usr/java/jdk$ source /etc/profile#$ source .bash_profile 至此，配置完成]]></content>
@@ -876,6 +865,17 @@
       <tags>
         <tag>Java</tag>
         <tag>JDK</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux安装FTP]]></title>
+    <url>%2Fpost%2F9c4dd72b.html</url>
+    <content type="text"><![CDATA[Linux安装FTPubuntu开启ftp服务安装vsftpd1、打开”终端窗口”，输入”sudo apt-get install vsftpd”–&gt;回车–&gt;安装完成。 2、判断vsftpd是否安装成功打开”终端窗口”，输入”sudo service vsftpd restart”重启vsftpd服务–&gt;回车–&gt;vsftpd处于运行状态，说明安装成功。 3、使用gedit修改配置文件/etc/vsftpd.conf打开”终端窗口”，输入”sudo gedit /etc/vsftpd.conf”–&gt;回车–&gt;打开了vsftpd.conf文设置：write_enable=YES ubuntu开启SSH服务SSH分客户端openssh-client和openssh-server如果你只是想登陆别的机器的SSH只需要安装openssh-client（ubuntu有默认安装，如果没有则sudo apt-get install openssh-client），如果要使本机开放SSH服务就需要安装openssh-serversudo apt-get install openssh-server然后确认sshserver是否启动了：ps -e |grep ssh如果看到sshd那说明ssh-server已经启动了。如果没有则可以这样启动：sudo /etc/init.d/ssh startssh-server配置文件位于/ etc/ssh/sshd_config，在这里可以定义SSH的服务端口，默认端口是22，你可以自己定义成其他端口号，如222。然后重启SSH服务：sudo /etc/init.d/ssh stopsudo /etc/init.d/ssh start然后使用以下方式登陆SSH：ssh username@192.168.1.112 username为192.168.1.112 机器上的用户，需要输入密码。断开连接：exit 最近一直在Ubuntu下用终端操作，看着他长长的路径名实在不爽， 动手来改改咯～$: sudo gedit ~/.bashrc这个文件记录了用户终端配置找到if [ “$color_prompt “ = yes ]; then PS1 =’${debian_chroot:+($debian_chroot)}[\033[01;32m]\u@\h[\033[00m]:[\033[01;34m]\W [\033[00m]\$ ‘else PS1 =’${debian_chroot:+($debian_chroot)}\u@\h:\W \$ ‘将蓝色的w由小写改成大写，可以表示只显示当前目录名称.]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>FTP</tag>
       </tags>
   </entry>
 </search>
