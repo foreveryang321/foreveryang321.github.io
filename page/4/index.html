@@ -108,16 +108,16 @@
 
 
 
-  <meta name="description" content="开心又过一日，唔开心又过一日Coding make me happy.">
+  <meta name="description" content="开心又过一日，唔开心又过一日">
 <meta property="og:type" content="website">
 <meta property="og:title" content="forever杨&#39;s Blog">
 <meta property="og:url" content="https://blog.yl-online.top/page/4/index.html">
 <meta property="og:site_name" content="forever杨&#39;s Blog">
-<meta property="og:description" content="开心又过一日，唔开心又过一日Coding make me happy.">
+<meta property="og:description" content="开心又过一日，唔开心又过一日">
 <meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="forever杨&#39;s Blog">
-<meta name="twitter:description" content="开心又过一日，唔开心又过一日Coding make me happy.">
+<meta name="twitter:description" content="开心又过一日，唔开心又过一日">
 
 
 
@@ -347,11 +347,11 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/6c1ad93d.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/af01b9a2.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日<br/>Coding make me happy.">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
       <meta itemprop="image" content="/avatar.jpg">
     </span>
 
@@ -366,8 +366,8 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/posts/6c1ad93d.html" itemprop="url">
-                  zookeeper重启脚本
+                <a class="post-title-link" href="/posts/af01b9a2.html" itemprop="url">
+                  zookeeper 启动脚本
                 </a>
               
             
@@ -410,7 +410,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-05-17 10:52:53" itemprop="dateModified" datetime="2018-05-17T10:52:53+08:00">2018-05-17</time>
+                <time title="修改时间：2018-05-17 10:52:56" itemprop="dateModified" datetime="2018-05-17T10:52:56+08:00">2018-05-17</time>
               
             
           </span>
@@ -457,7 +457,7 @@
                 
                   <span class="post-meta-item-text">字数</span>
                 
-                <span title="字数">240</span>
+                <span title="字数">1.5k</span>
               
 
               
@@ -495,7 +495,7 @@
       
         
           
-            <h1 id="restart"><a href="#restart" class="headerlink" title="restart"></a>restart</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># @Author: YL</span></span><br><span class="line"><span class="comment"># @Date:   2017-06-29 09:00:10</span></span><br><span class="line"><span class="comment"># @Last Modified by:   YL</span></span><br><span class="line"><span class="comment"># @Last Modified time: 2017-11-01 09:37:30</span></span><br><span class="line"><span class="comment"># 此文件放到 zookeeper 的 bin 目录下</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> `dirname <span class="variable">$0</span>`</span><br><span class="line"></span><br><span class="line">./zkServer.sh stop</span><br><span class="line">sleep 3</span><br><span class="line">./zkServer.sh start</span><br></pre></td></tr></table></figure>
+            <h1 id="start"><a href="#start" class="headerlink" title="start"></a>start</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># @Author: YL</span></span><br><span class="line"><span class="comment"># @Date:   2017-06-28 10:23:20</span></span><br><span class="line"><span class="comment"># @Last Modified by:   YL</span></span><br><span class="line"><span class="comment"># @Last Modified time: 2017-11-01 09:37:41</span></span><br><span class="line"><span class="comment"># 此文件放到 zookeeper 的 bin 目录下</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> `dirname <span class="variable">$0</span>`</span><br><span class="line">NODE_BIN_DIR=`<span class="built_in">pwd</span>`</span><br><span class="line">NODE_LIB_DIR=<span class="variable">$NODE_BIN_DIR</span>/../lib/</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line">NODE_HOME=`<span class="built_in">pwd</span>`</span><br><span class="line"></span><br><span class="line"><span class="comment"># date pattern</span></span><br><span class="line">DATE_PATTERN=<span class="string">"[<span class="variable">$(date '+%Y-%m-%d %H:%M:%S')</span>]"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># mkdir logs dir</span></span><br><span class="line">NODE_DATA_LOG_DIR=`sed <span class="string">'/dataLogDir/!d;s/.*=//'</span> conf/zoo.cfg | tr -d <span class="string">'\r'</span>`</span><br><span class="line">NODE_LOGS_DIR=<span class="string">""</span></span><br><span class="line"><span class="keyword">if</span> [ -n <span class="string">"<span class="variable">$NODE_DATA_LOG_DIR</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">  NODE_LOGS_DIR=<span class="variable">$NODE_DATA_LOG_DIR</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  NODE_LOGS_DIR=<span class="variable">$NODE_HOME</span>/logs</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d <span class="variable">$NODE_LOGS_DIR</span> ]; <span class="keyword">then</span></span><br><span class="line">  mkdir <span class="variable">$NODE_LOGS_DIR</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line">STDOUT_FILE=<span class="variable">$NODE_LOGS_DIR</span>/stdout.log</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> NODE_BIN_DIR: <span class="variable">$NODE_BIN_DIR</span>"</span> | tee -a <span class="variable">$STDOUT_FILE</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># pid</span></span><br><span class="line">NODE_PID=`ps -ef | grep <span class="string">"<span class="variable">$NODE_LIB_DIR</span>"</span> | grep -v grep | awk <span class="string">'&#123;print $2&#125;'</span>`</span><br><span class="line"><span class="keyword">if</span> [ -n <span class="string">"<span class="variable">$NODE_PID</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> ERROR: The <span class="variable">$NODE_LIB_DIR</span> already started! pid: <span class="variable">$NODE_PID</span>"</span> | tee -a <span class="variable">$STDOUT_FILE</span></span><br><span class="line">  <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># port</span></span><br><span class="line">NODE_PORT=`sed <span class="string">'/clientPort/!d;s/.*=//'</span> conf/zoo.cfg | tr -d <span class="string">'\r'</span>`</span><br><span class="line"><span class="keyword">if</span> [ -n <span class="string">"<span class="variable">$NODE_PORT</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">  NODE_PORT_COUNT=`netstat -tln | grep <span class="variable">$NODE_PORT</span> | wc -l`</span><br><span class="line">  <span class="keyword">if</span> [ <span class="variable">$NODE_PORT_COUNT</span> -gt 0 ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> ERROR: The <span class="variable">$NODE_LIB_DIR</span> port <span class="variable">$NODE_PORT</span> already used!"</span> | tee -a <span class="variable">$STDOUT_FILE</span></span><br><span class="line">    <span class="built_in">exit</span> 1</span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># starting</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$NODE_BIN_DIR</span></span><br><span class="line">./zkServer.sh start</span><br><span class="line"></span><br><span class="line">NODE_PID=`ps -ef | grep <span class="string">"<span class="variable">$NODE_LIB_DIR</span>"</span> | grep -v grep | awk <span class="string">'&#123;print $2&#125;'</span>`</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> The <span class="variable">$NODE_LIB_DIR</span> started OK! pid: <span class="variable">$NODE_PID</span>"</span> | tee -a <span class="variable">$STDOUT_FILE</span></span><br></pre></td></tr></table></figure>
 
           
         
@@ -554,7 +554,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日<br/>Coding make me happy.">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
       <meta itemprop="image" content="/avatar.jpg">
     </span>
 
@@ -772,11 +772,214 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/6c1ad93d.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/posts/6c1ad93d.html" itemprop="url">
+                  zookeeper重启脚本
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-02-06 09:35:05" itemprop="dateCreated datePublished" datetime="2018-02-06T09:35:05+08:00">2018-02-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-05-17 10:52:53" itemprop="dateModified" datetime="2018-05-17T10:52:53+08:00">2018-05-17</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/zookeeper/" itemprop="url" rel="index"><span itemprop="name">zookeeper</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数</span>
+                
+                <span title="字数">240</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="restart"><a href="#restart" class="headerlink" title="restart"></a>restart</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># @Author: YL</span></span><br><span class="line"><span class="comment"># @Date:   2017-06-29 09:00:10</span></span><br><span class="line"><span class="comment"># @Last Modified by:   YL</span></span><br><span class="line"><span class="comment"># @Last Modified time: 2017-11-01 09:37:30</span></span><br><span class="line"><span class="comment"># 此文件放到 zookeeper 的 bin 目录下</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> `dirname <span class="variable">$0</span>`</span><br><span class="line"></span><br><span class="line">./zkServer.sh stop</span><br><span class="line">sleep 3</span><br><span class="line">./zkServer.sh start</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/e22f47ab.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日<br/>Coding make me happy.">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
       <meta itemprop="image" content="/avatar.jpg">
     </span>
 
@@ -990,7 +1193,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日<br/>Coding make me happy.">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
       <meta itemprop="image" content="/avatar.jpg">
     </span>
 
@@ -1202,214 +1405,11 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/c0bbcacd.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日<br/>Coding make me happy.">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/posts/c0bbcacd.html" itemprop="url">
-                  zookeeper 清理日志文件
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-02-06 09:35:05" itemprop="dateCreated datePublished" datetime="2018-02-06T09:35:05+08:00">2018-02-06</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-05-17 10:52:51" itemprop="dateModified" datetime="2018-05-17T10:52:51+08:00">2018-05-17</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/zookeeper/" itemprop="url" rel="index"><span itemprop="name">zookeeper</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数</span>
-                
-                <span title="字数">791</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="clear"><a href="#clear" class="headerlink" title="clear"></a>clear</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># @Author: YL</span></span><br><span class="line"><span class="comment"># @Date:   2017-11-01 08:59:34</span></span><br><span class="line"><span class="comment"># @Last Modified by:   YL</span></span><br><span class="line"><span class="comment"># @Last Modified time: 2017-11-01 09:36:09</span></span><br><span class="line"><span class="comment"># 此文件放到 zookeeper 的 bin 目录下</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> `dirname <span class="variable">$0</span>`</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line">NODE_HOME=`<span class="built_in">pwd</span>`</span><br><span class="line"></span><br><span class="line"><span class="comment"># snapshot</span></span><br><span class="line">NODE_DATA_DIR=<span class="variable">$NODE_HOME</span>/data/version-2</span><br><span class="line"><span class="comment"># snapshot log</span></span><br><span class="line">NODE_LOG_DIR=<span class="variable">$NODE_HOME</span>/logs/version-2</span><br><span class="line"><span class="comment"># zk log</span></span><br><span class="line">NODE_LOGS=<span class="variable">$NODE_HOME</span>/logs</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中</span></span><br><span class="line">count=3</span><br><span class="line">count=$[<span class="variable">$count</span>+1]</span><br><span class="line">ls -t <span class="variable">$NODE_LOG_DIR</span>/<span class="built_in">log</span>.* | tail -n +<span class="variable">$count</span> | xargs rm -f</span><br><span class="line">ls -t <span class="variable">$NODE_DATA_DIR</span>/snapshot.* | tail -n +<span class="variable">$count</span> | xargs rm -f</span><br><span class="line">ls -t <span class="variable">$NODE_LOGS</span>/zookeeper.log.* | tail -n +<span class="variable">$count</span> | xargs rm -f</span><br><span class="line"></span><br><span class="line"><span class="comment"># date pattern</span></span><br><span class="line">DATE_PATTERN=<span class="string">"[<span class="variable">$(date '+%Y-%m-%d %H:%M:%S')</span>]"</span></span><br><span class="line">STDOUT_FILE=<span class="variable">$NODE_LOGS</span>/stdout.log</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> clear logs success"</span> | tee -a <span class="variable">$STDOUT_FILE</span></span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/e20f93cc.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日<br/>Coding make me happy.">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
       <meta itemprop="image" content="/avatar.jpg">
     </span>
 
@@ -1628,7 +1628,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日<br/>Coding make me happy.">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
       <meta itemprop="image" content="/avatar.jpg">
     </span>
 
@@ -1848,7 +1848,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日<br/>Coding make me happy.">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
       <meta itemprop="image" content="/avatar.jpg">
     </span>
 
@@ -2068,7 +2068,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日<br/>Coding make me happy.">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
       <meta itemprop="image" content="/avatar.jpg">
     </span>
 
@@ -2285,7 +2285,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日<br/>Coding make me happy.">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
       <meta itemprop="image" content="/avatar.jpg">
     </span>
 
@@ -2522,7 +2522,7 @@
                 alt="forever杨" />
             
               <p class="site-author-name" itemprop="name">forever杨</p>
-              <p class="site-description motion-element" itemprop="description">开心又过一日，唔开心又过一日<br/>Coding make me happy.</p>
+              <p class="site-description motion-element" itemprop="description">开心又过一日，唔开心又过一日</p>
           </div>
 
           
