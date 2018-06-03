@@ -109,14 +109,14 @@
 
 
   <meta name="description" content="主要是记录一些在使用spring-data-jpa + Hibernate过程中遇到的一些问题，和要注意的知识点 Pageable 和 PageRequest 分页在Mysql、Oracle中分页从0开始1Pageable pageable = new PageRequest(0, 10);">
-<meta name="keywords" content="spring-boot,Hibernate">
+<meta name="keywords" content="Hibernate,spring-data-jpa">
 <meta property="og:type" content="article">
 <meta property="og:title" content="spring-data-jpa 使用笔记">
 <meta property="og:url" content="https://blog.yl-online.top/posts/43f916ea.html">
 <meta property="og:site_name" content="forever杨&#39;s Blog">
 <meta property="og:description" content="主要是记录一些在使用spring-data-jpa + Hibernate过程中遇到的一些问题，和要注意的知识点 Pageable 和 PageRequest 分页在Mysql、Oracle中分页从0开始1Pageable pageable = new PageRequest(0, 10);">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-05-26T09:51:52.818Z">
+<meta property="og:updated_time" content="2018-06-03T02:08:18.601Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring-data-jpa 使用笔记">
 <meta name="twitter:description" content="主要是记录一些在使用spring-data-jpa + Hibernate过程中遇到的一些问题，和要注意的知识点 Pageable 和 PageRequest 分页在Mysql、Oracle中分页从0开始1Pageable pageable = new PageRequest(0, 10);">
@@ -242,7 +242,7 @@
           
           <li class="menu-item menu-item-categories">
     <a href="/categories/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类<span class="badge">15</span></a>
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类<span class="badge">14</span></a>
   </li>
         
         
@@ -250,7 +250,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">74</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">63</span></a>
   </li>
         
         
@@ -407,7 +407,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-05-26 17:51:52" itemprop="dateModified" datetime="2018-05-26T17:51:52+08:00">2018-05-26</time>
+                <time title="修改时间：2018-06-03 10:08:18" itemprop="dateModified" datetime="2018-06-03T10:08:18+08:00">2018-06-03</time>
               
             
           </span>
@@ -424,7 +424,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/spring-data-jpa/" itemprop="url" rel="index"><span itemprop="name">spring-data-jpa</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
 
                 
                 
@@ -486,9 +486,9 @@
         </span>
         <span class="post-meta-item-text">标签</span>
         
-           <a href="/tags/spring-boot/" rel="tag" class="color1">spring-boot</a>
+           <a href="/tags/Hibernate/" rel="tag" class="color1">Hibernate</a>
         
-           <a href="/tags/Hibernate/" rel="tag" class="color2">Hibernate</a>
+           <a href="/tags/spring-data-jpa/" rel="tag" class="color2">spring-data-jpa</a>
         
       </div>
     
@@ -546,9 +546,9 @@
           </span>
           <span class="post-meta-item-text">标签</span>
           
-             <a href="/tags/spring-boot/" rel="tag" class="color1">spring-boot</a>
+             <a href="/tags/Hibernate/" rel="tag" class="color1">Hibernate</a>
           
-             <a href="/tags/Hibernate/" rel="tag" class="color2">Hibernate</a>
+             <a href="/tags/spring-data-jpa/" rel="tag" class="color2">spring-data-jpa</a>
           
         </div>
       
@@ -561,8 +561,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/4f0d5500.html" rel="next" title="pagehelper 使用笔记">
-                <i class="fa fa-chevron-left"></i> pagehelper 使用笔记
+              <a href="/posts/6202485a.html" rel="next" title="JPA Criteria 查询">
+                <i class="fa fa-chevron-left"></i> JPA Criteria 查询
               </a>
             
           </div>
@@ -571,8 +571,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/posts/8b243174.html" rel="prev" title="SQL中inner join、outer join和cross join的区别">
-                SQL中inner join、outer join和cross join的区别 <i class="fa fa-chevron-right"></i>
+              <a href="/posts/4f0d5500.html" rel="prev" title="pagehelper 使用笔记">
+                pagehelper 使用笔记 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -692,9 +692,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -833,29 +831,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">74</span>
+                    <span class="site-state-item-count">63</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
