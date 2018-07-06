@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="forever杨&#39;s Blog">
 <meta property="og:description" content="介绍SpringBoot 为 ApplicationContextEvent 提供了四种事件：  ApplicationStartedEvent ：spring boot 启动开始时执行的事件 ApplicationEnvironmentPreparedEvent：spring boot 对应 Enviroment 已经准备完毕，但此时上下文 context 还没有创建 ApplicationPr">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-07-06T09:09:39.414Z">
+<meta property="og:updated_time" content="2018-07-06T09:12:52.389Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring-boot 事件监听 ApplicationListener">
 <meta name="twitter:description" content="介绍SpringBoot 为 ApplicationContextEvent 提供了四种事件：  ApplicationStartedEvent ：spring boot 启动开始时执行的事件 ApplicationEnvironmentPreparedEvent：spring boot 对应 Enviroment 已经准备完毕，但此时上下文 context 还没有创建 ApplicationPr">
@@ -390,7 +390,7 @@
                 
               
 
-              <time title="创建时间：2018-07-06 16:11:20 / 修改时间：17:09:39" itemprop="dateCreated datePublished" datetime="2018-07-06T16:11:20+08:00">2018-07-06</time>
+              <time title="创建时间：2018-07-06 16:11:20 / 修改时间：17:12:52" itemprop="dateCreated datePublished" datetime="2018-07-06T16:11:20+08:00">2018-07-06</time>
             
 
             
@@ -495,6 +495,7 @@
 <li>ApplicationPreparedEvent：spring boot 上下文 context 创建完成，但此时 spring 中的 bean 是没有完全加载完成的</li>
 <li>ApplicationFailedEvent：spring boot启动异常时执行事件</li>
 </ul>
+<a id="more"></a>
 <h1 id="ApplicationEnvironmentPreparedEvent事件监听"><a href="#ApplicationEnvironmentPreparedEvent事件监听" class="headerlink" title="ApplicationEnvironmentPreparedEvent事件监听"></a>ApplicationEnvironmentPreparedEvent事件监听</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.context.event.ApplicationEnvironmentPreparedEvent;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.ApplicationListener;</span><br><span class="line"><span class="keyword">import</span> org.springframework.core.env.ConfigurableEnvironment;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 环境配置事件监听器</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Created by YL on 2018/7/5</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EnvironmentPreparedEventListener</span> <span class="keyword">implements</span> <span class="title">ApplicationListener</span>&lt;<span class="title">ApplicationEnvironmentPreparedEvent</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onApplicationEvent</span><span class="params">(ApplicationEnvironmentPreparedEvent event)</span> </span>&#123;</span><br><span class="line">        ConfigurableEnvironment environment = event.getEnvironment();</span><br><span class="line">        <span class="comment">// 获取 spring.profiles.active 的值</span></span><br><span class="line">        String activeProfile = environment.getActiveProfiles()[<span class="number">0</span>];</span><br><span class="line">        log.info(<span class="string">"激活环境 ---&gt; activeProfile: &#123;&#125;"</span>, activeProfile);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>这里要注意注册<code>ApplicationEnvironmentPreparedEvent</code>监听器的方式</p>
@@ -923,7 +924,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">281k</span>
+    <span title="站点总字数">284k</span>
   
 
   
