@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="@Retryable注解 被注解的方法发生异常时会重试   value：指定发生的异常进行重试  include：和value一样，默认空，当exclude也为空时，所有异常都重试  exclude：指定异常不重试，默认空，当include也为空时，所有异常都重试  maxAttemps：重试次数，默认3  backoff：重试补偿机制，默认没有">
+  <meta name="description" content="@Retryable 被注解的方法发生异常时会重试     参数 默认值 说明     value 空 指定发生的异常，进行重试   include 空 指定异常重试。和value一样，默认空，当exclude也为空时，所有异常都重试   exclude 空 指定异常不重试。默认空，当include也为空时，所有异常都重试   maxAttemps 3 重试次数   backoff 空 重试补偿机">
 <meta name="keywords" content="spring,retry">
 <meta property="og:type" content="article">
 <meta property="og:title" content="spring retry 使用">
 <meta property="og:url" content="https://blog.yl-online.top/posts/9cd0a544.html">
 <meta property="og:site_name" content="forever杨&#39;s Blog">
-<meta property="og:description" content="@Retryable注解 被注解的方法发生异常时会重试   value：指定发生的异常进行重试  include：和value一样，默认空，当exclude也为空时，所有异常都重试  exclude：指定异常不重试，默认空，当include也为空时，所有异常都重试  maxAttemps：重试次数，默认3  backoff：重试补偿机制，默认没有">
+<meta property="og:description" content="@Retryable 被注解的方法发生异常时会重试     参数 默认值 说明     value 空 指定发生的异常，进行重试   include 空 指定异常重试。和value一样，默认空，当exclude也为空时，所有异常都重试   exclude 空 指定异常不重试。默认空，当include也为空时，所有异常都重试   maxAttemps 3 重试次数   backoff 空 重试补偿机">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-07-18T08:16:35.567Z">
+<meta property="og:updated_time" content="2018-07-18T08:25:19.681Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring retry 使用">
-<meta name="twitter:description" content="@Retryable注解 被注解的方法发生异常时会重试   value：指定发生的异常进行重试  include：和value一样，默认空，当exclude也为空时，所有异常都重试  exclude：指定异常不重试，默认空，当include也为空时，所有异常都重试  maxAttemps：重试次数，默认3  backoff：重试补偿机制，默认没有">
+<meta name="twitter:description" content="@Retryable 被注解的方法发生异常时会重试     参数 默认值 说明     value 空 指定发生的异常，进行重试   include 空 指定异常重试。和value一样，默认空，当exclude也为空时，所有异常都重试   exclude 空 指定异常不重试。默认空，当include也为空时，所有异常都重试   maxAttemps 3 重试次数   backoff 空 重试补偿机">
 
 
 
@@ -390,7 +390,7 @@
                 
               
 
-              <time title="创建时间：2018-07-18 16:43:05 / 修改时间：16:16:35" itemprop="dateCreated datePublished" datetime="2018-07-18T16:43:05+08:00">2018-07-18</time>
+              <time title="创建时间：2018-07-18 16:43:05 / 修改时间：16:25:19" itemprop="dateCreated datePublished" datetime="2018-07-18T16:43:05+08:00">2018-07-18</time>
             
 
             
@@ -490,21 +490,67 @@
       
 
       
-        <p><strong>@Retryable注解</strong></p>
+        <p><strong>@Retryable</strong></p>
 <p>被注解的方法发生异常时会重试 </p>
-<ul>
-<li>value：指定发生的异常进行重试 </li>
-<li>include：和value一样，默认空，当exclude也为空时，所有异常都重试 </li>
-<li>exclude：指定异常不重试，默认空，当include也为空时，所有异常都重试 </li>
-<li>maxAttemps：重试次数，默认3 </li>
-<li>backoff：重试补偿机制，默认没有</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>value</td>
+<td>空</td>
+<td>指定发生的异常，进行重试</td>
+</tr>
+<tr>
+<td>include</td>
+<td>空</td>
+<td>指定异常重试。和value一样，默认空，当exclude也为空时，所有异常都重试</td>
+</tr>
+<tr>
+<td>exclude</td>
+<td>空</td>
+<td>指定异常不重试。默认空，当include也为空时，所有异常都重试</td>
+</tr>
+<tr>
+<td>maxAttemps</td>
+<td>3</td>
+<td>重试次数</td>
+</tr>
+<tr>
+<td>backoff</td>
+<td>空</td>
+<td>重试补偿机制</td>
+</tr>
+</tbody>
+</table>
 <a id="more"></a>
-<p><strong>@Backoff注解</strong></p>
-<ul>
-<li>delay:指定延迟后重试 </li>
-<li>multiplier:指定延迟的倍数，比如delay=5000l,multiplier=2时，第一次重试为5秒后，第二次为10秒，第三次为20秒</li>
-</ul>
+<p><strong>@Backoff</strong></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>delay</td>
+<td>1000L</td>
+<td>指定延迟时间</td>
+</tr>
+<tr>
+<td>multiplier</td>
+<td>0.0D</td>
+<td>指定延迟的倍数。比如delay=5000l,multiplier=2时，第一次重试为5秒后，第二次为10秒，第三次为20秒</td>
+</tr>
+</tbody>
+</table>
 <p><strong>@Recover</strong> </p>
 <p>当重试到达指定次数时，被注解的方法将被回调，可以在该方法中进行日志处理。需要注意的是发生的异常和入参类型一致时才会回调。</p>
 <p><strong>示例</strong></p>
