@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[spring retry 使用]]></title>
+    <url>%2Fposts%2F9cd0a544.html</url>
+    <content type="text"><![CDATA[@Retryable注解 被注解的方法发生异常时会重试 value：指定发生的异常进行重试 include：和value一样，默认空，当exclude也为空时，所有异常都重试 exclude：指定异常不重试，默认空，当include也为空时，所有异常都重试 maxAttemps：重试次数，默认3 backoff：重试补偿机制，默认没有 @Backoff注解 delay:指定延迟后重试 multiplier:指定延迟的倍数，比如delay=5000l,multiplier=2时，第一次重试为5秒后，第二次为10秒，第三次为20秒 @Recover 当重试到达指定次数时，被注解的方法将被回调，可以在该方法中进行日志处理。需要注意的是发生的异常和入参类型一致时才会回调。 示例 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263import org.springframework.retry.annotation.Backoff;import org.springframework.retry.annotation.Recover;import org.springframework.retry.annotation.Retryable;import org.springframework.stereotype.Service;/** * @author Created by YL on 2018/7/18 */@Service@Slf4jpublic class RetryService &#123; @Retryable( value = &#123;Exception.class&#125;, maxAttempts = 10, backoff = @Backoff(delay = 10000L) ) public String retry() throws Exception &#123; throw new Exception("测试 spring retry"); &#125; @Recover public void exception(Exception e) &#123; log.error("errmsg: &#123;&#125;", e.getMessage(), e); &#125;&#125;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.boot.builder.SpringApplicationBuilder;import org.springframework.retry.annotation.EnableRetry;@SpringBootApplication@EnableRetrypublic class App &#123; /** * Common */ private static SpringApplicationBuilder configureSpringBuilder(SpringApplicationBuilder builder) &#123; //builder.application().addListeners(new EnvironmentPreparedEventListener()); builder.application().addPrimarySources(Collections.singletonList(App.class)); return builder.sources(App.class); &#125; // /** // * for WAR deploy // */ // @Override // protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) &#123; // // // 外部容器部署 web 环境要在这里配置 EnvironmentPreparedEvent 监听器才生效 // // builder.application().addListeners(new EnvironmentPreparedEventListener()); // // return builder.sources(Application.class); // return super.configure(configureSpringBuilder(builder)); // &#125; /** * for JAR deploy */ public static void main(String[] args) &#123; // SpringApplication.run(Application.class, args); SpringApplicationBuilder builder = configureSpringBuilder(new SpringApplicationBuilder()); builder.application().run(args); &#125;&#125;]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>spring</tag>
+        <tag>retry</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Netty Epoll 和 Nio]]></title>
     <url>%2Fposts%2Fa8f7cc4d.html</url>
     <content type="text"><![CDATA[入门1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677import org.slf4j.Logger;import org.slf4j.LoggerFactory;import io.netty.bootstrap.ServerBootstrap;import io.netty.channel.Channel;import io.netty.channel.ChannelOption;import io.netty.channel.EventLoopGroup;import io.netty.channel.nio.NioEventLoopGroup;import io.netty.channel.socket.nio.NioServerSocketChannel;import io.netty.handler.ssl.SslContext;import io.netty.handler.ssl.SslContextBuilder;import io.netty.handler.ssl.util.SelfSignedCertificate;import io.netty.util.concurrent.DefaultEventExecutorGroup;import io.netty.util.concurrent.EventExecutorGroup;/** * Netty 启动器，初始化 spring boot 的时候会自动加载 */public class Server &#123; private static final Logger LOG = LoggerFactory.getLogger(Server.class); /* * NioEventLoopGroup 默认创建数量为 CPU * 2，类型为 NioEventLoop 的实例。 * 每个 NioEventLoop 实例都持有一个线程，以及一个类型为 LinkedBlockingQueue 的任务队列 */ EventLoopGroup bossGroup = new NioEventLoopGroup(); EventLoopGroup workerGroup = new NioEventLoopGroup(); // 业务线程 EventExecutorGroup eventExecutorGroup = new DefaultEventExecutorGroup(16); static final boolean isSsl = System.getProperty("ssl") != null; /** * 初始化 Netty */ public void startNetty() &#123; try &#123; final SslContext sslCtx; if (isSsl) &#123; SelfSignedCertificate ssc = new SelfSignedCertificate(); sslCtx = SslContextBuilder.forServer(ssc.certificate(), ssc.privateKey()).build(); &#125; else &#123; sslCtx = null; &#125; // 引导辅助程序 ServerBootstrap bs = new ServerBootstrap(); // 通过NIO方式来接收连接和处理连接 bs.group(bossGroup, workerGroup); // 设置NIO的Channel bs.channel(NioServerSocketChannel.class); bs.childHandler(new HttpChannelInitializer(sslCtx, eventExecutorGroup)); bs.option(ChannelOption.SO_BACKLOG, 1024); // 连接数 // bs.childOption(ChannelOption.SO_KEEPALIVE, true); // 是否长链接 bs.childOption(ChannelOption.TCP_NODELAY, true); // 是否TCP延迟 // 配置完成，开始绑定server，通过调用sync同步方法阻塞直到绑定成功 Channel ch = bs.bind(9999).sync().channel(); LOG.info("Server startup. listen on &#123;&#125;-&#123;&#125;", (isSsl ? "https" : "http"), 9999); // 应用程序会一直等待，直到Channel关闭 ch.closeFuture().sync(); &#125; catch (Exception e) &#123; LOG.error("server startup failed. &#123;&#125;", e.getMessage(), e); &#125; finally &#123; LOG.info("释放资源..."); bossGroup.shutdownGracefully(); workerGroup.shutdownGracefully(); eventExecutorGroup.shutdownGracefully(); bossGroup = null; workerGroup = null; eventExecutorGroup = null; &#125; &#125; public static void main(String[] args) &#123; new Server().startNetty(); &#125;&#125; 优化：Epoll 和 Nio123456private static final boolean isEpoll = Epoll.isAvailable();private EventLoopGroup bossGroup = isEpoll ? new EpollEventLoopGroup() : new NioEventLoopGroup();private EventLoopGroup workerGroup = isEpoll ? new EpollEventLoopGroup() : new NioEventLoopGroup();ServerBootstrap bootstrap = new ServerBootstrap();bootstrap.group(bossGroup, workerGroup) .channel(isEpoll ? EpollServerSocketChannel.class : NioServerSocketChannel.class);]]></content>
@@ -188,18 +200,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Java、JS版AES加密算法工具类]]></title>
-    <url>%2Fposts%2F1f7e0ef5.html</url>
-    <content type="text"><![CDATA[[TOC] 本文主要是实现AES算法的Java版本和Javascript版本，并提供测试例子。 AES是一个对称分组密码算法，旨在取代DES成为广泛使用的标准。根据使用的密码长度，AES最常见的有3种方案，用以适应不同的场景要求，分别是AES-128、AES-192和AES-256。 Java中的PKCS5Padding和Javascript中的PKCS7Padding的结果是一样。 Java 版 AES 工具类123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143package cn.tisson.wechat.common.util;import javax.crypto.BadPaddingException;import javax.crypto.Cipher;import javax.crypto.IllegalBlockSizeException;import javax.crypto.NoSuchPaddingException;import javax.crypto.spec.SecretKeySpec;import java.io.UnsupportedEncodingException;import java.security.InvalidKeyException;import java.security.NoSuchAlgorithmException;/** * AES 加密、解密 * * @author Created by YL on 2018/2/9 */public enum AESUtils &#123; GBK &#123; public String getCharset() &#123; return "GBK"; &#125; &#125;, UTF8 &#123; public String getCharset() &#123; return "UTF-8"; &#125; &#125;; public static final String AES_KEY = "MHYKD5tes6fhkdv9"; /** * 获取编码 */ public String getCharset() &#123; throw new AbstractMethodError(); &#125; /** * 加密 * * @param str 需要加密的内容 * @param key 加密密码 * * @return 加密后的字符串 */ private byte[] enc(String str, String key) &#123; try &#123; SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(getCharset()), "AES"); Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding"); cipher.init(Cipher.ENCRYPT_MODE, skeySpec); return cipher.doFinal(str.getBytes(getCharset())); &#125; catch (UnsupportedEncodingException e) &#123; throw new RuntimeException("不支持的编码格式", e); &#125; catch (NoSuchAlgorithmException e) &#123; throw new RuntimeException("不支持的加密算法", e); &#125; catch (NoSuchPaddingException e) &#123; throw new RuntimeException("不支持的填充机制", e); &#125; catch (InvalidKeyException e) &#123; throw new RuntimeException("无效的Key、错误的长度、未初始化等", e); &#125; catch (IllegalBlockSizeException e) &#123; throw new RuntimeException("密码的块大小不匹配", e); &#125; catch (BadPaddingException e) &#123; throw new RuntimeException("输入的数据错误，导致填充机制未能正常填充", e); &#125; &#125; private byte[] dec(byte[] str, String key) &#123; try &#123; SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(getCharset()), "AES"); Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding"); cipher.init(Cipher.DECRYPT_MODE, skeySpec); return cipher.doFinal(str); &#125; catch (UnsupportedEncodingException e) &#123; throw new RuntimeException("不支持的编码格式", e); &#125; catch (NoSuchAlgorithmException e) &#123; throw new RuntimeException("不支持的加密算法", e); &#125; catch (NoSuchPaddingException e) &#123; throw new RuntimeException("不支持的填充机制", e); &#125; catch (InvalidKeyException e) &#123; throw new RuntimeException("无效的Key、错误的长度、未初始化等", e); &#125; catch (IllegalBlockSizeException e) &#123; throw new RuntimeException("密码的块大小不匹配", e); &#125; catch (BadPaddingException e) &#123; throw new RuntimeException("输入的数据错误，导致填充机制未能正常填充", e); &#125; &#125; /** * AES 加密，使用默认 key 加密 * * @param str 要加密的明文 * * @return 加密后的密文 */ public String encrypt(String str) &#123; return encrypt(str, AESUtils.AES_KEY); &#125; /** * AES加密，使用指定 key 加密 * * @param str 要加密的明文 * @param key 加密 key * * @return 解密后字符串 */ public String encrypt(String str, String key) &#123; byte[] encryptBytes = enc(str, key); return Base64Utils.UTF8.encode(encryptBytes); &#125; /** * AES 解密，使用默认 key 解密 * * @param str 要解密的密文 * * @return 解密后的明文 */ public String decrypt(String str) &#123; return decrypt(str, AESUtils.AES_KEY); &#125; /** * AES 解密，使用默认 key 解密 * * @param str 要解密的密文 * @param key 解密 key * * @return 解密后的明文 */ public String decrypt(String str, String key) &#123; if (str == null || "".equals(str)) &#123; return ""; &#125; byte[] bytes = Base64Utils.UTF8.decode2byte(str); try &#123; return new String(dec(bytes, key), getCharset()); &#125; catch (UnsupportedEncodingException e) &#123; e.printStackTrace(); &#125; return ""; &#125;&#125; Java 版 AES 工具类测试123456789101112131415161718192021package cn.tisson.wechat.common.util;import org.junit.Assert;import org.junit.Test;/** * @author Created by YL on 2018/2/13 */public class AESUtilsTest &#123; private static final String KEY = "SYhU9Qf3nmrZAx7D"; private static final String STR = "法拉利_24234slfkjsl《》？：“”｛｝+——"; @Test public void aes() &#123; String encrypt = AESUtils.UTF8.encrypt(STR, KEY); System.out.println("encrypt ---&gt; " + encrypt); String decrypt = AESUtils.UTF8.decrypt(encrypt, KEY); System.out.println(decrypt); Assert.assertEquals(STR, decrypt); &#125;&#125; JS 版 AES 工具类要引入的 js 文件地址：https://github.com/brix/crypto-js12345&lt;script th:src="@&#123;/crypto-js/core.js&#125;"&gt;&lt;/script&gt;&lt;script th:src="@&#123;/crypto-js/enc-base64.js&#125;"&gt;&lt;/script&gt;&lt;script th:src="@&#123;/crypto-js/cipher-core.js&#125;"&gt;&lt;/script&gt;&lt;script th:src="@&#123;/crypto-js/aes.js&#125;"&gt;&lt;/script&gt;&lt;script th:src="@&#123;/crypto-js/mode-ecb.js&#125;"&gt;&lt;/script&gt; JS 版 AES 工具类扩展123456789101112131415161718192021222324252627282930313233343536function getRandom(len) &#123; var a = len || 16, s = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', n = s.length; var r = ''; for (var i = 0; i &lt; a; i++) &#123; r += s.charAt(Math.floor(Math.random() * n)); &#125; return r;&#125;function encryptAES(str, key) &#123; var s = CryptoJS.enc.Utf8.parse(str), k = CryptoJS.enc.Utf8.parse(key), c = CryptoJS.AES.encrypt(s, k, &#123; mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 &#125;), // 转换为字符串 // return c.toString(); // Hex 转为十六进制 d = CryptoJS.enc.Hex.parse(c.ciphertext.toString()); // Base64 编码 return CryptoJS.enc.Base64.stringify(d);&#125;function decryptAES(str, key) &#123; var k = CryptoJS.enc.Utf8.parse(key), c = CryptoJS.AES.decrypt(str, k, &#123; mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 &#125;); // 转换为 UTF8 字符串 return CryptoJS.enc.Utf8.stringify(c); // return c.toString(CryptoJS.enc.Utf8);&#125; JS 版 AES 工具类测试12345678var key = getRandom();console.log('key: %o', key);var str = '法拉利_24234slfkjsl《》？：“”｛｝+——';console.log('str: %o', str);var e = encryptAES(str, key);console.log('e: %o', e);var d = decryptAES(e, key);console.log('d: %o', d);]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Javascript</tag>
-        <tag>AES</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Java、JS版RSA加密算法工具类]]></title>
     <url>%2Fposts%2F5314af17.html</url>
     <content type="text"><![CDATA[[TOC] 本文主要是实现RSA算法的Java版本和Javascript版本，并提供测试例子。 1、RSA算法可以用于数据加密和数字签名 2、RSA算法相对于DES/AES等对称加密算法，他的速度要慢的多 3、使用原则：公钥加密，私钥解密；私钥加密，公钥解密 Java 版 RSA 工具类要引入的 jar 包123456&lt;!-- jdk1.5 ~ jdk1.8 --&gt;&lt;dependency&gt; &lt;groupId&gt;org.bouncycastle&lt;/groupId&gt; &lt;artifactId&gt;bcprov-jdk15on&lt;/artifactId&gt; &lt;version&gt;1.46&lt;/version&gt;&lt;/dependency&gt; 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150151152153154155156157158159160161162163164165166167168169170171172173174175176177178179180181182183184185186187188189190191192193194195196197198199200201202203204205206207208209210211212213214215216217218219220221222223224225226227228229230231232233234235236237238239240241242243244245246247248249250251252253254255256257258259260261262263264265266267268269270271272273274275276277278279280281282283284285286287288289290291292293294295296297298299300301302303304305306307308309310311312313314315316317318319320321322323324325326327328329330331332333334335336337338339340341342343344345346347348349350351352353354355356357358359360361362363364365366367368369370371372373374375376377378379380381382383384385386387388389390391392393394395396397398399400401402403404405406407408409410411412413414415416417418419420421422423424425426427428429430431432433434435436437438439440441442443444445446447448449450451452453454455456457458459460461462463464465package cn.tisson.wechat.common.util;import org.bouncycastle.jce.provider.BouncyCastleProvider;import javax.crypto.BadPaddingException;import javax.crypto.Cipher;import javax.crypto.IllegalBlockSizeException;import javax.crypto.NoSuchPaddingException;import javax.crypto.ShortBufferException;import java.io.ByteArrayOutputStream;import java.io.IOException;import java.io.UnsupportedEncodingException;import java.math.BigInteger;import java.net.URLDecoder;import java.net.URLEncoder;import java.security.InvalidKeyException;import java.security.Key;import java.security.KeyFactory;import java.security.KeyPair;import java.security.KeyPairGenerator;import java.security.NoSuchAlgorithmException;import java.security.NoSuchProviderException;import java.security.Provider;import java.security.SecureRandom;import java.security.Security;import java.security.interfaces.RSAPrivateKey;import java.security.interfaces.RSAPublicKey;import java.security.spec.InvalidKeySpecException;import java.security.spec.RSAPrivateKeySpec;import java.security.spec.RSAPublicKeySpec;/** * RSA 加解密算法工具 * &lt;pre&gt; * 依赖第三方jar包：bcprov-jdk16-1.46.jar 或者 bcprov-jdk15on-1.46.jar * 记录： * 1、Java Sun 的 security provider 默认：RSA/None/PKCS1Padding * 2、Android 的 security provider 是 Bouncycastle Security provider，默认：RSA/None/NoPadding * 3、Cipher.getInstance("RSA/ECB/NoPadding")，有一个缺点就是解密后的明文比加密之前多了很多空格 * 推荐： * Cipher.getInstance("RSA"，"BC") * &lt;/pre&gt; * &lt;pre&gt; * 一般用法： * 1、私钥加密，公钥解密（服务端加密，客户端解密） * 2、公钥加密，私钥解密（客户端加密，服务端解密） * 注意：私钥不要泄漏出去，客户端一般使用公钥 * &lt;/pre&gt; * * @author Created by YL on 2018/2/9 */public class RSAUtils &#123; // /** // * RSA 最大加密明文大小 // */ // private static final int MAX_ENCRYPT_BLOCK = 117; // // /** // * RSA 最大解密密文大小 // */ // private static final int MAX_DECRYPT_BLOCK = 128; /** * 编码 */ private static final String CHARSET = "UTF-8"; /** * 加密算法 RSA */ private static final String ALGORITHM = "RSA"; /** * 这个值关系到块加密的大小，可以更改，但是不要太大，否则效率会低 */ private static final int KEY_SIZE = 1024; // private static byte[] hexStringToBytes(String hexString) &#123; // if (hexString == null || hexString.equals("")) &#123; // return null; // &#125; // hexString = hexString.toUpperCase(); // int length = hexString.length() / 2; // char[] hexChars = hexString.toCharArray(); // byte[] d = new byte[length]; // for (int i = 0; i &lt; length; i++) &#123; // int pos = i * 2; // d[i] = (byte) (charToByte(hexChars[pos]) &lt;&lt; 4 | charToByte(hexChars[pos + 1])); // &#125; // return d; // &#125; // // /** // * Convert char to byte * @param c char * @return byte // */ // private static byte charToByte(char c) &#123; // return (byte) "0123456789ABCDEF".indexOf(c); // &#125; /** * 把 byte 数组变换为16进制的字符串 * * @param bytes byte 数组 * * @return 16进制的字符串 */ private static String byteToString(byte[] bytes) &#123; StringBuilder sb = new StringBuilder(); for (byte by : bytes) &#123; int d = by; if (d &lt; 0) &#123; d += 256; &#125; if (d &lt; 16) &#123; sb.append("0"); &#125; sb.append(Integer.toString(d, 16)); &#125; return sb.toString(); &#125; /** * 默认的安全服务提供者 */ private static final Provider BC_PROVIDER = new BouncyCastleProvider(); private static final String BC = BouncyCastleProvider.PROVIDER_NAME; private static void addProvider() &#123; String bc = Security.getProperty(BC); if (bc == null || "".equals(bc.trim())) &#123; Security.addProvider(BC_PROVIDER); &#125; &#125; /** * 初始化 RSA，生成密钥对：KeyPair * &lt;pre&gt; * 生成密钥对是非常耗时的，一般要 2s 左右，所以最好缓存密钥对起来，定期去做更新，不用每次都初始化 * &lt;/pre&gt; */ public static KeyPair generateKeyPair() &#123; try &#123; addProvider(); KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(ALGORITHM, BC); // keysize 这个值关系到块加密的大小，可以更改，但是不要太大，否则效率会低 keyPairGen.initialize(KEY_SIZE, new SecureRandom()); KeyPair keyPair = keyPairGen.generateKeyPair(); System.out.println("init："); System.out.println(keyPair.getPrivate()); System.out.println(keyPair.getPublic()); return keyPair; &#125; catch (NoSuchAlgorithmException e) &#123; throw new RuntimeException("RSA 初始化失败。无此算法", e); &#125; catch (NoSuchProviderException e) &#123; throw new RuntimeException("RSA 初始化失败。无此安全服务提供者", e); &#125; &#125; /** * 使用模（n）、公钥指数（e），还原公钥 * * @param modulus 模（n） * @param publicExponent 公钥指数（e） * * @return RSAPublicKey */ public static RSAPublicKey generatePublicKey(String modulus, String publicExponent) &#123; try &#123; addProvider(); KeyFactory keyFac = KeyFactory.getInstance(ALGORITHM, BC); BigInteger bi1 = new BigInteger(modulus, 16); BigInteger bi2 = new BigInteger(publicExponent, 16); RSAPublicKeySpec pubKeySpec = new RSAPublicKeySpec(bi1, bi2); return (RSAPublicKey) keyFac.generatePublic(pubKeySpec); &#125; catch (InvalidKeySpecException e) &#123; throw new RuntimeException("无效的密钥", e); &#125; catch (NoSuchAlgorithmException e) &#123; throw new RuntimeException("无此算法", e); &#125; catch (NoSuchProviderException e) &#123; throw new RuntimeException("无此安全服务提供者", e); &#125; &#125; /** * * 使用模（n）、私钥指数（d），还原私钥 * * @param modulus 模（n） * @param privateExponent 私钥指数（d） * * @return RSAPrivateKey */ public static RSAPrivateKey generatePrivateKey(String modulus, String privateExponent) &#123; try &#123; addProvider(); KeyFactory keyFac = KeyFactory.getInstance(ALGORITHM, BC); BigInteger bi1 = new BigInteger(modulus, 16); BigInteger bi2 = new BigInteger(privateExponent, 16); RSAPrivateKeySpec priKeySpec = new RSAPrivateKeySpec(bi1, bi2); return (RSAPrivateKey) keyFac.generatePrivate(priKeySpec); &#125; catch (InvalidKeySpecException e) &#123; throw new RuntimeException("无效的密钥", e); &#125; catch (NoSuchAlgorithmException e) &#123; throw new RuntimeException("无此算法", e); &#125; catch (NoSuchProviderException e) &#123; throw new RuntimeException("无此安全服务提供者", e); &#125; &#125; /** * 返回模值n */ public static String getModulus(RSAPublicKey publicKey) &#123; return publicKey.getModulus().toString(16); &#125; /** * 返回模值n */ public static String getModulus(RSAPrivateKey privateKey) &#123; return privateKey.getModulus().toString(16); &#125; /** * 返回公钥指数e */ public static String getPublicExponent(RSAPublicKey publicKey) &#123; return publicKey.getPublicExponent().toString(16); &#125; /** * 返回私钥指数d */ public static String getPrivateExponent(RSAPrivateKey privateKey) &#123; return privateKey.getPrivateExponent().toString(16); &#125; /** * 加密 * * @param key 密钥（公钥、私钥） * @param data 要被加密的明文 * * @return 加密后的数据 */ private static byte[] encrypt(Key key, byte[] data) &#123; try &#123; addProvider(); Cipher cipher = Cipher.getInstance(ALGORITHM, BC); cipher.init(Cipher.ENCRYPT_MODE, key); // 127 int blockSize = cipher.getBlockSize();// 获得加密块大小，如：加密前数据为128个byte，而key_size=1024 // 加密块大小为127 // byte,加密后为128个byte;因此共有2个加密块，第一个127 // byte第二个为1个byte int length = data.length; int outputSize = cipher.getOutputSize(length);// 获得加密块加密后块大小 int leavedSize = length % blockSize; int blocksSize = leavedSize != 0 ? length / blockSize + 1 : length / blockSize; byte[] raw = new byte[outputSize * blocksSize]; int i = 0; while (length - i * blockSize &gt; 0) &#123; /* * 这里面doUpdate方法不可用，查看源代码后发现每次doUpdate后并没有什么实际动作除了把byte[]放到 * ByteArrayOutputStream中，而最后doFinal的时候才将所有的byte[]进行加密，可是到了此时加密块大小很可能已经超出了 * OutputSize所以只好用dofinal方法。 */ if (length - i * blockSize &gt; blockSize) &#123; cipher.doFinal(data, i * blockSize, blockSize, raw, i * outputSize); &#125; else &#123; cipher.doFinal(data, i * blockSize, length - i * blockSize, raw, i * outputSize); &#125; i++; &#125; return raw; &#125; catch (NoSuchAlgorithmException e) &#123; throw new RuntimeException("无此算法", e); &#125; catch (InvalidKeyException e) &#123; throw new RuntimeException("无效的密钥", e); &#125; catch (ShortBufferException e) &#123; throw new RuntimeException("缓冲区异常", e); &#125; catch (NoSuchPaddingException e) &#123; throw new RuntimeException("无此填充方式", e); &#125; catch (BadPaddingException e) &#123; throw new RuntimeException("错误的填充", e); &#125; catch (NoSuchProviderException e) &#123; throw new RuntimeException("无此安全服务提供者", e); &#125; catch (IllegalBlockSizeException e) &#123; throw new RuntimeException("非法的块大小", e); &#125; &#125; /** * 解密 * * @param key 密钥（公钥、私钥） * @param data 要被解密的密文 * * @return 解密后的明文 */ private static byte[] decrypt(Key key, byte[] data) &#123; ByteArrayOutputStream bout = null; try &#123; addProvider(); Cipher cipher = Cipher.getInstance(ALGORITHM, BC); cipher.init(Cipher.DECRYPT_MODE, key); // 128 int blockSize = cipher.getBlockSize(); bout = new ByteArrayOutputStream(64); int i = 0; int length = data.length; while (length - i * blockSize &gt; 0) &#123; bout.write(cipher.doFinal(data, i * blockSize, blockSize)); i++; &#125; return bout.toByteArray(); &#125; catch (BadPaddingException e) &#123; throw new RuntimeException("错误的填充", e); &#125; catch (IOException e) &#123; throw new RuntimeException("IO操作异常", e); &#125; catch (NoSuchAlgorithmException e) &#123; throw new RuntimeException("无此算法", e); &#125; catch (InvalidKeyException e) &#123; throw new RuntimeException("无效的密钥", e); &#125; catch (NoSuchPaddingException e) &#123; throw new RuntimeException("无此填充方式", e); &#125; catch (NoSuchProviderException e) &#123; throw new RuntimeException("无此安全服务提供者", e); &#125; catch (IllegalBlockSizeException e) &#123; throw new RuntimeException("非法的块大小", e); &#125; finally &#123; if (bout != null) &#123; try &#123; bout.close(); &#125; catch (IOException e) &#123; e.printStackTrace(); &#125; &#125; &#125; &#125; private static String encrypt(Key pk, String data) &#123; try &#123; data = URLEncoder.encode(data, CHARSET); &#125; catch (UnsupportedEncodingException e) &#123; e.printStackTrace(); &#125; // 处理空格问题：URLEncoder.encode 后，会把空格变成“+”号 if (data.contains("+")) &#123; data = data.replace("+", "%20"); &#125; byte[] b1; try &#123; b1 = data.getBytes(CHARSET); &#125; catch (UnsupportedEncodingException e) &#123; throw new RuntimeException(String.format("不支持的编码格式：%s", CHARSET), e); &#125; byte[] b2 = encrypt(pk, b1); return byteToString(b2); &#125; private static String decrypt(Key pk, String data) &#123; // byte[] b1 = hexStringToBytes(data); byte[] b1 = org.bouncycastle.util.encoders.Hex.decode(data); // 使用 new BigInteger(data, 16).toByteArray() 解密 js 加密的密文有问题，但是解密 java 端的密文确正常 // byte[] b1 = new BigInteger(data, 16).toByteArray(); byte[] b2 = decrypt(pk, b1); String str = new String(b2); // str = new StringBuffer(str).reverse().toString(); if (str.contains("%")) &#123; str = str.replaceAll("%(?![0-9a-fA-F]&#123;2&#125;)", "%25"); &#125; try &#123; return URLDecoder.decode(str, "UTF-8"); &#125; catch (UnsupportedEncodingException e) &#123; throw new RuntimeException(String.format("不支持的编码格式：%s", CHARSET), e); &#125; &#125; /** * 用公钥加密 * * @param pk 公钥 * @param str 要加密的明文 */ public static String encryptPublic(RSAPublicKey pk, String str) &#123; return encrypt(pk, str); &#125; /** * 用公钥加密 * * @param modulus 模 * @param publicExponent 公钥指数 * @param str 要加密的明文 */ public static String encryptPublic(String modulus, String publicExponent, String str) &#123; RSAPublicKey publicKey = generatePublicKey(modulus, publicExponent); return encrypt(publicKey, str); &#125; /** * 用公钥解密 * * @param pk 公钥 * @param str 要解密的密文 */ public static String decryptPublic(RSAPublicKey pk, String str) &#123; return decrypt(pk, str); &#125; /** * 用公钥解密 * * @param modulus 模 * @param publicExponent 公钥指数 * @param str 要解密的密文 */ public static String decryptPublic(String modulus, String publicExponent, String str) &#123; RSAPublicKey publicKey = generatePublicKey(modulus, publicExponent); return decrypt(publicKey, str); &#125; /** * 用私钥加密 * * @param pk 私钥 * @param str 要加密的明文 */ public static String encryptPrivate(RSAPrivateKey pk, String str) &#123; return encrypt(pk, str); &#125; /** * 用私钥加密 * * @param modulus 模 * @param privateExponent 私钥指数 * @param str 要加密的明文 */ public static String encryptPrivate(String modulus, String privateExponent, String str) &#123; RSAPrivateKey privateKey = generatePrivateKey(modulus, privateExponent); return encrypt(privateKey, str); &#125; /** * 用私钥解密 * * @param pk 私钥 * @param str 要解密的密文 */ public static String decryptPrivate(RSAPrivateKey pk, String str) &#123; return decrypt(pk, str); &#125; /** * 用私钥解密 * * @param modulus 模 * @param privateExponent 私钥指数 * @param str 要解密的密文 */ public static String decryptPrivate(String modulus, String privateExponent, String str) &#123; RSAPrivateKey privateKey = generatePrivateKey(modulus, privateExponent); return decrypt(privateKey, str); &#125;&#125; Java 版 RSA 工具类测试123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146package cn.tisson.wechat.common.util;import org.junit.Assert;import org.junit.Before;import org.junit.Test;import java.security.KeyPair;import java.security.interfaces.RSAPrivateKey;import java.security.interfaces.RSAPublicKey;/** * @author Created by YL on 2018/2/11 */public class RSAUtilsTest &#123; private RSAPublicKey publicKey; private RSAPrivateKey privateKey; private RSAPublicKey generatePublicKey; private RSAPrivateKey generatePrivateKey; private static final String str = "test_三地警方随即_1222——《》？“”："; @Before public void init() &#123; KeyPair keyPair = RSAUtils.generateKeyPair(); publicKey = (RSAPublicKey) keyPair.getPublic(); privateKey = (RSAPrivateKey) keyPair.getPrivate(); String modulus = RSAUtils.getModulus(publicKey); String publicExponent = RSAUtils.getPublicExponent(publicKey); String privateExponent = RSAUtils.getPrivateExponent(privateKey); System.out.println("n ---&gt; " + modulus); System.out.println("e ---&gt; " + publicExponent); System.out.println("d ---&gt; " + privateExponent); // 恢复密钥 long time = System.currentTimeMillis(); generatePublicKey = RSAUtils.generatePublicKey(modulus, publicExponent); System.out.println("恢复公钥 ---&gt; " + (System.currentTimeMillis() - time)); time = System.currentTimeMillis(); generatePrivateKey = RSAUtils.generatePrivateKey(modulus, privateExponent); System.out.println("恢复私钥 ---&gt; " + (System.currentTimeMillis() - time)); modulus = RSAUtils.getModulus(generatePublicKey); publicExponent = RSAUtils.getPublicExponent(generatePublicKey); privateExponent = RSAUtils.getPrivateExponent(generatePrivateKey); System.out.println("n ---&gt; " + modulus); System.out.println("e ---&gt; " + publicExponent); System.out.println("d ---&gt; " + privateExponent); &#125; @Test public void all() &#123; String modulus = RSAUtils.getModulus(publicKey); String publicExponent = RSAUtils.getPublicExponent(publicKey); String privateExponent = RSAUtils.getPrivateExponent(privateKey); System.out.println("modulus ---&gt; " + modulus); System.out.println("publicExponent ---&gt; " + publicExponent); System.out.println("privateExponent ---&gt; " + privateExponent); // 私钥加密，公钥解密 System.out.println("-----------------------------------私钥加密，公钥解密-----------------------------------"); String s = RSAUtils.encryptPrivate(privateKey, str); System.out.println("RSA私匙加密：" + s); String s1 = RSAUtils.decryptPublic(publicKey, s); System.out.println("RSA公匙解密：" + s1); Assert.assertEquals(str, s1); System.out.println("--------------------------------------------------------------------------------------"); String ss = RSAUtils.encryptPrivate(modulus, privateExponent, str); System.out.println("RSA私匙加密：" + ss); String ss1 = RSAUtils.decryptPublic(modulus, publicExponent, ss); System.out.println("RSA公匙解密：" + ss1); Assert.assertEquals(str, ss1); // 公钥加密，私钥解密 System.out.println("-----------------------------------私钥加密，私钥解密-----------------------------------"); String s2 = RSAUtils.encryptPublic(publicKey, str); System.out.println("RSA公钥加密：" + s2); String s3 = RSAUtils.decryptPrivate(privateKey, s2); System.out.println("RSA私钥解密：" + s3); Assert.assertEquals(str, s3); System.out.println("--------------------------------------------------------------------------------------"); String ss2 = RSAUtils.encryptPublic(modulus, publicExponent, str); System.out.println("RSA公钥加密：" + ss2); String ss3 = RSAUtils.decryptPrivate(modulus, privateExponent, ss2); System.out.println("RSA私钥解密：" + ss3); Assert.assertEquals(str, ss3); &#125; @Test public void getModulus() &#123; String modulus = RSAUtils.getModulus(publicKey); String modulus1 = RSAUtils.getModulus(generatePublicKey); Assert.assertEquals(modulus, modulus1); String modulus2 = RSAUtils.getModulus(privateKey); String modulus3 = RSAUtils.getModulus(generatePrivateKey); Assert.assertEquals(modulus2, modulus3); &#125; @Test public void getPublicExponent() &#123; String publicExponent = RSAUtils.getPublicExponent(publicKey); String publicExponent1 = RSAUtils.getPublicExponent(generatePublicKey); Assert.assertEquals(publicExponent, publicExponent1); &#125; @Test public void getPrivateExponent() &#123; String privateExponent = RSAUtils.getPrivateExponent(privateKey); String privateExponent1 = RSAUtils.getPrivateExponent(generatePrivateKey); Assert.assertEquals(privateExponent, privateExponent1); &#125; @Test public void encryptPublic() &#123; String s = RSAUtils.encryptPublic(publicKey, str); String s1 = RSAUtils.encryptPublic(generatePublicKey, str); Assert.assertEquals(s, s1); &#125; @Test public void decryptPublic() &#123; String s = RSAUtils.encryptPrivate(privateKey, str); String s1 = RSAUtils.decryptPublic(publicKey, s); String s2 = RSAUtils.decryptPublic(generatePublicKey, s); Assert.assertEquals(s1, s2); &#125; @Test public void encryptPrivate() &#123; String s = RSAUtils.encryptPrivate(privateKey, str); String s1 = RSAUtils.encryptPrivate(generatePrivateKey, str); Assert.assertEquals(s, s1); &#125; @Test public void decryptPrivate() &#123; String s = RSAUtils.encryptPublic(publicKey, str); String s1 = RSAUtils.decryptPrivate(privateKey, s); String s2 = RSAUtils.decryptPrivate(generatePrivateKey, s); Assert.assertEquals(s1, s2); &#125;&#125; JS 版 RSA 工具类123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150151152153154155156157158159160161162163164165166167168169170171172173174175176177178179180181182183184185186187188189190191192193194195196197198199200201202203204205206207208209210211212213214215216217218219220221222223224225226227228229230231232233234235236237238239240241242243244245246247248249250251252253254255256257258259260261262263264265266267268269270271272273274275276277278279280281282283284285286287288289290291292293294295296297298299300301302303304305306307308309310311312313314315316317318319320321322323324325326327328329330331332333334335336337338339340341342343344345346347348349350351352353354355356357358359360361362363364365366367368369370371372373374375376377378379380381382383384385386387388389390391392393394395396397398399400401402403404405406407408409410411412413414415416417418419420421422423424425426427428429430431432433434435436437438439440441442443444445446447448449450451452453454455456457458459460461462463464465466467468469470471472473474475476477478479480481482483484485486487488489490491492493494495496497498499500501502503504505506507508509510511512513514515516517518519520521522523524525526527528529530531532533534535536537538539540541542543544545546547548549550551552553554555556557558559560561562563564565566567568569570571572573574575576577578579580581582583584585586587588589590591592593594595596597598599600601602603604605606607608609610611612613614615616617618619620621622623624625626627628629630631632633634635636637638639640641642643644645646647648649650651652653654655656657658659660661662663664665666667668669670671672673674675676677678679680681682683684685686687688689690691692693694/* * RSA, a suite of routines for performing RSA public-key computations in JavaScript. * Copyright 1998-2005 David Shapiro. * Dave Shapiro * dave@ohdave.com * changed by Fuchun, 2010-05-06 * fcrpg2005@gmail.com */;(function($w) &#123; if (typeof $w.RSAUtils === 'undefined') var RSAUtils = $w.RSAUtils = &#123;&#125;; var biRadixBase = 2; var biRadixBits = 16; var bitsPerDigit = biRadixBits; var biRadix = 1 &lt;&lt; 16; // = 2^16 = 65536 var biHalfRadix = biRadix &gt;&gt;&gt; 1; var biRadixSquared = biRadix * biRadix; var maxDigitVal = biRadix - 1; var maxInteger = 9999999999999998; //maxDigits: //Change this to accommodate your largest number size. Use setMaxDigits() //to change it! // //In general, if you're working with numbers of size N bits, you'll need 2*N //bits of storage. Each digit holds 16 bits. So, a 1024-bit key will need // //1024 * 2 / 16 = 128 digits of storage. // var maxDigits; var ZERO_ARRAY; var bigZero, bigOne; var BigInt = $w.BigInt = function(flag) &#123; if (typeof flag == "boolean" &amp;&amp; flag == true) &#123; this.digits = null; &#125; else &#123; this.digits = ZERO_ARRAY.slice(0); &#125; this.isNeg = false; &#125;; RSAUtils.setMaxDigits = function(value) &#123; maxDigits = value; ZERO_ARRAY = new Array(maxDigits); for (var iza = 0; iza &lt; ZERO_ARRAY.length; iza++) ZERO_ARRAY[iza] = 0; bigZero = new BigInt(); bigOne = new BigInt(); bigOne.digits[0] = 1; &#125;; RSAUtils.setMaxDigits(20); //The maximum number of digits in base 10 you can convert to an //integer without JavaScript throwing up on you. var dpl10 = 15; RSAUtils.biFromNumber = function(i) &#123; var result = new BigInt(); result.isNeg = i &lt; 0; i = Math.abs(i); var j = 0; while (i &gt; 0) &#123; result.digits[j++] = i &amp; maxDigitVal; i = Math.floor(i / biRadix); &#125; return result; &#125;; //lr10 = 10 ^ dpl10 var lr10 = RSAUtils.biFromNumber(1000000000000000); RSAUtils.biFromDecimal = function(s) &#123; var isNeg = s.charAt(0) == '-'; var i = isNeg ? 1 : 0; var result; // Skip leading zeros. while (i &lt; s.length &amp;&amp; s.charAt(i) == '0') ++i; if (i == s.length) &#123; result = new BigInt(); &#125; else &#123; var digitCount = s.length - i; var fgl = digitCount % dpl10; if (fgl == 0) fgl = dpl10; result = RSAUtils.biFromNumber(Number(s.substr(i, fgl))); i += fgl; while (i &lt; s.length) &#123; result = RSAUtils.biAdd(RSAUtils.biMultiply(result, lr10), RSAUtils.biFromNumber(Number(s.substr(i, dpl10)))); i += dpl10; &#125; result.isNeg = isNeg; &#125; return result; &#125;; RSAUtils.biCopy = function(bi) &#123; var result = new BigInt(true); result.digits = bi.digits.slice(0); result.isNeg = bi.isNeg; return result; &#125;; RSAUtils.reverseStr = function(s) &#123; var result = ""; for (var i = s.length - 1; i &gt; -1; --i) &#123; result += s.charAt(i); &#125; return result; &#125;; var hexatrigesimalToChar = [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' ]; RSAUtils.biToString = function(x, radix) &#123; // 2 &lt;= radix &lt;= 36 var b = new BigInt(); b.digits[0] = radix; var qr = RSAUtils.biDivideModulo(x, b); var result = hexatrigesimalToChar[qr[1].digits[0]]; while (RSAUtils.biCompare(qr[0], bigZero) == 1) &#123; qr = RSAUtils.biDivideModulo(qr[0], b); digit = qr[1].digits[0]; result += hexatrigesimalToChar[qr[1].digits[0]]; &#125; return (x.isNeg ? "-" : "") + RSAUtils.reverseStr(result); &#125;; RSAUtils.biToDecimal = function(x) &#123; var b = new BigInt(); b.digits[0] = 10; var qr = RSAUtils.biDivideModulo(x, b); var result = String(qr[1].digits[0]); while (RSAUtils.biCompare(qr[0], bigZero) == 1) &#123; qr = RSAUtils.biDivideModulo(qr[0], b); result += String(qr[1].digits[0]); &#125; return (x.isNeg ? "-" : "") + RSAUtils.reverseStr(result); &#125;; var hexToChar = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' ]; RSAUtils.digitToHex = function(n) &#123; var mask = 0xf; var result = ""; for (i = 0; i &lt; 4; ++i) &#123; result += hexToChar[n &amp; mask]; n &gt;&gt;&gt;= 4; &#125; return RSAUtils.reverseStr(result); &#125;; RSAUtils.biToHex = function(x) &#123; var result = ""; var n = RSAUtils.biHighIndex(x); for (var i = RSAUtils.biHighIndex(x); i &gt; -1; --i) &#123; result += RSAUtils.digitToHex(x.digits[i]); &#125; return result; &#125;; RSAUtils.charToHex = function(c) &#123; var ZERO = 48; var NINE = ZERO + 9; var littleA = 97; var littleZ = littleA + 25; var bigA = 65; var bigZ = 65 + 25; var result; if (c &gt;= ZERO &amp;&amp; c &lt;= NINE) &#123; result = c - ZERO; &#125; else if (c &gt;= bigA &amp;&amp; c &lt;= bigZ) &#123; result = 10 + c - bigA; &#125; else if (c &gt;= littleA &amp;&amp; c &lt;= littleZ) &#123; result = 10 + c - littleA; &#125; else &#123; result = 0; &#125; return result; &#125;; RSAUtils.hexToDigit = function(s) &#123; var result = 0; var sl = Math.min(s.length, 4); for (var i = 0; i &lt; sl; ++i) &#123; result &lt;&lt;= 4; result |= RSAUtils.charToHex(s.charCodeAt(i)); &#125; return result; &#125;; RSAUtils.biFromHex = function(s) &#123; var result = new BigInt(); var sl = s.length; for (var i = sl, j = 0; i &gt; 0; i -= 4, ++j) &#123; result.digits[j] = RSAUtils.hexToDigit(s.substr(Math.max(i - 4, 0), Math.min(i, 4))); &#125; return result; &#125;; RSAUtils.biFromString = function(s, radix) &#123; var isNeg = s.charAt(0) == '-'; var istop = isNeg ? 1 : 0; var result = new BigInt(); var place = new BigInt(); place.digits[0] = 1; // radix^0 for (var i = s.length - 1; i &gt;= istop; i--) &#123; var c = s.charCodeAt(i); var digit = RSAUtils.charToHex(c); var biDigit = RSAUtils.biMultiplyDigit(place, digit); result = RSAUtils.biAdd(result, biDigit); place = RSAUtils.biMultiplyDigit(place, radix); &#125; result.isNeg = isNeg; return result; &#125;; RSAUtils.biDump = function(b) &#123; return (b.isNeg ? "-" : "") + b.digits.join(" "); &#125;; RSAUtils.biAdd = function(x, y) &#123; var result; if (x.isNeg != y.isNeg) &#123; y.isNeg = !y.isNeg; result = RSAUtils.biSubtract(x, y); y.isNeg = !y.isNeg; &#125; else &#123; result = new BigInt(); var c = 0; var n; for (var i = 0; i &lt; x.digits.length; ++i) &#123; n = x.digits[i] + y.digits[i] + c; result.digits[i] = n % biRadix; c = Number(n &gt;= biRadix); &#125; result.isNeg = x.isNeg; &#125; return result; &#125;; RSAUtils.biSubtract = function(x, y) &#123; var result; if (x.isNeg != y.isNeg) &#123; y.isNeg = !y.isNeg; result = RSAUtils.biAdd(x, y); y.isNeg = !y.isNeg; &#125; else &#123; result = new BigInt(); var n, c; c = 0; for (var i = 0; i &lt; x.digits.length; ++i) &#123; n = x.digits[i] - y.digits[i] + c; result.digits[i] = n % biRadix; // Stupid non-conforming modulus operation. if (result.digits[i] &lt; 0) result.digits[i] += biRadix; c = 0 - Number(n &lt; 0); &#125; // Fix up the negative sign, if any. if (c == -1) &#123; c = 0; for (var i = 0; i &lt; x.digits.length; ++i) &#123; n = 0 - result.digits[i] + c; result.digits[i] = n % biRadix; // Stupid non-conforming modulus operation. if (result.digits[i] &lt; 0) result.digits[i] += biRadix; c = 0 - Number(n &lt; 0); &#125; // Result is opposite sign of arguments. result.isNeg = !x.isNeg; &#125; else &#123; // Result is same sign. result.isNeg = x.isNeg; &#125; &#125; return result; &#125;; RSAUtils.biHighIndex = function(x) &#123; var result = x.digits.length - 1; while (result &gt; 0 &amp;&amp; x.digits[result] == 0) --result; return result; &#125;; RSAUtils.biNumBits = function(x) &#123; var n = RSAUtils.biHighIndex(x); var d = x.digits[n]; var m = (n + 1) * bitsPerDigit; var result; for (result = m; result &gt; m - bitsPerDigit; --result) &#123; if ((d &amp; 0x8000) != 0) break; d &lt;&lt;= 1; &#125; return result; &#125;; RSAUtils.biMultiply = function(x, y) &#123; var result = new BigInt(); var c; var n = RSAUtils.biHighIndex(x); var t = RSAUtils.biHighIndex(y); var u, uv, k; for (var i = 0; i &lt;= t; ++i) &#123; c = 0; k = i; for (j = 0; j &lt;= n; ++j, ++k) &#123; uv = result.digits[k] + x.digits[j] * y.digits[i] + c; result.digits[k] = uv &amp; maxDigitVal; c = uv &gt;&gt;&gt; biRadixBits; //c = Math.floor(uv / biRadix); &#125; result.digits[i + n + 1] = c; &#125; // Someone give me a logical xor, please. result.isNeg = x.isNeg != y.isNeg; return result; &#125;; RSAUtils.biMultiplyDigit = function(x, y) &#123; var n, c, uv; result = new BigInt(); n = RSAUtils.biHighIndex(x); c = 0; for (var j = 0; j &lt;= n; ++j) &#123; uv = result.digits[j] + x.digits[j] * y + c; result.digits[j] = uv &amp; maxDigitVal; c = uv &gt;&gt;&gt; biRadixBits; //c = Math.floor(uv / biRadix); &#125; result.digits[1 + n] = c; return result; &#125;; RSAUtils.arrayCopy = function(src, srcStart, dest, destStart, n) &#123; var m = Math.min(srcStart + n, src.length); for (var i = srcStart, j = destStart; i &lt; m; ++i, ++j) &#123; dest[j] = src[i]; &#125; &#125;; var highBitMasks = [0x0000, 0x8000, 0xC000, 0xE000, 0xF000, 0xF800, 0xFC00, 0xFE00, 0xFF00, 0xFF80, 0xFFC0, 0xFFE0, 0xFFF0, 0xFFF8, 0xFFFC, 0xFFFE, 0xFFFF ]; RSAUtils.biShiftLeft = function(x, n) &#123; var digitCount = Math.floor(n / bitsPerDigit); var result = new BigInt(); RSAUtils.arrayCopy(x.digits, 0, result.digits, digitCount, result.digits.length - digitCount); var bits = n % bitsPerDigit; var rightBits = bitsPerDigit - bits; for (var i = result.digits.length - 1, i1 = i - 1; i &gt; 0; --i, --i1) &#123; result.digits[i] = ((result.digits[i] &lt;&lt; bits) &amp; maxDigitVal) | ((result.digits[i1] &amp; highBitMasks[bits]) &gt;&gt;&gt; (rightBits)); &#125; result.digits[0] = ((result.digits[i] &lt;&lt; bits) &amp; maxDigitVal); result.isNeg = x.isNeg; return result; &#125;; var lowBitMasks = [0x0000, 0x0001, 0x0003, 0x0007, 0x000F, 0x001F, 0x003F, 0x007F, 0x00FF, 0x01FF, 0x03FF, 0x07FF, 0x0FFF, 0x1FFF, 0x3FFF, 0x7FFF, 0xFFFF ]; RSAUtils.biShiftRight = function(x, n) &#123; var digitCount = Math.floor(n / bitsPerDigit); var result = new BigInt(); RSAUtils.arrayCopy(x.digits, digitCount, result.digits, 0, x.digits.length - digitCount); var bits = n % bitsPerDigit; var leftBits = bitsPerDigit - bits; for (var i = 0, i1 = i + 1; i &lt; result.digits.length - 1; ++i, ++i1) &#123; result.digits[i] = (result.digits[i] &gt;&gt;&gt; bits) | ((result.digits[i1] &amp; lowBitMasks[bits]) &lt;&lt; leftBits); &#125; result.digits[result.digits.length - 1] &gt;&gt;&gt;= bits; result.isNeg = x.isNeg; return result; &#125;; RSAUtils.biMultiplyByRadixPower = function(x, n) &#123; var result = new BigInt(); RSAUtils.arrayCopy(x.digits, 0, result.digits, n, result.digits.length - n); return result; &#125;; RSAUtils.biDivideByRadixPower = function(x, n) &#123; var result = new BigInt(); RSAUtils.arrayCopy(x.digits, n, result.digits, 0, result.digits.length - n); return result; &#125;; RSAUtils.biModuloByRadixPower = function(x, n) &#123; var result = new BigInt(); RSAUtils.arrayCopy(x.digits, 0, result.digits, 0, n); return result; &#125;; RSAUtils.biCompare = function(x, y) &#123; if (x.isNeg != y.isNeg) &#123; return 1 - 2 * Number(x.isNeg); &#125; for (var i = x.digits.length - 1; i &gt;= 0; --i) &#123; if (x.digits[i] != y.digits[i]) &#123; if (x.isNeg) &#123; return 1 - 2 * Number(x.digits[i] &gt; y.digits[i]); &#125; else &#123; return 1 - 2 * Number(x.digits[i] &lt; y.digits[i]); &#125; &#125; &#125; return 0; &#125;; RSAUtils.biDivideModulo = function(x, y) &#123; var nb = RSAUtils.biNumBits(x); var tb = RSAUtils.biNumBits(y); var origYIsNeg = y.isNeg; var q, r; if (nb &lt; tb) &#123; // |x| &lt; |y| if (x.isNeg) &#123; q = RSAUtils.biCopy(bigOne); q.isNeg = !y.isNeg; x.isNeg = false; y.isNeg = false; r = biSubtract(y, x); // Restore signs, 'cause they're references. x.isNeg = true; y.isNeg = origYIsNeg; &#125; else &#123; q = new BigInt(); r = RSAUtils.biCopy(x); &#125; return [q, r]; &#125; q = new BigInt(); r = x; // Normalize Y. var t = Math.ceil(tb / bitsPerDigit) - 1; var lambda = 0; while (y.digits[t] &lt; biHalfRadix) &#123; y = RSAUtils.biShiftLeft(y, 1); ++lambda; ++tb; t = Math.ceil(tb / bitsPerDigit) - 1; &#125; // Shift r over to keep the quotient constant. We'll shift the // remainder back at the end. r = RSAUtils.biShiftLeft(r, lambda); nb += lambda; // Update the bit count for x. var n = Math.ceil(nb / bitsPerDigit) - 1; var b = RSAUtils.biMultiplyByRadixPower(y, n - t); while (RSAUtils.biCompare(r, b) != -1) &#123; ++q.digits[n - t]; r = RSAUtils.biSubtract(r, b); &#125; for (var i = n; i &gt; t; --i) &#123; var ri = (i &gt;= r.digits.length) ? 0 : r.digits[i]; var ri1 = (i - 1 &gt;= r.digits.length) ? 0 : r.digits[i - 1]; var ri2 = (i - 2 &gt;= r.digits.length) ? 0 : r.digits[i - 2]; var yt = (t &gt;= y.digits.length) ? 0 : y.digits[t]; var yt1 = (t - 1 &gt;= y.digits.length) ? 0 : y.digits[t - 1]; if (ri == yt) &#123; q.digits[i - t - 1] = maxDigitVal; &#125; else &#123; q.digits[i - t - 1] = Math.floor((ri * biRadix + ri1) / yt); &#125; var c1 = q.digits[i - t - 1] * ((yt * biRadix) + yt1); var c2 = (ri * biRadixSquared) + ((ri1 * biRadix) + ri2); while (c1 &gt; c2) &#123; --q.digits[i - t - 1]; c1 = q.digits[i - t - 1] * ((yt * biRadix) | yt1); c2 = (ri * biRadix * biRadix) + ((ri1 * biRadix) + ri2); &#125; b = RSAUtils.biMultiplyByRadixPower(y, i - t - 1); r = RSAUtils.biSubtract(r, RSAUtils.biMultiplyDigit(b, q.digits[i - t - 1])); if (r.isNeg) &#123; r = RSAUtils.biAdd(r, b); --q.digits[i - t - 1]; &#125; &#125; r = RSAUtils.biShiftRight(r, lambda); // Fiddle with the signs and stuff to make sure that 0 &lt;= r &lt; y. q.isNeg = x.isNeg != origYIsNeg; if (x.isNeg) &#123; if (origYIsNeg) &#123; q = RSAUtils.biAdd(q, bigOne); &#125; else &#123; q = RSAUtils.biSubtract(q, bigOne); &#125; y = RSAUtils.biShiftRight(y, lambda); r = RSAUtils.biSubtract(y, r); &#125; // Check for the unbelievably stupid degenerate case of r == -0. if (r.digits[0] == 0 &amp;&amp; RSAUtils.biHighIndex(r) == 0) r.isNeg = false; return [q, r]; &#125;; RSAUtils.biDivide = function(x, y) &#123; return RSAUtils.biDivideModulo(x, y)[0]; &#125;; RSAUtils.biModulo = function(x, y) &#123; return RSAUtils.biDivideModulo(x, y)[1]; &#125;; RSAUtils.biMultiplyMod = function(x, y, m) &#123; return RSAUtils.biModulo(RSAUtils.biMultiply(x, y), m); &#125;; RSAUtils.biPow = function(x, y) &#123; var result = bigOne; var a = x; while (true) &#123; if ((y &amp; 1) != 0) result = RSAUtils.biMultiply(result, a); y &gt;&gt;= 1; if (y == 0) break; a = RSAUtils.biMultiply(a, a); &#125; return result; &#125;; RSAUtils.biPowMod = function(x, y, m) &#123; var result = bigOne; var a = x; var k = y; while (true) &#123; if ((k.digits[0] &amp; 1) != 0) result = RSAUtils.biMultiplyMod(result, a, m); k = RSAUtils.biShiftRight(k, 1); if (k.digits[0] == 0 &amp;&amp; RSAUtils.biHighIndex(k) == 0) break; a = RSAUtils.biMultiplyMod(a, a, m); &#125; return result; &#125;; $w.BarrettMu = function(m) &#123; this.modulus = RSAUtils.biCopy(m); this.k = RSAUtils.biHighIndex(this.modulus) + 1; var b2k = new BigInt(); b2k.digits[2 * this.k] = 1; // b2k = b^(2k) this.mu = RSAUtils.biDivide(b2k, this.modulus); this.bkplus1 = new BigInt(); this.bkplus1.digits[this.k + 1] = 1; // bkplus1 = b^(k+1) this.modulo = BarrettMu_modulo; this.multiplyMod = BarrettMu_multiplyMod; this.powMod = BarrettMu_powMod; &#125;; function BarrettMu_modulo(x) &#123; var $dmath = RSAUtils; var q1 = $dmath.biDivideByRadixPower(x, this.k - 1); var q2 = $dmath.biMultiply(q1, this.mu); var q3 = $dmath.biDivideByRadixPower(q2, this.k + 1); var r1 = $dmath.biModuloByRadixPower(x, this.k + 1); var r2term = $dmath.biMultiply(q3, this.modulus); var r2 = $dmath.biModuloByRadixPower(r2term, this.k + 1); var r = $dmath.biSubtract(r1, r2); if (r.isNeg) &#123; r = $dmath.biAdd(r, this.bkplus1); &#125; var rgtem = $dmath.biCompare(r, this.modulus) &gt;= 0; while (rgtem) &#123; r = $dmath.biSubtract(r, this.modulus); rgtem = $dmath.biCompare(r, this.modulus) &gt;= 0; &#125; return r; &#125; function BarrettMu_multiplyMod(x, y) &#123; /* x = this.modulo(x); y = this.modulo(y); */ var xy = RSAUtils.biMultiply(x, y); return this.modulo(xy); &#125; function BarrettMu_powMod(x, y) &#123; var result = new BigInt(); result.digits[0] = 1; var a = x; var k = y; while (true) &#123; if ((k.digits[0] &amp; 1) != 0) result = this.multiplyMod(result, a); k = RSAUtils.biShiftRight(k, 1); if (k.digits[0] == 0 &amp;&amp; RSAUtils.biHighIndex(k) == 0) break; a = this.multiplyMod(a, a); &#125; return result; &#125; var RSAKeyPair = function(encryptionExponent, decryptionExponent, modulus) &#123; var $dmath = RSAUtils; this.e = $dmath.biFromHex(encryptionExponent); this.d = $dmath.biFromHex(decryptionExponent); this.m = $dmath.biFromHex(modulus); // We can do two bytes per digit, so // chunkSize = 2 * (number of digits in modulus - 1). // Since biHighIndex returns the high index, not the number of digits, 1 has // already been subtracted. this.chunkSize = 2 * $dmath.biHighIndex(this.m); this.radix = 16; this.barrett = new $w.BarrettMu(this.m); &#125;; RSAUtils.getKeyPair = function(encryptionExponent, decryptionExponent, modulus) &#123; return new RSAKeyPair(encryptionExponent, decryptionExponent, modulus); &#125;; if (typeof $w.twoDigit === 'undefined') &#123; $w.twoDigit = function(n) &#123; return (n &lt; 10 ? "0" : "") + String(n); &#125;; &#125; // Altered by Rob Saunders (rob@robsaunders.net). New routine pads the // string after it has been converted to an array. This fixes an // incompatibility with Flash MX's ActionScript. RSAUtils.encryptedString = function(key, s) &#123; var a = []; var sl = s.length; var i = 0; while (i &lt; sl) &#123; a[i] = s.charCodeAt(i); i++; &#125; while (a.length % key.chunkSize != 0) &#123; a[i++] = 0; &#125; var al = a.length; var result = ""; var j, k, block; for (i = 0; i &lt; al; i += key.chunkSize) &#123; block = new BigInt(); j = 0; for (k = i; k &lt; i + key.chunkSize; ++j) &#123; block.digits[j] = a[k++]; block.digits[j] += a[k++] &lt;&lt; 8; &#125; var crypt = key.barrett.powMod(block, key.e); var text = key.radix == 16 ? RSAUtils.biToHex(crypt) : RSAUtils.biToString(crypt, key.radix); result += text + " "; &#125; return result.substring(0, result.length - 1); // Remove last space. &#125;; RSAUtils.decryptedString = function(key, s) &#123; var blocks = s.split(" "); var result = ""; var i, j, block; for (i = 0; i &lt; blocks.length; ++i) &#123; var bi; if (key.radix == 16) &#123; bi = RSAUtils.biFromHex(blocks[i]); &#125; else &#123; bi = RSAUtils.biFromString(blocks[i], key.radix); &#125; block = key.barrett.powMod(bi, key.d); for (j = 0; j &lt;= RSAUtils.biHighIndex(block); ++j) &#123; result += String.fromCharCode(block.digits[j] &amp; 255, block.digits[j] &gt;&gt; 8); &#125; &#125; // Remove trailing null, if any. if (result.charCodeAt(result.length - 1) == 0) &#123; result = result.substring(0, result.length - 1); &#125; return result; &#125;; RSAUtils.setMaxDigits(130);&#125;)(window); JS 版 RSA 工具类扩展12345678910111213141516171819202122232425262728293031/** * RSA 加密数据：返回加密后的字符串 * &lt;p&gt;e 公匙 * &lt;p&gt;n 模 * &lt;p&gt;s 要加密的字符串 */function encryptRSA(e, n, s) &#123; RSAUtils.setMaxDigits(130); var keyPair = RSAUtils.getKeyPair(e, '', n); // URI 编码 s = window.encodeURIComponent(s); // 反转 s = s.split("").reverse().join(""); return RSAUtils.encryptedString(keyPair, s);&#125;/** * RSA 解密数据：返回解密后的字符串 * &lt;p&gt;e 公匙 * &lt;p&gt;n 模 * &lt;p&gt;s 要解密的字符串 */function decryptRSA(e, n, s) &#123; RSAUtils.setMaxDigits(130); var keyPair = RSAUtils.getKeyPair('', e, n); s = RSAUtils.decryptedString(keyPair, s); // 反转 s = s.split("").reverse().join(""); // URI 解码 return window.decodeURIComponent(s);&#125; JS 版 RSA 工具类测试1234567891011121314151617181920212223var n = 'e1eb7ab440eb2b3413146dc64c66b4047c7d035712201f944dc092d6d65fb6496c27bb6984477e9d4d683cfe28f06e03efdbe28e92134071f5867adb5789d3b076b79bba167a710197ef7f47894f1d3737e4bf5dd33a7db4de67eebbd85f72f7fd681f17f03a30575d613df6ed682fd324e12ec14bd17cc2b667f7536d8db137';var e = '10001';// 一般客户端不要传私钥，这里是为了测试var d = '9316ca9c034c59a39cec87103d7bfca6931a9d8b1a0cfa228780e2d9a757478a8435562abbea04808bfe5affab4de682ffaeacd1e03f528d1faaffe0411d4649fb2e691f0eea759f609b26e04e86419e4e2c628da8ea54168999d744fd611aa1f3c67ceba4a87a289e251dc1dbdd91448d996971dd6daf5804843fe4d0776091';var encrypt = '651e45bc3f35e766cb2397eef719401a88b6177fc1e566f97d24bf22398aad87b00e82a55cd70520172abd7e8d70a452ef22ce0c5a2477ea61f9430fa94c0913753f18781868bdb730fb78b812461884db72a2211ec681780bd7143d7fd0dddff81be42b887cf6fd70c2cad7a845f93bd79563dc60bb94b85610230cbb327c55';console.log('------------- 服务端私钥加密，客户端公钥解密 -------------');decryptR = decryptRSA(e, n, encrypt);console.log('decryptR: %o', decryptR);console.log('------------- 公钥加密，私钥解密 -------------');var str = '客户端 - 法拉利_123_abc_《》';console.log('str: %o', str);var encryptR = encryptRSA(e, n, str);console.log('encryptR: %o', encryptR);var decryptR = decryptRSA(d, n, encryptR);console.log('decryptR: %o', decryptR);console.log('------------- 私钥加密，公钥解密 -------------');console.log('str: %o', str);encryptR = encryptRSA(d, n, str);console.log('encryptR: %o', encryptR);decryptR = decryptRSA(e, n, encryptR);console.log('decryptR: %o', decryptR);]]></content>
@@ -212,195 +212,23 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Java、JS版AES加密算法工具类]]></title>
+    <url>%2Fposts%2F1f7e0ef5.html</url>
+    <content type="text"><![CDATA[[TOC] 本文主要是实现AES算法的Java版本和Javascript版本，并提供测试例子。 AES是一个对称分组密码算法，旨在取代DES成为广泛使用的标准。根据使用的密码长度，AES最常见的有3种方案，用以适应不同的场景要求，分别是AES-128、AES-192和AES-256。 Java中的PKCS5Padding和Javascript中的PKCS7Padding的结果是一样。 Java 版 AES 工具类123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143package cn.tisson.wechat.common.util;import javax.crypto.BadPaddingException;import javax.crypto.Cipher;import javax.crypto.IllegalBlockSizeException;import javax.crypto.NoSuchPaddingException;import javax.crypto.spec.SecretKeySpec;import java.io.UnsupportedEncodingException;import java.security.InvalidKeyException;import java.security.NoSuchAlgorithmException;/** * AES 加密、解密 * * @author Created by YL on 2018/2/9 */public enum AESUtils &#123; GBK &#123; public String getCharset() &#123; return "GBK"; &#125; &#125;, UTF8 &#123; public String getCharset() &#123; return "UTF-8"; &#125; &#125;; public static final String AES_KEY = "MHYKD5tes6fhkdv9"; /** * 获取编码 */ public String getCharset() &#123; throw new AbstractMethodError(); &#125; /** * 加密 * * @param str 需要加密的内容 * @param key 加密密码 * * @return 加密后的字符串 */ private byte[] enc(String str, String key) &#123; try &#123; SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(getCharset()), "AES"); Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding"); cipher.init(Cipher.ENCRYPT_MODE, skeySpec); return cipher.doFinal(str.getBytes(getCharset())); &#125; catch (UnsupportedEncodingException e) &#123; throw new RuntimeException("不支持的编码格式", e); &#125; catch (NoSuchAlgorithmException e) &#123; throw new RuntimeException("不支持的加密算法", e); &#125; catch (NoSuchPaddingException e) &#123; throw new RuntimeException("不支持的填充机制", e); &#125; catch (InvalidKeyException e) &#123; throw new RuntimeException("无效的Key、错误的长度、未初始化等", e); &#125; catch (IllegalBlockSizeException e) &#123; throw new RuntimeException("密码的块大小不匹配", e); &#125; catch (BadPaddingException e) &#123; throw new RuntimeException("输入的数据错误，导致填充机制未能正常填充", e); &#125; &#125; private byte[] dec(byte[] str, String key) &#123; try &#123; SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(getCharset()), "AES"); Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding"); cipher.init(Cipher.DECRYPT_MODE, skeySpec); return cipher.doFinal(str); &#125; catch (UnsupportedEncodingException e) &#123; throw new RuntimeException("不支持的编码格式", e); &#125; catch (NoSuchAlgorithmException e) &#123; throw new RuntimeException("不支持的加密算法", e); &#125; catch (NoSuchPaddingException e) &#123; throw new RuntimeException("不支持的填充机制", e); &#125; catch (InvalidKeyException e) &#123; throw new RuntimeException("无效的Key、错误的长度、未初始化等", e); &#125; catch (IllegalBlockSizeException e) &#123; throw new RuntimeException("密码的块大小不匹配", e); &#125; catch (BadPaddingException e) &#123; throw new RuntimeException("输入的数据错误，导致填充机制未能正常填充", e); &#125; &#125; /** * AES 加密，使用默认 key 加密 * * @param str 要加密的明文 * * @return 加密后的密文 */ public String encrypt(String str) &#123; return encrypt(str, AESUtils.AES_KEY); &#125; /** * AES加密，使用指定 key 加密 * * @param str 要加密的明文 * @param key 加密 key * * @return 解密后字符串 */ public String encrypt(String str, String key) &#123; byte[] encryptBytes = enc(str, key); return Base64Utils.UTF8.encode(encryptBytes); &#125; /** * AES 解密，使用默认 key 解密 * * @param str 要解密的密文 * * @return 解密后的明文 */ public String decrypt(String str) &#123; return decrypt(str, AESUtils.AES_KEY); &#125; /** * AES 解密，使用默认 key 解密 * * @param str 要解密的密文 * @param key 解密 key * * @return 解密后的明文 */ public String decrypt(String str, String key) &#123; if (str == null || "".equals(str)) &#123; return ""; &#125; byte[] bytes = Base64Utils.UTF8.decode2byte(str); try &#123; return new String(dec(bytes, key), getCharset()); &#125; catch (UnsupportedEncodingException e) &#123; e.printStackTrace(); &#125; return ""; &#125;&#125; Java 版 AES 工具类测试123456789101112131415161718192021package cn.tisson.wechat.common.util;import org.junit.Assert;import org.junit.Test;/** * @author Created by YL on 2018/2/13 */public class AESUtilsTest &#123; private static final String KEY = "SYhU9Qf3nmrZAx7D"; private static final String STR = "法拉利_24234slfkjsl《》？：“”｛｝+——"; @Test public void aes() &#123; String encrypt = AESUtils.UTF8.encrypt(STR, KEY); System.out.println("encrypt ---&gt; " + encrypt); String decrypt = AESUtils.UTF8.decrypt(encrypt, KEY); System.out.println(decrypt); Assert.assertEquals(STR, decrypt); &#125;&#125; JS 版 AES 工具类要引入的 js 文件地址：https://github.com/brix/crypto-js12345&lt;script th:src="@&#123;/crypto-js/core.js&#125;"&gt;&lt;/script&gt;&lt;script th:src="@&#123;/crypto-js/enc-base64.js&#125;"&gt;&lt;/script&gt;&lt;script th:src="@&#123;/crypto-js/cipher-core.js&#125;"&gt;&lt;/script&gt;&lt;script th:src="@&#123;/crypto-js/aes.js&#125;"&gt;&lt;/script&gt;&lt;script th:src="@&#123;/crypto-js/mode-ecb.js&#125;"&gt;&lt;/script&gt; JS 版 AES 工具类扩展123456789101112131415161718192021222324252627282930313233343536function getRandom(len) &#123; var a = len || 16, s = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', n = s.length; var r = ''; for (var i = 0; i &lt; a; i++) &#123; r += s.charAt(Math.floor(Math.random() * n)); &#125; return r;&#125;function encryptAES(str, key) &#123; var s = CryptoJS.enc.Utf8.parse(str), k = CryptoJS.enc.Utf8.parse(key), c = CryptoJS.AES.encrypt(s, k, &#123; mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 &#125;), // 转换为字符串 // return c.toString(); // Hex 转为十六进制 d = CryptoJS.enc.Hex.parse(c.ciphertext.toString()); // Base64 编码 return CryptoJS.enc.Base64.stringify(d);&#125;function decryptAES(str, key) &#123; var k = CryptoJS.enc.Utf8.parse(key), c = CryptoJS.AES.decrypt(str, k, &#123; mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 &#125;); // 转换为 UTF8 字符串 return CryptoJS.enc.Utf8.stringify(c); // return c.toString(CryptoJS.enc.Utf8);&#125; JS 版 AES 工具类测试12345678var key = getRandom();console.log('key: %o', key);var str = '法拉利_24234slfkjsl《》？：“”｛｝+——';console.log('str: %o', str);var e = encryptAES(str, key);console.log('e: %o', e);var d = decryptAES(e, key);console.log('d: %o', d);]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Javascript</tag>
+        <tag>AES</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[hexo github ignorecase]]></title>
     <url>%2Fposts%2F18219b06.html</url>
     <content type="text"><![CDATA[Hexo 部署到 Github Pages 文件夹大小写问题问题使用 Hexo 部署博客到 Github Pages 时经常会遇到文件夹大小写问题导致的 404问题。 例如 Hexo 生成了一个 javasccript Category文件夹，但是我后来把它改成了 Javasccript，即 javasccript 的首字母大写了。Hexo会生成正确，但部署到 Github 上却老是不正确。 原因git 默认忽略文件名大小写，所以即使文件夹大小写变更，git 也检测不到。 解决办法1、进入到博客项目中 .deploy_git文件夹，修改 .git 下的 config 文件，将 ignorecase=true 改为 ignorecase=false12cd ./deploy_git/.gitvi config 2、删除博客项目中 .deploy_git 文件夹下的所有文件，并 push 到 Github 上, 这一步是清空你的 github.io 项目中所有文件。1234cd ./deploy_git/git rm -rf *git commit -m 'clean'git push 3、使用 Hexo 再次生成及部署123cd ..hexo clean &amp;&amp; hexo d -g# hexo clean &amp;&amp; hexo g &amp;&amp; hexo d]]></content>
       <categories>
         <category>hexo</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux tar 命令]]></title>
-    <url>%2Fposts%2Fbd083454.html</url>
-    <content type="text"><![CDATA[tar1tar -zxvf xxx.tar.gz]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>tar</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux cp 命令]]></title>
-    <url>%2Fposts%2F2835e3e.html</url>
-    <content type="text"><![CDATA[cp复制文件夹1cp -r [old source] -d [new source]]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>cp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux sed 命令]]></title>
-    <url>%2Fposts%2Fb8ec468d.html</url>
-    <content type="text"><![CDATA[sed打印指定行数1sed -n '12457431, 12457440p' tomcat/logs/catalina.out]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>sed</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[jar启动脚本]]></title>
-    <url>%2Fposts%2F6d838077.html</url>
-    <content type="text"><![CDATA[jar启动脚本123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263#!/usr/bin/env bash# @Author: YL# @Date: 2017-08-31 15:52:30# @Last Modified by: YL# @Last Modified time: 2017-12-18 14:12:45export LANG=en_US.UTF-8export JAVA_HOME=/usr/java/jdk1.8.0_144export PATH=$PATH:$JAVA_HOME/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHcd `dirname $0`PROJECT_HOME=`pwd`PROJECT_LIB=$PROJECT_HOME/libPROJECT_LOGS=$PROJECT_HOME/logsSTDOUT_FILE=$PROJECT_HOME/logs/stdout.logPROJECT_JAR=$PROJECT_HOME/tisson-ftp.jar# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $PROJECT_JAR"# pidPROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'`function operate()&#123; if [[ "$1" = "kill" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN kill $PROJECT_PID begining" | tee -a $STDOUT_FILE kill -9 $PROJECT_PID echo "$DATE_PATTERN kill $PROJECT_PID success" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not alive" | tee -a $STDOUT_FILE fi elif [[ "$1" = "start" ]] ; then # cd $PROJECT_HOME # starting nohup java -server -Xms512m -Xmx512m -Xss256k -Dloader.path=$PROJECT_LIB -Djava.io.tmpdir=$PROJECT_LOGS -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$PROJECT_LOGS/$PROJECT_PID.hprof -jar $PROJECT_JAR &gt;&gt; $STDOUT_FILE 2&gt;&amp;1 &amp; PROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'` echo "$DATE_PATTERN The $PROJECT_JAR started OK! pid: $PROJECT_PID" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILE fi&#125;if [[ "$1" = "start" || "$1" = "check" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN already started! pid: $PROJECT_PID" &gt;&gt; $STDOUT_FILE exit 1 fi operate startelif [[ "$1" = "" || "$1" = "restart" ]]; then operate kill echo "$DATE_PATTERN starting" | tee -a $STDOUT_FILE operate startelif [[ "$1" = "kill" ]]; then operate killelse echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILEfi -Djava.ext.dirs和-Dloader.path区别 -Djava.ext.dirs 使用-Djava.ext.dirs配置外部jar包引用时，会覆盖jdk默认的lib/ext下的扩展包 -Dloader.path]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>jar</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux vi 命令]]></title>
-    <url>%2Fposts%2F87207300.html</url>
-    <content type="text"><![CDATA[vilinux文件格式的问题（使用unix格式）123456789# 查看文件格式vi 文件名:set ff # :set fileencoding# 设置文件格式为unix:set ff=unix# 保存退出:wq# 也可以直接使用dos2unix 文件名]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>vi</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux crontab 命令]]></title>
-    <url>%2Fposts%2Fb0b79272.html</url>
-    <content type="text"><![CDATA[crontab 使用注意事项如果通过 crontab 执行1、crontab 无法获取 jdk 变量，要在 java 命令之前写入jdk绝对路径2、要把路径切换到要执行的 sh 路径下注意：二者缺一不可 查找 jdk 路径的方法 1 12$ echo $JAVA_HOME/usr/java/jdk1.6.0_45/bin/java 2 123456$ which java/usr/bin/java$ ls -lrt /usr/bin/java #/usr/bin/java是which java查出来的路径lrwxrwxrwx. 1 root root 22 Sep 16 2015 /usr/bin/java -&gt; /etc/alternatives/java$ ls -lrt /etc/alternatives/java #/etc/alternatives/java是ls -lrt /usr/bin/java查出来的路径 lrwxrwxrwx. 1 root root 46 Sep 16 2015 /etc/alternatives/java -&gt; /usr/lib/jvm/jre-1.6.0-openjdk.x86_64/bin/java 查询 crontab 定时器配置情况1crontab -l 编辑 crontab 定时器1234567crontab -e# 当 crontab 调用时，错误和标准输出会写成 mail 通知你* * * * * /opt/restart.sh# 标准输出重定向到 /dev/null，输出到这里就找不回来了* * * * * /opt/restart.sh &gt; /dev/null# 标准输出和错误输出都重定向到 /dev/null* * * * * /opt/restart.sh &gt; /dev/null 2&gt;&amp;1]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>crontab</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[zookeeper 启动脚本]]></title>
-    <url>%2Fposts%2Faf01b9a2.html</url>
-    <content type="text"><![CDATA[start12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-28 10:23:20# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:41# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`NODE_BIN_DIR=`pwd`NODE_LIB_DIR=$NODE_BIN_DIR/../lib/cd ..NODE_HOME=`pwd`# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"# mkdir logs dirNODE_DATA_LOG_DIR=`sed '/dataLogDir/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`NODE_LOGS_DIR=""if [ -n "$NODE_DATA_LOG_DIR" ]; then NODE_LOGS_DIR=$NODE_DATA_LOG_DIRelse NODE_LOGS_DIR=$NODE_HOME/logsfiif [ ! -d $NODE_LOGS_DIR ]; then mkdir $NODE_LOGS_DIRfiSTDOUT_FILE=$NODE_LOGS_DIR/stdout.logecho "$DATE_PATTERN NODE_BIN_DIR: $NODE_BIN_DIR" | tee -a $STDOUT_FILE# pidNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`if [ -n "$NODE_PID" ]; then echo "$DATE_PATTERN ERROR: The $NODE_LIB_DIR already started! pid: $NODE_PID" | tee -a $STDOUT_FILE exit 1fi# portNODE_PORT=`sed '/clientPort/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`if [ -n "$NODE_PORT" ]; then NODE_PORT_COUNT=`netstat -tln | grep $NODE_PORT | wc -l` if [ $NODE_PORT_COUNT -gt 0 ]; then echo "$DATE_PATTERN ERROR: The $NODE_LIB_DIR port $NODE_PORT already used!" | tee -a $STDOUT_FILE exit 1 fifi# startingcd $NODE_BIN_DIR./zkServer.sh startNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`echo "$DATE_PATTERN The $NODE_LIB_DIR started OK! pid: $NODE_PID" | tee -a $STDOUT_FILE]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux cat 命令]]></title>
-    <url>%2Fposts%2Fbe15a742.html</url>
-    <content type="text"><![CDATA[cat统计出现次数12# linux统计某一文件中字符串“sent ip”出现的次数：cat nohup.log |grep "sent ip" |wc -l 清空默认文件中的内容1cat /dev/null &gt; filename]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>cat</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux grep 命令]]></title>
-    <url>%2Fposts%2F1f104b3f.html</url>
-    <content type="text"><![CDATA[grep统计出现次数1grep 'sign.*time.*openid' access_p80_weixinv3.log | awk '&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;' | sort -n 4 183.3.234.4510 183.3.234.5720 183.3.234.58 查询前后日志grep -5 ‘parttern’ inputfile //打印匹配行的前后5行grep -C 5 ‘parttern’ inputfile //打印匹配行的前后5行grep -A 5 ‘parttern’ inputfile //打印匹配行的后5行grep -B 5 ‘parttern’ inputfile //打印匹配行的前5行]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>grep</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux lsof 命令]]></title>
-    <url>%2Fposts%2Ffc091577.html</url>
-    <content type="text"><![CDATA[lsof检测端口未被占用1lsof -i:8080]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>lsof</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux curl 命令]]></title>
-    <url>%2Fposts%2Faea02818.html</url>
-    <content type="text"><![CDATA[curlGET 请求1curl http://www.baidu.com?q=xxxx POST 请求1curl http://ip:port/weixin_v3/w -XPOST -d "send message..." 发送 POST JSON 请求1curl -H "Content-Type: application/json" -X POST --data '&#123;"data":"1"&#125;' http://127.0.0.1/ 使用代理1curl -x 192.168.2.5:3128 http://www.baidu.com?q=xxxx 输出请求信息12345678# http_code# time_connect# time_starttransfer# time_total# size_download# speed_download# 参考地址：curl http://www.baidu.com?q=xxxx -so /dev/null -w "%&#123;http_code&#125;\t%&#123;time_connect&#125;\t%&#123;time_starttransfer&#125;\t%&#123;time_total&#125;\t%&#123;size_download&#125;\t%&#123;speed_download&#125;\t"]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>curl</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux unzip 命令]]></title>
-    <url>%2Fposts%2F64f75729.html</url>
-    <content type="text"><![CDATA[unzip解压war、jar、zip、rar等文件1unzip -oq /opt/xxx.war -d /opt/ddd]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>unzip</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Tomcat 启动脚本]]></title>
-    <url>%2Fposts%2Fe22f47ab.html</url>
-    <content type="text"><![CDATA[Tomcat 启动脚本start.sh12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455#!/usr/bin/env bash# @Author: YL# @Date: 2017-01-25 14:50:43# @Last Modified by: YL# @Last Modified time: 2017-12-18 14:12:23cd `dirname $0`PROJECT_HOME=`pwd`# Tomcat 服务器路径TC_HOME="$PROJECT_HOME/tomcat"# crontab 检测日记文件TC_STDOUT_FILE="$TC_HOME/logs/stdout.out"# 检测 Tomcat 是否启动（进程ID）TC_PID=`ps -ef | grep $TC_HOME/bin | grep -v grep | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# 检测输出的日记格式DATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME"function operate()&#123; if [[ "$1" = "kill" ]] ; then if [[ "$TC_PID" = "" ]] ; then echo "$DATE_PATTERN is not alive" | tee -a $TC_STDOUT_FILE else echo "$DATE_PATTERN kill $TC_PID begining" | tee -a $TC_STDOUT_FILE kill -9 $TC_PID echo "$DATE_PATTERN kill $TC_PID success" | tee -a $TC_STDOUT_FILE fi elif [[ "$1" = "start" ]]; then cd $TC_HOME/bin sh startup.sh else echo "$DATE_PATTERN is not support $1" | tee -a $TC_STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "$DATE_PATTERN starting" | tee -a $TC_STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$TC_PID" = "" ]] ; then echo "$DATE_PATTERN starting" &gt;&gt; $TC_STDOUT_FILE operate start else echo "$DATE_PATTERN pid $TC_PID" &gt;&gt; $TC_STDOUT_FILE fielse echo "$DATE_PATTERN is not support $1" | tee -a $TC_STDOUT_FILEfi 使用说明12345sh start.sh start # 重启sh start.sh # 重启sh start.sh restart # 重启sh start.sh check # 检测服务是否启动，没有启动，则启动之，否则不做其他操作sh start.sh kill # kill掉已启动的服务进程]]></content>
-      <categories>
-        <category>Tomcat</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux netstat 命令]]></title>
-    <url>%2Fposts%2F6c05ba39.html</url>
-    <content type="text"><![CDATA[netstat查看进程的网络状态1netstat -anp | grep 7646]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>netstat</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[zookeeper重启脚本]]></title>
-    <url>%2Fposts%2F6c1ad93d.html</url>
-    <content type="text"><![CDATA[restart12345678910111213#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:10# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:30# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stopsleep 3./zkServer.sh start]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[zookeeper stop脚本]]></title>
-    <url>%2Fposts%2F7bd064dc.html</url>
-    <content type="text"><![CDATA[stop12345678910#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:00# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:49# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stop]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[zookeeper 清理日志文件]]></title>
-    <url>%2Fposts%2Fc0bbcacd.html</url>
-    <content type="text"><![CDATA[clear123456789101112131415161718192021222324252627282930#!/usr/bin/env bash# @Author: YL# @Date: 2017-11-01 08:59:34# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:09# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`cd ..NODE_HOME=`pwd`# snapshotNODE_DATA_DIR=$NODE_HOME/data/version-2# snapshot logNODE_LOG_DIR=$NODE_HOME/logs/version-2# zk logNODE_LOGS=$NODE_HOME/logs# 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中count=3count=$[$count+1]ls -t $NODE_LOG_DIR/log.* | tail -n +$count | xargs rm -fls -t $NODE_DATA_DIR/snapshot.* | tail -n +$count | xargs rm -fls -t $NODE_LOGS/zookeeper.log.* | tail -n +$count | xargs rm -f# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"STDOUT_FILE=$NODE_LOGS/stdout.logecho "$DATE_PATTERN clear logs success" | tee -a $STDOUT_FILE]]></content>
-      <categories>
-        <category>zookeeper</category>
       </categories>
   </entry>
   <entry>
@@ -424,15 +252,27 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux tail 命令]]></title>
-    <url>%2Fposts%2F29bd046e.html</url>
-    <content type="text"><![CDATA[tail]]></content>
+    <title><![CDATA[Linux curl 命令]]></title>
+    <url>%2Fposts%2Faea02818.html</url>
+    <content type="text"><![CDATA[curlGET 请求1curl http://www.baidu.com?q=xxxx POST 请求1curl http://ip:port/weixin_v3/w -XPOST -d "send message..." 发送 POST JSON 请求1curl -H "Content-Type: application/json" -X POST --data '&#123;"data":"1"&#125;' http://127.0.0.1/ 使用代理1curl -x 192.168.2.5:3128 http://www.baidu.com?q=xxxx 输出请求信息12345678# http_code# time_connect# time_starttransfer# time_total# size_download# speed_download# 参考地址：curl http://www.baidu.com?q=xxxx -so /dev/null -w "%&#123;http_code&#125;\t%&#123;time_connect&#125;\t%&#123;time_starttransfer&#125;\t%&#123;time_total&#125;\t%&#123;size_download&#125;\t%&#123;speed_download&#125;\t"]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>tail</tag>
+        <tag>curl</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux netstat 命令]]></title>
+    <url>%2Fposts%2F6c05ba39.html</url>
+    <content type="text"><![CDATA[netstat查看进程的网络状态1netstat -anp | grep 7646]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>netstat</tag>
       </tags>
   </entry>
   <entry>
@@ -448,6 +288,110 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Linux cp 命令]]></title>
+    <url>%2Fposts%2F2835e3e.html</url>
+    <content type="text"><![CDATA[cp复制文件夹1cp -r [old source] -d [new source]]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>cp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[jar启动脚本]]></title>
+    <url>%2Fposts%2F6d838077.html</url>
+    <content type="text"><![CDATA[jar启动脚本123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263#!/usr/bin/env bash# @Author: YL# @Date: 2017-08-31 15:52:30# @Last Modified by: YL# @Last Modified time: 2017-12-18 14:12:45export LANG=en_US.UTF-8export JAVA_HOME=/usr/java/jdk1.8.0_144export PATH=$PATH:$JAVA_HOME/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHcd `dirname $0`PROJECT_HOME=`pwd`PROJECT_LIB=$PROJECT_HOME/libPROJECT_LOGS=$PROJECT_HOME/logsSTDOUT_FILE=$PROJECT_HOME/logs/stdout.logPROJECT_JAR=$PROJECT_HOME/tisson-ftp.jar# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $PROJECT_JAR"# pidPROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'`function operate()&#123; if [[ "$1" = "kill" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN kill $PROJECT_PID begining" | tee -a $STDOUT_FILE kill -9 $PROJECT_PID echo "$DATE_PATTERN kill $PROJECT_PID success" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not alive" | tee -a $STDOUT_FILE fi elif [[ "$1" = "start" ]] ; then # cd $PROJECT_HOME # starting nohup java -server -Xms512m -Xmx512m -Xss256k -Dloader.path=$PROJECT_LIB -Djava.io.tmpdir=$PROJECT_LOGS -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$PROJECT_LOGS/$PROJECT_PID.hprof -jar $PROJECT_JAR &gt;&gt; $STDOUT_FILE 2&gt;&amp;1 &amp; PROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'` echo "$DATE_PATTERN The $PROJECT_JAR started OK! pid: $PROJECT_PID" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILE fi&#125;if [[ "$1" = "start" || "$1" = "check" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN already started! pid: $PROJECT_PID" &gt;&gt; $STDOUT_FILE exit 1 fi operate startelif [[ "$1" = "" || "$1" = "restart" ]]; then operate kill echo "$DATE_PATTERN starting" | tee -a $STDOUT_FILE operate startelif [[ "$1" = "kill" ]]; then operate killelse echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILEfi -Djava.ext.dirs和-Dloader.path区别 -Djava.ext.dirs 使用-Djava.ext.dirs配置外部jar包引用时，会覆盖jdk默认的lib/ext下的扩展包 -Dloader.path]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>jar</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux grep 命令]]></title>
+    <url>%2Fposts%2F1f104b3f.html</url>
+    <content type="text"><![CDATA[grep统计出现次数1grep 'sign.*time.*openid' access_p80_weixinv3.log | awk '&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;' | sort -n 4 183.3.234.4510 183.3.234.5720 183.3.234.58 查询前后日志grep -5 ‘parttern’ inputfile //打印匹配行的前后5行grep -C 5 ‘parttern’ inputfile //打印匹配行的前后5行grep -A 5 ‘parttern’ inputfile //打印匹配行的后5行grep -B 5 ‘parttern’ inputfile //打印匹配行的前5行]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>grep</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux sed 命令]]></title>
+    <url>%2Fposts%2Fb8ec468d.html</url>
+    <content type="text"><![CDATA[sed打印指定行数1sed -n '12457431, 12457440p' tomcat/logs/catalina.out]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>sed</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux tar 命令]]></title>
+    <url>%2Fposts%2Fbd083454.html</url>
+    <content type="text"><![CDATA[tar1tar -zxvf xxx.tar.gz]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>tar</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper重启脚本]]></title>
+    <url>%2Fposts%2F6c1ad93d.html</url>
+    <content type="text"><![CDATA[restart12345678910111213#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:10# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:30# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stopsleep 3./zkServer.sh start]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Tomcat 启动脚本]]></title>
+    <url>%2Fposts%2Fe22f47ab.html</url>
+    <content type="text"><![CDATA[Tomcat 启动脚本start.sh12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455#!/usr/bin/env bash# @Author: YL# @Date: 2017-01-25 14:50:43# @Last Modified by: YL# @Last Modified time: 2017-12-18 14:12:23cd `dirname $0`PROJECT_HOME=`pwd`# Tomcat 服务器路径TC_HOME="$PROJECT_HOME/tomcat"# crontab 检测日记文件TC_STDOUT_FILE="$TC_HOME/logs/stdout.out"# 检测 Tomcat 是否启动（进程ID）TC_PID=`ps -ef | grep $TC_HOME/bin | grep -v grep | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# 检测输出的日记格式DATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME"function operate()&#123; if [[ "$1" = "kill" ]] ; then if [[ "$TC_PID" = "" ]] ; then echo "$DATE_PATTERN is not alive" | tee -a $TC_STDOUT_FILE else echo "$DATE_PATTERN kill $TC_PID begining" | tee -a $TC_STDOUT_FILE kill -9 $TC_PID echo "$DATE_PATTERN kill $TC_PID success" | tee -a $TC_STDOUT_FILE fi elif [[ "$1" = "start" ]]; then cd $TC_HOME/bin sh startup.sh else echo "$DATE_PATTERN is not support $1" | tee -a $TC_STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "$DATE_PATTERN starting" | tee -a $TC_STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$TC_PID" = "" ]] ; then echo "$DATE_PATTERN starting" &gt;&gt; $TC_STDOUT_FILE operate start else echo "$DATE_PATTERN pid $TC_PID" &gt;&gt; $TC_STDOUT_FILE fielse echo "$DATE_PATTERN is not support $1" | tee -a $TC_STDOUT_FILEfi 使用说明12345sh start.sh start # 重启sh start.sh # 重启sh start.sh restart # 重启sh start.sh check # 检测服务是否启动，没有启动，则启动之，否则不做其他操作sh start.sh kill # kill掉已启动的服务进程]]></content>
+      <categories>
+        <category>Tomcat</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux vi 命令]]></title>
+    <url>%2Fposts%2F87207300.html</url>
+    <content type="text"><![CDATA[vilinux文件格式的问题（使用unix格式）123456789# 查看文件格式vi 文件名:set ff # :set fileencoding# 设置文件格式为unix:set ff=unix# 保存退出:wq# 也可以直接使用dos2unix 文件名]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>vi</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper stop脚本]]></title>
+    <url>%2Fposts%2F7bd064dc.html</url>
+    <content type="text"><![CDATA[stop12345678910#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:00# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:49# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stop]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper 清理日志文件]]></title>
+    <url>%2Fposts%2Fc0bbcacd.html</url>
+    <content type="text"><![CDATA[clear123456789101112131415161718192021222324252627282930#!/usr/bin/env bash# @Author: YL# @Date: 2017-11-01 08:59:34# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:09# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`cd ..NODE_HOME=`pwd`# snapshotNODE_DATA_DIR=$NODE_HOME/data/version-2# snapshot logNODE_LOG_DIR=$NODE_HOME/logs/version-2# zk logNODE_LOGS=$NODE_HOME/logs# 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中count=3count=$[$count+1]ls -t $NODE_LOG_DIR/log.* | tail -n +$count | xargs rm -fls -t $NODE_DATA_DIR/snapshot.* | tail -n +$count | xargs rm -fls -t $NODE_LOGS/zookeeper.log.* | tail -n +$count | xargs rm -f# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"STDOUT_FILE=$NODE_LOGS/stdout.logecho "$DATE_PATTERN clear logs success" | tee -a $STDOUT_FILE]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
     <title><![CDATA[Linux ls 命令]]></title>
     <url>%2Fposts%2F53b5960c.html</url>
     <content type="text"><![CDATA[ls12# 统计文件夹中文件数ls -l |grep "^-"|wc -l 保留最新的1个文件夹，删除其他文件夹（使用-d）1ls -t -d /home/txrd/tisson-web-open/logs/undertow-* | tail -n +2 | xargs rm -rf]]></content>
@@ -457,6 +401,74 @@
       <tags>
         <tag>shell</tag>
         <tag>ls</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux crontab 命令]]></title>
+    <url>%2Fposts%2Fb0b79272.html</url>
+    <content type="text"><![CDATA[crontab 使用注意事项如果通过 crontab 执行1、crontab 无法获取 jdk 变量，要在 java 命令之前写入jdk绝对路径2、要把路径切换到要执行的 sh 路径下注意：二者缺一不可 查找 jdk 路径的方法 1 12$ echo $JAVA_HOME/usr/java/jdk1.6.0_45/bin/java 2 123456$ which java/usr/bin/java$ ls -lrt /usr/bin/java #/usr/bin/java是which java查出来的路径lrwxrwxrwx. 1 root root 22 Sep 16 2015 /usr/bin/java -&gt; /etc/alternatives/java$ ls -lrt /etc/alternatives/java #/etc/alternatives/java是ls -lrt /usr/bin/java查出来的路径 lrwxrwxrwx. 1 root root 46 Sep 16 2015 /etc/alternatives/java -&gt; /usr/lib/jvm/jre-1.6.0-openjdk.x86_64/bin/java 查询 crontab 定时器配置情况1crontab -l 编辑 crontab 定时器1234567crontab -e# 当 crontab 调用时，错误和标准输出会写成 mail 通知你* * * * * /opt/restart.sh# 标准输出重定向到 /dev/null，输出到这里就找不回来了* * * * * /opt/restart.sh &gt; /dev/null# 标准输出和错误输出都重定向到 /dev/null* * * * * /opt/restart.sh &gt; /dev/null 2&gt;&amp;1]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>crontab</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux lsof 命令]]></title>
+    <url>%2Fposts%2Ffc091577.html</url>
+    <content type="text"><![CDATA[lsof检测端口未被占用1lsof -i:8080]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>lsof</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux tail 命令]]></title>
+    <url>%2Fposts%2F29bd046e.html</url>
+    <content type="text"><![CDATA[tail]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>tail</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper 启动脚本]]></title>
+    <url>%2Fposts%2Faf01b9a2.html</url>
+    <content type="text"><![CDATA[start12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-28 10:23:20# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:41# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`NODE_BIN_DIR=`pwd`NODE_LIB_DIR=$NODE_BIN_DIR/../lib/cd ..NODE_HOME=`pwd`# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"# mkdir logs dirNODE_DATA_LOG_DIR=`sed '/dataLogDir/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`NODE_LOGS_DIR=""if [ -n "$NODE_DATA_LOG_DIR" ]; then NODE_LOGS_DIR=$NODE_DATA_LOG_DIRelse NODE_LOGS_DIR=$NODE_HOME/logsfiif [ ! -d $NODE_LOGS_DIR ]; then mkdir $NODE_LOGS_DIRfiSTDOUT_FILE=$NODE_LOGS_DIR/stdout.logecho "$DATE_PATTERN NODE_BIN_DIR: $NODE_BIN_DIR" | tee -a $STDOUT_FILE# pidNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`if [ -n "$NODE_PID" ]; then echo "$DATE_PATTERN ERROR: The $NODE_LIB_DIR already started! pid: $NODE_PID" | tee -a $STDOUT_FILE exit 1fi# portNODE_PORT=`sed '/clientPort/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`if [ -n "$NODE_PORT" ]; then NODE_PORT_COUNT=`netstat -tln | grep $NODE_PORT | wc -l` if [ $NODE_PORT_COUNT -gt 0 ]; then echo "$DATE_PATTERN ERROR: The $NODE_LIB_DIR port $NODE_PORT already used!" | tee -a $STDOUT_FILE exit 1 fifi# startingcd $NODE_BIN_DIR./zkServer.sh startNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`echo "$DATE_PATTERN The $NODE_LIB_DIR started OK! pid: $NODE_PID" | tee -a $STDOUT_FILE]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux cat 命令]]></title>
+    <url>%2Fposts%2Fbe15a742.html</url>
+    <content type="text"><![CDATA[cat统计出现次数12# linux统计某一文件中字符串“sent ip”出现的次数：cat nohup.log |grep "sent ip" |wc -l 清空默认文件中的内容1cat /dev/null &gt; filename]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>cat</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux unzip 命令]]></title>
+    <url>%2Fposts%2F64f75729.html</url>
+    <content type="text"><![CDATA[unzip解压war、jar、zip、rar等文件1unzip -oq /opt/xxx.war -d /opt/ddd]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>unzip</tag>
       </tags>
   </entry>
   <entry>
@@ -472,6 +484,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[spring boot 使用注意事项]]></title>
+    <url>%2Fposts%2F47aa1712.html</url>
+    <content type="text"><![CDATA[兼容问题spring-boot-starter-parent切换回1.5.2.RELEASE版本 因为1.5.4.RELEASE、1.5.5.RELEASE、1.5.6.RELEASE、1.5.7.RELEASE、2.0.0.M1、2.0.0.M2、2.0.0.M3都存在使用spring-boot-starter-data-redis时，会出现异常 java.lang.NoSuchMethodError: org.springframework.data.repository.config.AnnotationRepositoryConfigurationSource.&lt;init&gt;异常 请查看https://github.com/spring-projects/spring-boot/issues/9606 外部 Tomcat 容器部署 外部 Tomcat 等容器部署war，要继承 SpringBootServletInitializer 类 1234567891011121314151617import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.boot.builder.SpringApplicationBuilder;import org.springframework.boot.web.support.SpringBootServletInitializer;@SpringBootApplicationpublic class OutserverApplication extends SpringBootServletInitializer &#123; @Override protected SpringApplicationBuilder configure(SpringApplicationBuilder application) &#123; return application.sources(OutserverApplication.class); &#125; public static void main(String[] args) &#123; SpringApplication.run(OutserverApplication.class, args); &#125;&#125; attach=false123456789101112131415&lt;plugin&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt; &lt;configuration&gt; &lt;layout&gt;ZIP&lt;/layout&gt; &lt;includes&gt; &lt;include&gt; &lt;groupId&gt;nothing&lt;/groupId&gt; &lt;artifactId&gt;nothing&lt;/artifactId&gt; &lt;/include&gt; &lt;/includes&gt; &lt;!-- 将原始的包作为 install 和 deploy 的对象，而不是包含了依赖的包 --&gt; &lt;attach&gt;false&lt;/attach&gt; &lt;/configuration&gt;&lt;/plugin&gt; spring-boot升级到2.0 弃用WebMvcConfigurerAdapter，替换成WebMvcConfigurer 12345678910@Configuratiionpublic class WebAdapter extends WebMvcConfigurerAdapter &#123; @Override public void addCorsMappings(CorsRegistry registry) &#123; registry.addMapping("/**") .allowedHeaders("*") .allowedOrigins("*") .allowedMethods("GET", "POST", "PUT"); &#125;&#125; 在 spring-boot 2.0 中需要注意，因为使用的是 spring 5，原先的方法是继承WebMvcConfigurerAdapter抽象类，现在是直接扩展 WebMvcConfigurer 这个接口。原先的方式很能生效，不过已经被 spring 5弃用了（@Deprecated） 12345678910111213141516171819@Configuratiionpublic class MyConfiguration &#123; @Bean public WebMvcConfigurer webMvcConfigurer() &#123; return new WebMvcConfigurer() &#123; // 跨域配置 @Override public void addCorsMappings(CorsRegistry registry) &#123; registry.addMapping("/api/**"); &#125; // 拦截器配置 @Override public void addInterceptors(InterceptorRegistry registry) &#123; &#125; // ... &#125;; &#125;&#125; 其他 @RequestBody 使用 @RequestBody 注解时，如果注解的参数没有传入，则会抛出org.springframework.http.converter.HttpMessageNotReadableException异常 配合hibernate-validator不起作用的问题 在参数前面使用org.springframework.validation.annotation.Validated注解，或者javax.validation.Valid注解均可 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051import lombok.AllArgsConstructor;import lombok.Data;import lombok.NoArgsConstructor;import org.hibernate.validator.constraints.Length;import org.hibernate.validator.constraints.NotBlank;import java.io.Serializable;/** * @author Created by YL on 2017/10/19 */@Data@AllArgsConstructor@NoArgsConstructorpublic class MarketRebateDTO implements Serializable &#123; @NotBlank(message = "营销活动 Id 不能为空") @Length(min = 5, max = 8, message = "营销活动 Id[$&#123;validatedValue&#125;] 长度必须在 &#123;min&#125; 和 &#123;max&#125; 之间") private String marketCfgId; private String productNo; private String rebateAmt; private String tradeType;&#125;import com.alibaba.dubbo.config.annotation.Reference;import org.springframework.validation.annotation.Validated;import org.springframework.web.bind.annotation.PostMapping;import org.springframework.web.bind.annotation.RequestBody;import org.springframework.web.bind.annotation.RequestMapping;import org.springframework.web.bind.annotation.RestController;import javax.validation.Valid;/** * 广东省营销接口 * * @author Created by YL on 2017/10/18 */@RestController@RequestMapping("/api/market")public class MarketController extends BaseRestController &#123; @Reference private MarketService marketService; @PostMapping("/rebate") public BaseResponse rebate(@RequestBody @Valid MarketRebateDTO rebate) throws CoreException, OkHttpException &#123; return marketService.doRebate(rebate); &#125;&#125; @RequestParam 使用 @RequestParam 注解时，如果注解的参数没有传入，则会抛出org.springframework.web.bind.MissingServletRequestParameterException异常 配合hibernate-validator不起作用的问题 要注册 MethodValidationPostProcessor Bean，并且在类上面使用org.springframework.validation.annotation.Validated注解 注意：使用javax.validation.Valid注解对RequestParam对应的参数进行注解，是无效的，需要使用@Validated注解来使得验证生效 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253@Beanpublic Validator validator() &#123; ValidatorFactory factory = Validation.byProvider(HibernateValidator.class) .configure() // 1、普通模式（默认是这个模式） // 普通模式(会校验完所有的属性，然后返回所有的验证失败信息) // 2、快速失败返回模式 // 快速失败返回模式(只要有一个验证失败，则返回) // .addProperty("hibernate.validator.fail_fast", "true") .failFast(true) .buildValidatorFactory(); return factory.getValidator();&#125;@Beanpublic MethodValidationPostProcessor methodValidationPostProcessor() &#123; MethodValidationPostProcessor postProcessor = new MethodValidationPostProcessor(); // 设置validator模式为快速失败返回 postProcessor.setValidator(validator()); return postProcessor;&#125;import com.alibaba.dubbo.config.annotation.Reference;import org.hibernate.validator.constraints.NotBlank;import org.springframework.validation.annotation.Validated;import org.springframework.web.bind.annotation.GetMapping;import org.springframework.web.bind.annotation.PostMapping;import org.springframework.web.bind.annotation.RequestMapping;import org.springframework.web.bind.annotation.RequestParam;import org.springframework.web.bind.annotation.RestController;/** * csp 平台接口封装 * * @author Created by YL on 2017/9/19 */@RestController@RequestMapping("/api/csp")@Validatedpublic class CspController extends BaseRestController &#123; @Reference private CspService cspService; @GetMapping public BaseResponse get(@RequestParam @NotBlank(message = "组件名不能为空") String func, @RequestParam @NotBlank(message = "参数值不能为空") String param) throws OkHttpException, OpenApiException &#123; return new BaseResponse(cspService.get(func, param)); &#125;&#125; 至此，Bean Validator 和 hibernate-validator的@Size、@Min、@Max、@Length、@NotBlank等注解就生效了]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>spring-boot</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Spring Data JPA 使用]]></title>
     <url>%2Fposts%2F6cc2492a.html</url>
     <content type="text"><![CDATA[总记录数getTotalElements —&gt; 21 总页数getTotalPages —&gt; 7 查询记录列表getContent —&gt; [User(id=1, name=AAA, age=20, status=DEFAULT, createDate=null, addressId=2), User(id=2, name=AAA, age=20, status=DEFAULT, createDate=null, addressId=null), User(id=3, name=AAA, age=20, status=DEFAULT, createDate=null, addressId=null)] 当前页数，从0开始getNumber —&gt; 0 当前页码中的记录数getNumberOfElements —&gt; 3 每页记录数getSize —&gt; 3]]></content>
@@ -481,17 +504,6 @@
       <tags>
         <tag>spring-boot</tag>
         <tag>jpa</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[spring boot 使用注意事项]]></title>
-    <url>%2Fposts%2F47aa1712.html</url>
-    <content type="text"><![CDATA[兼容问题spring-boot-starter-parent切换回1.5.2.RELEASE版本 因为1.5.4.RELEASE、1.5.5.RELEASE、1.5.6.RELEASE、1.5.7.RELEASE、2.0.0.M1、2.0.0.M2、2.0.0.M3都存在使用spring-boot-starter-data-redis时，会出现异常 java.lang.NoSuchMethodError: org.springframework.data.repository.config.AnnotationRepositoryConfigurationSource.&lt;init&gt;异常 请查看https://github.com/spring-projects/spring-boot/issues/9606 外部 Tomcat 容器部署 外部 Tomcat 等容器部署war，要继承 SpringBootServletInitializer 类 1234567891011121314151617import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.boot.builder.SpringApplicationBuilder;import org.springframework.boot.web.support.SpringBootServletInitializer;@SpringBootApplicationpublic class OutserverApplication extends SpringBootServletInitializer &#123; @Override protected SpringApplicationBuilder configure(SpringApplicationBuilder application) &#123; return application.sources(OutserverApplication.class); &#125; public static void main(String[] args) &#123; SpringApplication.run(OutserverApplication.class, args); &#125;&#125; attach=false123456789101112131415&lt;plugin&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt; &lt;configuration&gt; &lt;layout&gt;ZIP&lt;/layout&gt; &lt;includes&gt; &lt;include&gt; &lt;groupId&gt;nothing&lt;/groupId&gt; &lt;artifactId&gt;nothing&lt;/artifactId&gt; &lt;/include&gt; &lt;/includes&gt; &lt;!-- 将原始的包作为 install 和 deploy 的对象，而不是包含了依赖的包 --&gt; &lt;attach&gt;false&lt;/attach&gt; &lt;/configuration&gt;&lt;/plugin&gt; spring-boot升级到2.0 弃用WebMvcConfigurerAdapter，替换成WebMvcConfigurer 12345678910@Configuratiionpublic class WebAdapter extends WebMvcConfigurerAdapter &#123; @Override public void addCorsMappings(CorsRegistry registry) &#123; registry.addMapping("/**") .allowedHeaders("*") .allowedOrigins("*") .allowedMethods("GET", "POST", "PUT"); &#125;&#125; 在 spring-boot 2.0 中需要注意，因为使用的是 spring 5，原先的方法是继承WebMvcConfigurerAdapter抽象类，现在是直接扩展 WebMvcConfigurer 这个接口。原先的方式很能生效，不过已经被 spring 5弃用了（@Deprecated） 12345678910111213141516171819@Configuratiionpublic class MyConfiguration &#123; @Bean public WebMvcConfigurer webMvcConfigurer() &#123; return new WebMvcConfigurer() &#123; // 跨域配置 @Override public void addCorsMappings(CorsRegistry registry) &#123; registry.addMapping("/api/**"); &#125; // 拦截器配置 @Override public void addInterceptors(InterceptorRegistry registry) &#123; &#125; // ... &#125;; &#125;&#125; 其他 @RequestBody 使用 @RequestBody 注解时，如果注解的参数没有传入，则会抛出org.springframework.http.converter.HttpMessageNotReadableException异常 配合hibernate-validator不起作用的问题 在参数前面使用org.springframework.validation.annotation.Validated注解，或者javax.validation.Valid注解均可 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051import lombok.AllArgsConstructor;import lombok.Data;import lombok.NoArgsConstructor;import org.hibernate.validator.constraints.Length;import org.hibernate.validator.constraints.NotBlank;import java.io.Serializable;/** * @author Created by YL on 2017/10/19 */@Data@AllArgsConstructor@NoArgsConstructorpublic class MarketRebateDTO implements Serializable &#123; @NotBlank(message = "营销活动 Id 不能为空") @Length(min = 5, max = 8, message = "营销活动 Id[$&#123;validatedValue&#125;] 长度必须在 &#123;min&#125; 和 &#123;max&#125; 之间") private String marketCfgId; private String productNo; private String rebateAmt; private String tradeType;&#125;import com.alibaba.dubbo.config.annotation.Reference;import org.springframework.validation.annotation.Validated;import org.springframework.web.bind.annotation.PostMapping;import org.springframework.web.bind.annotation.RequestBody;import org.springframework.web.bind.annotation.RequestMapping;import org.springframework.web.bind.annotation.RestController;import javax.validation.Valid;/** * 广东省营销接口 * * @author Created by YL on 2017/10/18 */@RestController@RequestMapping("/api/market")public class MarketController extends BaseRestController &#123; @Reference private MarketService marketService; @PostMapping("/rebate") public BaseResponse rebate(@RequestBody @Valid MarketRebateDTO rebate) throws CoreException, OkHttpException &#123; return marketService.doRebate(rebate); &#125;&#125; @RequestParam 使用 @RequestParam 注解时，如果注解的参数没有传入，则会抛出org.springframework.web.bind.MissingServletRequestParameterException异常 配合hibernate-validator不起作用的问题 要注册 MethodValidationPostProcessor Bean，并且在类上面使用org.springframework.validation.annotation.Validated注解 注意：使用javax.validation.Valid注解对RequestParam对应的参数进行注解，是无效的，需要使用@Validated注解来使得验证生效 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253@Beanpublic Validator validator() &#123; ValidatorFactory factory = Validation.byProvider(HibernateValidator.class) .configure() // 1、普通模式（默认是这个模式） // 普通模式(会校验完所有的属性，然后返回所有的验证失败信息) // 2、快速失败返回模式 // 快速失败返回模式(只要有一个验证失败，则返回) // .addProperty("hibernate.validator.fail_fast", "true") .failFast(true) .buildValidatorFactory(); return factory.getValidator();&#125;@Beanpublic MethodValidationPostProcessor methodValidationPostProcessor() &#123; MethodValidationPostProcessor postProcessor = new MethodValidationPostProcessor(); // 设置validator模式为快速失败返回 postProcessor.setValidator(validator()); return postProcessor;&#125;import com.alibaba.dubbo.config.annotation.Reference;import org.hibernate.validator.constraints.NotBlank;import org.springframework.validation.annotation.Validated;import org.springframework.web.bind.annotation.GetMapping;import org.springframework.web.bind.annotation.PostMapping;import org.springframework.web.bind.annotation.RequestMapping;import org.springframework.web.bind.annotation.RequestParam;import org.springframework.web.bind.annotation.RestController;/** * csp 平台接口封装 * * @author Created by YL on 2017/9/19 */@RestController@RequestMapping("/api/csp")@Validatedpublic class CspController extends BaseRestController &#123; @Reference private CspService cspService; @GetMapping public BaseResponse get(@RequestParam @NotBlank(message = "组件名不能为空") String func, @RequestParam @NotBlank(message = "参数值不能为空") String param) throws OkHttpException, OpenApiException &#123; return new BaseResponse(cspService.get(func, param)); &#125;&#125; 至此，Bean Validator 和 hibernate-validator的@Size、@Min、@Max、@Length、@NotBlank等注解就生效了]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>spring-boot</tag>
       </tags>
   </entry>
   <entry>
@@ -548,8 +560,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>Hibernate</tag>
         <tag>spring-data-jpa</tag>
+        <tag>Hibernate</tag>
       </tags>
   </entry>
   <entry>
@@ -582,18 +594,7 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>Hibernate</tag>
         <tag>spring-data-jpa</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Hibernate的DynamicInsert、DynamicUpdate介绍]]></title>
-    <url>%2Fposts%2F2ed26d9a.html</url>
-    <content type="text"><![CDATA[作用 使用 Dynamic Update 如果使用了 Dynamic Update，需要注意的是，当select后，显式的把某些字段set为NULL，hibernate 会认为你修改了该字段，会生成到 update 语句中。一般先 select 实体出来，再 save 的话，只会 update 该实体被修改的字段。否则会 update 所有表字段。添加Dynamic Update配置可以减少被 update 的字段。 使用 Dynamic Insert 如果使用了 Dynamic Insert，并且数据库配置了默认值，当 insert，并且new 实体时，该属性没有 set 值的话，会使用数据库默认值，否则会使用实体的值。 配置方式 第一种：使用注解配置12345678910111213@Entiry(name = "t_user")@DynamicInsert@DynamicUpdatepublic class User &#123; @Id @GeneratedValue private Long id; private Strin name; private Integer age; private Integer status; // getter setter&#125; 第二种：使用.hbm.xml配置12345&lt;hibernate-mapping&gt; &lt;class name="xxx.User" table="t_user" dynamic-insert="true" dynamic-update="true"&gt; &lt;!-- 省略配置 --&gt; &lt;/class&gt;&lt;/hibernate-mapping&gt; 效果主要比较一下insert、update语句的区别，其中update一个已有的实体对象时，hibernate会再执行一次select操作再去update123456789101112131415161718192021222324252627282930@RunWith(SpringJUnit4ClassRunner.class)@SpringBootTestpublic class ApplicationTests &#123; @Autowired private UserRepository repository; @Test public void test() throws Exception &#123; // 1、插入新记录 // 配置 dynamic insert // insert into user (name) values (?) // 未配置 dynamic insert // insert into user (age, name, status) values (?, ?, ?) User user = new User("AAA"); User save = repository.save(user); // 2、更新记录 // 配置 dynamic update // select user0_.id as id1_1_0_, user0_.age as age2_1_0_, user0_.name as name3_1_0_, user0_.status as status4_1_0_ from user user0_ where user0_.id=? // update user set name=? where id=? // 未配置 dynamic update // select user0_.id as id1_1_0_, user0_.age as age2_1_0_, user0_.name as name3_1_0_, user0_.status as status4_1_0_ from user user0_ where user0_.id=? // update user set age=?, name=?, status=? where id=? save.setName("BBB"); repository.save(save); &#125;&#125;]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
         <tag>Hibernate</tag>
       </tags>
   </entry>
@@ -605,7 +606,18 @@
         <category>Java</category>
       </categories>
       <tags>
+        <tag>Hibernate</tag>
         <tag>logback</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hibernate的DynamicInsert、DynamicUpdate介绍]]></title>
+    <url>%2Fposts%2F2ed26d9a.html</url>
+    <content type="text"><![CDATA[作用 使用 Dynamic Update 如果使用了 Dynamic Update，需要注意的是，当select后，显式的把某些字段set为NULL，hibernate 会认为你修改了该字段，会生成到 update 语句中。一般先 select 实体出来，再 save 的话，只会 update 该实体被修改的字段。否则会 update 所有表字段。添加Dynamic Update配置可以减少被 update 的字段。 使用 Dynamic Insert 如果使用了 Dynamic Insert，并且数据库配置了默认值，当 insert，并且new 实体时，该属性没有 set 值的话，会使用数据库默认值，否则会使用实体的值。 配置方式 第一种：使用注解配置12345678910111213@Entiry(name = "t_user")@DynamicInsert@DynamicUpdatepublic class User &#123; @Id @GeneratedValue private Long id; private Strin name; private Integer age; private Integer status; // getter setter&#125; 第二种：使用.hbm.xml配置12345&lt;hibernate-mapping&gt; &lt;class name="xxx.User" table="t_user" dynamic-insert="true" dynamic-update="true"&gt; &lt;!-- 省略配置 --&gt; &lt;/class&gt;&lt;/hibernate-mapping&gt; 效果主要比较一下insert、update语句的区别，其中update一个已有的实体对象时，hibernate会再执行一次select操作再去update123456789101112131415161718192021222324252627282930@RunWith(SpringJUnit4ClassRunner.class)@SpringBootTestpublic class ApplicationTests &#123; @Autowired private UserRepository repository; @Test public void test() throws Exception &#123; // 1、插入新记录 // 配置 dynamic insert // insert into user (name) values (?) // 未配置 dynamic insert // insert into user (age, name, status) values (?, ?, ?) User user = new User("AAA"); User save = repository.save(user); // 2、更新记录 // 配置 dynamic update // select user0_.id as id1_1_0_, user0_.age as age2_1_0_, user0_.name as name3_1_0_, user0_.status as status4_1_0_ from user user0_ where user0_.id=? // update user set name=? where id=? // 未配置 dynamic update // select user0_.id as id1_1_0_, user0_.age as age2_1_0_, user0_.name as name3_1_0_, user0_.status as status4_1_0_ from user user0_ where user0_.id=? // update user set age=?, name=?, status=? where id=? save.setName("BBB"); repository.save(save); &#125;&#125;]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
         <tag>Hibernate</tag>
       </tags>
   </entry>
@@ -901,17 +913,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux安装FTP]]></title>
-    <url>%2Fposts%2F9c4dd72b.html</url>
-    <content type="text"><![CDATA[Linux安装FTPubuntu开启ftp服务安装vsftpd1、打开”终端窗口”，输入”sudo apt-get install vsftpd”–&gt;回车–&gt;安装完成。 2、判断vsftpd是否安装成功打开”终端窗口”，输入”sudo service vsftpd restart”重启vsftpd服务–&gt;回车–&gt;vsftpd处于运行状态，说明安装成功。 3、使用gedit修改配置文件/etc/vsftpd.conf打开”终端窗口”，输入”sudo gedit /etc/vsftpd.conf”–&gt;回车–&gt;打开了vsftpd.conf文设置：write_enable=YES ubuntu开启SSH服务SSH分客户端openssh-client和openssh-server如果你只是想登陆别的机器的SSH只需要安装openssh-client（ubuntu有默认安装，如果没有则sudo apt-get install openssh-client），如果要使本机开放SSH服务就需要安装openssh-serversudo apt-get install openssh-server然后确认sshserver是否启动了：ps -e |grep ssh如果看到sshd那说明ssh-server已经启动了。如果没有则可以这样启动：sudo /etc/init.d/ssh startssh-server配置文件位于/ etc/ssh/sshd_config，在这里可以定义SSH的服务端口，默认端口是22，你可以自己定义成其他端口号，如222。然后重启SSH服务：sudo /etc/init.d/ssh stopsudo /etc/init.d/ssh start然后使用以下方式登陆SSH：ssh username@192.168.1.112 username为192.168.1.112 机器上的用户，需要输入密码。断开连接：exit 最近一直在Ubuntu下用终端操作，看着他长长的路径名实在不爽， 动手来改改咯～$: sudo gedit ~/.bashrc这个文件记录了用户终端配置找到if [ “$color_prompt “ = yes ]; then PS1 =’${debian_chroot:+($debian_chroot)}[\033[01;32m]\u@\h[\033[00m]:[\033[01;34m]\W [\033[00m]\$ ‘else PS1 =’${debian_chroot:+($debian_chroot)}\u@\h:\W \$ ‘将蓝色的w由小写改成大写，可以表示只显示当前目录名称.]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>FTP</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[CentOS安装JDK]]></title>
     <url>%2Fposts%2Fd08f134.html</url>
     <content type="text"><![CDATA[1、准备创建目录12$ mkdir /usr/java$ cd /usr/java 下载 jdk-8u73-linux-x64.tar.gz，解压1$ tar -zxvf jdk-8u73-linux-x64.tar.gz 会解压到 /usr/java/jdk1.8.0_73 下 2、配置环境变量(两种方式二选一配置即可)2.1 编辑 /etc/profile 文件修改 /etc/profile 文件当本机仅仅作为开发使用时推荐使用这种方法，因为此种配置时所有用户的 shell 都有权使用这些环境变量，可能会给系统带来安全性问题。1$ vi /etc/profile 增加如下内容123export JAVA_HOME=/usr/java/jdkexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH 保存退出 :wq12$ . /etc/profile$ echo $JAVA_HOME 2.2 编辑用户目录下的 .bash_profile修改 .bash_profile 文件这种方法更为安全，它可以把使用这些环境变量的权限控制到用户级别，如果需要给某个用户权限使用这些环境变量，只需要修改其个人用户主目录下的 .bash_profile 文件就可以了123export JAVA_HOME=/usr/java/jdkexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH 然后执行使之生效1source .bash_profile 可以看到 JAVA_HOME 不是指向真实的 jdk 目录 /usr/java/jdk1.8.0_73，而是指向 /usr/java/jdk 3、创建软链接为jdk真实目录创建一个命名更加间洁快捷方式123$ ln -s /usr/java/jdk1.8.0_73 /usr/java/jdk$ source /etc/profile#$ source .bash_profile 至此，配置完成]]></content>
@@ -921,6 +922,17 @@
       <tags>
         <tag>Java</tag>
         <tag>JDK</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux安装FTP]]></title>
+    <url>%2Fposts%2F9c4dd72b.html</url>
+    <content type="text"><![CDATA[Linux安装FTPubuntu开启ftp服务安装vsftpd1、打开”终端窗口”，输入”sudo apt-get install vsftpd”–&gt;回车–&gt;安装完成。 2、判断vsftpd是否安装成功打开”终端窗口”，输入”sudo service vsftpd restart”重启vsftpd服务–&gt;回车–&gt;vsftpd处于运行状态，说明安装成功。 3、使用gedit修改配置文件/etc/vsftpd.conf打开”终端窗口”，输入”sudo gedit /etc/vsftpd.conf”–&gt;回车–&gt;打开了vsftpd.conf文设置：write_enable=YES ubuntu开启SSH服务SSH分客户端openssh-client和openssh-server如果你只是想登陆别的机器的SSH只需要安装openssh-client（ubuntu有默认安装，如果没有则sudo apt-get install openssh-client），如果要使本机开放SSH服务就需要安装openssh-serversudo apt-get install openssh-server然后确认sshserver是否启动了：ps -e |grep ssh如果看到sshd那说明ssh-server已经启动了。如果没有则可以这样启动：sudo /etc/init.d/ssh startssh-server配置文件位于/ etc/ssh/sshd_config，在这里可以定义SSH的服务端口，默认端口是22，你可以自己定义成其他端口号，如222。然后重启SSH服务：sudo /etc/init.d/ssh stopsudo /etc/init.d/ssh start然后使用以下方式登陆SSH：ssh username@192.168.1.112 username为192.168.1.112 机器上的用户，需要输入密码。断开连接：exit 最近一直在Ubuntu下用终端操作，看着他长长的路径名实在不爽， 动手来改改咯～$: sudo gedit ~/.bashrc这个文件记录了用户终端配置找到if [ “$color_prompt “ = yes ]; then PS1 =’${debian_chroot:+($debian_chroot)}[\033[01;32m]\u@\h[\033[00m]:[\033[01;34m]\W [\033[00m]\$ ‘else PS1 =’${debian_chroot:+($debian_chroot)}\u@\h:\W \$ ‘将蓝色的w由小写改成大写，可以表示只显示当前目录名称.]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>FTP</tag>
       </tags>
   </entry>
 </search>
