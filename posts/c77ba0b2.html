@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="forever杨&#39;s Blog">
 <meta property="og:description" content="场景一：取最新N条数据网站最新文章、最新评论等。使用 Redis 列表(List)集合，LPUSH 命令向 list 集合头部插入数据，LTRIM 命令对 list 集合进行修剪(trim)  123456789# 将一个或多个值插入到列表头部# LPUSH key value1 [value2] 127.0.0.1:6379&amp;gt; LPUSH latest.comments &quot;foo&quot;(int">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-07-24T06:37:42.510Z">
+<meta property="og:updated_time" content="2018-07-24T06:39:48.380Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis 使用场景">
 <meta name="twitter:description" content="场景一：取最新N条数据网站最新文章、最新评论等。使用 Redis 列表(List)集合，LPUSH 命令向 list 集合头部插入数据，LTRIM 命令对 list 集合进行修剪(trim)  123456789# 将一个或多个值插入到列表头部# LPUSH key value1 [value2] 127.0.0.1:6379&amp;gt; LPUSH latest.comments &quot;foo&quot;(int">
@@ -390,7 +390,7 @@
                 
               
 
-              <time title="创建时间：2018-07-24 10:43:05 / 修改时间：14:37:42" itemprop="dateCreated datePublished" datetime="2018-07-24T10:43:05+08:00">2018-07-24</time>
+              <time title="创建时间：2018-07-24 10:43:05 / 修改时间：14:39:48" itemprop="dateCreated datePublished" datetime="2018-07-24T10:43:05+08:00">2018-07-24</time>
             
 
             
@@ -490,6 +490,7 @@
       
         <h2 id="场景一：取最新N条数据"><a href="#场景一：取最新N条数据" class="headerlink" title="场景一：取最新N条数据"></a>场景一：取最新N条数据</h2><p>网站最新文章、最新评论等。使用 Redis 列表(List)集合，LPUSH 命令向 list 集合头部插入数据，LTRIM 命令对 list 集合进行修剪(trim) </p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将一个或多个值插入到列表头部</span></span><br><span class="line"><span class="comment"># LPUSH key value1 [value2] </span></span><br><span class="line">127.0.0.1:6379&gt; LPUSH latest.comments <span class="string">"foo"</span></span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对一个列表进行修剪(trim)，就是说，让列表只保留指定区间内的元素，不在指定区间之内的元素都将被删除</span></span><br><span class="line"><span class="comment"># LTRIM key start stop </span></span><br><span class="line">127.0.0.1:6379&gt; LTRIM latest.comments 0 10</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <h2 id="场景二：排行榜应用，取-TOP-N操作"><a href="#场景二：排行榜应用，取-TOP-N操作" class="headerlink" title="场景二：排行榜应用，取 TOP N操作"></a>场景二：排行榜应用，取 TOP N操作</h2><p>场景二和场景一不同之处在于，场景一操作以时间为权重，场景二是以某一个条件为权重。比如：赞次数、评论次数等。这个时候就需要使用 Redis 有序集合(sorted set)。将需要排序的值设置为有序集合的 score，将具体的数据设置为相应的 value，每次只需要执行 ZDAA 命令即可。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 向有序集合添加一个或多个成员，或者更新已存在成员的分数</span></span><br><span class="line"><span class="comment"># ZADD key score1 value1 [score2 value12] </span></span><br><span class="line">127.0.0.1:6379&gt; ZADD myzset 1 <span class="string">"one"</span></span><br></pre></td></tr></table></figure>
 <h2 id="场景三：计数器"><a href="#场景三：计数器" class="headerlink" title="场景三：计数器"></a>场景三：计数器</h2><p>Redis 命令是原子性的，可以利用 INCR、DECR 命令来构建计数器系统，其底层写入是单线程模型，并发写入会按先后顺序执行。</p>
@@ -552,8 +553,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/d03adf2b.html" rel="next" title="Linux 查看端口是否被占用">
-                <i class="fa fa-chevron-left"></i> Linux 查看端口是否被占用
+              <a href="/posts/fea0c721.html" rel="next" title="restful api 规范">
+                <i class="fa fa-chevron-left"></i> restful api 规范
               </a>
             
           </div>
@@ -561,10 +562,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/posts/fea0c721.html" rel="prev" title="restful api 规范">
-                restful api 规范 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
