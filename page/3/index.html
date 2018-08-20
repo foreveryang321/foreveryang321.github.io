@@ -2271,7 +2271,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/2835e3e.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/c0bbcacd.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
@@ -2290,8 +2290,8 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/posts/2835e3e.html" itemprop="url">
-                  Linux cp 命令
+                <a class="post-title-link" href="/posts/c0bbcacd.html" itemprop="url">
+                  zookeeper 清理日志文件
                 </a>
               
             
@@ -2334,7 +2334,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-05-17 10:50:01" itemprop="dateModified" datetime="2018-05-17T10:50:01+08:00">2018-05-17</time>
+                <time title="修改时间：2018-05-17 10:52:51" itemprop="dateModified" datetime="2018-05-17T10:52:51+08:00">2018-05-17</time>
               
             
           </span>
@@ -2351,7 +2351,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/zookeeper/" itemprop="url" rel="index"><span itemprop="name">zookeeper</span></a></span>
 
                 
                 
@@ -2381,7 +2381,7 @@
                 
                   <span class="post-meta-item-text">字数</span>
                 
-                <span title="字数">43</span>
+                <span title="字数">791</span>
               
 
               
@@ -2407,18 +2407,6 @@
     
 
     
-      <div class="post-tags" style="margin-top: 0; margin-bottom: 20px; text-align: left">
-        <span class="post-meta-item-icon">
-          <i class="fa fa-tags"></i>
-        </span>
-        <span class="post-meta-item-text">标签</span>
-        
-           <a href="/tags/shell/" rel="tag" class="color1">shell</a>
-        
-           <a href="/tags/cp/" rel="tag" class="color2">cp</a>
-        
-      </div>
-    
 
     
     
@@ -2431,7 +2419,7 @@
       
         
           
-            <h1 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h1><h2 id="复制文件夹"><a href="#复制文件夹" class="headerlink" title="复制文件夹"></a>复制文件夹</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp -r [old <span class="built_in">source</span>] -d [new <span class="built_in">source</span>]</span><br></pre></td></tr></table></figure>
+            <h1 id="clear"><a href="#clear" class="headerlink" title="clear"></a>clear</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># @Author: YL</span></span><br><span class="line"><span class="comment"># @Date:   2017-11-01 08:59:34</span></span><br><span class="line"><span class="comment"># @Last Modified by:   YL</span></span><br><span class="line"><span class="comment"># @Last Modified time: 2017-11-01 09:36:09</span></span><br><span class="line"><span class="comment"># 此文件放到 zookeeper 的 bin 目录下</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> `dirname <span class="variable">$0</span>`</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line">NODE_HOME=`<span class="built_in">pwd</span>`</span><br><span class="line"></span><br><span class="line"><span class="comment"># snapshot</span></span><br><span class="line">NODE_DATA_DIR=<span class="variable">$NODE_HOME</span>/data/version-2</span><br><span class="line"><span class="comment"># snapshot log</span></span><br><span class="line">NODE_LOG_DIR=<span class="variable">$NODE_HOME</span>/logs/version-2</span><br><span class="line"><span class="comment"># zk log</span></span><br><span class="line">NODE_LOGS=<span class="variable">$NODE_HOME</span>/logs</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中</span></span><br><span class="line">count=3</span><br><span class="line">count=$[<span class="variable">$count</span>+1]</span><br><span class="line">ls -t <span class="variable">$NODE_LOG_DIR</span>/<span class="built_in">log</span>.* | tail -n +<span class="variable">$count</span> | xargs rm -f</span><br><span class="line">ls -t <span class="variable">$NODE_DATA_DIR</span>/snapshot.* | tail -n +<span class="variable">$count</span> | xargs rm -f</span><br><span class="line">ls -t <span class="variable">$NODE_LOGS</span>/zookeeper.log.* | tail -n +<span class="variable">$count</span> | xargs rm -f</span><br><span class="line"></span><br><span class="line"><span class="comment"># date pattern</span></span><br><span class="line">DATE_PATTERN=<span class="string">"[<span class="variable">$(date '+%Y-%m-%d %H:%M:%S')</span>]"</span></span><br><span class="line">STDOUT_FILE=<span class="variable">$NODE_LOGS</span>/stdout.log</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> clear logs success"</span> | tee -a <span class="variable">$STDOUT_FILE</span></span><br></pre></td></tr></table></figure>
 
           
         
