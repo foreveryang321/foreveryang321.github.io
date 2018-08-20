@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="3.x 版本这个类AbstractCachingViewResolver里面的viewCache HashMap没有限制大小  3.x：如果在 controller 返回的 view 是不固定的，如：”redirect:form.html?entityId=” + entityId，由于 entityId 的值会存在 N 个，那么会导致产生 N 个 ViewName 被缓存起来  4.x 版本及以">
+  <meta name="description" content="3.x 版本这个类AbstractCachingViewResolver里面的viewCache HashMap没有限制大小  3.x：如果在 controller 返回的 view 是不固定的，如：”redirect:form.html?entityId=” + entityId，由于 entityId 的值会存在 N 个，那么会导致产生 N 个 ViewName 被缓存起来">
 <meta name="keywords" content="spring,redirect">
 <meta property="og:type" content="article">
 <meta property="og:title" content="spring redirect 导致内存溢出问题核查">
 <meta property="og:url" content="https://blog.yl-online.top/posts/b575301a.html">
 <meta property="og:site_name" content="forever杨&#39;s Blog">
-<meta property="og:description" content="3.x 版本这个类AbstractCachingViewResolver里面的viewCache HashMap没有限制大小  3.x：如果在 controller 返回的 view 是不固定的，如：”redirect:form.html?entityId=” + entityId，由于 entityId 的值会存在 N 个，那么会导致产生 N 个 ViewName 被缓存起来  4.x 版本及以">
+<meta property="og:description" content="3.x 版本这个类AbstractCachingViewResolver里面的viewCache HashMap没有限制大小  3.x：如果在 controller 返回的 view 是不固定的，如：”redirect:form.html?entityId=” + entityId，由于 entityId 的值会存在 N 个，那么会导致产生 N 个 ViewName 被缓存起来">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-20T03:57:20.084Z">
+<meta property="og:updated_time" content="2018-08-20T04:14:17.801Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring redirect 导致内存溢出问题核查">
-<meta name="twitter:description" content="3.x 版本这个类AbstractCachingViewResolver里面的viewCache HashMap没有限制大小  3.x：如果在 controller 返回的 view 是不固定的，如：”redirect:form.html?entityId=” + entityId，由于 entityId 的值会存在 N 个，那么会导致产生 N 个 ViewName 被缓存起来  4.x 版本及以">
+<meta name="twitter:description" content="3.x 版本这个类AbstractCachingViewResolver里面的viewCache HashMap没有限制大小  3.x：如果在 controller 返回的 view 是不固定的，如：”redirect:form.html?entityId=” + entityId，由于 entityId 的值会存在 N 个，那么会导致产生 N 个 ViewName 被缓存起来">
 
 
 
@@ -390,7 +390,7 @@
                 
               
 
-              <time title="创建时间：2018-08-20 11:43:05 / 修改时间：11:57:20" itemprop="dateCreated datePublished" datetime="2018-08-20T11:43:05+08:00">2018-08-20</time>
+              <time title="创建时间：2018-08-20 11:43:05 / 修改时间：12:14:17" itemprop="dateCreated datePublished" datetime="2018-08-20T11:43:05+08:00">2018-08-20</time>
             
 
             
@@ -492,6 +492,7 @@
       
         <h1 id="3-x-版本"><a href="#3-x-版本" class="headerlink" title="3.x 版本"></a>3.x 版本</h1><p>这个类AbstractCachingViewResolver里面的viewCache HashMap没有限制大小 </p>
 <p>3.x：如果在 controller 返回的 view 是不固定的，如：”redirect:form.html?entityId=” + entityId，由于 entityId 的值会存在 N 个，那么会导致产生 N 个 ViewName 被缓存起来</p>
+<a id="more"></a>
 <blockquote>
 <p>4.x 版本及以上已经修复这个问题，代码如下</p>
 </blockquote>

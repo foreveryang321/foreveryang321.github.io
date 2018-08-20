@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="线程池作用 CPU资源隔离 减少上下文切换 减少线程创建/关闭的资源开销 更好并发控制 更好生命周期控制  设计时注意事项 任务混杂 任务依赖 饥饿死锁 慢操作  使用时注意事项线程池参数 核心池大小（core pool size） 最大池的大小（maximum pool size） 存活时间（keep-alive time） 缓冲队列（work queue）  任务队列（BlockingQueu">
+  <meta name="description" content="线程池作用 CPU资源隔离 减少上下文切换 减少线程创建/关闭的资源开销 更好并发控制 更好生命周期控制  设计时注意事项 任务混杂 任务依赖 饥饿死锁 慢操作">
 <meta name="keywords" content="ExecutorService,Executors">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java 线程池">
 <meta property="og:url" content="https://blog.yl-online.top/posts/bc557e1a.html">
 <meta property="og:site_name" content="forever杨&#39;s Blog">
-<meta property="og:description" content="线程池作用 CPU资源隔离 减少上下文切换 减少线程创建/关闭的资源开销 更好并发控制 更好生命周期控制  设计时注意事项 任务混杂 任务依赖 饥饿死锁 慢操作  使用时注意事项线程池参数 核心池大小（core pool size） 最大池的大小（maximum pool size） 存活时间（keep-alive time） 缓冲队列（work queue）  任务队列（BlockingQueu">
+<meta property="og:description" content="线程池作用 CPU资源隔离 减少上下文切换 减少线程创建/关闭的资源开销 更好并发控制 更好生命周期控制  设计时注意事项 任务混杂 任务依赖 饥饿死锁 慢操作">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-17T09:38:05.933Z">
+<meta property="og:updated_time" content="2018-08-20T04:14:37.865Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 线程池">
-<meta name="twitter:description" content="线程池作用 CPU资源隔离 减少上下文切换 减少线程创建/关闭的资源开销 更好并发控制 更好生命周期控制  设计时注意事项 任务混杂 任务依赖 饥饿死锁 慢操作  使用时注意事项线程池参数 核心池大小（core pool size） 最大池的大小（maximum pool size） 存活时间（keep-alive time） 缓冲队列（work queue）  任务队列（BlockingQueu">
+<meta name="twitter:description" content="线程池作用 CPU资源隔离 减少上下文切换 减少线程创建/关闭的资源开销 更好并发控制 更好生命周期控制  设计时注意事项 任务混杂 任务依赖 饥饿死锁 慢操作">
 
 
 
@@ -390,12 +390,24 @@
                 
               
 
-              <time title="创建时间：2018-08-17 16:47:17 / 修改时间：17:38:05" itemprop="dateCreated datePublished" datetime="2018-08-17T16:47:17+08:00">2018-08-17</time>
+              <time title="创建时间：2018-08-17 16:47:17" itemprop="dateCreated datePublished" datetime="2018-08-17T16:47:17+08:00">2018-08-17</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-08-20 12:14:37" itemprop="dateModified" datetime="2018-08-20T12:14:37+08:00">2018-08-20</time>
               
             
           </span>
@@ -503,6 +515,7 @@
 <li>饥饿死锁</li>
 <li>慢操作</li>
 </ul>
+<a id="more"></a>
 <h2 id="使用时注意事项"><a href="#使用时注意事项" class="headerlink" title="使用时注意事项"></a>使用时注意事项</h2><h3 id="线程池参数"><a href="#线程池参数" class="headerlink" title="线程池参数"></a>线程池参数</h3><ul>
 <li>核心池大小（core pool size）</li>
 <li>最大池的大小（maximum pool size）</li>
