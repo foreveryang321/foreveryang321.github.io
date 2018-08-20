@@ -233,7 +233,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">89</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">93</span></a>
   </li>
         
         
@@ -249,7 +249,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">73</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">81</span></a>
   </li>
         
         
@@ -347,7 +347,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/fea0c721.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/b575301a.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
@@ -366,8 +366,8 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/posts/fea0c721.html" itemprop="url">
-                  restful api 规范
+                <a class="post-title-link" href="/posts/b575301a.html" itemprop="url">
+                  spring redirect 导致内存溢出问题核查
                 </a>
               
             
@@ -393,7 +393,7 @@
                 
               
 
-              <time title="创建时间：2018-07-24 10:43:05 / 修改时间：14:40:08" itemprop="dateCreated datePublished" datetime="2018-07-24T10:43:05+08:00">2018-07-24</time>
+              <time title="创建时间：2018-08-20 11:43:05 / 修改时间：11:57:20" itemprop="dateCreated datePublished" datetime="2018-08-20T11:43:05+08:00">2018-08-20</time>
             
 
             
@@ -415,7 +415,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/规范/" itemprop="url" rel="index"><span itemprop="name">规范</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
 
                 
                 
@@ -445,7 +445,7 @@
                 
                   <span class="post-meta-item-text">字数</span>
                 
-                <span title="字数">14k</span>
+                <span title="字数">2.4k</span>
               
 
               
@@ -459,7 +459,7 @@
                 
                   <span class="post-meta-item-text">时长 &asymp;</span>
                 
-                <span title="时长">12 分钟</span>
+                <span title="时长">2 分钟</span>
               
             </div>
           
@@ -477,7 +477,9 @@
         </span>
         <span class="post-meta-item-text">标签</span>
         
-           <a href="/tags/restful-api/" rel="tag" class="color1">restful api</a>
+           <a href="/tags/spring/" rel="tag" class="color1">spring</a>
+        
+           <a href="/tags/redirect/" rel="tag" class="color2">redirect</a>
         
       </div>
     
@@ -492,27 +494,783 @@
 
       
         
-          <h1 id="RESTful-API-设计规范"><a href="#RESTful-API-设计规范" class="headerlink" title="RESTful API 设计规范"></a>RESTful API 设计规范</h1><blockquote>
-<p>原文地址：<a href="https://github.com/godruoyi/restful-api-specification" target="_blank" rel="noopener">https://github.com/godruoyi/restful-api-specification</a></p>
-</blockquote>
-<h2 id="关于「能愿动词」的使用"><a href="#关于「能愿动词」的使用" class="headerlink" title="关于「能愿动词」的使用"></a>关于「能愿动词」的使用</h2><p>为了避免歧义，文档大量使用了「能愿动词」，对应的解释如下：</p>
-<ul>
-<li><code>必须 (MUST)</code>：绝对，严格遵循，请照做，无条件遵守；</li>
-<li><code>一定不可 (MUST NOT)</code>：禁令，严令禁止；</li>
-<li><code>应该 (SHOULD)</code> ：强烈建议这样做，但是不强求；</li>
-<li><code>不该 (SHOULD NOT)</code>：强烈不建议这样做，但是不强求；</li>
-<li><code>可以 (MAY)</code> 和 <code>可选 (OPTIONAL)</code> ：选择性高一点，在这个文档内，此词语使用较少；</li>
-</ul>
+          
+            <h1 id="3-x-版本"><a href="#3-x-版本" class="headerlink" title="3.x 版本"></a>3.x 版本</h1><p>这个类AbstractCachingViewResolver里面的viewCache HashMap没有限制大小 </p>
+<p>3.x：如果在 controller 返回的 view 是不固定的，如：”redirect:form.html?entityId=” + entityId，由于 entityId 的值会存在 N 个，那么会导致产生 N 个 ViewName 被缓存起来</p>
 <blockquote>
-<p>参见：<a href="http://www.ietf.org/rfc/rfc2119.txt" target="_blank" rel="noopener">RFC 2119</a></p>
+<p>4.x 版本及以上已经修复这个问题，代码如下</p>
 </blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/posts/fea0c721.html" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractCachingViewResolver</span> <span class="keyword">extends</span> <span class="title">WebApplicationObjectSupport</span> <span class="keyword">implements</span> <span class="title">ViewResolver</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/** Default maximum number of entries for the view cache: 1024 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_CACHE_LIMIT = <span class="number">1024</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/** Dummy marker object for unresolved views in the cache Maps */</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> View UNRESOLVED_VIEW = <span class="keyword">new</span> View() &#123;</span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> String <span class="title">getContentType</span><span class="params">()</span> </span>&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">render</span><span class="params">(Map&lt;String, ?&gt; model, HttpServletRequest request, HttpServletResponse response)</span> </span>&#123;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">/** The maximum number of entries in the cache */</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">int</span> cacheLimit = DEFAULT_CACHE_LIMIT;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/** Whether we should refrain from resolving views again if unresolved once */</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">boolean</span> cacheUnresolved = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/** Fast access cache for Views, returning already cached instances without a global lock */</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> Map&lt;Object, View&gt; viewAccessCache = <span class="keyword">new</span> ConcurrentHashMap&lt;Object, View&gt;(DEFAULT_CACHE_LIMIT);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/** Map from view key to View instance, synchronized for View creation */</span></span><br><span class="line">	<span class="meta">@SuppressWarnings</span>(<span class="string">"serial"</span>)</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> Map&lt;Object, View&gt; viewCreationCache =</span><br><span class="line">			<span class="keyword">new</span> LinkedHashMap&lt;Object, View&gt;(DEFAULT_CACHE_LIMIT, <span class="number">0.75f</span>, <span class="keyword">true</span>) &#123;</span><br><span class="line">				<span class="meta">@Override</span></span><br><span class="line">				<span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">removeEldestEntry</span><span class="params">(Map.Entry&lt;Object, View&gt; eldest)</span> </span>&#123;</span><br><span class="line">					<span class="keyword">if</span> (size() &gt; getCacheLimit()) &#123;</span><br><span class="line">                        <span class="comment">// 超过限制大小，删除老数据</span></span><br><span class="line">						viewAccessCache.remove(eldest.getKey());</span><br><span class="line">						<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">					&#125;</span><br><span class="line">					<span class="keyword">else</span> &#123;</span><br><span class="line">						<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;;</span><br><span class="line">    ......</span><br></pre></td></tr></table></figure>
+<h1 id="4-x-版本"><a href="#4-x-版本" class="headerlink" title="4.x 版本"></a>4.x 版本</h1><p>4.x版本是这个AbstractAutoProxyCreator这个类里面的advisedBeans ConcurrentHashMap没有限制大小</p>
+<p>问题描述：<a href="https://github.com/spring-projects/spring-boot/issues/13771" target="_blank" rel="noopener">https://github.com/spring-projects/spring-boot/issues/13771</a></p>
+<p>The problem is that <code>InternalResourceViewResolver</code> calls <code>AutowireCapableBeanFactory.initializeBean(Object existingBean, String beanName)</code> using the complete URL as the <code>beanName</code>. The bean name is then used by <code>AbstractAutoProxyCreator.wrapIfNecessary(Object, String, Object)</code> as the key when it caches the fact that no advice applies to it. </p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/d7b08969.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/posts/d7b08969.html" itemprop="url">
+                  Java 实现 BigPipe
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-08-18 14:47:17" itemprop="dateCreated datePublished" datetime="2018-08-18T14:47:17+08:00">2018-08-18</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-08-20 12:10:59" itemprop="dateModified" datetime="2018-08-20T12:10:59+08:00">2018-08-20</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数</span>
+                
+                <span title="字数">8.1k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">7 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/jsp/" rel="tag" class="color1">jsp</a>
+        
+           <a href="/tags/freemarker/" rel="tag" class="color2">freemarker</a>
+        
+           <a href="/tags/BigPipe/" rel="tag" class="color3">BigPipe</a>
+        
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="JPipe-Project"><a href="#JPipe-Project" class="headerlink" title="JPipe Project"></a>JPipe Project</h1><p>A Java implementation of Facebook’s bigPipe technology.</p>
+<p>JPipe 提供了多线程模式、单线程模式、和混合模式3种使用方式。</p>
+<blockquote>
+<p>出于降低后期维护性，这里不打算使用 PageletService 可配置方法，即是在 pagelet 标签增加 method 属性以自定义要执行的函数。<br>统一使用 doGet 函数，只要找到对应的 bean 即可，不用参照前端代码去搜找要执行的函数。</p>
+</blockquote>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="JSP-标签"><a href="#JSP-标签" class="headerlink" title="JSP 标签"></a>JSP 标签</h3><h4 id="Maven-依赖"><a href="#Maven-依赖" class="headerlink" title="Maven 依赖"></a>Maven 依赖</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>cn.tisson.jpipe<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jpipe-jsp<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>&#123;version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="Service-层实现-PageletService-接口的-doGet-方法"><a href="#Service-层实现-PageletService-接口的-doGet-方法" class="headerlink" title="Service 层实现 PageletService 接口的 doGet 方法"></a>Service 层实现 PageletService 接口的 doGet 方法</h4><p>这里的 <code>@Pagelet</code> 可以使用 Spring 的 <code>@Service</code> 代替<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Pagelet</span>(<span class="string">"t_pagelet_one"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestPagelet1</span> <span class="keyword">implements</span> <span class="title">PageletService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Map&lt;String, Object&gt; <span class="title">doGet</span><span class="params">(Map&lt;String, String&gt; params)</span> </span>&#123;</span><br><span class="line">        Map&lt;String, Object&gt; data = <span class="keyword">new</span> HashMap&lt;&gt;(params);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            TimeUnit.MILLISECONDS.sleep(<span class="keyword">new</span> Random().nextInt(<span class="number">5000</span>));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> data;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="index-JSP-代码"><a href="#index-JSP-代码" class="headerlink" title="index.JSP 代码"></a>index.JSP 代码</h4><ul>
+<li>引入标签 <code>&lt;%@ taglib prefix=&quot;jp&quot; uri=&quot;http://java.tisson.cn/tags/jsp/jpipe&quot; %&gt;</code></li>
+<li>使用自定义标签，最好放到<code>&lt;/body&gt;</code>上面，这样就不会堵塞首屏dom的渲染<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">%@</span> <span class="attr">page</span> <span class="attr">contentType</span>=<span class="string">"text/html;charset=UTF-8"</span> <span class="attr">trimDirectiveWhitespaces</span>=<span class="string">"true"</span> %&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">%@</span> <span class="attr">taglib</span> <span class="attr">prefix</span>=<span class="string">"jp"</span> <span class="attr">uri</span>=<span class="string">"http://java.tisson.cn/tags/jsp/jpipe"</span> %&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>index<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=UTF-8"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        ;(function (root, factory) &#123;</span></span><br><span class="line"><span class="undefined">            if (typeof exports === 'object') &#123;</span></span><br><span class="line"><span class="undefined">                module.exports = exports = factory();</span></span><br><span class="line"><span class="undefined">            &#125; else if (typeof define === 'function' &amp;&amp; define.amd) &#123;</span></span><br><span class="line"><span class="undefined">                define([], factory);</span></span><br><span class="line"><span class="undefined">            &#125; else &#123;</span></span><br><span class="line"><span class="undefined">                root.JP = factory();</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined">        &#125;(this, function () &#123;</span></span><br><span class="line"><span class="undefined">            var JP = JP || (function (window) &#123;</span></span><br><span class="line"><span class="undefined">                return &#123;</span></span><br><span class="line"><span class="undefined">                    view: function (json) &#123;</span></span><br><span class="line"><span class="undefined">                        var code = json['code'],</span></span><br><span class="line"><span class="undefined">                            message = json['message'],</span></span><br><span class="line"><span class="undefined">                            bn = json['bn'],</span></span><br><span class="line"><span class="undefined">                            domId = json['domId'],</span></span><br><span class="line"><span class="undefined">                            templateId = json['templateId'],</span></span><br><span class="line"><span class="undefined">                            data = json['data'];</span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="undefined">                        document.getElementById(domId).innerHTML =</span></span><br><span class="line"><span class="xml">                            '<span class="tag">&lt;<span class="name">p</span>&gt;</span>code: ' + code</span></span><br><span class="line"><span class="xml">                            + '<span class="tag">&lt;<span class="name">br</span>/&gt;</span>message: ' + message</span></span><br><span class="line"><span class="xml">                            + '<span class="tag">&lt;<span class="name">br</span>/&gt;</span>bn: ' + bn</span></span><br><span class="line"><span class="xml">                            + '<span class="tag">&lt;<span class="name">br</span>/&gt;</span>domId: ' + domId</span></span><br><span class="line"><span class="xml">                            + '<span class="tag">&lt;<span class="name">br</span>/&gt;</span>templateId: ' + templateId</span></span><br><span class="line"><span class="xml">                            + '<span class="tag">&lt;<span class="name">br</span>/&gt;</span>data: ' + JSON.stringify(data)</span></span><br><span class="line"><span class="xml">                            + '<span class="tag">&lt;/<span class="name">p</span>&gt;</span>';</span></span><br><span class="line"><span class="undefined">                    &#125;</span></span><br><span class="line"><span class="undefined">                &#125;;</span></span><br><span class="line"><span class="undefined">            &#125;(window));</span></span><br><span class="line"><span class="undefined">            return JP;</span></span><br><span class="line"><span class="undefined">        &#125;));</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>index<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"t_pagelet_1"</span>&gt;</span>JPipe 分块会替换这里的内容 1<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"t_pagelet_2"</span>&gt;</span>JPipe 分块会替换这里的内容 2<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">jp:pipe</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">jp:pagelet</span> <span class="attr">domId</span>=<span class="string">"t_pagelet_1"</span> <span class="attr">bean</span>=<span class="string">"t_pagelet_one"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">jp:param</span> <span class="attr">name</span>=<span class="string">"id"</span> <span class="attr">value</span>=<span class="string">"$&#123;id&#125;"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">jp:param</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">value</span>=<span class="string">"$&#123;name&#125;"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">jp:pagelet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">jp:pagelet</span> <span class="attr">domId</span>=<span class="string">"t_pagelet_2"</span> <span class="attr">bean</span>=<span class="string">"t_pagelet_one"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">jp:param</span> <span class="attr">name</span>=<span class="string">"id"</span> <span class="attr">value</span>=<span class="string">"年级信息"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">jp:param</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">value</span>=<span class="string">"班级信息"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">jp:param</span> <span class="attr">name</span>=<span class="string">"age"</span>&gt;</span>21<span class="tag">&lt;/<span class="name">jp:param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">jp:pagelet</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">jp:pipe</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>略：部署到 Tomcat、Jetty 等容器</p>
+<h3 id="FTL-指令"><a href="#FTL-指令" class="headerlink" title="FTL 指令"></a>FTL 指令</h3><p>暂未实现</p>
+<h4 id="Maven-依赖-1"><a href="#Maven-依赖-1" class="headerlink" title="Maven 依赖"></a>Maven 依赖</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>cn.tisson.jpipe<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jpipe-freemarker<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>&#123;version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="在-FTL-中使用自定义-JSP-标签"><a href="#在-FTL-中使用自定义-JSP-标签" class="headerlink" title="在 FTL 中使用自定义 JSP 标签"></a>在 FTL 中使用自定义 JSP 标签</h3><p>FTL 是支持使用 JSP 标签的。如果你的项目本来没有使用 JSP 模版，不推荐这种使用做法。因为自定义 JSP 标签是在 JSP 环境中来写作操作的，需要引入 支持 JSP 1.1或者 JSP 1.2的 Servlet 容器（Tomcat、Jetty等Servlet容器部署），而 FTL 可以在非 Servlet 等 Web 环境中使用。</p>
+<blockquote>
+<p>更准确的解释是：尽管 Servlet 容器没有本地的JSP支持，你也可以在 FreeMarker 中使用JSP标签库。 只是确保对JSP 1.2版本(或更新)的 javax.servlet.jsp.* 包在Web应用程序中可用就行。如果你的servlet容器只对JSP 1.1支持， 那么你不得不将下面六个类(比如你可以从Tomcat 5.x或Tomcat 4.x的jar包中提取)复制到Web应用的 WEB-INF/classes/…目录下： javax.servlet.jsp.tagext.IterationTag， javax.servlet.jsp.tagext.TryCatchFinally， javax.servlet.ServletContextListener， javax.servlet.ServletContextAttributeListener， javax.servlet.http.HttpSessionAttributeListener， javax.servlet.http.HttpSessionListener。但是要注意， 因为容器只支持JSP 1.1，通常是使用较早的Servlet 2.3之前的版本，事件监听器可能就不支持，因此JSP 1.2标签库来注册事件监听器会正常工作。</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.servlet<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>javax.servlet-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-tomcat<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.tomcat.embed<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>tomcat-embed-jasper<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="index-ftl-代码"><a href="#index-ftl-代码" class="headerlink" title="index.ftl 代码"></a>index.ftl 代码</h4><p>使用 &lt;#assign jp=JspTaglibs[“<a href="http://java.tisson.cn/tags/jsp/jpipe&quot;]" target="_blank" rel="noopener">http://java.tisson.cn/tags/jsp/jpipe&quot;]</a> /&gt; 引入自定义 JSP 标签<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">#assign</span> <span class="attr">jp</span>=<span class="string">JspTaglibs[</span>"<span class="attr">http:</span>//<span class="attr">java.tisson.cn</span>/<span class="attr">tags</span>/<span class="attr">jsp</span>/<span class="attr">jpipe</span>"] /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>index<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=UTF-8"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        ;(function (root, factory) &#123;</span></span><br><span class="line"><span class="undefined">            if (typeof exports === 'object') &#123;</span></span><br><span class="line"><span class="undefined">                module.exports = exports = factory();</span></span><br><span class="line"><span class="undefined">            &#125; else if (typeof define === 'function' &amp;&amp; define.amd) &#123;</span></span><br><span class="line"><span class="undefined">                define([], factory);</span></span><br><span class="line"><span class="undefined">            &#125; else &#123;</span></span><br><span class="line"><span class="undefined">                root.JP = factory();</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined">        &#125;(this, function () &#123;</span></span><br><span class="line"><span class="undefined">            var JP = JP || (function (window) &#123;</span></span><br><span class="line"><span class="undefined">                return &#123;</span></span><br><span class="line"><span class="undefined">                    view: function (json) &#123;</span></span><br><span class="line"><span class="undefined">                        var code = json['code'],</span></span><br><span class="line"><span class="undefined">                            message = json['message'],</span></span><br><span class="line"><span class="undefined">                            bn = json['bn'],</span></span><br><span class="line"><span class="undefined">                            domId = json['domId'],</span></span><br><span class="line"><span class="undefined">                            templateId = json['templateId'],</span></span><br><span class="line"><span class="undefined">                            data = json['data'];</span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="undefined">                        document.getElementById(domId).innerHTML =</span></span><br><span class="line"><span class="xml">                            '<span class="tag">&lt;<span class="name">p</span>&gt;</span>code: ' + code</span></span><br><span class="line"><span class="xml">                            + '<span class="tag">&lt;<span class="name">br</span>/&gt;</span>message: ' + message</span></span><br><span class="line"><span class="xml">                            + '<span class="tag">&lt;<span class="name">br</span>/&gt;</span>bn: ' + bn</span></span><br><span class="line"><span class="xml">                            + '<span class="tag">&lt;<span class="name">br</span>/&gt;</span>domId: ' + domId</span></span><br><span class="line"><span class="xml">                            + '<span class="tag">&lt;<span class="name">br</span>/&gt;</span>templateId: ' + templateId</span></span><br><span class="line"><span class="xml">                            + '<span class="tag">&lt;<span class="name">br</span>/&gt;</span>data: ' + JSON.stringify(data)</span></span><br><span class="line"><span class="xml">                            + '<span class="tag">&lt;/<span class="name">p</span>&gt;</span>';</span></span><br><span class="line"><span class="undefined">                    &#125;</span></span><br><span class="line"><span class="undefined">                &#125;;</span></span><br><span class="line"><span class="undefined">            &#125;(window));</span></span><br><span class="line"><span class="undefined">            return JP;</span></span><br><span class="line"><span class="undefined">        &#125;));</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>index<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"pagelet1"</span>&gt;</span>JPipe 分块会替换这里的内容 1<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"pagelet2"</span>&gt;</span>JPipe 分块会替换这里的内容 2<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">@jp.pipe</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">@jp.pagelet</span> <span class="attr">domId</span>=<span class="string">"pagelet1"</span> <span class="attr">bean</span>=<span class="string">"t_pagelet_one"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">@jp.param</span> <span class="attr">name</span>=<span class="string">"id"</span> <span class="attr">value</span>=<span class="string">"$&#123;id&#125;"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">@jp.param</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">value</span>=<span class="string">"$&#123;name&#125;"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">@jp.pagelet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">@jp.pagelet</span> <span class="attr">domId</span>=<span class="string">"pagelet2"</span> <span class="attr">bean</span>=<span class="string">"t_pagelet_one"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">@jp.param</span> <span class="attr">name</span>=<span class="string">"id"</span> <span class="attr">value</span>=<span class="string">"年级信息"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">@jp.param</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">value</span>=<span class="string">"班级信息"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">@jp.param</span> <span class="attr">name</span>=<span class="string">"age"</span>&gt;</span>21<span class="tag">&lt;/<span class="name">@jp.param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">@jp.pagelet</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">@jp.pipe</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>略：部署到 Tomcat</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/bc557e1a.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/posts/bc557e1a.html" itemprop="url">
+                  Java 线程池
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-08-17 16:47:17 / 修改时间：17:38:05" itemprop="dateCreated datePublished" datetime="2018-08-17T16:47:17+08:00">2018-08-17</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数</span>
+                
+                <span title="字数">1.5k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/ExecutorService/" rel="tag" class="color1">ExecutorService</a>
+        
+           <a href="/tags/Executors/" rel="tag" class="color2">Executors</a>
+        
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="线程池作用"><a href="#线程池作用" class="headerlink" title="线程池作用"></a>线程池作用</h2><ul>
+<li>CPU资源隔离</li>
+<li>减少上下文切换</li>
+<li>减少线程创建/关闭的资源开销</li>
+<li>更好并发控制</li>
+<li>更好生命周期控制</li>
+</ul>
+<h2 id="设计时注意事项"><a href="#设计时注意事项" class="headerlink" title="设计时注意事项"></a>设计时注意事项</h2><ul>
+<li>任务混杂</li>
+<li>任务依赖</li>
+<li>饥饿死锁</li>
+<li>慢操作</li>
+</ul>
+<h2 id="使用时注意事项"><a href="#使用时注意事项" class="headerlink" title="使用时注意事项"></a>使用时注意事项</h2><h3 id="线程池参数"><a href="#线程池参数" class="headerlink" title="线程池参数"></a>线程池参数</h3><ul>
+<li>核心池大小（core pool size）</li>
+<li>最大池的大小（maximum pool size）</li>
+<li>存活时间（keep-alive time）</li>
+<li>缓冲队列（work queue）</li>
+</ul>
+<h3 id="任务队列（BlockingQueue）"><a href="#任务队列（BlockingQueue）" class="headerlink" title="任务队列（BlockingQueue）"></a>任务队列（BlockingQueue）</h3><ul>
+<li>无限队列<ul>
+<li>LinkedBlockingQueue<ul>
+<li><code>newSingleThreadExecutor</code></li>
+<li><code>newFixedThreadPool</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>有限队列 </p>
+<ul>
+<li>ArrayBlockingQueue</li>
+<li>LinkedBlockingQueue(int capacity)</li>
+<li>饱和策略<ul>
+<li><code>setRejectedExecutionHandler</code></li>
+<li><code>ThreadPoolExecutor.AbortPolicy</code><ul>
+<li>中止策略（默认）</li>
+<li>抛出<code>RejectedExecutionException</code></li>
+<li>调用者捕获后，自行实现逻辑</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ThreadPoolExecutor.CallerRunsPolicy <ul>
+<li>不丢弃任务</li>
+<li>不抛出异常</li>
+<li>把任务退回调用者线程执行（同步调用）</li>
+</ul>
+</li>
+<li>ThreadPoolExecutor.DiscardOldestPolicy <ul>
+<li>遗弃最旧的任务</li>
+<li>选择本应该接下来就要执行的任务<ul>
+<li>会尝试再次提交</li>
+</ul>
+</li>
+<li>如果使用优先级队列，则丢弃优先级最高的元素</li>
+<li><em>配合 SynchronousQueue 使用，可以实现任务提交并等待的效果</em></li>
+</ul>
+</li>
+<li>ThreadPoolExecutor.DiscardPolicy <ul>
+<li>遗弃策略</li>
+<li>放弃这个任务</li>
+</ul>
+</li>
+<li><p>可以结合<code>Semaphore</code>使用 </p>
+<ul>
+<li>限制任务注入率（injection rate）</li>
+</ul>
+</li>
+<li><p>FIFO</p>
+</li>
+</ul>
+</li>
+<li>同步移交（synchronous handoff） <ul>
+<li>直接传递给其他线程</li>
+<li>SynchronousQueue<ul>
+<li><code>newCachedThreadPool</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="线程工厂"><a href="#线程工厂" class="headerlink" title="线程工厂"></a>线程工厂</h3><ul>
+<li><p>设置异常处理 <code>UncaughtExceptionHandler</code></p>
+</li>
+<li><p>设置线程名称</p>
+</li>
+<li>优先级（不建议）</li>
+<li>守护线程（不建议）</li>
+<li>增加额外的计数器</li>
+<li>增加额外的统计信息</li>
+<li><code>Executors.privilegedThreadFactory()</code>，使用安全策略创建线程 </li>
+</ul>
+<h3 id="执行策略"><a href="#执行策略" class="headerlink" title="执行策略"></a>执行策略</h3><ul>
+<li>执行任务，不关心结果<ul>
+<li>void execute(Runnable command)</li>
+</ul>
+</li>
+<li>执行任务，需要对结果进行处理<ul>
+<li>Future submit(Callable task)</li>
+<li>Future submit(Runnable task)</li>
+<li>Future submit(Runnable task, T result)</li>
+</ul>
+</li>
+<li>执行一批任务，需要全部成功完成<ul>
+<li>List<future> invokeAll(Collection&lt;? extends Callable<t>&gt; tasks)</t></future></li>
+<li>List<future> invokeAll(Collection&lt;? extends Callable<t>&gt; tasks, long timeout, TimeUnit unit)</t></future></li>
+</ul>
+</li>
+<li>执行一批任务，只需要有一个成功完成即可<ul>
+<li>T List<future> invokeAny(Collection&lt;? extends Callable<t>&gt; tasks)</t></future></li>
+<li>T invokeAny(Collection&lt;? extends Callable<t>&gt; tasks, long timeout, TimeUnit unit)</t></li>
+</ul>
+</li>
+<li>执行一批任务，需要逐个处理结果<ul>
+<li>CompletionService<ul>
+<li>ExecutorCompletionService</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/6ae6b8a1.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/posts/6ae6b8a1.html" itemprop="url">
+                  camel-ftp 使用笔记
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-08-09 19:11:20 / 修改时间：19:31:31" itemprop="dateCreated datePublished" datetime="2018-08-09T19:11:20+08:00">2018-08-09</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数</span>
+                
+                <span title="字数">603</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/Apache/" rel="tag" class="color1">Apache</a>
+        
+           <a href="/tags/camel-ftp/" rel="tag" class="color2">camel-ftp</a>
+        
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="idempotentConsumer"><a href="#idempotentConsumer" class="headerlink" title="idempotentConsumer"></a>idempotentConsumer</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// tmp 是一个路径：./../tmp</span></span><br><span class="line"><span class="comment">// 通过文件名缓存，如果缓存中已经有这个文件名，怎不再处理这个文件</span></span><br><span class="line">.idempotentConsumer(header(Exchange.FILE_NAME),</span><br><span class="line">                        FileIdempotentRepository.fileIdempotentRepository(</span><br><span class="line">                                <span class="keyword">new</span> File(tmp, <span class="string">"fir-智能语音-智能语音识别清单报表.txt"</span>),</span><br><span class="line">                                <span class="number">100</span> * <span class="number">1024</span>,</span><br><span class="line">                                <span class="number">5</span> * <span class="number">1024</span> * <span class="number">1024</span>))</span><br></pre></td></tr></table></figure>
+<h1 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 标识文件名是“智能语音清单_20180803.txt”时，才执行之后的流程</span></span><br><span class="line">.filter(header(Exchange.FILE_NAME).isEqualTo(<span class="string">"智能语音清单_20180803.txt"</span>))</span><br><span class="line">    </span><br><span class="line"><span class="comment">// 标识文件名不是“智能语音清单_20180803.txt”时，才执行之后的流程</span></span><br><span class="line">.filter(header(Exchange.FILE_NAME).isNotEqualTo(<span class="string">"智能语音清单_20180803.txt"</span>))</span><br></pre></td></tr></table></figure>
+
+          
         
       
     </div>
@@ -715,6 +1473,224 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/posts/c77ba0b2.html" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/fea0c721.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/posts/fea0c721.html" itemprop="url">
+                  restful api 规范
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-07-24 10:43:05 / 修改时间：14:40:08" itemprop="dateCreated datePublished" datetime="2018-07-24T10:43:05+08:00">2018-07-24</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/规范/" itemprop="url" rel="index"><span itemprop="name">规范</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数</span>
+                
+                <span title="字数">14k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">12 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/restful-api/" rel="tag" class="color1">restful api</a>
+        
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="RESTful-API-设计规范"><a href="#RESTful-API-设计规范" class="headerlink" title="RESTful API 设计规范"></a>RESTful API 设计规范</h1><blockquote>
+<p>原文地址：<a href="https://github.com/godruoyi/restful-api-specification" target="_blank" rel="noopener">https://github.com/godruoyi/restful-api-specification</a></p>
+</blockquote>
+<h2 id="关于「能愿动词」的使用"><a href="#关于「能愿动词」的使用" class="headerlink" title="关于「能愿动词」的使用"></a>关于「能愿动词」的使用</h2><p>为了避免歧义，文档大量使用了「能愿动词」，对应的解释如下：</p>
+<ul>
+<li><code>必须 (MUST)</code>：绝对，严格遵循，请照做，无条件遵守；</li>
+<li><code>一定不可 (MUST NOT)</code>：禁令，严令禁止；</li>
+<li><code>应该 (SHOULD)</code> ：强烈建议这样做，但是不强求；</li>
+<li><code>不该 (SHOULD NOT)</code>：强烈不建议这样做，但是不强求；</li>
+<li><code>可以 (MAY)</code> 和 <code>可选 (OPTIONAL)</code> ：选择性高一点，在这个文档内，此词语使用较少；</li>
+</ul>
+<blockquote>
+<p>参见：<a href="http://www.ietf.org/rfc/rfc2119.txt" target="_blank" rel="noopener">RFC 2119</a></p>
+</blockquote>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/posts/fea0c721.html" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1622,889 +2598,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/ba3065f8.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/posts/ba3065f8.html" itemprop="url">
-                  spring-boot 事件监听 ApplicationListener
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-07-06 16:11:20" itemprop="dateCreated datePublished" datetime="2018-07-06T16:11:20+08:00">2018-07-06</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-08-09 15:49:24" itemprop="dateModified" datetime="2018-08-09T15:49:24+08:00">2018-08-09</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数</span>
-                
-                <span title="字数">4.6k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">4 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-      <div class="post-tags" style="margin-top: 0; margin-bottom: 20px; text-align: left">
-        <span class="post-meta-item-icon">
-          <i class="fa fa-tags"></i>
-        </span>
-        <span class="post-meta-item-text">标签</span>
-        
-           <a href="/tags/spring-boot/" rel="tag" class="color1">spring-boot</a>
-        
-      </div>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>SpringBoot 为 ApplicationContextEvent 提供了四种事件：</p>
-<ul>
-<li>ApplicationStartedEvent ：spring boot 启动开始时执行的事件</li>
-<li>ApplicationEnvironmentPreparedEvent：spring boot 对应 Enviroment 已经准备完毕，但此时上下文 context 还没有创建</li>
-<li>ApplicationPreparedEvent：spring boot 上下文 context 创建完成，但此时 spring 中的 bean 是没有完全加载完成的</li>
-<li>ApplicationFailedEvent：spring boot启动异常时执行事件</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/posts/ba3065f8.html" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/a56434f6.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/posts/a56434f6.html" itemprop="url">
-                  返回 JSON 格式数据，Long 前端精准度丢失问题
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-06-14 13:11:20" itemprop="dateCreated datePublished" datetime="2018-06-14T13:11:20+08:00">2018-06-14</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-07-06 17:17:36" itemprop="dateModified" datetime="2018-07-06T17:17:36+08:00">2018-07-06</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数</span>
-                
-                <span title="字数">3.4k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">3 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="配置-HttpMessageConverter"><a href="#配置-HttpMessageConverter" class="headerlink" title="配置 HttpMessageConverter"></a>配置 HttpMessageConverter</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebMvcConfig</span> <span class="keyword">extends</span> <span class="title">WebMvcConfigurerAdapter</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configureMessageConverters</span><span class="params">(List&lt;HttpMessageConverter&lt;?&gt;&gt; converters)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 返回 JSON，Long 前端精准度丢失问题</span></span><br><span class="line">        MappingJackson2HttpMessageConverter converter = <span class="keyword">new</span> MappingJackson2HttpMessageConverter();</span><br><span class="line">        ObjectMapper mapper = <span class="keyword">new</span> ObjectMapper();</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">         * 序列换成json时,将所有的long变成string</span></span><br><span class="line"><span class="comment">         * 因为js中得数字类型不能包含所有的java long值</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        SimpleModule <span class="keyword">module</span> = <span class="keyword">new</span> SimpleModule();</span><br><span class="line">        <span class="keyword">module</span>.addSerializer(Long.class, ToStringSerializer.instance);</span><br><span class="line">        <span class="keyword">module</span>.addSerializer(Long.TYPE, ToStringSerializer.instance);</span><br><span class="line">        mapper.registerModule(<span class="keyword">module</span>);</span><br><span class="line">        converter.setObjectMapper(mapper);</span><br><span class="line">        converters.add(converter);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/posts/a56434f6.html" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/58b4b1b8.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/posts/58b4b1b8.html" itemprop="url">
-                  vue-cli 使用
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-06-05 18:43:05" itemprop="dateCreated datePublished" datetime="2018-06-05T18:43:05+08:00">2018-06-05</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-07-06 17:09:07" itemprop="dateModified" datetime="2018-07-06T17:09:07+08:00">2018-07-06</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/vuejs/" itemprop="url" rel="index"><span itemprop="name">vuejs</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数</span>
-                
-                <span title="字数">538</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-      <div class="post-tags" style="margin-top: 0; margin-bottom: 20px; text-align: left">
-        <span class="post-meta-item-icon">
-          <i class="fa fa-tags"></i>
-        </span>
-        <span class="post-meta-item-text">标签</span>
-        
-           <a href="/tags/vue/" rel="tag" class="color1">vue</a>
-        
-           <a href="/tags/nodejs/" rel="tag" class="color2">nodejs</a>
-        
-           <a href="/tags/vue-cli/" rel="tag" class="color3">vue-cli</a>
-        
-      </div>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>安装 vue-cli</p>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 全局安装</span></span><br><span class="line">npm install -g vue-cli</span><br></pre></td></tr></table></figure>
-<p>如果安装失败，可以使用<code>npm cache clean</code>清理缓存，然后再重新安装</p>
-<blockquote>
-<p> 生成项目</p>
-</blockquote>
-<p>首先需要在命令行中进入到工作区间，然后输入</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue init webpack vue-project</span><br></pre></td></tr></table></figure>
-<p>全局安装<code>webpack</code>命令<code>npm install -g webpack</code></p>
-<p>vue-project 是自定义的项目名称，命令执行之后，会在当前目录生成一个以该名称命名的项目文件夹</p>
-<blockquote>
-<p>proxyTable 代理设置</p>
-</blockquote>
-<p>前后端分离项目本地测试，可以使用 proxyTable 代理到后台服务器，方便调试</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">proxyTable: &#123;</span><br><span class="line">    '/api': &#123;</span><br><span class="line">        targer: 'https:localhost:8080/service/api',</span><br><span class="line">        secure: false,</span><br><span class="line">        changeOrigin: true,</span><br><span class="line">        pathRewrite: &#123;</span><br><span class="line">            '^/api': '/'</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用时直接<strong>/api/接口名</strong>就行了 </p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/7150914.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/posts/7150914.html" itemprop="url">
-                  Oracle 分区
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-06-05 17:01:05" itemprop="dateCreated datePublished" datetime="2018-06-05T17:01:05+08:00">2018-06-05</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-07-06 17:09:07" itemprop="dateModified" datetime="2018-07-06T17:09:07+08:00">2018-07-06</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Oracle/" itemprop="url" rel="index"><span itemprop="name">Oracle</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数</span>
-                
-                <span title="字数">471</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="自增分区"><a href="#自增分区" class="headerlink" title="自增分区"></a>自增分区</h1><blockquote>
-<p>numtoyminterval 按年、月分区</p>
-</blockquote>
-<p>numtoyminterval(1, ‘year’)、numtoyminterval(1, ‘month’)</p>
-<blockquote>
-<p>numtodsinterval 按天、时、分、秒分区</p>
-</blockquote>
-<p>numtodsinterval(1, ‘day’)、numtodsinterval(1, ‘hour’)、numtodsinterval(1, ‘minute’)、numtodsinterval(1, ‘second’)</p>
-<blockquote>
-<p>例子</p>
-</blockquote>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">user</span> (<span class="keyword">id</span> <span class="built_in">number</span>, create_dt <span class="built_in">date</span>)</span><br><span class="line">	<span class="keyword">tablespace</span> <span class="keyword">users</span></span><br><span class="line">	<span class="keyword">partition</span> <span class="keyword">by</span> <span class="keyword">range</span> (create_dt)</span><br><span class="line">	<span class="built_in">interval</span>(numtoyminterval(<span class="number">1</span>, <span class="string">'month'</span>))</span><br><span class="line">	(</span><br><span class="line">        <span class="keyword">partition</span> p1 <span class="keyword">values</span> <span class="keyword">less</span> <span class="keyword">than</span> (<span class="keyword">to_date</span>(<span class="string">'2018-06-01 00:00:00'</span>, <span class="string">'yyyy-mm-dd hh24:mi:ss'</span>))</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2551,7 +2649,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">89</span>
+                    <span class="site-state-item-count">93</span>
                     <span class="site-state-item-name">文章</span>
                   </a>
                 </div>
@@ -2763,7 +2861,23 @@
                     
                       
                     
-                    <span class="site-state-item-count">73</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">81</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -2831,7 +2945,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">305k</span>
+    <span title="站点总字数">318k</span>
   
 
   
