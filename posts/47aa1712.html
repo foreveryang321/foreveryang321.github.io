@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="兼容问题spring-boot-starter-parent切换回1.5.2.RELEASE版本 因为1.5.4.RELEASE、1.5.5.RELEASE、1.5.6.RELEASE、1.5.7.RELEASE、2.0.0.M1、2.0.0.M2、2.0.0.M3都存在使用spring-boot-starter-data-redis时，会出现异常 java.lang.NoSuchMethodEr">
+  <meta name="description" content="兼容问题 外部 Tomcat 容器部署 attach=false spring-boot升级到2.0 @RequestBody @RequestParam   兼容问题spring-boot-starter-parent切换回1.5.2.RELEASE版本 因为1.5.4.RELEASE、1.5.5.RELEASE、1.5.6.RELEASE、1.5.7.RELEASE、2.0.0.M1、2.">
 <meta name="keywords" content="spring-boot">
 <meta property="og:type" content="article">
 <meta property="og:title" content="spring boot 使用注意事项">
 <meta property="og:url" content="https://blog.yl-online.top/posts/47aa1712.html">
 <meta property="og:site_name" content="forever杨&#39;s Blog">
-<meta property="og:description" content="兼容问题spring-boot-starter-parent切换回1.5.2.RELEASE版本 因为1.5.4.RELEASE、1.5.5.RELEASE、1.5.6.RELEASE、1.5.7.RELEASE、2.0.0.M1、2.0.0.M2、2.0.0.M3都存在使用spring-boot-starter-data-redis时，会出现异常 java.lang.NoSuchMethodEr">
+<meta property="og:description" content="兼容问题 外部 Tomcat 容器部署 attach=false spring-boot升级到2.0 @RequestBody @RequestParam   兼容问题spring-boot-starter-parent切换回1.5.2.RELEASE版本 因为1.5.4.RELEASE、1.5.5.RELEASE、1.5.6.RELEASE、1.5.7.RELEASE、2.0.0.M1、2.">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-09T07:51:44.308Z">
+<meta property="og:updated_time" content="2018-08-24T07:00:48.643Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring boot 使用注意事项">
-<meta name="twitter:description" content="兼容问题spring-boot-starter-parent切换回1.5.2.RELEASE版本 因为1.5.4.RELEASE、1.5.5.RELEASE、1.5.6.RELEASE、1.5.7.RELEASE、2.0.0.M1、2.0.0.M2、2.0.0.M3都存在使用spring-boot-starter-data-redis时，会出现异常 java.lang.NoSuchMethodEr">
+<meta name="twitter:description" content="兼容问题 外部 Tomcat 容器部署 attach=false spring-boot升级到2.0 @RequestBody @RequestParam   兼容问题spring-boot-starter-parent切换回1.5.2.RELEASE版本 因为1.5.4.RELEASE、1.5.5.RELEASE、1.5.6.RELEASE、1.5.7.RELEASE、2.0.0.M1、2.">
 
 
 
@@ -407,7 +407,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-08-09 15:51:44" itemprop="dateModified" datetime="2018-08-09T15:51:44+08:00">2018-08-09</time>
+                <time title="修改时间：2018-08-24 15:00:48" itemprop="dateModified" datetime="2018-08-24T15:00:48+08:00">2018-08-24</time>
               
             
           </span>
@@ -500,7 +500,17 @@
       
 
       
-        <h2 id="兼容问题"><a href="#兼容问题" class="headerlink" title="兼容问题"></a>兼容问题</h2><p>spring-boot-starter-parent切换回1.5.2.RELEASE版本</p>
+        <!-- TOC -->
+<ul>
+<li><a href="#兼容问题">兼容问题</a></li>
+<li><a href="#外部-tomcat-容器部署">外部 Tomcat 容器部署</a></li>
+<li><a href="#attachfalse">attach=false</a></li>
+<li><a href="#spring-boot升级到20">spring-boot升级到2.0</a></li>
+<li><a href="#requestbody">@RequestBody</a></li>
+<li><a href="#requestparam">@RequestParam</a></li>
+</ul>
+<!-- /TOC -->
+<h2 id="兼容问题"><a href="#兼容问题" class="headerlink" title="兼容问题"></a>兼容问题</h2><p>spring-boot-starter-parent切换回1.5.2.RELEASE版本</p>
 <p>因为1.5.4.RELEASE、1.5.5.RELEASE、1.5.6.RELEASE、1.5.7.RELEASE、2.0.0.M1、2.0.0.M2、2.0.0.M3都存在使用spring-boot-starter-data-redis时，会出现异常</p>
 <p><code>java.lang.NoSuchMethodError: org.springframework.data.repository.config.AnnotationRepositoryConfigurationSource.&lt;init&gt;</code>异常</p>
 <p>请查看<a href="https://github.com/spring-projects/spring-boot/issues/9606" target="_blank" rel="noopener">https://github.com/spring-projects/spring-boot/issues/9606</a></p>

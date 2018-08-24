@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="webjars打包包路径：src\main\resources\webjars123456789&amp;lt;build&amp;gt;    &amp;lt;finalName&amp;gt;$&amp;#123;project.artifactId&amp;#125;&amp;lt;/finalName&amp;gt;    &amp;lt;resources&amp;gt;        &amp;lt;resource&amp;gt;            &amp;lt;director">
+  <meta name="description" content="webjars打包 使用外部配置文件，静态资源 JAR部署方式 WAR包部署方式   webjars打包包路径：src\main\resources\webjars123456789&amp;lt;build&amp;gt;    &amp;lt;finalName&amp;gt;$&amp;#123;project.artifactId&amp;#125;&amp;lt;/finalName&amp;gt;    &amp;lt;resources&amp;gt;">
 <meta name="keywords" content="spring-boot">
 <meta property="og:type" content="article">
 <meta property="og:title" content="spring boot 打包相关">
 <meta property="og:url" content="https://blog.yl-online.top/posts/ab825d27.html">
 <meta property="og:site_name" content="forever杨&#39;s Blog">
-<meta property="og:description" content="webjars打包包路径：src\main\resources\webjars123456789&amp;lt;build&amp;gt;    &amp;lt;finalName&amp;gt;$&amp;#123;project.artifactId&amp;#125;&amp;lt;/finalName&amp;gt;    &amp;lt;resources&amp;gt;        &amp;lt;resource&amp;gt;            &amp;lt;director">
+<meta property="og:description" content="webjars打包 使用外部配置文件，静态资源 JAR部署方式 WAR包部署方式   webjars打包包路径：src\main\resources\webjars123456789&amp;lt;build&amp;gt;    &amp;lt;finalName&amp;gt;$&amp;#123;project.artifactId&amp;#125;&amp;lt;/finalName&amp;gt;    &amp;lt;resources&amp;gt;">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-09T07:52:21.515Z">
+<meta property="og:updated_time" content="2018-08-24T07:01:52.671Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring boot 打包相关">
-<meta name="twitter:description" content="webjars打包包路径：src\main\resources\webjars123456789&amp;lt;build&amp;gt;    &amp;lt;finalName&amp;gt;$&amp;#123;project.artifactId&amp;#125;&amp;lt;/finalName&amp;gt;    &amp;lt;resources&amp;gt;        &amp;lt;resource&amp;gt;            &amp;lt;director">
+<meta name="twitter:description" content="webjars打包 使用外部配置文件，静态资源 JAR部署方式 WAR包部署方式   webjars打包包路径：src\main\resources\webjars123456789&amp;lt;build&amp;gt;    &amp;lt;finalName&amp;gt;$&amp;#123;project.artifactId&amp;#125;&amp;lt;/finalName&amp;gt;    &amp;lt;resources&amp;gt;">
 
 
 
@@ -407,7 +407,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-08-09 15:52:21" itemprop="dateModified" datetime="2018-08-09T15:52:21+08:00">2018-08-09</time>
+                <time title="修改时间：2018-08-24 15:01:52" itemprop="dateModified" datetime="2018-08-24T15:01:52+08:00">2018-08-24</time>
               
             
           </span>
@@ -454,7 +454,7 @@
                 
                   <span class="post-meta-item-text">字数</span>
                 
-                <span title="字数">3.6k</span>
+                <span title="字数">3.7k</span>
               
 
               
@@ -500,7 +500,15 @@
       
 
       
-        <h1 id="webjars打包"><a href="#webjars打包" class="headerlink" title="webjars打包"></a>webjars打包</h1><p>包路径：src\main\resources\webjars<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">finalName</span>&gt;</span>$&#123;project.artifactId&#125;<span class="tag">&lt;/<span class="name">finalName</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">directory</span>&gt;</span>$&#123;project.basedir&#125;/src/main/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">targetPath</span>&gt;</span>$&#123;project.build.outputDirectory&#125;/META-INF/resources/<span class="tag">&lt;/<span class="name">targetPath</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+        <!-- TOC -->
+<ul>
+<li><a href="#webjars打包">webjars打包</a></li>
+<li><a href="#使用外部配置文件静态资源">使用外部配置文件，静态资源</a></li>
+<li><a href="#jar部署方式">JAR部署方式</a></li>
+<li><a href="#war包部署方式">WAR包部署方式</a></li>
+</ul>
+<!-- /TOC -->
+<h1 id="webjars打包"><a href="#webjars打包" class="headerlink" title="webjars打包"></a>webjars打包</h1><p>包路径：src\main\resources\webjars<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">finalName</span>&gt;</span>$&#123;project.artifactId&#125;<span class="tag">&lt;/<span class="name">finalName</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">directory</span>&gt;</span>$&#123;project.basedir&#125;/src/main/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">targetPath</span>&gt;</span>$&#123;project.build.outputDirectory&#125;/META-INF/resources/<span class="tag">&lt;/<span class="name">targetPath</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <a id="more"></a>
 <h1 id="使用外部配置文件，静态资源"><a href="#使用外部配置文件，静态资源" class="headerlink" title="使用外部配置文件，静态资源"></a>使用外部配置文件，静态资源</h1><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">excludes</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">exclude</span>&gt;</span>freemarker/**/*<span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">excludes</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">targetPath</span>&gt;</span>$&#123;project.build.directory&#125;/<span class="tag">&lt;/<span class="name">targetPath</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">includes</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">include</span>&gt;</span>freemarker/**/*<span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">includes</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h1 id="JAR部署方式"><a href="#JAR部署方式" class="headerlink" title="JAR部署方式"></a>JAR部署方式</h1><blockquote>
