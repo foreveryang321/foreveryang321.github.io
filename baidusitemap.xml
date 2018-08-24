@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>https://blog.yl-online.top/posts/6cc2492a.html</loc>
+    <lastmod>2018-08-24T06:57:59.196Z</lastmod>
+    <data>
+        <display>
+        <title>Spring Data JPA 使用</title>
+        <pubTime>2017-09-11T06:11:20.000Z</pubTime>
+        
+        <tag>spring-boot</tag>
+         
+        <tag>jpa</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="https://blog.yl-online.top/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://blog.yl-online.top/posts/4896de77.html</loc>
     <lastmod>2018-08-22T10:29:58.492Z</lastmod>
     <data>
@@ -180,28 +202,6 @@
         <pubTime>2018-07-06T08:11:20.000Z</pubTime>
         
         <tag>spring-boot</tag>
-         
-         
-           
-             
-              <breadCrumb title="Java" url="https://blog.yl-online.top/categories/Java/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://blog.yl-online.top/posts/6cc2492a.html</loc>
-    <lastmod>2018-08-07T08:17:59.069Z</lastmod>
-    <data>
-        <display>
-        <title>Spring Data JPA 使用</title>
-        <pubTime>2017-09-11T06:11:20.000Z</pubTime>
-        
-        <tag>spring-boot</tag>
-         
-        <tag>jpa</tag>
          
          
            
@@ -1067,9 +1067,9 @@
         <title>spring-boot cxf 集成</title>
         <pubTime>2018-06-02T10:35:05.000Z</pubTime>
         
-        <tag>spring-boot</tag>
-         
         <tag>cxf</tag>
+         
+        <tag>spring-boot</tag>
          
          
            
@@ -1089,9 +1089,9 @@
         <title>spring-boot shiro 引入外部lib启动方式报错</title>
         <pubTime>2018-02-05T07:34:07.000Z</pubTime>
         
-        <tag>shiro</tag>
-         
         <tag>spring-boot</tag>
+         
+        <tag>shiro</tag>
          
          
            
@@ -1372,9 +1372,9 @@
         <title>spring boot 2.0 + redis自定义注解</title>
         <pubTime>2018-03-23T07:44:18.000Z</pubTime>
         
-        <tag>redis</tag>
-         
         <tag>spring-boot</tag>
+         
+        <tag>redis</tag>
          
          
            
@@ -1394,9 +1394,9 @@
         <title>spring boot + redis自定义注解</title>
         <pubTime>2018-03-23T07:34:18.000Z</pubTime>
         
-        <tag>redis</tag>
-         
         <tag>spring-boot</tag>
+         
+        <tag>redis</tag>
          
          
            

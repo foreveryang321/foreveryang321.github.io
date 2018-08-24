@@ -167,8 +167,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>spring-boot</tag>
         <tag>cxf</tag>
+        <tag>spring-boot</tag>
       </tags>
   </entry>
   <entry>
@@ -255,8 +255,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>redis</tag>
         <tag>spring-boot</tag>
+        <tag>redis</tag>
       </tags>
   </entry>
   <entry>
@@ -267,20 +267,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>redis</tag>
         <tag>spring-boot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Java、JS版AES加密算法工具类]]></title>
-    <url>%2Fposts%2F1f7e0ef5.html</url>
-    <content type="text"><![CDATA[[TOC] 本文主要是实现AES算法的Java版本和Javascript版本，并提供测试例子。 AES是一个对称分组密码算法，旨在取代DES成为广泛使用的标准。根据使用的密码长度，AES最常见的有3种方案，用以适应不同的场景要求，分别是AES-128、AES-192和AES-256。 Java中的PKCS5Padding和Javascript中的PKCS7Padding的结果是一样。 Java 版 AES 工具类123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143package cn.tisson.wechat.common.util;import javax.crypto.BadPaddingException;import javax.crypto.Cipher;import javax.crypto.IllegalBlockSizeException;import javax.crypto.NoSuchPaddingException;import javax.crypto.spec.SecretKeySpec;import java.io.UnsupportedEncodingException;import java.security.InvalidKeyException;import java.security.NoSuchAlgorithmException;/** * AES 加密、解密 * * @author Created by YL on 2018/2/9 */public enum AESUtils &#123; GBK &#123; public String getCharset() &#123; return "GBK"; &#125; &#125;, UTF8 &#123; public String getCharset() &#123; return "UTF-8"; &#125; &#125;; public static final String AES_KEY = "MHYKD5tes6fhkdv9"; /** * 获取编码 */ public String getCharset() &#123; throw new AbstractMethodError(); &#125; /** * 加密 * * @param str 需要加密的内容 * @param key 加密密码 * * @return 加密后的字符串 */ private byte[] enc(String str, String key) &#123; try &#123; SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(getCharset()), "AES"); Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding"); cipher.init(Cipher.ENCRYPT_MODE, skeySpec); return cipher.doFinal(str.getBytes(getCharset())); &#125; catch (UnsupportedEncodingException e) &#123; throw new RuntimeException("不支持的编码格式", e); &#125; catch (NoSuchAlgorithmException e) &#123; throw new RuntimeException("不支持的加密算法", e); &#125; catch (NoSuchPaddingException e) &#123; throw new RuntimeException("不支持的填充机制", e); &#125; catch (InvalidKeyException e) &#123; throw new RuntimeException("无效的Key、错误的长度、未初始化等", e); &#125; catch (IllegalBlockSizeException e) &#123; throw new RuntimeException("密码的块大小不匹配", e); &#125; catch (BadPaddingException e) &#123; throw new RuntimeException("输入的数据错误，导致填充机制未能正常填充", e); &#125; &#125; private byte[] dec(byte[] str, String key) &#123; try &#123; SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(getCharset()), "AES"); Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding"); cipher.init(Cipher.DECRYPT_MODE, skeySpec); return cipher.doFinal(str); &#125; catch (UnsupportedEncodingException e) &#123; throw new RuntimeException("不支持的编码格式", e); &#125; catch (NoSuchAlgorithmException e) &#123; throw new RuntimeException("不支持的加密算法", e); &#125; catch (NoSuchPaddingException e) &#123; throw new RuntimeException("不支持的填充机制", e); &#125; catch (InvalidKeyException e) &#123; throw new RuntimeException("无效的Key、错误的长度、未初始化等", e); &#125; catch (IllegalBlockSizeException e) &#123; throw new RuntimeException("密码的块大小不匹配", e); &#125; catch (BadPaddingException e) &#123; throw new RuntimeException("输入的数据错误，导致填充机制未能正常填充", e); &#125; &#125; /** * AES 加密，使用默认 key 加密 * * @param str 要加密的明文 * * @return 加密后的密文 */ public String encrypt(String str) &#123; return encrypt(str, AESUtils.AES_KEY); &#125; /** * AES加密，使用指定 key 加密 * * @param str 要加密的明文 * @param key 加密 key * * @return 解密后字符串 */ public String encrypt(String str, String key) &#123; byte[] encryptBytes = enc(str, key); return Base64Utils.UTF8.encode(encryptBytes); &#125; /** * AES 解密，使用默认 key 解密 * * @param str 要解密的密文 * * @return 解密后的明文 */ public String decrypt(String str) &#123; return decrypt(str, AESUtils.AES_KEY); &#125; /** * AES 解密，使用默认 key 解密 * * @param str 要解密的密文 * @param key 解密 key * * @return 解密后的明文 */ public String decrypt(String str, String key) &#123; if (str == null || "".equals(str)) &#123; return ""; &#125; byte[] bytes = Base64Utils.UTF8.decode2byte(str); try &#123; return new String(dec(bytes, key), getCharset()); &#125; catch (UnsupportedEncodingException e) &#123; e.printStackTrace(); &#125; return ""; &#125;&#125; Java 版 AES 工具类测试123456789101112131415161718192021package cn.tisson.wechat.common.util;import org.junit.Assert;import org.junit.Test;/** * @author Created by YL on 2018/2/13 */public class AESUtilsTest &#123; private static final String KEY = "SYhU9Qf3nmrZAx7D"; private static final String STR = "法拉利_24234slfkjsl《》？：“”｛｝+——"; @Test public void aes() &#123; String encrypt = AESUtils.UTF8.encrypt(STR, KEY); System.out.println("encrypt ---&gt; " + encrypt); String decrypt = AESUtils.UTF8.decrypt(encrypt, KEY); System.out.println(decrypt); Assert.assertEquals(STR, decrypt); &#125;&#125; JS 版 AES 工具类要引入的 js 文件地址：https://github.com/brix/crypto-js12345&lt;script th:src="@&#123;/crypto-js/core.js&#125;"&gt;&lt;/script&gt;&lt;script th:src="@&#123;/crypto-js/enc-base64.js&#125;"&gt;&lt;/script&gt;&lt;script th:src="@&#123;/crypto-js/cipher-core.js&#125;"&gt;&lt;/script&gt;&lt;script th:src="@&#123;/crypto-js/aes.js&#125;"&gt;&lt;/script&gt;&lt;script th:src="@&#123;/crypto-js/mode-ecb.js&#125;"&gt;&lt;/script&gt; JS 版 AES 工具类扩展123456789101112131415161718192021222324252627282930313233343536function getRandom(len) &#123; var a = len || 16, s = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', n = s.length; var r = ''; for (var i = 0; i &lt; a; i++) &#123; r += s.charAt(Math.floor(Math.random() * n)); &#125; return r;&#125;function encryptAES(str, key) &#123; var s = CryptoJS.enc.Utf8.parse(str), k = CryptoJS.enc.Utf8.parse(key), c = CryptoJS.AES.encrypt(s, k, &#123; mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 &#125;), // 转换为字符串 // return c.toString(); // Hex 转为十六进制 d = CryptoJS.enc.Hex.parse(c.ciphertext.toString()); // Base64 编码 return CryptoJS.enc.Base64.stringify(d);&#125;function decryptAES(str, key) &#123; var k = CryptoJS.enc.Utf8.parse(key), c = CryptoJS.AES.decrypt(str, k, &#123; mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 &#125;); // 转换为 UTF8 字符串 return CryptoJS.enc.Utf8.stringify(c); // return c.toString(CryptoJS.enc.Utf8);&#125; JS 版 AES 工具类测试12345678var key = getRandom();console.log('key: %o', key);var str = '法拉利_24234slfkjsl《》？：“”｛｝+——';console.log('str: %o', str);var e = encryptAES(str, key);console.log('e: %o', e);var d = decryptAES(e, key);console.log('d: %o', d);]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Javascript</tag>
-        <tag>AES</tag>
+        <tag>redis</tag>
       </tags>
   </entry>
   <entry>
@@ -296,12 +284,92 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Java、JS版AES加密算法工具类]]></title>
+    <url>%2Fposts%2F1f7e0ef5.html</url>
+    <content type="text"><![CDATA[[TOC] 本文主要是实现AES算法的Java版本和Javascript版本，并提供测试例子。 AES是一个对称分组密码算法，旨在取代DES成为广泛使用的标准。根据使用的密码长度，AES最常见的有3种方案，用以适应不同的场景要求，分别是AES-128、AES-192和AES-256。 Java中的PKCS5Padding和Javascript中的PKCS7Padding的结果是一样。 Java 版 AES 工具类123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143package cn.tisson.wechat.common.util;import javax.crypto.BadPaddingException;import javax.crypto.Cipher;import javax.crypto.IllegalBlockSizeException;import javax.crypto.NoSuchPaddingException;import javax.crypto.spec.SecretKeySpec;import java.io.UnsupportedEncodingException;import java.security.InvalidKeyException;import java.security.NoSuchAlgorithmException;/** * AES 加密、解密 * * @author Created by YL on 2018/2/9 */public enum AESUtils &#123; GBK &#123; public String getCharset() &#123; return "GBK"; &#125; &#125;, UTF8 &#123; public String getCharset() &#123; return "UTF-8"; &#125; &#125;; public static final String AES_KEY = "MHYKD5tes6fhkdv9"; /** * 获取编码 */ public String getCharset() &#123; throw new AbstractMethodError(); &#125; /** * 加密 * * @param str 需要加密的内容 * @param key 加密密码 * * @return 加密后的字符串 */ private byte[] enc(String str, String key) &#123; try &#123; SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(getCharset()), "AES"); Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding"); cipher.init(Cipher.ENCRYPT_MODE, skeySpec); return cipher.doFinal(str.getBytes(getCharset())); &#125; catch (UnsupportedEncodingException e) &#123; throw new RuntimeException("不支持的编码格式", e); &#125; catch (NoSuchAlgorithmException e) &#123; throw new RuntimeException("不支持的加密算法", e); &#125; catch (NoSuchPaddingException e) &#123; throw new RuntimeException("不支持的填充机制", e); &#125; catch (InvalidKeyException e) &#123; throw new RuntimeException("无效的Key、错误的长度、未初始化等", e); &#125; catch (IllegalBlockSizeException e) &#123; throw new RuntimeException("密码的块大小不匹配", e); &#125; catch (BadPaddingException e) &#123; throw new RuntimeException("输入的数据错误，导致填充机制未能正常填充", e); &#125; &#125; private byte[] dec(byte[] str, String key) &#123; try &#123; SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(getCharset()), "AES"); Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding"); cipher.init(Cipher.DECRYPT_MODE, skeySpec); return cipher.doFinal(str); &#125; catch (UnsupportedEncodingException e) &#123; throw new RuntimeException("不支持的编码格式", e); &#125; catch (NoSuchAlgorithmException e) &#123; throw new RuntimeException("不支持的加密算法", e); &#125; catch (NoSuchPaddingException e) &#123; throw new RuntimeException("不支持的填充机制", e); &#125; catch (InvalidKeyException e) &#123; throw new RuntimeException("无效的Key、错误的长度、未初始化等", e); &#125; catch (IllegalBlockSizeException e) &#123; throw new RuntimeException("密码的块大小不匹配", e); &#125; catch (BadPaddingException e) &#123; throw new RuntimeException("输入的数据错误，导致填充机制未能正常填充", e); &#125; &#125; /** * AES 加密，使用默认 key 加密 * * @param str 要加密的明文 * * @return 加密后的密文 */ public String encrypt(String str) &#123; return encrypt(str, AESUtils.AES_KEY); &#125; /** * AES加密，使用指定 key 加密 * * @param str 要加密的明文 * @param key 加密 key * * @return 解密后字符串 */ public String encrypt(String str, String key) &#123; byte[] encryptBytes = enc(str, key); return Base64Utils.UTF8.encode(encryptBytes); &#125; /** * AES 解密，使用默认 key 解密 * * @param str 要解密的密文 * * @return 解密后的明文 */ public String decrypt(String str) &#123; return decrypt(str, AESUtils.AES_KEY); &#125; /** * AES 解密，使用默认 key 解密 * * @param str 要解密的密文 * @param key 解密 key * * @return 解密后的明文 */ public String decrypt(String str, String key) &#123; if (str == null || "".equals(str)) &#123; return ""; &#125; byte[] bytes = Base64Utils.UTF8.decode2byte(str); try &#123; return new String(dec(bytes, key), getCharset()); &#125; catch (UnsupportedEncodingException e) &#123; e.printStackTrace(); &#125; return ""; &#125;&#125; Java 版 AES 工具类测试123456789101112131415161718192021package cn.tisson.wechat.common.util;import org.junit.Assert;import org.junit.Test;/** * @author Created by YL on 2018/2/13 */public class AESUtilsTest &#123; private static final String KEY = "SYhU9Qf3nmrZAx7D"; private static final String STR = "法拉利_24234slfkjsl《》？：“”｛｝+——"; @Test public void aes() &#123; String encrypt = AESUtils.UTF8.encrypt(STR, KEY); System.out.println("encrypt ---&gt; " + encrypt); String decrypt = AESUtils.UTF8.decrypt(encrypt, KEY); System.out.println(decrypt); Assert.assertEquals(STR, decrypt); &#125;&#125; JS 版 AES 工具类要引入的 js 文件地址：https://github.com/brix/crypto-js12345&lt;script th:src="@&#123;/crypto-js/core.js&#125;"&gt;&lt;/script&gt;&lt;script th:src="@&#123;/crypto-js/enc-base64.js&#125;"&gt;&lt;/script&gt;&lt;script th:src="@&#123;/crypto-js/cipher-core.js&#125;"&gt;&lt;/script&gt;&lt;script th:src="@&#123;/crypto-js/aes.js&#125;"&gt;&lt;/script&gt;&lt;script th:src="@&#123;/crypto-js/mode-ecb.js&#125;"&gt;&lt;/script&gt; JS 版 AES 工具类扩展123456789101112131415161718192021222324252627282930313233343536function getRandom(len) &#123; var a = len || 16, s = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', n = s.length; var r = ''; for (var i = 0; i &lt; a; i++) &#123; r += s.charAt(Math.floor(Math.random() * n)); &#125; return r;&#125;function encryptAES(str, key) &#123; var s = CryptoJS.enc.Utf8.parse(str), k = CryptoJS.enc.Utf8.parse(key), c = CryptoJS.AES.encrypt(s, k, &#123; mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 &#125;), // 转换为字符串 // return c.toString(); // Hex 转为十六进制 d = CryptoJS.enc.Hex.parse(c.ciphertext.toString()); // Base64 编码 return CryptoJS.enc.Base64.stringify(d);&#125;function decryptAES(str, key) &#123; var k = CryptoJS.enc.Utf8.parse(key), c = CryptoJS.AES.decrypt(str, k, &#123; mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 &#125;); // 转换为 UTF8 字符串 return CryptoJS.enc.Utf8.stringify(c); // return c.toString(CryptoJS.enc.Utf8);&#125; JS 版 AES 工具类测试12345678var key = getRandom();console.log('key: %o', key);var str = '法拉利_24234slfkjsl《》？：“”｛｝+——';console.log('str: %o', str);var e = encryptAES(str, key);console.log('e: %o', e);var d = decryptAES(e, key);console.log('d: %o', d);]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Javascript</tag>
+        <tag>AES</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[hexo github ignorecase]]></title>
     <url>%2Fposts%2F18219b06.html</url>
     <content type="text"><![CDATA[Hexo 部署到 Github Pages 文件夹大小写问题问题使用 Hexo 部署博客到 Github Pages 时经常会遇到文件夹大小写问题导致的 404问题。 例如 Hexo 生成了一个 javasccript Category文件夹，但是我后来把它改成了 Javasccript，即 javasccript 的首字母大写了。Hexo会生成正确，但部署到 Github 上却老是不正确。 原因git 默认忽略文件名大小写，所以即使文件夹大小写变更，git 也检测不到。 解决办法1、进入到博客项目中 .deploy_git文件夹，修改 .git 下的 config 文件，将 ignorecase=true 改为 ignorecase=false12cd ./deploy_git/.gitvi config 2、删除博客项目中 .deploy_git 文件夹下的所有文件，并 push 到 Github 上, 这一步是清空你的 github.io 项目中所有文件。1234cd ./deploy_git/git rm -rf *git commit -m 'clean'git push 3、使用 Hexo 再次生成及部署123cd ..hexo clean &amp;&amp; hexo d -g# hexo clean &amp;&amp; hexo g &amp;&amp; hexo d]]></content>
       <categories>
         <category>hexo</category>
       </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper 启动脚本]]></title>
+    <url>%2Fposts%2Faf01b9a2.html</url>
+    <content type="text"><![CDATA[start12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-28 10:23:20# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:41# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`NODE_BIN_DIR=`pwd`NODE_LIB_DIR=$NODE_BIN_DIR/../lib/cd ..NODE_HOME=`pwd`# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"# mkdir logs dirNODE_DATA_LOG_DIR=`sed '/dataLogDir/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`NODE_LOGS_DIR=""if [ -n "$NODE_DATA_LOG_DIR" ]; then NODE_LOGS_DIR=$NODE_DATA_LOG_DIRelse NODE_LOGS_DIR=$NODE_HOME/logsfiif [ ! -d $NODE_LOGS_DIR ]; then mkdir $NODE_LOGS_DIRfiSTDOUT_FILE=$NODE_LOGS_DIR/stdout.logecho "$DATE_PATTERN NODE_BIN_DIR: $NODE_BIN_DIR" | tee -a $STDOUT_FILE# pidNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`if [ -n "$NODE_PID" ]; then echo "$DATE_PATTERN ERROR: The $NODE_LIB_DIR already started! pid: $NODE_PID" | tee -a $STDOUT_FILE exit 1fi# portNODE_PORT=`sed '/clientPort/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`if [ -n "$NODE_PORT" ]; then NODE_PORT_COUNT=`netstat -tln | grep $NODE_PORT | wc -l` if [ $NODE_PORT_COUNT -gt 0 ]; then echo "$DATE_PATTERN ERROR: The $NODE_LIB_DIR port $NODE_PORT already used!" | tee -a $STDOUT_FILE exit 1 fifi# startingcd $NODE_BIN_DIR./zkServer.sh startNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`echo "$DATE_PATTERN The $NODE_LIB_DIR started OK! pid: $NODE_PID" | tee -a $STDOUT_FILE]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux du 命令]]></title>
+    <url>%2Fposts%2F2e023d93.html</url>
+    <content type="text"><![CDATA[du计算当前文件夹下占用空间，排序1du -sh * | sort -nr]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>du</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux crontab 命令]]></title>
+    <url>%2Fposts%2Fb0b79272.html</url>
+    <content type="text"><![CDATA[crontab 使用注意事项如果通过 crontab 执行1、crontab 无法获取 jdk 变量，要在 java 命令之前写入jdk绝对路径2、要把路径切换到要执行的 sh 路径下注意：二者缺一不可 查找 jdk 路径的方法 1 12$ echo $JAVA_HOME/usr/java/jdk1.6.0_45/bin/java 2 123456$ which java/usr/bin/java$ ls -lrt /usr/bin/java #/usr/bin/java是which java查出来的路径lrwxrwxrwx. 1 root root 22 Sep 16 2015 /usr/bin/java -&gt; /etc/alternatives/java$ ls -lrt /etc/alternatives/java #/etc/alternatives/java是ls -lrt /usr/bin/java查出来的路径 lrwxrwxrwx. 1 root root 46 Sep 16 2015 /etc/alternatives/java -&gt; /usr/lib/jvm/jre-1.6.0-openjdk.x86_64/bin/java 查询 crontab 定时器配置情况1crontab -l 编辑 crontab 定时器1234567crontab -e# 当 crontab 调用时，错误和标准输出会写成 mail 通知你* * * * * /opt/restart.sh# 标准输出重定向到 /dev/null，输出到这里就找不回来了* * * * * /opt/restart.sh &gt; /dev/null# 标准输出和错误输出都重定向到 /dev/null* * * * * /opt/restart.sh &gt; /dev/null 2&gt;&amp;1]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>crontab</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux grep 命令]]></title>
+    <url>%2Fposts%2F1f104b3f.html</url>
+    <content type="text"><![CDATA[grep统计出现次数1grep 'sign.*time.*openid' access_p80_weixinv3.log | awk '&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;' | sort -n 4 183.3.234.4510 183.3.234.5720 183.3.234.58 查询前后日志grep -5 ‘parttern’ inputfile //打印匹配行的前后5行grep -C 5 ‘parttern’ inputfile //打印匹配行的前后5行grep -A 5 ‘parttern’ inputfile //打印匹配行的后5行grep -B 5 ‘parttern’ inputfile //打印匹配行的前5行]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>grep</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux lsof 命令]]></title>
+    <url>%2Fposts%2Ffc091577.html</url>
+    <content type="text"><![CDATA[lsof检测端口未被占用1lsof -i:8080]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>lsof</tag>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux netstat 命令]]></title>
+    <url>%2Fposts%2F6c05ba39.html</url>
+    <content type="text"><![CDATA[netstat查看进程的网络状态1netstat -anp | grep 7646]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>netstat</tag>
+        <tag>shell</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[Linux ls 命令]]></title>
@@ -313,6 +381,106 @@
       <tags>
         <tag>shell</tag>
         <tag>ls</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux cat 命令]]></title>
+    <url>%2Fposts%2Fbe15a742.html</url>
+    <content type="text"><![CDATA[cat统计出现次数12# linux统计某一文件中字符串“sent ip”出现的次数：cat nohup.log |grep "sent ip" |wc -l 清空默认文件中的内容1cat /dev/null &gt; filename]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>cat</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux find 命令]]></title>
+    <url>%2Fposts%2F7b744fec.html</url>
+    <content type="text"><![CDATA[find查找文件并删除12345678# 删除指定时间前的 jpg 文件find /opt/upload/ -mtime +30 -type f -name *.jpg -exec rm -f &#123;&#125; \;# 删除隐藏文件（-fr）find /opt/upload/ -type d -name .svn -exec rm -fr &#123;&#125; \;# 删除30天前的文件find /opt/upload -mtime +30 -type f -name "*.jpg" -exec rm -rf &#123;&#125; \; 打印指定时间前的文件1find project/upload/ -mtime +30 -type f -print]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>find</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Tomcat 启动脚本]]></title>
+    <url>%2Fposts%2Fe22f47ab.html</url>
+    <content type="text"><![CDATA[Tomcat 启动脚本start.sh12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455#!/usr/bin/env bash# @Author: YL# @Date: 2017-01-25 14:50:43# @Last Modified by: YL# @Last Modified time: 2017-12-18 14:12:23cd `dirname $0`PROJECT_HOME=`pwd`# Tomcat 服务器路径TC_HOME="$PROJECT_HOME/tomcat"# crontab 检测日记文件TC_STDOUT_FILE="$TC_HOME/logs/stdout.out"# 检测 Tomcat 是否启动（进程ID）TC_PID=`ps -ef | grep $TC_HOME/bin | grep -v grep | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# 检测输出的日记格式DATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME"function operate()&#123; if [[ "$1" = "kill" ]] ; then if [[ "$TC_PID" = "" ]] ; then echo "$DATE_PATTERN is not alive" | tee -a $TC_STDOUT_FILE else echo "$DATE_PATTERN kill $TC_PID begining" | tee -a $TC_STDOUT_FILE kill -9 $TC_PID echo "$DATE_PATTERN kill $TC_PID success" | tee -a $TC_STDOUT_FILE fi elif [[ "$1" = "start" ]]; then cd $TC_HOME/bin sh startup.sh else echo "$DATE_PATTERN is not support $1" | tee -a $TC_STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "$DATE_PATTERN starting" | tee -a $TC_STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$TC_PID" = "" ]] ; then echo "$DATE_PATTERN starting" &gt;&gt; $TC_STDOUT_FILE operate start else echo "$DATE_PATTERN pid $TC_PID" &gt;&gt; $TC_STDOUT_FILE fielse echo "$DATE_PATTERN is not support $1" | tee -a $TC_STDOUT_FILEfi 使用说明12345sh start.sh start # 重启sh start.sh # 重启sh start.sh restart # 重启sh start.sh check # 检测服务是否启动，没有启动，则启动之，否则不做其他操作sh start.sh kill # kill掉已启动的服务进程]]></content>
+      <categories>
+        <category>Tomcat</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper 清理日志文件]]></title>
+    <url>%2Fposts%2Fc0bbcacd.html</url>
+    <content type="text"><![CDATA[clear123456789101112131415161718192021222324252627282930#!/usr/bin/env bash# @Author: YL# @Date: 2017-11-01 08:59:34# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:09# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`cd ..NODE_HOME=`pwd`# snapshotNODE_DATA_DIR=$NODE_HOME/data/version-2# snapshot logNODE_LOG_DIR=$NODE_HOME/logs/version-2# zk logNODE_LOGS=$NODE_HOME/logs# 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中count=3count=$[$count+1]ls -t $NODE_LOG_DIR/log.* | tail -n +$count | xargs rm -fls -t $NODE_DATA_DIR/snapshot.* | tail -n +$count | xargs rm -fls -t $NODE_LOGS/zookeeper.log.* | tail -n +$count | xargs rm -f# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"STDOUT_FILE=$NODE_LOGS/stdout.logecho "$DATE_PATTERN clear logs success" | tee -a $STDOUT_FILE]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper重启脚本]]></title>
+    <url>%2Fposts%2F6c1ad93d.html</url>
+    <content type="text"><![CDATA[restart12345678910111213#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:10# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:30# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stopsleep 3./zkServer.sh start]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux curl 命令]]></title>
+    <url>%2Fposts%2Faea02818.html</url>
+    <content type="text"><![CDATA[curlGET 请求1curl http://www.baidu.com?q=xxxx POST 请求1curl http://ip:port/weixin_v3/w -XPOST -d "send message..." 发送 POST JSON 请求1curl -H "Content-Type: application/json" -X POST --data '&#123;"data":"1"&#125;' http://127.0.0.1/ 使用代理1curl -x 192.168.2.5:3128 http://www.baidu.com?q=xxxx 输出请求信息12345678# http_code# time_connect# time_starttransfer# time_total# size_download# speed_download# 参考地址：curl http://www.baidu.com?q=xxxx -so /dev/null -w "%&#123;http_code&#125;\t%&#123;time_connect&#125;\t%&#123;time_starttransfer&#125;\t%&#123;time_total&#125;\t%&#123;size_download&#125;\t%&#123;speed_download&#125;\t"]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>curl</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper evn 环境变量配置脚本]]></title>
+    <url>%2Fposts%2F57428144.html</url>
+    <content type="text"><![CDATA[zookeeper-env1234567891011121314151617181920#!/usr/bin/env bash# @Author: YL# @Date: 2017-10-31 10:27:16# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:43# 此文件放到 zookeeper 的 conf 目录下# java envexport JAVA_HOME=/usr/java/jdk1.8.0_131export PATH=$JAVA_HOME/bin:$PATHexport JVMFLAGS="-Xms1536m -Xmx1536m $JVMFLAGS"cd `dirname $0`cd ..NODE_HOME=`pwd`# zookeeper envZOO_LOG_DIR=$NODE_HOME/logsZOO_LOG4J_PROP="INFO,ROLLINGFILE"]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper stop脚本]]></title>
+    <url>%2Fposts%2F7bd064dc.html</url>
+    <content type="text"><![CDATA[stop12345678910#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:00# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:49# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stop]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux vi 命令]]></title>
+    <url>%2Fposts%2F87207300.html</url>
+    <content type="text"><![CDATA[vilinux文件格式的问题（使用unix格式）123456789# 查看文件格式vi 文件名:set ff # :set fileencoding# 设置文件格式为unix:set ff=unix# 保存退出:wq# 也可以直接使用dos2unix 文件名]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>vi</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux sed 命令]]></title>
+    <url>%2Fposts%2Fb8ec468d.html</url>
+    <content type="text"><![CDATA[sed打印指定行数1sed -n '12457431, 12457440p' tomcat/logs/catalina.out]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>sed</tag>
       </tags>
   </entry>
   <entry>
@@ -328,15 +496,27 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux grep 命令]]></title>
-    <url>%2Fposts%2F1f104b3f.html</url>
-    <content type="text"><![CDATA[grep统计出现次数1grep 'sign.*time.*openid' access_p80_weixinv3.log | awk '&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;' | sort -n 4 183.3.234.4510 183.3.234.5720 183.3.234.58 查询前后日志grep -5 ‘parttern’ inputfile //打印匹配行的前后5行grep -C 5 ‘parttern’ inputfile //打印匹配行的前后5行grep -A 5 ‘parttern’ inputfile //打印匹配行的后5行grep -B 5 ‘parttern’ inputfile //打印匹配行的前5行]]></content>
+    <title><![CDATA[Linux cp 命令]]></title>
+    <url>%2Fposts%2F2835e3e.html</url>
+    <content type="text"><![CDATA[cp复制文件夹1cp -r [old source] -d [new source]]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>grep</tag>
+        <tag>cp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux tail 命令]]></title>
+    <url>%2Fposts%2F29bd046e.html</url>
+    <content type="text"><![CDATA[tail]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>tail</tag>
       </tags>
   </entry>
   <entry>
@@ -364,186 +544,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[zookeeper evn 环境变量配置脚本]]></title>
-    <url>%2Fposts%2F57428144.html</url>
-    <content type="text"><![CDATA[zookeeper-env1234567891011121314151617181920#!/usr/bin/env bash# @Author: YL# @Date: 2017-10-31 10:27:16# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:43# 此文件放到 zookeeper 的 conf 目录下# java envexport JAVA_HOME=/usr/java/jdk1.8.0_131export PATH=$JAVA_HOME/bin:$PATHexport JVMFLAGS="-Xms1536m -Xmx1536m $JVMFLAGS"cd `dirname $0`cd ..NODE_HOME=`pwd`# zookeeper envZOO_LOG_DIR=$NODE_HOME/logsZOO_LOG4J_PROP="INFO,ROLLINGFILE"]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux sed 命令]]></title>
-    <url>%2Fposts%2Fb8ec468d.html</url>
-    <content type="text"><![CDATA[sed打印指定行数1sed -n '12457431, 12457440p' tomcat/logs/catalina.out]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>sed</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux find 命令]]></title>
-    <url>%2Fposts%2F7b744fec.html</url>
-    <content type="text"><![CDATA[find查找文件并删除12345678# 删除指定时间前的 jpg 文件find /opt/upload/ -mtime +30 -type f -name *.jpg -exec rm -f &#123;&#125; \;# 删除隐藏文件（-fr）find /opt/upload/ -type d -name .svn -exec rm -fr &#123;&#125; \;# 删除30天前的文件find /opt/upload -mtime +30 -type f -name "*.jpg" -exec rm -rf &#123;&#125; \; 打印指定时间前的文件1find project/upload/ -mtime +30 -type f -print]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>find</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux du 命令]]></title>
-    <url>%2Fposts%2F2e023d93.html</url>
-    <content type="text"><![CDATA[du计算当前文件夹下占用空间，排序1du -sh * | sort -nr]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>du</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux cp 命令]]></title>
-    <url>%2Fposts%2F2835e3e.html</url>
-    <content type="text"><![CDATA[cp复制文件夹1cp -r [old source] -d [new source]]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>cp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux crontab 命令]]></title>
-    <url>%2Fposts%2Fb0b79272.html</url>
-    <content type="text"><![CDATA[crontab 使用注意事项如果通过 crontab 执行1、crontab 无法获取 jdk 变量，要在 java 命令之前写入jdk绝对路径2、要把路径切换到要执行的 sh 路径下注意：二者缺一不可 查找 jdk 路径的方法 1 12$ echo $JAVA_HOME/usr/java/jdk1.6.0_45/bin/java 2 123456$ which java/usr/bin/java$ ls -lrt /usr/bin/java #/usr/bin/java是which java查出来的路径lrwxrwxrwx. 1 root root 22 Sep 16 2015 /usr/bin/java -&gt; /etc/alternatives/java$ ls -lrt /etc/alternatives/java #/etc/alternatives/java是ls -lrt /usr/bin/java查出来的路径 lrwxrwxrwx. 1 root root 46 Sep 16 2015 /etc/alternatives/java -&gt; /usr/lib/jvm/jre-1.6.0-openjdk.x86_64/bin/java 查询 crontab 定时器配置情况1crontab -l 编辑 crontab 定时器1234567crontab -e# 当 crontab 调用时，错误和标准输出会写成 mail 通知你* * * * * /opt/restart.sh# 标准输出重定向到 /dev/null，输出到这里就找不回来了* * * * * /opt/restart.sh &gt; /dev/null# 标准输出和错误输出都重定向到 /dev/null* * * * * /opt/restart.sh &gt; /dev/null 2&gt;&amp;1]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>crontab</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux curl 命令]]></title>
-    <url>%2Fposts%2Faea02818.html</url>
-    <content type="text"><![CDATA[curlGET 请求1curl http://www.baidu.com?q=xxxx POST 请求1curl http://ip:port/weixin_v3/w -XPOST -d "send message..." 发送 POST JSON 请求1curl -H "Content-Type: application/json" -X POST --data '&#123;"data":"1"&#125;' http://127.0.0.1/ 使用代理1curl -x 192.168.2.5:3128 http://www.baidu.com?q=xxxx 输出请求信息12345678# http_code# time_connect# time_starttransfer# time_total# size_download# speed_download# 参考地址：curl http://www.baidu.com?q=xxxx -so /dev/null -w "%&#123;http_code&#125;\t%&#123;time_connect&#125;\t%&#123;time_starttransfer&#125;\t%&#123;time_total&#125;\t%&#123;size_download&#125;\t%&#123;speed_download&#125;\t"]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>curl</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Tomcat 启动脚本]]></title>
-    <url>%2Fposts%2Fe22f47ab.html</url>
-    <content type="text"><![CDATA[Tomcat 启动脚本start.sh12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455#!/usr/bin/env bash# @Author: YL# @Date: 2017-01-25 14:50:43# @Last Modified by: YL# @Last Modified time: 2017-12-18 14:12:23cd `dirname $0`PROJECT_HOME=`pwd`# Tomcat 服务器路径TC_HOME="$PROJECT_HOME/tomcat"# crontab 检测日记文件TC_STDOUT_FILE="$TC_HOME/logs/stdout.out"# 检测 Tomcat 是否启动（进程ID）TC_PID=`ps -ef | grep $TC_HOME/bin | grep -v grep | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# 检测输出的日记格式DATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME"function operate()&#123; if [[ "$1" = "kill" ]] ; then if [[ "$TC_PID" = "" ]] ; then echo "$DATE_PATTERN is not alive" | tee -a $TC_STDOUT_FILE else echo "$DATE_PATTERN kill $TC_PID begining" | tee -a $TC_STDOUT_FILE kill -9 $TC_PID echo "$DATE_PATTERN kill $TC_PID success" | tee -a $TC_STDOUT_FILE fi elif [[ "$1" = "start" ]]; then cd $TC_HOME/bin sh startup.sh else echo "$DATE_PATTERN is not support $1" | tee -a $TC_STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "$DATE_PATTERN starting" | tee -a $TC_STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$TC_PID" = "" ]] ; then echo "$DATE_PATTERN starting" &gt;&gt; $TC_STDOUT_FILE operate start else echo "$DATE_PATTERN pid $TC_PID" &gt;&gt; $TC_STDOUT_FILE fielse echo "$DATE_PATTERN is not support $1" | tee -a $TC_STDOUT_FILEfi 使用说明12345sh start.sh start # 重启sh start.sh # 重启sh start.sh restart # 重启sh start.sh check # 检测服务是否启动，没有启动，则启动之，否则不做其他操作sh start.sh kill # kill掉已启动的服务进程]]></content>
-      <categories>
-        <category>Tomcat</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux cat 命令]]></title>
-    <url>%2Fposts%2Fbe15a742.html</url>
-    <content type="text"><![CDATA[cat统计出现次数12# linux统计某一文件中字符串“sent ip”出现的次数：cat nohup.log |grep "sent ip" |wc -l 清空默认文件中的内容1cat /dev/null &gt; filename]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>cat</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[zookeeper 清理日志文件]]></title>
-    <url>%2Fposts%2Fc0bbcacd.html</url>
-    <content type="text"><![CDATA[clear123456789101112131415161718192021222324252627282930#!/usr/bin/env bash# @Author: YL# @Date: 2017-11-01 08:59:34# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:09# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`cd ..NODE_HOME=`pwd`# snapshotNODE_DATA_DIR=$NODE_HOME/data/version-2# snapshot logNODE_LOG_DIR=$NODE_HOME/logs/version-2# zk logNODE_LOGS=$NODE_HOME/logs# 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中count=3count=$[$count+1]ls -t $NODE_LOG_DIR/log.* | tail -n +$count | xargs rm -fls -t $NODE_DATA_DIR/snapshot.* | tail -n +$count | xargs rm -fls -t $NODE_LOGS/zookeeper.log.* | tail -n +$count | xargs rm -f# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"STDOUT_FILE=$NODE_LOGS/stdout.logecho "$DATE_PATTERN clear logs success" | tee -a $STDOUT_FILE]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[zookeeper重启脚本]]></title>
-    <url>%2Fposts%2F6c1ad93d.html</url>
-    <content type="text"><![CDATA[restart12345678910111213#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:10# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:30# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stopsleep 3./zkServer.sh start]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[zookeeper 启动脚本]]></title>
-    <url>%2Fposts%2Faf01b9a2.html</url>
-    <content type="text"><![CDATA[start12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-28 10:23:20# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:41# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`NODE_BIN_DIR=`pwd`NODE_LIB_DIR=$NODE_BIN_DIR/../lib/cd ..NODE_HOME=`pwd`# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"# mkdir logs dirNODE_DATA_LOG_DIR=`sed '/dataLogDir/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`NODE_LOGS_DIR=""if [ -n "$NODE_DATA_LOG_DIR" ]; then NODE_LOGS_DIR=$NODE_DATA_LOG_DIRelse NODE_LOGS_DIR=$NODE_HOME/logsfiif [ ! -d $NODE_LOGS_DIR ]; then mkdir $NODE_LOGS_DIRfiSTDOUT_FILE=$NODE_LOGS_DIR/stdout.logecho "$DATE_PATTERN NODE_BIN_DIR: $NODE_BIN_DIR" | tee -a $STDOUT_FILE# pidNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`if [ -n "$NODE_PID" ]; then echo "$DATE_PATTERN ERROR: The $NODE_LIB_DIR already started! pid: $NODE_PID" | tee -a $STDOUT_FILE exit 1fi# portNODE_PORT=`sed '/clientPort/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`if [ -n "$NODE_PORT" ]; then NODE_PORT_COUNT=`netstat -tln | grep $NODE_PORT | wc -l` if [ $NODE_PORT_COUNT -gt 0 ]; then echo "$DATE_PATTERN ERROR: The $NODE_LIB_DIR port $NODE_PORT already used!" | tee -a $STDOUT_FILE exit 1 fifi# startingcd $NODE_BIN_DIR./zkServer.sh startNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`echo "$DATE_PATTERN The $NODE_LIB_DIR started OK! pid: $NODE_PID" | tee -a $STDOUT_FILE]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[zookeeper stop脚本]]></title>
-    <url>%2Fposts%2F7bd064dc.html</url>
-    <content type="text"><![CDATA[stop12345678910#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:00# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:49# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stop]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux tail 命令]]></title>
-    <url>%2Fposts%2F29bd046e.html</url>
-    <content type="text"><![CDATA[tail]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>tail</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux lsof 命令]]></title>
-    <url>%2Fposts%2Ffc091577.html</url>
-    <content type="text"><![CDATA[lsof检测端口未被占用1lsof -i:8080]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>lsof</tag>
-        <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux vi 命令]]></title>
-    <url>%2Fposts%2F87207300.html</url>
-    <content type="text"><![CDATA[vilinux文件格式的问题（使用unix格式）123456789# 查看文件格式vi 文件名:set ff # :set fileencoding# 设置文件格式为unix:set ff=unix# 保存退出:wq# 也可以直接使用dos2unix 文件名]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>vi</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux netstat 命令]]></title>
-    <url>%2Fposts%2F6c05ba39.html</url>
-    <content type="text"><![CDATA[netstat查看进程的网络状态1netstat -anp | grep 7646]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>netstat</tag>
-        <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[spring-boot shiro 引入外部lib启动方式报错]]></title>
     <url>%2Fposts%2Fe20f93cc.html</url>
     <content type="text"><![CDATA[打包方式123456789101112131415161718192021222324252627282930313233343536&lt;!-- 外部 lib 打包方式 --&gt;&lt;plugin&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt; &lt;configuration&gt; &lt;layout&gt;ZIP&lt;/layout&gt; &lt;executable&gt;true&lt;/executable&gt; &lt;includes&gt; &lt;include&gt; &lt;groupId&gt;nothing&lt;/groupId&gt; &lt;artifactId&gt;nothing&lt;/artifactId&gt; &lt;/include&gt; &lt;/includes&gt; &lt;/configuration&gt;&lt;/plugin&gt;&lt;plugin&gt; &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt; &lt;artifactId&gt;maven-dependency-plugin&lt;/artifactId&gt; &lt;executions&gt; &lt;execution&gt; &lt;id&gt;copy-dependencies&lt;/id&gt; &lt;phase&gt;package&lt;/phase&gt; &lt;goals&gt; &lt;goal&gt;copy-dependencies&lt;/goal&gt; &lt;/goals&gt; &lt;configuration&gt; &lt;type&gt;jar&lt;/type&gt; &lt;includeTypes&gt;jar&lt;/includeTypes&gt; &lt;includeScope&gt;runtime&lt;/includeScope&gt; &lt;outputDirectory&gt; $&#123;project.build.directory&#125;/lib &lt;/outputDirectory&gt; &lt;/configuration&gt; &lt;/execution&gt; &lt;/executions&gt;&lt;/plugin&gt; 启动脚本1/usr/java/jdk1.8.0_144/bin/java -server -Djava.ext.dirs=/opt/tisson-web-open/lib -Dspring.profiles.active=local -jar tisson-web-open.jar 启动异常信息123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150151152153154155156157158159160161162163164165166167168169170171172173174175176177178179180181 . ____ _ __ _ _ /\\ / ___&apos;_ __ _ _(_)_ __ __ _ \ \ \ \( ( )\___ | &apos;_ | &apos;_| | &apos;_ \/ _` | \ \ \ \ \\/ ___)| |_)| | | | | || (_| | ) ) ) ) &apos; |____| .__|_| |_|_| |_\__, | / / / / =========|_|==============|___/=/_/_/_/ :: Spring Boot :: (v1.5.2.RELEASE)[17-12-07 14:41:05 INFO ] main org.springframework.boot.SpringApplication.logStarting(48) | Starting application on im2-gf-test with PID 12160 (started by imhtp in /opt/tisson-web-open/bak)[17-12-07 14:41:05 DEBUG] main org.springframework.boot.SpringApplication.logStarting(51) | Running with Spring Boot v1.5.2.RELEASE, Spring v4.3.7.RELEASE[17-12-07 14:41:05 INFO ] main org.springframework.boot.SpringApplication.logStartupProfileInfo(641) | The following profiles are active: local[17-12-07 14:41:05 DEBUG] main org.springframework.boot.SpringApplication.load(665) | Loading source class cn.tisson.wechat.web.open.OpenApplication[17-12-07 14:41:05 DEBUG] main org.springframework.boot.context.config.ConfigFileApplicationListener.replayTo(172) | Activated profiles local[17-12-07 14:41:05 DEBUG] main org.springframework.boot.context.config.ConfigFileApplicationListener.replayTo(172) | Profiles already activated, &apos;[local]&apos; will not be applied[17-12-07 14:41:05 DEBUG] main org.springframework.boot.context.config.ConfigFileApplicationListener.replayTo(172) | Loaded config file &apos;jar:file:/opt/tisson-web-open/bak/tisson-web-open.jar!/BOOT-INF/classes!/application.yml&apos; (classpath:/application.yml)[17-12-07 14:41:05 DEBUG] main org.springframework.boot.context.config.ConfigFileApplicationListener.replayTo(172) | Loaded config file &apos;jar:file:/opt/tisson-web-open/bak/tisson-web-open.jar!/BOOT-INF/classes!/application-local.yml&apos; (classpath:/application-local.yml)[17-12-07 14:41:05 DEBUG] main org.springframework.boot.context.config.ConfigFileApplicationListener.replayTo(172) | Skipped (empty) config file &apos;jar:file:/opt/tisson-web-open/bak/tisson-web-open.jar!/BOOT-INF/classes!/application-local.yml&apos; (classpath:/application-local.yml) for profile local[17-12-07 14:41:05 DEBUG] main org.springframework.boot.context.config.ConfigFileApplicationListener.replayTo(172) | Skipped (empty) config file &apos;jar:file:/opt/tisson-web-open/bak/tisson-web-open.jar!/BOOT-INF/classes!/application.yml&apos; (classpath:/application.yml) for profile local[17-12-07 14:41:05 INFO ] main org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext.prepareRefresh(582) | Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@31190526: startup date [Thu Dec 07 14:41:05 CST 2017]; root of context hierarchy[17-12-07 14:41:05 DEBUG] main org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext.obtainFreshBeanFactory(616) | Bean factory for org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@31190526: org.springframework.beans.factory.support.DefaultListableBeanFactory@663c9e7a: defining beans [org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,org.springframework.context.event.internalEventListenerProcessor,org.springframework.context.event.internalEventListenerFactory,openApplication]; root of factory hierarchy[17-12-07 14:41:05 INFO ] background-preinit org.hibernate.validator.internal.util.Version.&lt;clinit&gt;(30) | HV000001: Hibernate Validator 5.3.4.Final[17-12-07 14:41:06 INFO ] main com.alibaba.dubbo.config.spring.context.annotation.DubboComponentScanRegistrar.registerServiceBeans(85) | 0 annotated @Service Components &#123; [] &#125; were scanned under package[cn.tisson.wechat.web.open][17-12-07 14:41:06 INFO ] main org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization(325) | Bean &apos;shiroConfig&apos; of type [cn.tisson.wechat.web.open.config.ShiroConfig$$EnhancerBySpringCGLIB$$d483728f] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)[17-12-07 14:41:06 WARN ] main org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext.refresh(550) | Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name &apos;methodValidationPostProcessor&apos; defined in class path resource [org/springframework/boot/autoconfigure/validation/ValidationAutoConfiguration.class]: Unsatisfied dependency expressed through method &apos;methodValidationPostProcessor&apos; parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name &apos;methodInvokingFactoryBean&apos; defined in class path resource [cn/tisson/wechat/web/open/config/ShiroConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.beans.factory.config.MethodInvokingFactoryBean]: Factory method &apos;methodInvokingFactoryBean&apos; threw exception; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name &apos;securityManager&apos; defined in class path resource [cn/tisson/wechat/web/open/config/ShiroConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.apache.shiro.mgt.SecurityManager]: Factory method &apos;securityManager&apos; threw exception; nested exception is java.lang.IllegalStateException: Unable to acquire AES algorithm. This is required to function.[17-12-07 14:41:06 ERROR] main org.springframework.beans.factory.support.DefaultListableBeanFactory.destroyBean(581) | Destroy method on bean with name &apos;org.springframework.boot.context.properties.ConfigurationPropertiesBindingPostProcessor&apos; threw an exceptionjava.lang.IllegalStateException: ApplicationEventMulticaster not initialized - call &apos;refresh&apos; before multicasting events via the context: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@31190526: startup date [Thu Dec 07 14:41:05 CST 2017]; root of context hierarchy at org.springframework.context.support.AbstractApplicationContext.getApplicationEventMulticaster(AbstractApplicationContext.java:404) at org.springframework.context.support.ApplicationListenerDetector.postProcessBeforeDestruction(ApplicationListenerDetector.java:97) at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:253) at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:578) at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:554) at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:961) at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:523) at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:968) at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1033) at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:555) at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.refresh(EmbeddedWebApplicationContext.java:122) at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:737) at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:370) at org.springframework.boot.SpringApplication.run(SpringApplication.java:314) at org.springframework.boot.SpringApplication.run(SpringApplication.java:1162) at org.springframework.boot.SpringApplication.run(SpringApplication.java:1151) at cn.tisson.wechat.web.open.OpenApplication.main(OpenApplication.java:35) at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) at java.lang.reflect.Method.invoke(Method.java:498) at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:48) at org.springframework.boot.loader.Launcher.launch(Launcher.java:87) at org.springframework.boot.loader.Launcher.launch(Launcher.java:50) at org.springframework.boot.loader.PropertiesLauncher.main(PropertiesLauncher.java:557)[17-12-07 14:41:06 INFO ] main com.alibaba.dubbo.config.spring.beans.factory.annotation.ReferenceAnnotationBeanPostProcessor.destroy(246) | class com.alibaba.dubbo.config.spring.beans.factory.annotation.ReferenceAnnotationBeanPostProcessor was destroying![17-12-07 14:41:06 ERROR] main org.springframework.beans.factory.support.DefaultListableBeanFactory.destroyBean(581) | Destroy method on bean with name &apos;org.springframework.boot.autoconfigure.internalCachingMetadataReaderFactory&apos; threw an exceptionjava.lang.IllegalStateException: ApplicationEventMulticaster not initialized - call &apos;refresh&apos; before multicasting events via the context: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@31190526: startup date [Thu Dec 07 14:41:05 CST 2017]; root of context hierarchy at org.springframework.context.support.AbstractApplicationContext.getApplicationEventMulticaster(AbstractApplicationContext.java:404) at org.springframework.context.support.ApplicationListenerDetector.postProcessBeforeDestruction(ApplicationListenerDetector.java:97) at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:253) at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:578) at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:554) at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:961) at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:523) at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:968) at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1033) at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:555) at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.refresh(EmbeddedWebApplicationContext.java:122) at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:737) at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:370) at org.springframework.boot.SpringApplication.run(SpringApplication.java:314) at org.springframework.boot.SpringApplication.run(SpringApplication.java:1162) at org.springframework.boot.SpringApplication.run(SpringApplication.java:1151) at cn.tisson.wechat.web.open.OpenApplication.main(OpenApplication.java:35) at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) at java.lang.reflect.Method.invoke(Method.java:498) at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:48) at org.springframework.boot.loader.Launcher.launch(Launcher.java:87) at org.springframework.boot.loader.Launcher.launch(Launcher.java:50) at org.springframework.boot.loader.PropertiesLauncher.main(PropertiesLauncher.java:557)[17-12-07 14:41:06 ERROR] main org.springframework.boot.SpringApplication.reportFailure(815) | Application startup failedorg.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name &apos;methodValidationPostProcessor&apos; defined in class path resource [org/springframework/boot/autoconfigure/validation/ValidationAutoConfiguration.class]: Unsatisfied dependency expressed through method &apos;methodValidationPostProcessor&apos; parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name &apos;methodInvokingFactoryBean&apos; defined in class path resource [cn/tisson/wechat/web/open/config/ShiroConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.beans.factory.config.MethodInvokingFactoryBean]: Factory method &apos;methodInvokingFactoryBean&apos; threw exception; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name &apos;securityManager&apos; defined in class path resource [cn/tisson/wechat/web/open/config/ShiroConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.apache.shiro.mgt.SecurityManager]: Factory method &apos;securityManager&apos; threw exception; nested exception is java.lang.IllegalStateException: Unable to acquire AES algorithm. This is required to function. at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:749) at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:467) at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1173) at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1067) at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:513) at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:483) at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306) at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230) at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302) at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) at org.springframework.context.support.PostProcessorRegistrationDelegate.registerBeanPostProcessors(PostProcessorRegistrationDelegate.java:223) at org.springframework.context.support.AbstractApplicationContext.registerBeanPostProcessors(AbstractApplicationContext.java:702) at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:527) at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.refresh(EmbeddedWebApplicationContext.java:122) at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:737) at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:370) at org.springframework.boot.SpringApplication.run(SpringApplication.java:314) at org.springframework.boot.SpringApplication.run(SpringApplication.java:1162) at org.springframework.boot.SpringApplication.run(SpringApplication.java:1151) at cn.tisson.wechat.web.open.OpenApplication.main(OpenApplication.java:35) at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) at java.lang.reflect.Method.invoke(Method.java:498) at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:48) at org.springframework.boot.loader.Launcher.launch(Launcher.java:87) at org.springframework.boot.loader.Launcher.launch(Launcher.java:50) at org.springframework.boot.loader.PropertiesLauncher.main(PropertiesLauncher.java:557)Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name &apos;methodInvokingFactoryBean&apos; defined in class path resource [cn/tisson/wechat/web/open/config/ShiroConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.beans.factory.config.MethodInvokingFactoryBean]: Factory method &apos;methodInvokingFactoryBean&apos; threw exception; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name &apos;securityManager&apos; defined in class path resource [cn/tisson/wechat/web/open/config/ShiroConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.apache.shiro.mgt.SecurityManager]: Factory method &apos;securityManager&apos; threw exception; nested exception is java.lang.IllegalStateException: Unable to acquire AES algorithm. This is required to function. at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:599) at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1173) at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1067) at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.getSingletonFactoryBeanForTypeCheck(AbstractAutowireCapableBeanFactory.java:923) at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.getTypeForFactoryBean(AbstractAutowireCapableBeanFactory.java:804) at org.springframework.beans.factory.support.AbstractBeanFactory.isTypeMatch(AbstractBeanFactory.java:558) at org.springframework.beans.factory.support.DefaultListableBeanFactory.doGetBeanNamesForType(DefaultListableBeanFactory.java:432) at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBeanNamesForType(DefaultListableBeanFactory.java:395) at org.springframework.beans.factory.BeanFactoryUtils.beanNamesForTypeIncludingAncestors(BeanFactoryUtils.java:220) at org.springframework.beans.factory.support.DefaultListableBeanFactory.findAutowireCandidates(DefaultListableBeanFactory.java:1260) at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1101) at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1066) at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:835) at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:741) ... 27 common frames omittedCaused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.beans.factory.config.MethodInvokingFactoryBean]: Factory method &apos;methodInvokingFactoryBean&apos; threw exception; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name &apos;securityManager&apos; defined in class path resource [cn/tisson/wechat/web/open/config/ShiroConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.apache.shiro.mgt.SecurityManager]: Factory method &apos;securityManager&apos; threw exception; nested exception is java.lang.IllegalStateException: Unable to acquire AES algorithm. This is required to function. at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:189) at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:588) ... 40 common frames omittedCaused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name &apos;securityManager&apos; defined in class path resource [cn/tisson/wechat/web/open/config/ShiroConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.apache.shiro.mgt.SecurityManager]: Factory method &apos;securityManager&apos; threw exception; nested exception is java.lang.IllegalStateException: Unable to acquire AES algorithm. This is required to function. at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:599) at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1173) at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1067) at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:513) at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:483) at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306) at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230) at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302) at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197) at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.obtainBeanInstanceFromFactory(ConfigurationClassEnhancer.java:389) at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:361) at cn.tisson.wechat.web.open.config.ShiroConfig$$EnhancerBySpringCGLIB$$d483728f.securityManager(&lt;generated&gt;) at cn.tisson.wechat.web.open.config.ShiroConfig.methodInvokingFactoryBean(ShiroConfig.java:119) at cn.tisson.wechat.web.open.config.ShiroConfig$$EnhancerBySpringCGLIB$$d483728f.CGLIB$methodInvokingFactoryBean$5(&lt;generated&gt;) at cn.tisson.wechat.web.open.config.ShiroConfig$$EnhancerBySpringCGLIB$$d483728f$$FastClassBySpringCGLIB$$29d8f88d.invoke(&lt;generated&gt;) at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:228) at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:358) at cn.tisson.wechat.web.open.config.ShiroConfig$$EnhancerBySpringCGLIB$$d483728f.methodInvokingFactoryBean(&lt;generated&gt;) at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) at java.lang.reflect.Method.invoke(Method.java:498) at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:162) ... 41 common frames omittedCaused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.apache.shiro.mgt.SecurityManager]: Factory method &apos;securityManager&apos; threw exception; nested exception is java.lang.IllegalStateException: Unable to acquire AES algorithm. This is required to function. at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:189) at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:588) ... 63 common frames omittedCaused by: java.lang.IllegalStateException: Unable to acquire AES algorithm. This is required to function. at org.apache.shiro.crypto.AbstractSymmetricCipherService.generateNewKey(AbstractSymmetricCipherService.java:59) at org.apache.shiro.crypto.AbstractSymmetricCipherService.generateNewKey(AbstractSymmetricCipherService.java:43) at org.apache.shiro.mgt.AbstractRememberMeManager.&lt;init&gt;(AbstractRememberMeManager.java:99) at org.apache.shiro.web.mgt.CookieRememberMeManager.&lt;init&gt;(CookieRememberMeManager.java:87) at org.apache.shiro.web.mgt.DefaultWebSecurityManager.&lt;init&gt;(DefaultWebSecurityManager.java:75) at cn.tisson.wechat.web.open.config.ShiroConfig.securityManager(ShiroConfig.java:88) at cn.tisson.wechat.web.open.config.ShiroConfig$$EnhancerBySpringCGLIB$$d483728f.CGLIB$securityManager$0(&lt;generated&gt;) at cn.tisson.wechat.web.open.config.ShiroConfig$$EnhancerBySpringCGLIB$$d483728f$$FastClassBySpringCGLIB$$29d8f88d.invoke(&lt;generated&gt;) at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:228) at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:358) at cn.tisson.wechat.web.open.config.ShiroConfig$$EnhancerBySpringCGLIB$$d483728f.securityManager(&lt;generated&gt;) at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) at java.lang.reflect.Method.invoke(Method.java:498) at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:162) ... 64 common frames omittedCaused by: java.security.NoSuchAlgorithmException: AES KeyGenerator not available at javax.crypto.KeyGenerator.&lt;init&gt;(KeyGenerator.java:169) at javax.crypto.KeyGenerator.getInstance(KeyGenerator.java:223) at org.apache.shiro.crypto.AbstractSymmetricCipherService.generateNewKey(AbstractSymmetricCipherService.java:56) ... 79 common frames omitted 分析原因12345678910111213https://stackoverflow.com/questions/41295301/java-security-nosuchalgorithmexception-aes-keygenerator-not-available-while-depEvery implementation of Java is required to support a few standard algorithms like AES or DES. This is stated in the documentation of KeyGenerator. So you probably have a problem with your Java environment setup.In oracle&apos;s java implementation the algorithm classes should be located in `sunjce_provider.jar` (at least with version 1.7 and 1.8), which is usually located under $JAVA_HOME/jre/lib/ext.A common failure is, that this directory is not in your classpath, which might happen, when you explicitly define an extension-dir viajava -Djava.ext.dirs=/my/other/dir &lt;more arguments...&gt;If you specify an extension-dir this way, you should also include $JAVA_HOME/jre/lib/ext (and make sure JAVA_HOME is set correctly):java -Djava.ext.dirs=/my/other/dir:$JAVA_HOME/jre/lib/ext &lt;more arguments...&gt;In JBoss/Wildfy this is usually done in the configuration file bin/standalone.conf (or bin/run.conf in older versions). Details about java extensions and their configuration can be found here. 正确的启动脚本1/usr/java/jdk1.8.0_144/bin/java -server -Djava.ext.dirs=/opt/tisson-web-open/lib/:/usr/java/jdk1.8.0_144/jre/lib/ext/ -Dspring.profiles.active=local -jar tisson-web-open.jar 或者1/usr/java/jdk1.8.0_144/bin/java -server -Dloader.path=/opt/tisson-web-open/lib/ -Dspring.profiles.active=local -jar tisson-web-open.jar 重点：-Djava.ext.dirs 和 -Dloader.path的区别]]></content>
@@ -551,20 +551,8 @@
         <category>Java</category>
       </categories>
       <tags>
+        <tag>spring-boot</tag>
         <tag>shiro</tag>
-        <tag>spring-boot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Spring Data JPA 使用]]></title>
-    <url>%2Fposts%2F6cc2492a.html</url>
-    <content type="text"><![CDATA[Page 函数 描述 备注 getTotalElements 总记录数 getTotalPages 总页数 getContent 查询记录列表 getNumber 当前页数，从0开始 getNumberOfElements 当前页码中的记录数 getSize 每页记录数 Modifying注解（1）可以通过自定义的 JPQL 完成 UPDATE 和 DELETE 操作。 注意： JPQL 不支持使用 INSERT （2）在 @Query 注解中编写 JPQL 语句， 但必须使用 @Modifying 进行修饰. 以通知 Spring Data， 这是一个 UPDATE 或 DELETE 操作 （3）UPDATE 或 DELETE 操作需要使用事务，此时需要定义 Service 层，在 Service 层的方法上添加事务操作 （4）默认情况下， Spring Data 的每个方法上有事务， 但都是一个只读事务。 他们不能完成修改操作]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>spring-boot</tag>
-        <tag>jpa</tag>
       </tags>
   </entry>
   <entry>
@@ -576,6 +564,18 @@
       </categories>
       <tags>
         <tag>spring-boot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Spring Data JPA 使用]]></title>
+    <url>%2Fposts%2F6cc2492a.html</url>
+    <content type="text"><![CDATA[Page Modifying注解 Page 函数 描述 备注 getTotalElements 总记录数 getTotalPages 总页数 getContent 查询记录列表 getNumber 当前页数，从0开始 getNumberOfElements 当前页码中的记录数 getSize 每页记录数 Modifying注解（1）可以通过自定义的 JPQL 完成 UPDATE 和 DELETE 操作。 注意： JPQL 不支持使用 INSERT （2）在 @Query 注解中编写 JPQL 语句， 但必须使用 @Modifying 进行修饰. 以通知 Spring Data， 这是一个 UPDATE 或 DELETE 操作 （3）UPDATE 或 DELETE 操作需要使用事务，此时需要定义 Service 层，在 Service 层的方法上添加事务操作 （4）默认情况下， Spring Data 的每个方法上有事务， 但都是一个只读事务。 他们不能完成修改操作]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>spring-boot</tag>
+        <tag>jpa</tag>
       </tags>
   </entry>
   <entry>
@@ -625,6 +625,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[pagehelper 使用笔记]]></title>
+    <url>%2Fposts%2F4f0d5500.html</url>
+    <content type="text"><![CDATA[主要是记录一些在使用mybatis + pagehelper过程中遇到的一些问题，和要注意的知识点 PageHelper 分页12345// 获取第1页，10条内容，默认查询总数countPageHelper.startPage(1, 10);// 获取第1页，10条内容，不查询总数countPageHelper.startPage(1, 10, false);]]></content>
+      <categories>
+        <category>mybatis</category>
+      </categories>
+      <tags>
+        <tag>pagehelper</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[spring-data-jpa 使用笔记]]></title>
     <url>%2Fposts%2F43f916ea.html</url>
     <content type="text"><![CDATA[主要是记录一些在使用spring-data-jpa + Hibernate过程中遇到的一些问题，和要注意的知识点 Pageable 和 PageRequest 分页在Mysql、Oracle中分页从0开始1Pageable pageable = new PageRequest(0, 10); 查看org.springframework.data.domain.PageRequest源码可知，分页从0开始 123public Pageable first() &#123; return new PageRequest(0, this.getPageSize(), this.getSort());&#125;]]></content>
@@ -637,17 +648,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[pagehelper 使用笔记]]></title>
-    <url>%2Fposts%2F4f0d5500.html</url>
-    <content type="text"><![CDATA[主要是记录一些在使用mybatis + pagehelper过程中遇到的一些问题，和要注意的知识点 PageHelper 分页12345// 获取第1页，10条内容，默认查询总数countPageHelper.startPage(1, 10);// 获取第1页，10条内容，不查询总数countPageHelper.startPage(1, 10, false);]]></content>
-      <categories>
-        <category>mybatis</category>
-      </categories>
-      <tags>
-        <tag>pagehelper</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[JPA Criteria 查询]]></title>
     <url>%2Fposts%2F6202485a.html</url>
     <content type="text"><![CDATA[#构建 CriteriaQuery 实例API说明 CriteriaBuilder 安全查询创建工厂CriteriaBuilder是一个工厂对象，可以从EntityManager或EntityManagerFactory类中获得。可以用于创建CriteriaQuery、Predicate等1CriteriaBuilder builder = entityManager.getCriteriaBuilder(); CriteriaQuery 安全查询主语句CriteriaQuery对象必须在实体类型或嵌入式类型上的Criteria查询上起作用。它通过调用 CriteriaBuilder.createQuery或CriteriaBuilder.createTupleQuery等获得。1CriteriaQuery&lt;User&gt; query = builder.createQuery(User.class); Root 定义查询的 From 子句中能出现的类型12// 获取 User 实体查询的根对象Root&lt;User&gt; root = query.from(User.class); Predicate 过滤条件过滤条件应用到SQL语句的FROM子句中。 在Criteria查询中，查询条件通过Predicate或Expression实例应用到CriteriaQuery 对象上。这些条件使用CriteriaQuery.where方法应用到CriteriaQuery对象上。 Predicate对象通过调用CriteriaBuilder的equal、notEqual、gt、ge、lt、le、between、like等方法创建。 Predicate实例也可以用Expression实例的isNull、isNotNull和in方法获得，复合的Predicate语句可以使用CriteriaBuilder的and、or方法构建。123// 查询 id 大于10的用户Predicate predicate = builder.gt(root.get("id"), 10);query.where(predicate); ExpressionExpression对象用在查询语句的select、where和having子句中，该接口有isNull、isNotNull和in方法123456789101112131415// 第一种CriteriaQuery&lt;User&gt; query = builder.createQuery(User.class);Root&lt;User&gt; root = query.from(User.class);query.where(root.get("id").in(1, 5));entityManager.createQuery(query).getResultList();// select * from user where id in (1, 5)// 第二种Expression&lt;String&gt; exp = root.get("id");List&lt;Integer&gt; list = new ArrayList&lt;&gt;();list.add(1);list.add(5);predicates.add(exp.in(list));query.where(predicates.toArray(new Predicate[predicates.size()]));// select * from user where id in (1, 5) 高级用法复合查询12345678910111213141516// 使用 CriteriaQuery，查询年龄为10，且名字以 ts 开头的用户Path&lt;String&gt; name = root.get("name");query.where( builder.and( builder.equal(root.get("age"), 10), builder.like(name, "ts%") ));entityManager.createQuery(query).getResultList();// 使用 CriteriaBuilder，查询年龄为10，名字以 ts 开头的用户Path&lt;String&gt; name = root.get("name");Predicate and = builder.and( builder.equal(root.get("age"), 10), builder.like(name, "ts%")); 1234567891011SELECT user0_.id AS id1_1_, user0_.age AS age2_1_, user0_.create_date AS create_d3_1_, user0_. NAME AS name4_1_, user0_. STATUS AS status5_1_FROM USER user0_WHERE user0_.age = 10AND (user0_. NAME LIKE ?)]]></content>
@@ -656,6 +656,18 @@
       </categories>
       <tags>
         <tag>Hibernate</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[hibernate显示sql中的参数值（logback）]]></title>
+    <url>%2Fposts%2F9eea8fb4.html</url>
+    <content type="text"><![CDATA[以下是 logback 的日志输出配置，只要是在 logback 的配置文件中添加以下配置12&lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt;&lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt; 完整的 logback 配置如下123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;!-- For assistance related to logback-translator or configuration --&gt;&lt;!-- files in general, please contact the logback user mailing list --&gt;&lt;!-- at http://www.qos.ch/mailman/listinfo/logback-user --&gt;&lt;!-- --&gt;&lt;!-- For professional support please see --&gt;&lt;!-- http://www.qos.ch/shop/products/professionalSupport --&gt;&lt;!-- --&gt;&lt;configuration scan="true" scanPeriod="60 seconds" debug="false"&gt; &lt;property name="logger.charset" value="UTF-8"/&gt; &lt;property name="logger.path" value="$&#123;catalina.home&#125;/logs"/&gt; &lt;property name="logger.pattern" value="[%d&#123;yyyy-MM-dd HH:mm:ss&#125; %highlight(%-5p)] %yellow(%t) %cyan(%c.%M\\(%L\\)) | %m%n"/&gt; &lt;property name="logger.maxHistory" value="15"/&gt; &lt;!--&amp;lt;!&amp;ndash; https://logback.qos.ch/manual/layouts.html#coloring &amp;ndash;&amp;gt; &amp;lt;!&amp;ndash; 彩色日志依赖的渲染类 &amp;ndash;&amp;gt; &lt;conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" /&gt; &lt;conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" /&gt; &lt;conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" /&gt; &amp;lt;!&amp;ndash; 彩色日志格式 &amp;ndash;&amp;gt; &lt;property name="logger.pattern" value="$&#123;CONSOLE_LOG_PATTERN:-%clr([%d&#123;yyyy-MM-dd HH:mm:ss&#125; %clr($&#123;LOG_LEVEL_PATTERN:-%5p&#125;)])&#123;faint&#125; %clr(%c.%M\\(%L\\))&#123;cyan&#125; | %m%n&#125;" /&gt;--&gt; &lt;springProfile name="dev, local"&gt; &lt;appender name="stdout" class="ch.qos.logback.core.ConsoleAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;/appender&gt; &lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt; &lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt; &lt;!--&lt;logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="DEBUG"/&gt; &lt;logger name="org.hibernate.SQL" level="DEBUG"/&gt; &lt;logger name="org.hibernate.type" level="INFO"/&gt; &lt;logger name="org.hibernate.engine.QueryParameters" level="DEBUG"/&gt; &lt;logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG"/&gt;--&gt; &lt;!--&lt;logger name="org.apache.ibatis" level="debug"/&gt; &lt;logger name="java.sql.Connection" level="debug"/&gt; &lt;logger name="java.sql.Statement" level="debug"/&gt; &lt;logger name="java.sql.PreparedStatement" level="debug"/&gt;--&gt; &lt;root level="info"&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt; &lt;springProfile name="prod"&gt; &lt;!--See http://logback.qos.ch/manual/appenders.html#RollingFileAppender --&gt; &lt;!--and http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy --&gt; &lt;!--for further documentation --&gt; &lt;appender name="stdout" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;File&gt;$&#123;logger.path&#125;/info.log&lt;/File&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/info.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="warn" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/warn.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;WARN&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/warn.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/error.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;ERROR&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/error.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;logger name="warn" level="WARN"/&gt; &lt;logger name="error" level="ERROR"/&gt; &lt;root level="info"&gt; &lt;appender-ref ref="warn"/&gt; &lt;appender-ref ref="error"/&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt;&lt;/configuration&gt;]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Hibernate</tag>
+        <tag>logback</tag>
       </tags>
   </entry>
   <entry>
@@ -679,18 +691,6 @@
       </categories>
       <tags>
         <tag>Hibernate</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[hibernate显示sql中的参数值（logback）]]></title>
-    <url>%2Fposts%2F9eea8fb4.html</url>
-    <content type="text"><![CDATA[以下是 logback 的日志输出配置，只要是在 logback 的配置文件中添加以下配置12&lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt;&lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt; 完整的 logback 配置如下123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;!-- For assistance related to logback-translator or configuration --&gt;&lt;!-- files in general, please contact the logback user mailing list --&gt;&lt;!-- at http://www.qos.ch/mailman/listinfo/logback-user --&gt;&lt;!-- --&gt;&lt;!-- For professional support please see --&gt;&lt;!-- http://www.qos.ch/shop/products/professionalSupport --&gt;&lt;!-- --&gt;&lt;configuration scan="true" scanPeriod="60 seconds" debug="false"&gt; &lt;property name="logger.charset" value="UTF-8"/&gt; &lt;property name="logger.path" value="$&#123;catalina.home&#125;/logs"/&gt; &lt;property name="logger.pattern" value="[%d&#123;yyyy-MM-dd HH:mm:ss&#125; %highlight(%-5p)] %yellow(%t) %cyan(%c.%M\\(%L\\)) | %m%n"/&gt; &lt;property name="logger.maxHistory" value="15"/&gt; &lt;!--&amp;lt;!&amp;ndash; https://logback.qos.ch/manual/layouts.html#coloring &amp;ndash;&amp;gt; &amp;lt;!&amp;ndash; 彩色日志依赖的渲染类 &amp;ndash;&amp;gt; &lt;conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" /&gt; &lt;conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" /&gt; &lt;conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" /&gt; &amp;lt;!&amp;ndash; 彩色日志格式 &amp;ndash;&amp;gt; &lt;property name="logger.pattern" value="$&#123;CONSOLE_LOG_PATTERN:-%clr([%d&#123;yyyy-MM-dd HH:mm:ss&#125; %clr($&#123;LOG_LEVEL_PATTERN:-%5p&#125;)])&#123;faint&#125; %clr(%c.%M\\(%L\\))&#123;cyan&#125; | %m%n&#125;" /&gt;--&gt; &lt;springProfile name="dev, local"&gt; &lt;appender name="stdout" class="ch.qos.logback.core.ConsoleAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;/appender&gt; &lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt; &lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt; &lt;!--&lt;logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="DEBUG"/&gt; &lt;logger name="org.hibernate.SQL" level="DEBUG"/&gt; &lt;logger name="org.hibernate.type" level="INFO"/&gt; &lt;logger name="org.hibernate.engine.QueryParameters" level="DEBUG"/&gt; &lt;logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG"/&gt;--&gt; &lt;!--&lt;logger name="org.apache.ibatis" level="debug"/&gt; &lt;logger name="java.sql.Connection" level="debug"/&gt; &lt;logger name="java.sql.Statement" level="debug"/&gt; &lt;logger name="java.sql.PreparedStatement" level="debug"/&gt;--&gt; &lt;root level="info"&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt; &lt;springProfile name="prod"&gt; &lt;!--See http://logback.qos.ch/manual/appenders.html#RollingFileAppender --&gt; &lt;!--and http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy --&gt; &lt;!--for further documentation --&gt; &lt;appender name="stdout" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;File&gt;$&#123;logger.path&#125;/info.log&lt;/File&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/info.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="warn" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/warn.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;WARN&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/warn.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/error.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;ERROR&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/error.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;logger name="warn" level="WARN"/&gt; &lt;logger name="error" level="ERROR"/&gt; &lt;root level="info"&gt; &lt;appender-ref ref="warn"/&gt; &lt;appender-ref ref="error"/&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt;&lt;/configuration&gt;]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Hibernate</tag>
-        <tag>logback</tag>
       </tags>
   </entry>
   <entry>
@@ -869,17 +869,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[使用RSA注意事项]]></title>
-    <url>%2Fposts%2Fef742936.html</url>
-    <content type="text"><![CDATA[比较以下两种写法12// 第一种：这种写法会造成内存溢出Cipher cipher = Cipher.getInstance("RSA", new BouncyCastleProvider()); 123456// 第二种：推荐这种写法// BC可用BouncyCastleProvider.PROVIDER_NAME代替if (StringUtils.isNullOrEmpty(Security.getProperty("BC"))) &#123; Security.addProvider(new BouncyCastleProvider());&#125;Cipher cipher = Cipher.getInstance("RSA", "BC"); 还有一种写法是要替换jdk的jar包，不推荐 要依赖bcprov-jdk16包12345&lt;dependency&gt; &lt;groupId&gt;org.bouncycastle&lt;/groupId&gt; &lt;artifactId&gt;bcprov-jdk16&lt;/artifactId&gt; &lt;version&gt;1.46&lt;/version&gt;&lt;/dependency&gt;]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>RSA</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[store.js的使用]]></title>
     <url>%2Fposts%2F78a81828.html</url>
     <content type="text"><![CDATA[基于store.js实现localStorage缓存过期策略 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150151152153154155156157158159160161162163164165166167168169170171172173174175176177178179180181182183184185186187188189190191192193194195196197198199200201202203204205206207208209210211212213214215216217218219220221222223224225226227228229230231232233234235236237238239240241242243244245246"use strict";(function(s) &#123; /** * 判断是否支持localStorage本地存储 */ if (!s.enabled) &#123; console.error('localStorage is not supported by your browser.') return; &#125; /** * 规定日期格式 * 比如：yyyy年MM月dd日 HH:mm:ss S、yyyy-MM-dd HH:mm:ss S...... */ function _checkFormat(fmt) &#123; if (!/^y+[\u5e74-]?M+[\u6708-]?(d+)[\u65e5]? H+[\u65f6:]?m+[\u5206:]?s+[\u79d2]?(( S)?)$/.test(fmt)) &#123; throw new Error('"' + fmt + '" is not supported by the format.'); return false; &#125; return true; &#125; /** * 时间格式化：时间毫秒数、Date对象 ---&gt; 时间字符串 默认格式化格式：yyyy-MM-dd HH:mm:ss */ function _date2str(str, fmt) &#123; if (fmt === undefined) &#123; fmt = 'yyyy-MM-dd HH:mm:ss'; &#125; _checkFormat(fmt); var date; if (typeof str === 'number') &#123; date = new Date(str); &#125; else if (_isValidDate(str)) &#123; date = str; &#125; var o = &#123; 'M+' : date.getMonth() + 1, // 月 'd+' : date.getDate(), // 日 'H+' : date.getHours(), // 小时（24小时制） 'm+' : date.getMinutes(), // 分 's+' : date.getSeconds(), // 秒 'S' : date.getMilliseconds() // 毫秒 &#125;; if (/(y+)/.test(fmt)) &#123; fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '') .substr(4 - RegExp.$1.length)); &#125; for ( var k in o) &#123; if (new RegExp('(' + k + ')').test(fmt)) &#123; fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length))); &#125; &#125; return fmt; &#125; /** * 时间格式化：将时间字符串 ---&gt; Date对象 默认格式化格式：yyyy-MM-dd HH:mm:ss，使用中文不能格式化 */ function _str2date(str, fmt) &#123; if (fmt === undefined) &#123; fmt = 'yyyy-MM-dd HH:mm:ss'; &#125; _checkFormat(fmt); var o = [ 'y+', // 年 'M+', // 月 'd+', // 日 'H+', // 小时（24小时制） 'm+', // 分 's+', // 秒 'S' // 毫秒 ]; var date = new Date(); for (var k = 0; k &lt; o.length; k++) &#123; var s = o[k]; if (new RegExp('(' + s + ')').test(fmt)) &#123; var r = RegExp.$1; var rl = RegExp.$1.length; var si = fmt.indexOf(RegExp.$1); var ei = si + rl; var n = 0; if (r.indexOf('S') &gt; -1) &#123; n = parseInt(str.substr(si)); date.setMilliseconds(n); // 设置 Date 对象中的毫秒 (0 ~ 999)。 &#125; else &#123; n = parseInt(str.substring(si, ei)); if (r.indexOf('y') &gt; -1) &#123; date.setFullYear(n); // 设置 Date 对象中的年份（四位数字）。 &#125; else if (r.indexOf('M') &gt; -1) &#123; date.setMonth(n - 1); // 设置 Date 对象中月份 (0 ~ 11)。 &#125; else if (r.indexOf('d') &gt; -1) &#123; date.setDate(n); // 设置 Date 对象中月的某一天 (1 ~ 31)。 &#125; else if (r.indexOf('H') &gt; -1) &#123; date.setHours(n); // 设置 Date 对象中的小时 (0 ~ 23)。 &#125; else if (r.indexOf('m') &gt; -1) &#123; date.setMinutes(n); // 设置 Date 对象中的分钟 (0 ~ 59)。 &#125; else if (r.indexOf('s') &gt; -1) &#123; date.setSeconds(n); // 设置 Date 对象中的秒钟 (0 ~ 59)。 &#125; &#125; &#125; &#125; return date; &#125; /** * 转换：毫秒 ---&gt; 天时分秒毫秒 */ function _ms2s(ms) &#123; var s = parseInt(ms / 1000);// 秒 var m = 0;// 分 var h = 0;// 小时 var d = 0;// 天 if (s &gt;= 60) &#123; m = parseInt(s / 60); s = parseInt(s % 60); if (m &gt;= 60) &#123; h = parseInt(m / 60); m = parseInt(m % 60); if (h &gt;= 24) &#123; d = parseInt(h / 24); h = parseInt(h % 24); &#125; &#125; &#125; var str = ''; if (s &gt; 0) str = '' + parseInt(s) + '\u79d2' + str; if (m &gt; 0) str = '' + parseInt(m) + '\u5206' + str; if (h &gt; 0) str = '' + parseInt(h) + '\u5c0f\u65f6' + str; if (d &gt; 0) str = '' + parseInt(d) + '\u5929' + str; return str; &#125; /** * 设置有效时间，返回对象 */ function VConstructor(val, exp) &#123; var item = &#123;&#125;; // 创建时间、有效时间 var createTime = (new Date()).getTime(), effectiveTime; if (typeof exp === 'number') &#123; effectiveTime = new Date(createTime + exp * 60000); &#125; else if (typeof exp === 'string') &#123; effectiveTime = _str2date(exp); &#125; if (effectiveTime &amp;&amp; !_isValidDate(effectiveTime)) &#123; throw new Error('effectiveTime cannot be converted to a valid Date instance'); &#125; effectiveTime = effectiveTime.getTime(); item['c'] = _date2str(createTime); item['e'] = _date2str(effectiveTime); item['t'] = _ms2s(effectiveTime - createTime); item['v'] = val; return item; &#125; /** * 判断是否是Date对象 */ function _isValidDate(date) &#123; return Object.prototype.toString.call(date) === '[object Date]' &amp;&amp; !isNaN(date.getTime()); &#125; /** * 判断是否设置了有效时间 */ function _hasEffective(item) &#123; if (item) &#123; if (typeof item === 'object' &amp;&amp; 'c' in item &amp;&amp; 'e' in item &amp;&amp; 'v' in item) &#123; return true; &#125; &#125; return false; &#125; /** * 判断是否是有效 */ function _isEffective(item) &#123; var ntime = (new Date()).getTime(); return ntime &lt; _str2date(item.e); &#125; /** * 判断key是否是字符串，如果不是，则转换成字符串 */ function _keyAsString(key) &#123; if (typeof key !== 'string') &#123; console.warn(key + ' used as a key, but it is not a string.'); key = String(key); &#125; return key; &#125; /** * exp 失效时间：默认为0（单位：分钟） */ s.setExp = function(key, val, exp) &#123; key = _keyAsString(key); if (exp === undefined) &#123; exp = 0; &#125; s.set(key, new VConstructor(val, exp)); &#125;; s.getExp = function(key) &#123; key = _keyAsString(key); var item = null; try &#123; item = s.get(key); &#125; catch (e) &#123; return null; &#125; if (_hasEffective(item)) &#123; if (_isEffective(item)) &#123; return item.v; &#125; else &#123; s.remove(key); return null; &#125; &#125; else &#123; return item; &#125; &#125;; s.getAllExp = function() &#123; var ret = &#123;&#125;; s.forEachExp(function(key, val) &#123; ret[key] = val; &#125;) return ret; &#125;; s.forEachExp = function(callback) &#123; var storage = s.getAll(); for ( var key in storage) &#123; callback(key, s.getExp(key)); &#125; &#125;;&#125;)(store);]]></content>
@@ -889,6 +878,17 @@
       <tags>
         <tag>localStorage</tag>
         <tag>store.js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[使用RSA注意事项]]></title>
+    <url>%2Fposts%2Fef742936.html</url>
+    <content type="text"><![CDATA[比较以下两种写法12// 第一种：这种写法会造成内存溢出Cipher cipher = Cipher.getInstance("RSA", new BouncyCastleProvider()); 123456// 第二种：推荐这种写法// BC可用BouncyCastleProvider.PROVIDER_NAME代替if (StringUtils.isNullOrEmpty(Security.getProperty("BC"))) &#123; Security.addProvider(new BouncyCastleProvider());&#125;Cipher cipher = Cipher.getInstance("RSA", "BC"); 还有一种写法是要替换jdk的jar包，不推荐 要依赖bcprov-jdk16包12345&lt;dependency&gt; &lt;groupId&gt;org.bouncycastle&lt;/groupId&gt; &lt;artifactId&gt;bcprov-jdk16&lt;/artifactId&gt; &lt;version&gt;1.46&lt;/version&gt;&lt;/dependency&gt;]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>RSA</tag>
       </tags>
   </entry>
   <entry>
@@ -985,17 +985,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux安装FTP]]></title>
-    <url>%2Fposts%2F9c4dd72b.html</url>
-    <content type="text"><![CDATA[Linux安装FTPubuntu开启ftp服务安装vsftpd1、打开”终端窗口”，输入”sudo apt-get install vsftpd”–&gt;回车–&gt;安装完成。 2、判断vsftpd是否安装成功打开”终端窗口”，输入”sudo service vsftpd restart”重启vsftpd服务–&gt;回车–&gt;vsftpd处于运行状态，说明安装成功。 3、使用gedit修改配置文件/etc/vsftpd.conf打开”终端窗口”，输入”sudo gedit /etc/vsftpd.conf”–&gt;回车–&gt;打开了vsftpd.conf文设置：write_enable=YES ubuntu开启SSH服务SSH分客户端openssh-client和openssh-server如果你只是想登陆别的机器的SSH只需要安装openssh-client（ubuntu有默认安装，如果没有则sudo apt-get install openssh-client），如果要使本机开放SSH服务就需要安装openssh-serversudo apt-get install openssh-server然后确认sshserver是否启动了：ps -e |grep ssh如果看到sshd那说明ssh-server已经启动了。如果没有则可以这样启动：sudo /etc/init.d/ssh startssh-server配置文件位于/ etc/ssh/sshd_config，在这里可以定义SSH的服务端口，默认端口是22，你可以自己定义成其他端口号，如222。然后重启SSH服务：sudo /etc/init.d/ssh stopsudo /etc/init.d/ssh start然后使用以下方式登陆SSH：ssh username@192.168.1.112 username为192.168.1.112 机器上的用户，需要输入密码。断开连接：exit 最近一直在Ubuntu下用终端操作，看着他长长的路径名实在不爽， 动手来改改咯～$: sudo gedit ~/.bashrc这个文件记录了用户终端配置找到if [ “$color_prompt “ = yes ]; then PS1 =’${debian_chroot:+($debian_chroot)}[\033[01;32m]\u@\h[\033[00m]:[\033[01;34m]\W [\033[00m]\$ ‘else PS1 =’${debian_chroot:+($debian_chroot)}\u@\h:\W \$ ‘将蓝色的w由小写改成大写，可以表示只显示当前目录名称.]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>FTP</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[CentOS安装JDK]]></title>
     <url>%2Fposts%2Fd08f134.html</url>
     <content type="text"><![CDATA[1、准备创建目录12$ mkdir /usr/java$ cd /usr/java 下载 jdk-8u73-linux-x64.tar.gz，解压1$ tar -zxvf jdk-8u73-linux-x64.tar.gz 会解压到 /usr/java/jdk1.8.0_73 下 2、配置环境变量(两种方式二选一配置即可)2.1 编辑 /etc/profile 文件修改 /etc/profile 文件当本机仅仅作为开发使用时推荐使用这种方法，因为此种配置时所有用户的 shell 都有权使用这些环境变量，可能会给系统带来安全性问题。1$ vi /etc/profile 增加如下内容123export JAVA_HOME=/usr/java/jdkexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH 保存退出 :wq12$ . /etc/profile$ echo $JAVA_HOME 2.2 编辑用户目录下的 .bash_profile修改 .bash_profile 文件这种方法更为安全，它可以把使用这些环境变量的权限控制到用户级别，如果需要给某个用户权限使用这些环境变量，只需要修改其个人用户主目录下的 .bash_profile 文件就可以了123export JAVA_HOME=/usr/java/jdkexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH 然后执行使之生效1source .bash_profile 可以看到 JAVA_HOME 不是指向真实的 jdk 目录 /usr/java/jdk1.8.0_73，而是指向 /usr/java/jdk 3、创建软链接为jdk真实目录创建一个命名更加间洁快捷方式123$ ln -s /usr/java/jdk1.8.0_73 /usr/java/jdk$ source /etc/profile#$ source .bash_profile 至此，配置完成]]></content>
@@ -1005,6 +994,17 @@
       <tags>
         <tag>Java</tag>
         <tag>JDK</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux安装FTP]]></title>
+    <url>%2Fposts%2F9c4dd72b.html</url>
+    <content type="text"><![CDATA[Linux安装FTPubuntu开启ftp服务安装vsftpd1、打开”终端窗口”，输入”sudo apt-get install vsftpd”–&gt;回车–&gt;安装完成。 2、判断vsftpd是否安装成功打开”终端窗口”，输入”sudo service vsftpd restart”重启vsftpd服务–&gt;回车–&gt;vsftpd处于运行状态，说明安装成功。 3、使用gedit修改配置文件/etc/vsftpd.conf打开”终端窗口”，输入”sudo gedit /etc/vsftpd.conf”–&gt;回车–&gt;打开了vsftpd.conf文设置：write_enable=YES ubuntu开启SSH服务SSH分客户端openssh-client和openssh-server如果你只是想登陆别的机器的SSH只需要安装openssh-client（ubuntu有默认安装，如果没有则sudo apt-get install openssh-client），如果要使本机开放SSH服务就需要安装openssh-serversudo apt-get install openssh-server然后确认sshserver是否启动了：ps -e |grep ssh如果看到sshd那说明ssh-server已经启动了。如果没有则可以这样启动：sudo /etc/init.d/ssh startssh-server配置文件位于/ etc/ssh/sshd_config，在这里可以定义SSH的服务端口，默认端口是22，你可以自己定义成其他端口号，如222。然后重启SSH服务：sudo /etc/init.d/ssh stopsudo /etc/init.d/ssh start然后使用以下方式登陆SSH：ssh username@192.168.1.112 username为192.168.1.112 机器上的用户，需要输入密码。断开连接：exit 最近一直在Ubuntu下用终端操作，看着他长长的路径名实在不爽， 动手来改改咯～$: sudo gedit ~/.bashrc这个文件记录了用户终端配置找到if [ “$color_prompt “ = yes ]; then PS1 =’${debian_chroot:+($debian_chroot)}[\033[01;32m]\u@\h[\033[00m]:[\033[01;34m]\W [\033[00m]\$ ‘else PS1 =’${debian_chroot:+($debian_chroot)}\u@\h:\W \$ ‘将蓝色的w由小写改成大写，可以表示只显示当前目录名称.]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>FTP</tag>
       </tags>
   </entry>
 </search>
