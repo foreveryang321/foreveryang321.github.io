@@ -109,14 +109,14 @@
 
 
   <meta name="description" content="安装 docker 删除老版本 12345678910$ sudo yum remove docker \                  docker-client \                  docker-client-latest \                  docker-common \                  docker-latest \">
-<meta name="keywords" content="CentOS,docker-compose">
+<meta name="keywords" content="docker-compose">
 <meta property="og:type" content="article">
 <meta property="og:title" content="安装 docker 环境 for CentOS">
 <meta property="og:url" content="https://blog.yl-online.top/posts/2fff8f5e.html">
 <meta property="og:site_name" content="forever杨&#39;s Blog">
 <meta property="og:description" content="安装 docker 删除老版本 12345678910$ sudo yum remove docker \                  docker-client \                  docker-client-latest \                  docker-common \                  docker-latest \">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-09-05T03:25:21.617Z">
+<meta property="og:updated_time" content="2018-09-05T04:10:42.105Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="安装 docker 环境 for CentOS">
 <meta name="twitter:description" content="安装 docker 删除老版本 12345678910$ sudo yum remove docker \                  docker-client \                  docker-client-latest \                  docker-common \                  docker-latest \">
@@ -234,7 +234,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">97</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">98</span></a>
   </li>
         
         
@@ -390,7 +390,7 @@
                 
               
 
-              <time title="创建时间：2018-09-05 10:48:48 / 修改时间：11:25:21" itemprop="dateCreated datePublished" datetime="2018-09-05T10:48:48+08:00">2018-09-05</time>
+              <time title="创建时间：2018-09-05 10:48:48 / 修改时间：12:10:42" itemprop="dateCreated datePublished" datetime="2018-09-05T10:48:48+08:00">2018-09-05</time>
             
 
             
@@ -474,9 +474,7 @@
         </span>
         <span class="post-meta-item-text">标签</span>
         
-           <a href="/tags/CentOS/" rel="tag" class="color1">CentOS</a>
-        
-           <a href="/tags/docker-compose/" rel="tag" class="color2">docker-compose</a>
+           <a href="/tags/docker-compose/" rel="tag" class="color1">docker-compose</a>
         
       </div>
     
@@ -494,6 +492,9 @@
 <li><p>删除老版本</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum remove docker \</span><br><span class="line">                  docker-client \</span><br><span class="line">                  docker-client-latest \</span><br><span class="line">                  docker-common \</span><br><span class="line">                  docker-latest \</span><br><span class="line">                  docker-latest-logrotate \</span><br><span class="line">                  docker-logrotate \</span><br><span class="line">                  docker-selinux \</span><br><span class="line">                  docker-engine-selinux \</span><br><span class="line">                  docker-engine</span><br></pre></td></tr></table></figure>
 </li>
+</ul>
+<a id="more"></a>
+<ul>
 <li><p>配置  repo</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install -y yum-utils \</span><br><span class="line">  device-mapper-persistent-data \</span><br><span class="line">  lvm2</span><br><span class="line">  </span><br><span class="line">$ sudo yum-config-manager \</span><br><span class="line">    --add-repo \</span><br><span class="line">    https://download.docker.com/linux/centos/docker-ce.repo</span><br><span class="line"></span><br><span class="line"><span class="comment"># Optional</span></span><br><span class="line">$ sudo yum-config-manager --<span class="built_in">enable</span> docker-ce-edge</span><br><span class="line">$ sudo yum-config-manager --<span class="built_in">enable</span> docker-ce-test</span><br><span class="line">$ sudo yum-config-manager --<span class="built_in">disable</span> docker-ce-edge</span><br></pre></td></tr></table></figure>
 </li>
@@ -563,9 +564,7 @@
           </span>
           <span class="post-meta-item-text">标签</span>
           
-             <a href="/tags/CentOS/" rel="tag" class="color1">CentOS</a>
-          
-             <a href="/tags/docker-compose/" rel="tag" class="color2">docker-compose</a>
+             <a href="/tags/docker-compose/" rel="tag" class="color1">docker-compose</a>
           
         </div>
       
@@ -668,7 +667,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">97</span>
+                    <span class="site-state-item-count">98</span>
                     <span class="site-state-item-name">文章</span>
                   </a>
                 </div>
