@@ -391,7 +391,7 @@
                 
               
 
-              <time title="创建时间：2018-12-04 16:30:05 / 修改时间：17:32:19" itemprop="dateCreated datePublished" datetime="2018-12-04T16:30:05+08:00">2018-12-04</time>
+              <time title="创建时间：2018-12-04 16:30:05 / 修改时间：17:48:58" itemprop="dateCreated datePublished" datetime="2018-12-04T16:30:05+08:00">2018-12-04</time>
             
 
             
@@ -443,7 +443,7 @@
                 
                   <span class="post-meta-item-text">字数</span>
                 
-                <span title="字数">3.6k</span>
+                <span title="字数">5.1k</span>
               
 
               
@@ -457,7 +457,7 @@
                 
                   <span class="post-meta-item-text">时长 &asymp;</span>
                 
-                <span title="时长">3 分钟</span>
+                <span title="时长">5 分钟</span>
               
             </div>
           
@@ -493,7 +493,7 @@
           <blockquote>
 <p>在包中定义的函数，包体中实现的时候，函数名、参数名、类型都要一致，否则报错</p>
 </blockquote>
-<h1 id="定义包说明"><a href="#定义包说明" class="headerlink" title="定义包说明"></a>定义包说明</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">OR</span> <span class="keyword">REPLACE</span> <span class="keyword">PACKAGE</span> WX_CRYPTO <span class="keyword">IS</span></span><br><span class="line">  <span class="comment">-- 定义 DES encrypt 函数</span></span><br><span class="line">  <span class="keyword">FUNCTION</span> <span class="keyword">DES_ENCRYPT</span>(INPUT_STRING <span class="keyword">IN</span> VARCHAR2, KEY_STRING <span class="keyword">IN</span> VARCHAR2)</span><br><span class="line">    <span class="keyword">RETURN</span> VARCHAR2;</span><br><span class="line"></span><br><span class="line">  <span class="comment">-- 定义 DES decrypt 函数</span></span><br><span class="line">  FUNCTION DES_DECRYPT(INPUT_STRING IN VARCHAR2, KEY_STRING IN VARCHAR2)</span><br><span class="line">    RETURN VARCHAR2;</span><br><span class="line"><span class="keyword">END</span> WX_CRYPTO;</span><br></pre></td></tr></table></figure>
+<h1 id="定义包说明"><a href="#定义包说明" class="headerlink" title="定义包说明"></a>定义包说明</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">OR</span> <span class="keyword">REPLACE</span> <span class="keyword">PACKAGE</span> WX_CRYPTO <span class="keyword">IS</span></span><br><span class="line">  <span class="comment">-- 定义 DES encrypt 函数</span></span><br><span class="line">  <span class="keyword">FUNCTION</span> <span class="keyword">DES_ENCRYPT</span>(INPUT_STRING <span class="keyword">IN</span> VARCHAR2) <span class="keyword">RETURN</span> VARCHAR2;</span><br><span class="line">  FUNCTION DES_ENCRYPT(INPUT_STRING IN VARCHAR2, KEY_STRING IN VARCHAR2)</span><br><span class="line">    RETURN VARCHAR2;</span><br><span class="line"></span><br><span class="line">  <span class="comment">-- 定义 DES decrypt 函数</span></span><br><span class="line">  FUNCTION DES_DECRYPT(INPUT_STRING IN VARCHAR2) RETURN VARCHAR2;</span><br><span class="line">  FUNCTION DES_DECRYPT(INPUT_STRING IN VARCHAR2, KEY_STRING IN VARCHAR2)</span><br><span class="line">    RETURN VARCHAR2;</span><br><span class="line"><span class="keyword">END</span> WX_CRYPTO;</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/posts/6b176628.html" rel="contents">
@@ -2835,7 +2835,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">352k</span>
+    <span title="站点总字数">354k</span>
   
 
   
