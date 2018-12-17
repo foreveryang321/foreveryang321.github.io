@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[Nacos 初探]]></title>
     <url>%2Fposts%2Fc706fd60.html</url>
-    <content type="text"><![CDATA[Nacos 是一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。以下内容都是基于spring-boot + nacos依赖管理项目：nacos-spring-boot-project12345&lt;dependency&gt; &lt;groupId&gt;com.alibaba.boot&lt;/groupId&gt; &lt;artifactId&gt;nacos-config-spring-boot-starter&lt;/artifactId&gt; &lt;version&gt;0.2.1&lt;/version&gt;&lt;/dependency&gt;application.yml1234nacos: config: server-addr: 192.168.56.101:8848# namespace: '0278390f-21e8-40ae-b46d-fac0ebb7af97'namespace是命名空间 ID，不能配置命名空间名称。如果不配置namespace，默认使用public在Nacos 控制台新建配置Data ID：szim.propertiesGroup：DEFAULT_GROUP配置内容：id=1name=forever杨App.java12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849import com.alibaba.nacos.api.config.annotation.NacosConfigListener;import com.alibaba.nacos.api.config.annotation.NacosValue;import com.alibaba.nacos.spring.context.annotation.config.EnableNacosConfig;import com.alibaba.nacos.spring.context.annotation.config.NacosPropertySource;import org.springframework.boot.CommandLineRunner;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.context.annotation.Bean;import org.springframework.core.Ordered;import org.springframework.core.annotation.Order;import lombok.extern.slf4j.Slf4j;@SpringBootApplication@EnableNacosConfig@NacosPropertySource(dataId = App.DATA_ID)@Slf4jpublic class App &#123; static final String DATA_ID = "szim.properties"; public static void main(String[] args) &#123; SpringApplication.run(App.class, args); &#125; @NacosConfigListener( dataId = App.DATA_ID, timeout = 500 ) public void onChange(String newContent) throws Exception &#123; log.info("onChange: &#123;&#125;", newContent); &#125; @Bean @Order(Ordered.LOWEST_PRECEDENCE - 1) public CommandLineRunner secondCommandLineRunner() &#123; return new SecondCommandLineRunner(); &#125; public static class SecondCommandLineRunner implements CommandLineRunner &#123; @NacosValue("$&#123;id:unknown&#125;") private String id; @NacosValue("$&#123;name:unknown&#125;") private String name; @Override public void run(String... args) throws Exception &#123; log.info("id: &#123;&#125;, name: &#123;&#125;", id, name); &#125; &#125;&#125;@NacosValue(value= “${xxx}”, , autoRefreshed = true)，autoRefreshed=true 则配置会自动更新]]></content>
+    <content type="text"><![CDATA[Nacos 是一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。以下内容都是基于spring-boot + nacos依赖管理项目：nacos-spring-boot-project12345&lt;dependency&gt; &lt;groupId&gt;com.alibaba.boot&lt;/groupId&gt; &lt;artifactId&gt;nacos-config-spring-boot-starter&lt;/artifactId&gt; &lt;version&gt;0.2.1&lt;/version&gt;&lt;/dependency&gt;application.yml1234nacos: config: server-addr: 192.168.56.101:8848# namespace: '0278390f-21e8-40ae-b46d-fac0ebb7af97'namespace是命名空间 ID，不能配置命名空间名称。如果不配置namespace，默认使用public在 Nacos 控制台新建配置Data ID：szim.propertiesGroup：DEFAULT_GROUP配置内容：id=1name=forever杨App.java12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849import com.alibaba.nacos.api.config.annotation.NacosConfigListener;import com.alibaba.nacos.api.config.annotation.NacosValue;import com.alibaba.nacos.spring.context.annotation.config.EnableNacosConfig;import com.alibaba.nacos.spring.context.annotation.config.NacosPropertySource;import org.springframework.boot.CommandLineRunner;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.context.annotation.Bean;import org.springframework.core.Ordered;import org.springframework.core.annotation.Order;import lombok.extern.slf4j.Slf4j;@SpringBootApplication@EnableNacosConfig@NacosPropertySource(dataId = App.DATA_ID)@Slf4jpublic class App &#123; static final String DATA_ID = "szim.properties"; public static void main(String[] args) &#123; SpringApplication.run(App.class, args); &#125; @NacosConfigListener( dataId = App.DATA_ID, timeout = 500 ) public void onChange(String newContent) throws Exception &#123; log.info("onChange: &#123;&#125;", newContent); &#125; @Bean @Order(Ordered.LOWEST_PRECEDENCE - 1) public CommandLineRunner secondCommandLineRunner() &#123; return new SecondCommandLineRunner(); &#125; public static class SecondCommandLineRunner implements CommandLineRunner &#123; @NacosValue("$&#123;id:unknown&#125;") private String id; @NacosValue("$&#123;name:unknown&#125;") private String name; @Override public void run(String... args) throws Exception &#123; log.info("id: &#123;&#125;, name: &#123;&#125;", id, name); &#125; &#125;&#125;@NacosValue(value = “${xxx}”, , autoRefreshed = true)，autoRefreshed=true 则配置会自动更新]]></content>
       <categories>
         <category>Java</category>
       </categories>
@@ -48,8 +48,8 @@
       </categories>
       <tags>
         <tag>spring-boot</tag>
-        <tag>spring-session</tag>
         <tag>redis</tag>
+        <tag>spring-session</tag>
       </tags>
   </entry>
   <entry>
@@ -495,85 +495,29 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[Linux netstat 命令]]></title>
-    <url>%2Fposts%2F6c05ba39.html</url>
-    <content type="text"><![CDATA[netstat查看进程的网络状态1netstat -anp | grep 7646]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>netstat</tag>
-        <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[zookeeper 启动脚本]]></title>
-    <url>%2Fposts%2Faf01b9a2.html</url>
-    <content type="text"><![CDATA[start12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-28 10:23:20# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:41# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`NODE_BIN_DIR=`pwd`NODE_LIB_DIR=$NODE_BIN_DIR/../lib/cd ..NODE_HOME=`pwd`# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"# mkdir logs dirNODE_DATA_LOG_DIR=`sed '/dataLogDir/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`NODE_LOGS_DIR=""if [ -n "$NODE_DATA_LOG_DIR" ]; then NODE_LOGS_DIR=$NODE_DATA_LOG_DIRelse NODE_LOGS_DIR=$NODE_HOME/logsfiif [ ! -d $NODE_LOGS_DIR ]; then mkdir $NODE_LOGS_DIRfiSTDOUT_FILE=$NODE_LOGS_DIR/stdout.logecho "$DATE_PATTERN NODE_BIN_DIR: $NODE_BIN_DIR" | tee -a $STDOUT_FILE# pidNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`if [ -n "$NODE_PID" ]; then echo "$DATE_PATTERN ERROR: The $NODE_LIB_DIR already started! pid: $NODE_PID" | tee -a $STDOUT_FILE exit 1fi# portNODE_PORT=`sed '/clientPort/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`if [ -n "$NODE_PORT" ]; then NODE_PORT_COUNT=`netstat -tln | grep $NODE_PORT | wc -l` if [ $NODE_PORT_COUNT -gt 0 ]; then echo "$DATE_PATTERN ERROR: The $NODE_LIB_DIR port $NODE_PORT already used!" | tee -a $STDOUT_FILE exit 1 fifi# startingcd $NODE_BIN_DIR./zkServer.sh startNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`echo "$DATE_PATTERN The $NODE_LIB_DIR started OK! pid: $NODE_PID" | tee -a $STDOUT_FILE]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux curl 命令]]></title>
-    <url>%2Fposts%2Faea02818.html</url>
-    <content type="text"><![CDATA[curlGET 请求1curl http://www.baidu.com?q=xxxxPOST 请求1curl http://ip:port/weixin_v3/w -XPOST -d "send message..."发送 POST JSON 请求1curl -H "Content-Type: application/json" -X POST --data '&#123;"data":"1"&#125;' http://127.0.0.1/使用代理1curl -x 192.168.2.5:3128 http://www.baidu.com?q=xxxx输出请求信息12345678# http_code# time_connect# time_starttransfer# time_total# size_download# speed_download# 参考地址：curl http://www.baidu.com?q=xxxx -so /dev/null -w "%&#123;http_code&#125;\t%&#123;time_connect&#125;\t%&#123;time_starttransfer&#125;\t%&#123;time_total&#125;\t%&#123;size_download&#125;\t%&#123;speed_download&#125;\t"]]></content>
+    <title><![CDATA[Linux vi 命令]]></title>
+    <url>%2Fposts%2F87207300.html</url>
+    <content type="text"><![CDATA[vilinux文件格式的问题（使用unix格式）123456789# 查看文件格式vi 文件名:set ff # :set fileencoding# 设置文件格式为unix:set ff=unix# 保存退出:wq# 也可以直接使用dos2unix 文件名]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>curl</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[zookeeper 清理日志文件]]></title>
-    <url>%2Fposts%2Fc0bbcacd.html</url>
-    <content type="text"><![CDATA[clear123456789101112131415161718192021222324252627282930#!/usr/bin/env bash# @Author: YL# @Date: 2017-11-01 08:59:34# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:09# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`cd ..NODE_HOME=`pwd`# snapshotNODE_DATA_DIR=$NODE_HOME/data/version-2# snapshot logNODE_LOG_DIR=$NODE_HOME/logs/version-2# zk logNODE_LOGS=$NODE_HOME/logs# 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中count=3count=$[$count+1]ls -t $NODE_LOG_DIR/log.* | tail -n +$count | xargs rm -fls -t $NODE_DATA_DIR/snapshot.* | tail -n +$count | xargs rm -fls -t $NODE_LOGS/zookeeper.log.* | tail -n +$count | xargs rm -f# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"STDOUT_FILE=$NODE_LOGS/stdout.logecho "$DATE_PATTERN clear logs success" | tee -a $STDOUT_FILE]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux cat 命令]]></title>
-    <url>%2Fposts%2Fbe15a742.html</url>
-    <content type="text"><![CDATA[cat统计出现次数12# linux统计某一文件中字符串“sent ip”出现的次数：cat nohup.log |grep "sent ip" |wc -l清空默认文件中的内容1cat /dev/null &gt; filename]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>cat</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux ls 命令]]></title>
-    <url>%2Fposts%2F53b5960c.html</url>
-    <content type="text"><![CDATA[ls12# 统计文件夹中文件数ls -l |grep "^-"|wc -l保留最新的1个文件夹，删除其他文件夹（使用-d）1ls -t -d /home/txrd/tisson-web-open/logs/undertow-* | tail -n +2 | xargs rm -rf]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>ls</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux crontab 命令]]></title>
-    <url>%2Fposts%2Fb0b79272.html</url>
-    <content type="text"><![CDATA[crontab 使用注意事项如果通过 crontab 执行1、crontab 无法获取 jdk 变量，要在 java 命令之前写入jdk绝对路径2、要把路径切换到要执行的 sh 路径下注意：二者缺一不可查找 jdk 路径的方法112$ echo $JAVA_HOME/usr/java/jdk1.6.0_45/bin/java2123456$ which java/usr/bin/java$ ls -lrt /usr/bin/java #/usr/bin/java是which java查出来的路径lrwxrwxrwx. 1 root root 22 Sep 16 2015 /usr/bin/java -&gt; /etc/alternatives/java$ ls -lrt /etc/alternatives/java #/etc/alternatives/java是ls -lrt /usr/bin/java查出来的路径 lrwxrwxrwx. 1 root root 46 Sep 16 2015 /etc/alternatives/java -&gt; /usr/lib/jvm/jre-1.6.0-openjdk.x86_64/bin/java查询 crontab 定时器配置情况1crontab -l编辑 crontab 定时器1234567crontab -e# 当 crontab 调用时，错误和标准输出会写成 mail 通知你* * * * * /opt/restart.sh# 标准输出重定向到 /dev/null，输出到这里就找不回来了* * * * * /opt/restart.sh &gt; /dev/null# 标准输出和错误输出都重定向到 /dev/null* * * * * /opt/restart.sh &gt; /dev/null 2&gt;&amp;1]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>crontab</tag>
+        <tag>vi</tag>
       </tags>
   </entry>
   <entry>
     <title><![CDATA[zookeeper stop脚本]]></title>
     <url>%2Fposts%2F7bd064dc.html</url>
     <content type="text"><![CDATA[stop12345678910#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:00# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:49# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stop]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper 启动脚本]]></title>
+    <url>%2Fposts%2Faf01b9a2.html</url>
+    <content type="text"><![CDATA[start12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-28 10:23:20# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:41# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`NODE_BIN_DIR=`pwd`NODE_LIB_DIR=$NODE_BIN_DIR/../lib/cd ..NODE_HOME=`pwd`# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"# mkdir logs dirNODE_DATA_LOG_DIR=`sed '/dataLogDir/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`NODE_LOGS_DIR=""if [ -n "$NODE_DATA_LOG_DIR" ]; then NODE_LOGS_DIR=$NODE_DATA_LOG_DIRelse NODE_LOGS_DIR=$NODE_HOME/logsfiif [ ! -d $NODE_LOGS_DIR ]; then mkdir $NODE_LOGS_DIRfiSTDOUT_FILE=$NODE_LOGS_DIR/stdout.logecho "$DATE_PATTERN NODE_BIN_DIR: $NODE_BIN_DIR" | tee -a $STDOUT_FILE# pidNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`if [ -n "$NODE_PID" ]; then echo "$DATE_PATTERN ERROR: The $NODE_LIB_DIR already started! pid: $NODE_PID" | tee -a $STDOUT_FILE exit 1fi# portNODE_PORT=`sed '/clientPort/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`if [ -n "$NODE_PORT" ]; then NODE_PORT_COUNT=`netstat -tln | grep $NODE_PORT | wc -l` if [ $NODE_PORT_COUNT -gt 0 ]; then echo "$DATE_PATTERN ERROR: The $NODE_LIB_DIR port $NODE_PORT already used!" | tee -a $STDOUT_FILE exit 1 fifi# startingcd $NODE_BIN_DIR./zkServer.sh startNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`echo "$DATE_PATTERN The $NODE_LIB_DIR started OK! pid: $NODE_PID" | tee -a $STDOUT_FILE]]></content>
       <categories>
         <category>zookeeper</category>
       </categories>
@@ -591,16 +535,56 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux tail 命令]]></title>
-    <url>%2Fposts%2F29bd046e.html</url>
-    <content type="text"><![CDATA[tail]]></content>
+    <title><![CDATA[Linux curl 命令]]></title>
+    <url>%2Fposts%2Faea02818.html</url>
+    <content type="text"><![CDATA[curlGET 请求1curl http://www.baidu.com?q=xxxxPOST 请求1curl http://ip:port/weixin_v3/w -XPOST -d "send message..."发送 POST JSON 请求1curl -H "Content-Type: application/json" -X POST --data '&#123;"data":"1"&#125;' http://127.0.0.1/使用代理1curl -x 192.168.2.5:3128 http://www.baidu.com?q=xxxx输出请求信息12345678# http_code# time_connect# time_starttransfer# time_total# size_download# speed_download# 参考地址：curl http://www.baidu.com?q=xxxx -so /dev/null -w "%&#123;http_code&#125;\t%&#123;time_connect&#125;\t%&#123;time_starttransfer&#125;\t%&#123;time_total&#125;\t%&#123;size_download&#125;\t%&#123;speed_download&#125;\t"]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>tail</tag>
+        <tag>curl</tag>
       </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux cat 命令]]></title>
+    <url>%2Fposts%2Fbe15a742.html</url>
+    <content type="text"><![CDATA[cat统计出现次数12# linux统计某一文件中字符串“sent ip”出现的次数：cat nohup.log |grep "sent ip" |wc -l清空默认文件中的内容1cat /dev/null &gt; filename]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>cat</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper重启脚本]]></title>
+    <url>%2Fposts%2F6c1ad93d.html</url>
+    <content type="text"><![CDATA[restart12345678910111213#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:10# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:30# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stopsleep 3./zkServer.sh start]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux crontab 命令]]></title>
+    <url>%2Fposts%2Fb0b79272.html</url>
+    <content type="text"><![CDATA[crontab 使用注意事项如果通过 crontab 执行1、crontab 无法获取 jdk 变量，要在 java 命令之前写入jdk绝对路径2、要把路径切换到要执行的 sh 路径下注意：二者缺一不可查找 jdk 路径的方法112$ echo $JAVA_HOME/usr/java/jdk1.6.0_45/bin/java2123456$ which java/usr/bin/java$ ls -lrt /usr/bin/java #/usr/bin/java是which java查出来的路径lrwxrwxrwx. 1 root root 22 Sep 16 2015 /usr/bin/java -&gt; /etc/alternatives/java$ ls -lrt /etc/alternatives/java #/etc/alternatives/java是ls -lrt /usr/bin/java查出来的路径 lrwxrwxrwx. 1 root root 46 Sep 16 2015 /etc/alternatives/java -&gt; /usr/lib/jvm/jre-1.6.0-openjdk.x86_64/bin/java查询 crontab 定时器配置情况1crontab -l编辑 crontab 定时器1234567crontab -e# 当 crontab 调用时，错误和标准输出会写成 mail 通知你* * * * * /opt/restart.sh# 标准输出重定向到 /dev/null，输出到这里就找不回来了* * * * * /opt/restart.sh &gt; /dev/null# 标准输出和错误输出都重定向到 /dev/null* * * * * /opt/restart.sh &gt; /dev/null 2&gt;&amp;1]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>crontab</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper 清理日志文件]]></title>
+    <url>%2Fposts%2Fc0bbcacd.html</url>
+    <content type="text"><![CDATA[clear123456789101112131415161718192021222324252627282930#!/usr/bin/env bash# @Author: YL# @Date: 2017-11-01 08:59:34# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:09# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`cd ..NODE_HOME=`pwd`# snapshotNODE_DATA_DIR=$NODE_HOME/data/version-2# snapshot logNODE_LOG_DIR=$NODE_HOME/logs/version-2# zk logNODE_LOGS=$NODE_HOME/logs# 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中count=3count=$[$count+1]ls -t $NODE_LOG_DIR/log.* | tail -n +$count | xargs rm -fls -t $NODE_DATA_DIR/snapshot.* | tail -n +$count | xargs rm -fls -t $NODE_LOGS/zookeeper.log.* | tail -n +$count | xargs rm -f# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"STDOUT_FILE=$NODE_LOGS/stdout.logecho "$DATE_PATTERN clear logs success" | tee -a $STDOUT_FILE]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
   </entry>
   <entry>
     <title><![CDATA[Tomcat 启动脚本]]></title>
@@ -623,62 +607,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux cp 命令]]></title>
-    <url>%2Fposts%2F2835e3e.html</url>
-    <content type="text"><![CDATA[cp复制文件夹1cp -r [old source] -d [new source]]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>cp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[zookeeper重启脚本]]></title>
-    <url>%2Fposts%2F6c1ad93d.html</url>
-    <content type="text"><![CDATA[restart12345678910111213#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:10# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:30# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stopsleep 3./zkServer.sh start]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux grep 命令]]></title>
-    <url>%2Fposts%2F1f104b3f.html</url>
-    <content type="text"><![CDATA[grep统计出现次数1grep 'sign.*time.*openid' access_p80_weixinv3.log | awk '&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;' | sort -n4 183.3.234.4510 183.3.234.5720 183.3.234.58查询前后日志grep -5 ‘parttern’ inputfile //打印匹配行的前后5行grep -C 5 ‘parttern’ inputfile //打印匹配行的前后5行grep -A 5 ‘parttern’ inputfile //打印匹配行的后5行grep -B 5 ‘parttern’ inputfile //打印匹配行的前5行]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>grep</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux vi 命令]]></title>
-    <url>%2Fposts%2F87207300.html</url>
-    <content type="text"><![CDATA[vilinux文件格式的问题（使用unix格式）123456789# 查看文件格式vi 文件名:set ff # :set fileencoding# 设置文件格式为unix:set ff=unix# 保存退出:wq# 也可以直接使用dos2unix 文件名]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>vi</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux sed 命令]]></title>
-    <url>%2Fposts%2Fb8ec468d.html</url>
-    <content type="text"><![CDATA[sed打印指定行数1sed -n '12457431, 12457440p' tomcat/logs/catalina.out]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>sed</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Linux unzip 命令]]></title>
     <url>%2Fposts%2F64f75729.html</url>
     <content type="text"><![CDATA[unzip解压war、jar、zip、rar等文件1unzip -oq /opt/xxx.war -d /opt/ddd]]></content>
@@ -688,6 +616,30 @@
       <tags>
         <tag>shell</tag>
         <tag>unzip</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux tar 命令]]></title>
+    <url>%2Fposts%2Fbd083454.html</url>
+    <content type="text"><![CDATA[tar1tar -zxvf xxx.tar.gz]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>tar</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux tail 命令]]></title>
+    <url>%2Fposts%2F29bd046e.html</url>
+    <content type="text"><![CDATA[tail]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>tail</tag>
       </tags>
   </entry>
   <entry>
@@ -703,6 +655,62 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Linux sed 命令]]></title>
+    <url>%2Fposts%2Fb8ec468d.html</url>
+    <content type="text"><![CDATA[sed打印指定行数1sed -n '12457431, 12457440p' tomcat/logs/catalina.out]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>sed</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux netstat 命令]]></title>
+    <url>%2Fposts%2F6c05ba39.html</url>
+    <content type="text"><![CDATA[netstat查看进程的网络状态1netstat -anp | grep 7646]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>netstat</tag>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux grep 命令]]></title>
+    <url>%2Fposts%2F1f104b3f.html</url>
+    <content type="text"><![CDATA[grep统计出现次数1grep 'sign.*time.*openid' access_p80_weixinv3.log | awk '&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;' | sort -n4 183.3.234.4510 183.3.234.5720 183.3.234.58查询前后日志grep -5 ‘parttern’ inputfile //打印匹配行的前后5行grep -C 5 ‘parttern’ inputfile //打印匹配行的前后5行grep -A 5 ‘parttern’ inputfile //打印匹配行的后5行grep -B 5 ‘parttern’ inputfile //打印匹配行的前5行]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>grep</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux ls 命令]]></title>
+    <url>%2Fposts%2F53b5960c.html</url>
+    <content type="text"><![CDATA[ls12# 统计文件夹中文件数ls -l |grep "^-"|wc -l保留最新的1个文件夹，删除其他文件夹（使用-d）1ls -t -d /home/txrd/tisson-web-open/logs/undertow-* | tail -n +2 | xargs rm -rf]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>ls</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper evn 环境变量配置脚本]]></title>
+    <url>%2Fposts%2F57428144.html</url>
+    <content type="text"><![CDATA[zookeeper-env1234567891011121314151617181920#!/usr/bin/env bash# @Author: YL# @Date: 2017-10-31 10:27:16# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:43# 此文件放到 zookeeper 的 conf 目录下# java envexport JAVA_HOME=/usr/java/jdk1.8.0_131export PATH=$JAVA_HOME/bin:$PATHexport JVMFLAGS="-Xms1536m -Xmx1536m $JVMFLAGS"cd `dirname $0`cd ..NODE_HOME=`pwd`# zookeeper envZOO_LOG_DIR=$NODE_HOME/logsZOO_LOG4J_PROP="INFO,ROLLINGFILE"]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
     <title><![CDATA[Linux lsof 命令]]></title>
     <url>%2Fposts%2Ffc091577.html</url>
     <content type="text"><![CDATA[lsof检测端口未被占用1lsof -i:8080]]></content>
@@ -715,23 +723,15 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[zookeeper evn 环境变量配置脚本]]></title>
-    <url>%2Fposts%2F57428144.html</url>
-    <content type="text"><![CDATA[zookeeper-env1234567891011121314151617181920#!/usr/bin/env bash# @Author: YL# @Date: 2017-10-31 10:27:16# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:43# 此文件放到 zookeeper 的 conf 目录下# java envexport JAVA_HOME=/usr/java/jdk1.8.0_131export PATH=$JAVA_HOME/bin:$PATHexport JVMFLAGS="-Xms1536m -Xmx1536m $JVMFLAGS"cd `dirname $0`cd ..NODE_HOME=`pwd`# zookeeper envZOO_LOG_DIR=$NODE_HOME/logsZOO_LOG4J_PROP="INFO,ROLLINGFILE"]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux tar 命令]]></title>
-    <url>%2Fposts%2Fbd083454.html</url>
-    <content type="text"><![CDATA[tar1tar -zxvf xxx.tar.gz]]></content>
+    <title><![CDATA[Linux cp 命令]]></title>
+    <url>%2Fposts%2F2835e3e.html</url>
+    <content type="text"><![CDATA[cp复制文件夹1cp -r [old source] -d [new source]]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>tar</tag>
+        <tag>cp</tag>
       </tags>
   </entry>
   <entry>
@@ -747,17 +747,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[spring boot 使用注意事项]]></title>
-    <url>%2Fposts%2F47aa1712.html</url>
-    <content type="text"><![CDATA[兼容问题spring-boot-starter-parent切换回1.5.2.RELEASE版本因为1.5.4.RELEASE、1.5.5.RELEASE、1.5.6.RELEASE、1.5.7.RELEASE、2.0.0.M1、2.0.0.M2、2.0.0.M3都存在使用spring-boot-starter-data-redis时，会出现异常java.lang.NoSuchMethodError: org.springframework.data.repository.config.AnnotationRepositoryConfigurationSource.&lt;init&gt;异常请查看https://github.com/spring-projects/spring-boot/issues/9606外部 Tomcat 容器部署外部 Tomcat 等容器部署war，要继承 SpringBootServletInitializer 类war部署要重写SpringBootServletInitializer的configure方法，可以不要main方法，main方法是jar部署时候会执行的1234567891011121314151617import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.boot.builder.SpringApplicationBuilder;import org.springframework.boot.web.support.SpringBootServletInitializer;@SpringBootApplicationpublic class App extends SpringBootServletInitializer &#123; @Override protected SpringApplicationBuilder configure(SpringApplicationBuilder application) &#123; return application.sources(App.class); &#125; public static void main(String[] args) &#123; SpringApplication.run(App.class, args); &#125;&#125;attach=false123456789101112131415&lt;plugin&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt; &lt;configuration&gt; &lt;layout&gt;ZIP&lt;/layout&gt; &lt;includes&gt; &lt;include&gt; &lt;groupId&gt;nothing&lt;/groupId&gt; &lt;artifactId&gt;nothing&lt;/artifactId&gt; &lt;/include&gt; &lt;/includes&gt; &lt;!-- 将原始的包作为 install 和 deploy 的对象，而不是包含了依赖的包 --&gt; &lt;attach&gt;false&lt;/attach&gt; &lt;/configuration&gt;&lt;/plugin&gt;spring-boot升级到2.0弃用WebMvcConfigurerAdapter，替换成WebMvcConfigurer12345678910@Configuratiionpublic class WebAdapter extends WebMvcConfigurerAdapter &#123; @Override public void addCorsMappings(CorsRegistry registry) &#123; registry.addMapping("/**") .allowedHeaders("*") .allowedOrigins("*") .allowedMethods("GET", "POST", "PUT"); &#125;&#125;在 spring-boot 2.0 中需要注意，因为使用的是 spring 5，原先的方法是继承WebMvcConfigurerAdapter抽象类，现在是直接扩展 WebMvcConfigurer 这个接口。原先的方式很能生效，不过已经被 spring 5弃用了（@Deprecated）12345678910111213141516171819@Configuratiionpublic class MyConfiguration &#123; @Bean public WebMvcConfigurer webMvcConfigurer() &#123; return new WebMvcConfigurer() &#123; // 跨域配置 @Override public void addCorsMappings(CorsRegistry registry) &#123; registry.addMapping("/api/**"); &#125; // 拦截器配置 @Override public void addInterceptors(InterceptorRegistry registry) &#123; &#125; // ... &#125;; &#125;&#125;其他@RequestBody使用 @RequestBody 注解时，如果注解的参数没有传入，则会抛出org.springframework.http.converter.HttpMessageNotReadableException异常配合hibernate-validator不起作用的问题在参数前面使用org.springframework.validation.annotation.Validated注解，或者javax.validation.Valid注解均可123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051import lombok.AllArgsConstructor;import lombok.Data;import lombok.NoArgsConstructor;import org.hibernate.validator.constraints.Length;import org.hibernate.validator.constraints.NotBlank;import java.io.Serializable;/** * @author Created by YL on 2017/10/19 */@Data@AllArgsConstructor@NoArgsConstructorpublic class MarketRebateDTO implements Serializable &#123; @NotBlank(message = "营销活动 Id 不能为空") @Length(min = 5, max = 8, message = "营销活动 Id[$&#123;validatedValue&#125;] 长度必须在 &#123;min&#125; 和 &#123;max&#125; 之间") private String marketCfgId; private String productNo; private String rebateAmt; private String tradeType;&#125;import com.alibaba.dubbo.config.annotation.Reference;import org.springframework.validation.annotation.Validated;import org.springframework.web.bind.annotation.PostMapping;import org.springframework.web.bind.annotation.RequestBody;import org.springframework.web.bind.annotation.RequestMapping;import org.springframework.web.bind.annotation.RestController;import javax.validation.Valid;/** * 广东省营销接口 * * @author Created by YL on 2017/10/18 */@RestController@RequestMapping("/api/market")public class MarketController extends BaseRestController &#123; @Reference private MarketService marketService; @PostMapping("/rebate") public BaseResponse rebate(@RequestBody @Valid MarketRebateDTO rebate) throws CoreException, OkHttpException &#123; return marketService.doRebate(rebate); &#125;&#125;@RequestParam使用 @RequestParam 注解时，如果注解的参数没有传入，则会抛出org.springframework.web.bind.MissingServletRequestParameterException异常配合hibernate-validator不起作用的问题要注册 MethodValidationPostProcessor Bean，并且在类上面使用org.springframework.validation.annotation.Validated注解注意：使用javax.validation.Valid注解对RequestParam对应的参数进行注解，是无效的，需要使用@Validated注解来使得验证生效1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253@Beanpublic Validator validator() &#123; ValidatorFactory factory = Validation.byProvider(HibernateValidator.class) .configure() // 1、普通模式（默认是这个模式） // 普通模式(会校验完所有的属性，然后返回所有的验证失败信息) // 2、快速失败返回模式 // 快速失败返回模式(只要有一个验证失败，则返回) // .addProperty("hibernate.validator.fail_fast", "true") .failFast(true) .buildValidatorFactory(); return factory.getValidator();&#125;@Beanpublic MethodValidationPostProcessor methodValidationPostProcessor() &#123; MethodValidationPostProcessor postProcessor = new MethodValidationPostProcessor(); // 设置validator模式为快速失败返回 postProcessor.setValidator(validator()); return postProcessor;&#125;import com.alibaba.dubbo.config.annotation.Reference;import org.hibernate.validator.constraints.NotBlank;import org.springframework.validation.annotation.Validated;import org.springframework.web.bind.annotation.GetMapping;import org.springframework.web.bind.annotation.PostMapping;import org.springframework.web.bind.annotation.RequestMapping;import org.springframework.web.bind.annotation.RequestParam;import org.springframework.web.bind.annotation.RestController;/** * csp 平台接口封装 * * @author Created by YL on 2017/9/19 */@RestController@RequestMapping("/api/csp")@Validatedpublic class CspController extends BaseRestController &#123; @Reference private CspService cspService; @GetMapping public BaseResponse get(@RequestParam @NotBlank(message = "组件名不能为空") String func, @RequestParam @NotBlank(message = "参数值不能为空") String param) throws OkHttpException, OpenApiException &#123; return new BaseResponse(cspService.get(func, param)); &#125;&#125;至此，Bean Validator 和 hibernate-validator的@Size、@Min、@Max、@Length、@NotBlank等注解就生效了]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>spring-boot</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Spring Data JPA 使用]]></title>
     <url>%2Fposts%2F6cc2492a.html</url>
     <content type="text"><![CDATA[Page函数描述备注getTotalElements总记录数getTotalPages总页数getContent查询记录列表getNumber当前页数，从0开始getNumberOfElements当前页码中的记录数getSize每页记录数Modifying注解（1）可以通过自定义的 JPQL 完成 UPDATE 和 DELETE 操作。 注意： JPQL 不支持使用 INSERT（2）在 @Query 注解中编写 JPQL 语句， 但必须使用 @Modifying 进行修饰. 以通知 Spring Data， 这是一个 UPDATE 或 DELETE 操作（3）UPDATE 或 DELETE 操作需要使用事务，此时需要定义 Service 层，在 Service 层的方法上添加事务操作（4）默认情况下， Spring Data 的每个方法上有事务， 但都是一个只读事务。 他们不能完成修改操作]]></content>
@@ -767,6 +756,17 @@
       <tags>
         <tag>spring-boot</tag>
         <tag>jpa</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[spring boot 使用注意事项]]></title>
+    <url>%2Fposts%2F47aa1712.html</url>
+    <content type="text"><![CDATA[兼容问题spring-boot-starter-parent切换回1.5.2.RELEASE版本因为1.5.4.RELEASE、1.5.5.RELEASE、1.5.6.RELEASE、1.5.7.RELEASE、2.0.0.M1、2.0.0.M2、2.0.0.M3都存在使用spring-boot-starter-data-redis时，会出现异常java.lang.NoSuchMethodError: org.springframework.data.repository.config.AnnotationRepositoryConfigurationSource.&lt;init&gt;异常请查看https://github.com/spring-projects/spring-boot/issues/9606外部 Tomcat 容器部署外部 Tomcat 等容器部署war，要继承 SpringBootServletInitializer 类war部署要重写SpringBootServletInitializer的configure方法，可以不要main方法，main方法是jar部署时候会执行的1234567891011121314151617import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.boot.builder.SpringApplicationBuilder;import org.springframework.boot.web.support.SpringBootServletInitializer;@SpringBootApplicationpublic class App extends SpringBootServletInitializer &#123; @Override protected SpringApplicationBuilder configure(SpringApplicationBuilder application) &#123; return application.sources(App.class); &#125; public static void main(String[] args) &#123; SpringApplication.run(App.class, args); &#125;&#125;attach=false123456789101112131415&lt;plugin&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt; &lt;configuration&gt; &lt;layout&gt;ZIP&lt;/layout&gt; &lt;includes&gt; &lt;include&gt; &lt;groupId&gt;nothing&lt;/groupId&gt; &lt;artifactId&gt;nothing&lt;/artifactId&gt; &lt;/include&gt; &lt;/includes&gt; &lt;!-- 将原始的包作为 install 和 deploy 的对象，而不是包含了依赖的包 --&gt; &lt;attach&gt;false&lt;/attach&gt; &lt;/configuration&gt;&lt;/plugin&gt;spring-boot升级到2.0弃用WebMvcConfigurerAdapter，替换成WebMvcConfigurer12345678910@Configuratiionpublic class WebAdapter extends WebMvcConfigurerAdapter &#123; @Override public void addCorsMappings(CorsRegistry registry) &#123; registry.addMapping("/**") .allowedHeaders("*") .allowedOrigins("*") .allowedMethods("GET", "POST", "PUT"); &#125;&#125;在 spring-boot 2.0 中需要注意，因为使用的是 spring 5，原先的方法是继承WebMvcConfigurerAdapter抽象类，现在是直接扩展 WebMvcConfigurer 这个接口。原先的方式很能生效，不过已经被 spring 5弃用了（@Deprecated）12345678910111213141516171819@Configuratiionpublic class MyConfiguration &#123; @Bean public WebMvcConfigurer webMvcConfigurer() &#123; return new WebMvcConfigurer() &#123; // 跨域配置 @Override public void addCorsMappings(CorsRegistry registry) &#123; registry.addMapping("/api/**"); &#125; // 拦截器配置 @Override public void addInterceptors(InterceptorRegistry registry) &#123; &#125; // ... &#125;; &#125;&#125;其他@RequestBody使用 @RequestBody 注解时，如果注解的参数没有传入，则会抛出org.springframework.http.converter.HttpMessageNotReadableException异常配合hibernate-validator不起作用的问题在参数前面使用org.springframework.validation.annotation.Validated注解，或者javax.validation.Valid注解均可123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051import lombok.AllArgsConstructor;import lombok.Data;import lombok.NoArgsConstructor;import org.hibernate.validator.constraints.Length;import org.hibernate.validator.constraints.NotBlank;import java.io.Serializable;/** * @author Created by YL on 2017/10/19 */@Data@AllArgsConstructor@NoArgsConstructorpublic class MarketRebateDTO implements Serializable &#123; @NotBlank(message = "营销活动 Id 不能为空") @Length(min = 5, max = 8, message = "营销活动 Id[$&#123;validatedValue&#125;] 长度必须在 &#123;min&#125; 和 &#123;max&#125; 之间") private String marketCfgId; private String productNo; private String rebateAmt; private String tradeType;&#125;import com.alibaba.dubbo.config.annotation.Reference;import org.springframework.validation.annotation.Validated;import org.springframework.web.bind.annotation.PostMapping;import org.springframework.web.bind.annotation.RequestBody;import org.springframework.web.bind.annotation.RequestMapping;import org.springframework.web.bind.annotation.RestController;import javax.validation.Valid;/** * 广东省营销接口 * * @author Created by YL on 2017/10/18 */@RestController@RequestMapping("/api/market")public class MarketController extends BaseRestController &#123; @Reference private MarketService marketService; @PostMapping("/rebate") public BaseResponse rebate(@RequestBody @Valid MarketRebateDTO rebate) throws CoreException, OkHttpException &#123; return marketService.doRebate(rebate); &#125;&#125;@RequestParam使用 @RequestParam 注解时，如果注解的参数没有传入，则会抛出org.springframework.web.bind.MissingServletRequestParameterException异常配合hibernate-validator不起作用的问题要注册 MethodValidationPostProcessor Bean，并且在类上面使用org.springframework.validation.annotation.Validated注解注意：使用javax.validation.Valid注解对RequestParam对应的参数进行注解，是无效的，需要使用@Validated注解来使得验证生效1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253@Beanpublic Validator validator() &#123; ValidatorFactory factory = Validation.byProvider(HibernateValidator.class) .configure() // 1、普通模式（默认是这个模式） // 普通模式(会校验完所有的属性，然后返回所有的验证失败信息) // 2、快速失败返回模式 // 快速失败返回模式(只要有一个验证失败，则返回) // .addProperty("hibernate.validator.fail_fast", "true") .failFast(true) .buildValidatorFactory(); return factory.getValidator();&#125;@Beanpublic MethodValidationPostProcessor methodValidationPostProcessor() &#123; MethodValidationPostProcessor postProcessor = new MethodValidationPostProcessor(); // 设置validator模式为快速失败返回 postProcessor.setValidator(validator()); return postProcessor;&#125;import com.alibaba.dubbo.config.annotation.Reference;import org.hibernate.validator.constraints.NotBlank;import org.springframework.validation.annotation.Validated;import org.springframework.web.bind.annotation.GetMapping;import org.springframework.web.bind.annotation.PostMapping;import org.springframework.web.bind.annotation.RequestMapping;import org.springframework.web.bind.annotation.RequestParam;import org.springframework.web.bind.annotation.RestController;/** * csp 平台接口封装 * * @author Created by YL on 2017/9/19 */@RestController@RequestMapping("/api/csp")@Validatedpublic class CspController extends BaseRestController &#123; @Reference private CspService cspService; @GetMapping public BaseResponse get(@RequestParam @NotBlank(message = "组件名不能为空") String func, @RequestParam @NotBlank(message = "参数值不能为空") String param) throws OkHttpException, OpenApiException &#123; return new BaseResponse(cspService.get(func, param)); &#125;&#125;至此，Bean Validator 和 hibernate-validator的@Size、@Min、@Max、@Length、@NotBlank等注解就生效了]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>spring-boot</tag>
       </tags>
   </entry>
   <entry>
@@ -816,6 +816,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[pagehelper 使用笔记]]></title>
+    <url>%2Fposts%2F4f0d5500.html</url>
+    <content type="text"><![CDATA[主要是记录一些在使用mybatis + pagehelper过程中遇到的一些问题，和要注意的知识点PageHelper 分页12345// 获取第1页，10条内容，默认查询总数countPageHelper.startPage(1, 10);// 获取第1页，10条内容，不查询总数countPageHelper.startPage(1, 10, false);]]></content>
+      <categories>
+        <category>mybatis</category>
+      </categories>
+      <tags>
+        <tag>pagehelper</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[spring-data-jpa 使用笔记]]></title>
     <url>%2Fposts%2F43f916ea.html</url>
     <content type="text"><![CDATA[主要是记录一些在使用spring-data-jpa + Hibernate过程中遇到的一些问题，和要注意的知识点Pageable 和 PageRequest 分页在Mysql、Oracle中分页从0开始1Pageable pageable = new PageRequest(0, 10);查看org.springframework.data.domain.PageRequest源码可知，分页从0开始123public Pageable first() &#123; return new PageRequest(0, this.getPageSize(), this.getSort());&#125;]]></content>
@@ -825,17 +836,6 @@
       <tags>
         <tag>Hibernate</tag>
         <tag>spring-data-jpa</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[pagehelper 使用笔记]]></title>
-    <url>%2Fposts%2F4f0d5500.html</url>
-    <content type="text"><![CDATA[主要是记录一些在使用mybatis + pagehelper过程中遇到的一些问题，和要注意的知识点PageHelper 分页12345// 获取第1页，10条内容，默认查询总数countPageHelper.startPage(1, 10);// 获取第1页，10条内容，不查询总数countPageHelper.startPage(1, 10, false);]]></content>
-      <categories>
-        <category>mybatis</category>
-      </categories>
-      <tags>
-        <tag>pagehelper</tag>
       </tags>
   </entry>
   <entry>
@@ -957,6 +957,18 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[nodejs 使用]]></title>
+    <url>%2Fposts%2F8d0f4649.html</url>
+    <content type="text"><![CDATA[配置淘宝npm国内访问外网是很慢的，安装NodeJS是自带的npm地址默认是：http://registry.npmjs.org，访问很慢，所以一般换成国内镜像地址。通过config命令123npm config set registry https://registry.npm.taobao.org/ npm info underscore#（如果配置成功，这个命令会有字符串response）npm --registry=https://registry.npm.taobao.org命令行指定1npm --registry https://registry.npm.taobao.org/ info underscore编辑node_modules/npm/.npmrc加入下面内容1registry = https://registry.npm.taobao.org/如果上面的npm地址不行的话，可以试试淘宝的npmhttps://registry.npm.taobao.org123npm set registry https://registry.npm.taobao.org/# 或者npm --registry https://registry.npm.taobao.org/ info underscore下载路径在安装完nodejs后，npm install -g jshint是被安装在默认路径（C:\Users\用户名\AppData\Roaming\npm）下的可以通过修改nodejs安装路径下的node_modules/npm/.npmrc文件prefix=D:\MyTools\nodejs\node_global （修改全局路径）cache=D:\MyTools\nodejs\node_cache （修改全局路径）请注意prefix、cache不能设置成一样的路径，否则通过npm安装模块时，会报错npm 使用123456789# -S 是--save 的缩写，它可以让你安装的模块记录到package.json文件当中npm install -S xxx# 这是删除模块，也可以删除全局模块npm uninstall xxxnpm uninstall -g xxx# -D就是--save-dev 这样安装的包的名称及版本号就会存在package.json的devDependencies这个里面，而--save会将包的名称及版本号放在dependencies里面npm install -D xxxnpm registry 设置1234567891011121314$ npm install -g nrm$ nrm lsD:\Workspace\vuejs-project&gt;nrm ls* npm ---- https://registry.npmjs.org/ cnpm --- http://r.cnpmjs.org/ taobao - https://registry.npm.taobao.org/ nj ----- https://registry.nodejitsu.com/ rednpm - http://registry.mirror.cqupt.edu.cn/ npmMirror https://skimdb.npmjs.com/registry/ edunpm - http://registry.enpmjs.org/# 切换源$ nrm use taobaoRegistry has been set to: https://registry.npm.taobao.org/npm-check检查依赖包版本123456# 安装 npm-checknpm install -g npm-check# 检查 npm 包版本npm-check -u -gnpm-check -u -Snpm-check -u -D]]></content>
+      <categories>
+        <category>nodejs</category>
+      </categories>
+      <tags>
+        <tag>npm</tag>
+        <tag>cnpm</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[xampp 安装 memcache 监控]]></title>
     <url>%2Fposts%2Fd01399d3.html</url>
     <content type="text"><![CDATA[xampp安装memcache监控现在 memadmin下载memadmin，解压到xampp/htdocs下查看 php 版本信息123&lt;?php echo phpinfo();?&gt;下载 php-memcache.dll根据查看到的php的信息，在php-memcache下载对应本版的Thread Safe，里面包含了php-memcache.dll。解压下载包，然后把php-memcache.dll拷贝到xampp/php/ext下在xampp/php/php.ini最后添加以下内容12345678;php-memcachedextension=php_memcache.dll[Memcache]memcache.allow_failover = 1memcache.max_failover_attempts=20memcache.chunk_size =8192memcache.default_port = 11211访问 memadminhttp://host:port/memadmin]]></content>
@@ -967,18 +979,6 @@
         <tag>xampp</tag>
         <tag>memcache</tag>
         <tag>php</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[nodejs 使用]]></title>
-    <url>%2Fposts%2F8d0f4649.html</url>
-    <content type="text"><![CDATA[配置淘宝npm国内访问外网是很慢的，安装NodeJS是自带的npm地址默认是：http://registry.npmjs.org，访问很慢，所以一般换成国内镜像地址。通过config命令123npm config set registry https://registry.npm.taobao.org/ npm info underscore#（如果配置成功，这个命令会有字符串response）npm --registry=https://registry.npm.taobao.org命令行指定1npm --registry https://registry.npm.taobao.org/ info underscore编辑node_modules/npm/.npmrc加入下面内容1registry = https://registry.npm.taobao.org/如果上面的npm地址不行的话，可以试试淘宝的npmhttps://registry.npm.taobao.org123npm set registry https://registry.npm.taobao.org/# 或者npm --registry https://registry.npm.taobao.org/ info underscore下载路径在安装完nodejs后，npm install -g jshint是被安装在默认路径（C:\Users\用户名\AppData\Roaming\npm）下的可以通过修改nodejs安装路径下的node_modules/npm/.npmrc文件prefix=D:\MyTools\nodejs\node_global （修改全局路径）cache=D:\MyTools\nodejs\node_cache （修改全局路径）请注意prefix、cache不能设置成一样的路径，否则通过npm安装模块时，会报错npm 使用123456789# -S 是--save 的缩写，它可以让你安装的模块记录到package.json文件当中npm install -S xxx# 这是删除模块，也可以删除全局模块npm uninstall xxxnpm uninstall -g xxx# -D就是--save-dev 这样安装的包的名称及版本号就会存在package.json的devDependencies这个里面，而--save会将包的名称及版本号放在dependencies里面npm install -D xxxnpm registry 设置1234567891011121314$ npm install -g nrm$ nrm lsD:\Workspace\vuejs-project&gt;nrm ls* npm ---- https://registry.npmjs.org/ cnpm --- http://r.cnpmjs.org/ taobao - https://registry.npm.taobao.org/ nj ----- https://registry.nodejitsu.com/ rednpm - http://registry.mirror.cqupt.edu.cn/ npmMirror https://skimdb.npmjs.com/registry/ edunpm - http://registry.enpmjs.org/# 切换源$ nrm use taobaoRegistry has been set to: https://registry.npm.taobao.org/npm-check检查依赖包版本123456# 安装 npm-checknpm install -g npm-check# 检查 npm 包版本npm-check -u -gnpm-check -u -Snpm-check -u -D]]></content>
-      <categories>
-        <category>nodejs</category>
-      </categories>
-      <tags>
-        <tag>npm</tag>
-        <tag>cnpm</tag>
       </tags>
   </entry>
   <entry>
@@ -1176,17 +1176,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux安装FTP]]></title>
-    <url>%2Fposts%2F9c4dd72b.html</url>
-    <content type="text"><![CDATA[Linux安装FTPubuntu开启ftp服务安装vsftpd1、打开”终端窗口”，输入”sudo apt-get install vsftpd”–&gt;回车–&gt;安装完成。2、判断vsftpd是否安装成功打开”终端窗口”，输入”sudo service vsftpd restart”重启vsftpd服务–&gt;回车–&gt;vsftpd处于运行状态，说明安装成功。3、使用gedit修改配置文件/etc/vsftpd.conf打开”终端窗口”，输入”sudo gedit /etc/vsftpd.conf”–&gt;回车–&gt;打开了vsftpd.conf文设置：write_enable=YESubuntu开启SSH服务SSH分客户端openssh-client和openssh-server如果你只是想登陆别的机器的SSH只需要安装openssh-client（ubuntu有默认安装，如果没有则sudo apt-get install openssh-client），如果要使本机开放SSH服务就需要安装openssh-serversudo apt-get install openssh-server然后确认sshserver是否启动了：ps -e |grep ssh如果看到sshd那说明ssh-server已经启动了。如果没有则可以这样启动：sudo /etc/init.d/ssh startssh-server配置文件位于/ etc/ssh/sshd_config，在这里可以定义SSH的服务端口，默认端口是22，你可以自己定义成其他端口号，如222。然后重启SSH服务：sudo /etc/init.d/ssh stopsudo /etc/init.d/ssh start然后使用以下方式登陆SSH：ssh username@192.168.1.112 username为192.168.1.112 机器上的用户，需要输入密码。断开连接：exit最近一直在Ubuntu下用终端操作，看着他长长的路径名实在不爽， 动手来改改咯～$: sudo gedit ~/.bashrc这个文件记录了用户终端配置找到if [ “$color_prompt “ = yes ]; thenPS1 =’${debian_chroot:+($debian_chroot)}[\033[01;32m]\u@\h[\033[00m]:[\033[01;34m]\W [\033[00m]\$ ‘elsePS1 =’${debian_chroot:+($debian_chroot)}\u@\h:\W \$ ‘将蓝色的w由小写改成大写，可以表示只显示当前目录名称.]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>FTP</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[CentOS安装JDK]]></title>
     <url>%2Fposts%2Fd08f134.html</url>
     <content type="text"><![CDATA[1、准备创建目录12$ mkdir /usr/java$ cd /usr/java下载 jdk-8u73-linux-x64.tar.gz，解压1$ tar -zxvf jdk-8u73-linux-x64.tar.gz会解压到 /usr/java/jdk1.8.0_73 下2、配置环境变量(两种方式二选一配置即可)2.1 编辑 /etc/profile 文件修改 /etc/profile 文件当本机仅仅作为开发使用时推荐使用这种方法，因为此种配置时所有用户的 shell 都有权使用这些环境变量，可能会给系统带来安全性问题。1$ vi /etc/profile增加如下内容123export JAVA_HOME=/usr/java/jdkexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH保存退出 :wq12$ . /etc/profile$ echo $JAVA_HOME2.2 编辑用户目录下的 .bash_profile修改 .bash_profile 文件这种方法更为安全，它可以把使用这些环境变量的权限控制到用户级别，如果需要给某个用户权限使用这些环境变量，只需要修改其个人用户主目录下的 .bash_profile 文件就可以了123export JAVA_HOME=/usr/java/jdkexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH然后执行使之生效1source .bash_profile可以看到 JAVA_HOME 不是指向真实的 jdk 目录 /usr/java/jdk1.8.0_73，而是指向 /usr/java/jdk3、创建软链接为jdk真实目录创建一个命名更加间洁快捷方式123$ ln -s /usr/java/jdk1.8.0_73 /usr/java/jdk$ source /etc/profile#$ source .bash_profile至此，配置完成]]></content>
@@ -1196,6 +1185,17 @@
       <tags>
         <tag>Java</tag>
         <tag>JDK</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux安装FTP]]></title>
+    <url>%2Fposts%2F9c4dd72b.html</url>
+    <content type="text"><![CDATA[Linux安装FTPubuntu开启ftp服务安装vsftpd1、打开”终端窗口”，输入”sudo apt-get install vsftpd”–&gt;回车–&gt;安装完成。2、判断vsftpd是否安装成功打开”终端窗口”，输入”sudo service vsftpd restart”重启vsftpd服务–&gt;回车–&gt;vsftpd处于运行状态，说明安装成功。3、使用gedit修改配置文件/etc/vsftpd.conf打开”终端窗口”，输入”sudo gedit /etc/vsftpd.conf”–&gt;回车–&gt;打开了vsftpd.conf文设置：write_enable=YESubuntu开启SSH服务SSH分客户端openssh-client和openssh-server如果你只是想登陆别的机器的SSH只需要安装openssh-client（ubuntu有默认安装，如果没有则sudo apt-get install openssh-client），如果要使本机开放SSH服务就需要安装openssh-serversudo apt-get install openssh-server然后确认sshserver是否启动了：ps -e |grep ssh如果看到sshd那说明ssh-server已经启动了。如果没有则可以这样启动：sudo /etc/init.d/ssh startssh-server配置文件位于/ etc/ssh/sshd_config，在这里可以定义SSH的服务端口，默认端口是22，你可以自己定义成其他端口号，如222。然后重启SSH服务：sudo /etc/init.d/ssh stopsudo /etc/init.d/ssh start然后使用以下方式登陆SSH：ssh username@192.168.1.112 username为192.168.1.112 机器上的用户，需要输入密码。断开连接：exit最近一直在Ubuntu下用终端操作，看着他长长的路径名实在不爽， 动手来改改咯～$: sudo gedit ~/.bashrc这个文件记录了用户终端配置找到if [ “$color_prompt “ = yes ]; thenPS1 =’${debian_chroot:+($debian_chroot)}[\033[01;32m]\u@\h[\033[00m]:[\033[01;34m]\W [\033[00m]\$ ‘elsePS1 =’${debian_chroot:+($debian_chroot)}\u@\h:\W \$ ‘将蓝色的w由小写改成大写，可以表示只显示当前目录名称.]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>FTP</tag>
       </tags>
   </entry>
 </search>
