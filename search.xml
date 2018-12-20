@@ -508,15 +508,15 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[Linux cp 命令]]></title>
-    <url>%2Fposts%2F2835e3e.html</url>
-    <content type="text"><![CDATA[cp复制文件夹1cp -r [old source] -d [new source]]]></content>
+    <title><![CDATA[Linux cat 命令]]></title>
+    <url>%2Fposts%2Fbe15a742.html</url>
+    <content type="text"><![CDATA[cat统计出现次数12# linux统计某一文件中字符串“sent ip”出现的次数：cat nohup.log |grep "sent ip" |wc -l清空默认文件中的内容1cat /dev/null &gt; filename]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>cp</tag>
+        <tag>cat</tag>
       </tags>
   </entry>
   <entry>
@@ -536,15 +536,15 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[Linux lsof 命令]]></title>
-    <url>%2Fposts%2Ffc091577.html</url>
-    <content type="text"><![CDATA[lsof检测端口未被占用1lsof -i:8080]]></content>
+    <title><![CDATA[Linux ls 命令]]></title>
+    <url>%2Fposts%2F53b5960c.html</url>
+    <content type="text"><![CDATA[ls12# 统计文件夹中文件数ls -l |grep "^-"|wc -l保留最新的1个文件夹，删除其他文件夹（使用-d）1ls -t -d /home/txrd/tisson-web-open/logs/undertow-* | tail -n +2 | xargs rm -rf]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>lsof</tag>
         <tag>shell</tag>
+        <tag>ls</tag>
       </tags>
   </entry>
   <entry>
@@ -560,24 +560,24 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux cat 命令]]></title>
-    <url>%2Fposts%2Fbe15a742.html</url>
-    <content type="text"><![CDATA[cat统计出现次数12# linux统计某一文件中字符串“sent ip”出现的次数：cat nohup.log |grep "sent ip" |wc -l清空默认文件中的内容1cat /dev/null &gt; filename]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>cat</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[zookeeper 启动脚本]]></title>
     <url>%2Fposts%2Faf01b9a2.html</url>
     <content type="text"><![CDATA[start12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-28 10:23:20# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:41# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`NODE_BIN_DIR=`pwd`NODE_LIB_DIR=$NODE_BIN_DIR/../lib/cd ..NODE_HOME=`pwd`# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"# mkdir logs dirNODE_DATA_LOG_DIR=`sed '/dataLogDir/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`NODE_LOGS_DIR=""if [ -n "$NODE_DATA_LOG_DIR" ]; then NODE_LOGS_DIR=$NODE_DATA_LOG_DIRelse NODE_LOGS_DIR=$NODE_HOME/logsfiif [ ! -d $NODE_LOGS_DIR ]; then mkdir $NODE_LOGS_DIRfiSTDOUT_FILE=$NODE_LOGS_DIR/stdout.logecho "$DATE_PATTERN NODE_BIN_DIR: $NODE_BIN_DIR" | tee -a $STDOUT_FILE# pidNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`if [ -n "$NODE_PID" ]; then echo "$DATE_PATTERN ERROR: The $NODE_LIB_DIR already started! pid: $NODE_PID" | tee -a $STDOUT_FILE exit 1fi# portNODE_PORT=`sed '/clientPort/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`if [ -n "$NODE_PORT" ]; then NODE_PORT_COUNT=`netstat -tln | grep $NODE_PORT | wc -l` if [ $NODE_PORT_COUNT -gt 0 ]; then echo "$DATE_PATTERN ERROR: The $NODE_LIB_DIR port $NODE_PORT already used!" | tee -a $STDOUT_FILE exit 1 fifi# startingcd $NODE_BIN_DIR./zkServer.sh startNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`echo "$DATE_PATTERN The $NODE_LIB_DIR started OK! pid: $NODE_PID" | tee -a $STDOUT_FILE]]></content>
       <categories>
         <category>zookeeper</category>
       </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux cp 命令]]></title>
+    <url>%2Fposts%2F2835e3e.html</url>
+    <content type="text"><![CDATA[cp复制文件夹1cp -r [old source] -d [new source]]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>cp</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[Linux find 命令]]></title>
@@ -592,19 +592,19 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[zookeeper重启脚本]]></title>
-    <url>%2Fposts%2F6c1ad93d.html</url>
-    <content type="text"><![CDATA[restart12345678910111213#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:10# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:30# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stopsleep 3./zkServer.sh start]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
     <title><![CDATA[zookeeper 清理日志文件]]></title>
     <url>%2Fposts%2Fc0bbcacd.html</url>
     <content type="text"><![CDATA[clear123456789101112131415161718192021222324252627282930#!/usr/bin/env bash# @Author: YL# @Date: 2017-11-01 08:59:34# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:09# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`cd ..NODE_HOME=`pwd`# snapshotNODE_DATA_DIR=$NODE_HOME/data/version-2# snapshot logNODE_LOG_DIR=$NODE_HOME/logs/version-2# zk logNODE_LOGS=$NODE_HOME/logs# 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中count=3count=$[$count+1]ls -t $NODE_LOG_DIR/log.* | tail -n +$count | xargs rm -fls -t $NODE_DATA_DIR/snapshot.* | tail -n +$count | xargs rm -fls -t $NODE_LOGS/zookeeper.log.* | tail -n +$count | xargs rm -f# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"STDOUT_FILE=$NODE_LOGS/stdout.logecho "$DATE_PATTERN clear logs success" | tee -a $STDOUT_FILE]]></content>
       <categories>
         <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Tomcat 启动脚本]]></title>
+    <url>%2Fposts%2Fe22f47ab.html</url>
+    <content type="text"><![CDATA[Tomcat 启动脚本start.sh12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455#!/usr/bin/env bash# @Author: YL# @Date: 2017-01-25 14:50:43# @Last Modified by: YL# @Last Modified time: 2017-12-18 14:12:23cd `dirname $0`PROJECT_HOME=`pwd`# Tomcat 服务器路径TC_HOME="$PROJECT_HOME/tomcat"# crontab 检测日记文件TC_STDOUT_FILE="$TC_HOME/logs/stdout.out"# 检测 Tomcat 是否启动（进程ID）TC_PID=`ps -ef | grep $TC_HOME/bin | grep -v grep | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# 检测输出的日记格式DATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME"function operate()&#123; if [[ "$1" = "kill" ]] ; then if [[ "$TC_PID" = "" ]] ; then echo "$DATE_PATTERN is not alive" | tee -a $TC_STDOUT_FILE else echo "$DATE_PATTERN kill $TC_PID begining" | tee -a $TC_STDOUT_FILE kill -9 $TC_PID echo "$DATE_PATTERN kill $TC_PID success" | tee -a $TC_STDOUT_FILE fi elif [[ "$1" = "start" ]]; then cd $TC_HOME/bin sh startup.sh else echo "$DATE_PATTERN is not support $1" | tee -a $TC_STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "$DATE_PATTERN starting" | tee -a $TC_STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$TC_PID" = "" ]] ; then echo "$DATE_PATTERN starting" &gt;&gt; $TC_STDOUT_FILE operate start else echo "$DATE_PATTERN pid $TC_PID" &gt;&gt; $TC_STDOUT_FILE fielse echo "$DATE_PATTERN is not support $1" | tee -a $TC_STDOUT_FILEfi使用说明12345sh start.sh start # 重启sh start.sh # 重启sh start.sh restart # 重启sh start.sh check # 检测服务是否启动，没有启动，则启动之，否则不做其他操作sh start.sh kill # kill掉已启动的服务进程]]></content>
+      <categories>
+        <category>Tomcat</category>
       </categories>
   </entry>
   <entry>
@@ -620,23 +620,23 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Tomcat 启动脚本]]></title>
-    <url>%2Fposts%2Fe22f47ab.html</url>
-    <content type="text"><![CDATA[Tomcat 启动脚本start.sh12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455#!/usr/bin/env bash# @Author: YL# @Date: 2017-01-25 14:50:43# @Last Modified by: YL# @Last Modified time: 2017-12-18 14:12:23cd `dirname $0`PROJECT_HOME=`pwd`# Tomcat 服务器路径TC_HOME="$PROJECT_HOME/tomcat"# crontab 检测日记文件TC_STDOUT_FILE="$TC_HOME/logs/stdout.out"# 检测 Tomcat 是否启动（进程ID）TC_PID=`ps -ef | grep $TC_HOME/bin | grep -v grep | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# 检测输出的日记格式DATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME"function operate()&#123; if [[ "$1" = "kill" ]] ; then if [[ "$TC_PID" = "" ]] ; then echo "$DATE_PATTERN is not alive" | tee -a $TC_STDOUT_FILE else echo "$DATE_PATTERN kill $TC_PID begining" | tee -a $TC_STDOUT_FILE kill -9 $TC_PID echo "$DATE_PATTERN kill $TC_PID success" | tee -a $TC_STDOUT_FILE fi elif [[ "$1" = "start" ]]; then cd $TC_HOME/bin sh startup.sh else echo "$DATE_PATTERN is not support $1" | tee -a $TC_STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "$DATE_PATTERN starting" | tee -a $TC_STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$TC_PID" = "" ]] ; then echo "$DATE_PATTERN starting" &gt;&gt; $TC_STDOUT_FILE operate start else echo "$DATE_PATTERN pid $TC_PID" &gt;&gt; $TC_STDOUT_FILE fielse echo "$DATE_PATTERN is not support $1" | tee -a $TC_STDOUT_FILEfi使用说明12345sh start.sh start # 重启sh start.sh # 重启sh start.sh restart # 重启sh start.sh check # 检测服务是否启动，没有启动，则启动之，否则不做其他操作sh start.sh kill # kill掉已启动的服务进程]]></content>
+    <title><![CDATA[zookeeper重启脚本]]></title>
+    <url>%2Fposts%2F6c1ad93d.html</url>
+    <content type="text"><![CDATA[restart12345678910111213#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:10# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:30# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stopsleep 3./zkServer.sh start]]></content>
       <categories>
-        <category>Tomcat</category>
+        <category>zookeeper</category>
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[Linux ls 命令]]></title>
-    <url>%2Fposts%2F53b5960c.html</url>
-    <content type="text"><![CDATA[ls12# 统计文件夹中文件数ls -l |grep "^-"|wc -l保留最新的1个文件夹，删除其他文件夹（使用-d）1ls -t -d /home/txrd/tisson-web-open/logs/undertow-* | tail -n +2 | xargs rm -rf]]></content>
+    <title><![CDATA[Linux unzip 命令]]></title>
+    <url>%2Fposts%2F64f75729.html</url>
+    <content type="text"><![CDATA[unzip解压war、jar、zip、rar等文件1unzip -oq /opt/xxx.war -d /opt/ddd]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>ls</tag>
+        <tag>unzip</tag>
       </tags>
   </entry>
   <entry>
@@ -652,15 +652,15 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux unzip 命令]]></title>
-    <url>%2Fposts%2F64f75729.html</url>
-    <content type="text"><![CDATA[unzip解压war、jar、zip、rar等文件1unzip -oq /opt/xxx.war -d /opt/ddd]]></content>
+    <title><![CDATA[Linux tar 命令]]></title>
+    <url>%2Fposts%2Fbd083454.html</url>
+    <content type="text"><![CDATA[tar1tar -zxvf xxx.tar.gz]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>unzip</tag>
+        <tag>tar</tag>
       </tags>
   </entry>
   <entry>
@@ -676,39 +676,15 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux tar 命令]]></title>
-    <url>%2Fposts%2Fbd083454.html</url>
-    <content type="text"><![CDATA[tar1tar -zxvf xxx.tar.gz]]></content>
+    <title><![CDATA[Linux tail 命令]]></title>
+    <url>%2Fposts%2F29bd046e.html</url>
+    <content type="text"><![CDATA[tail]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>tar</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux curl 命令]]></title>
-    <url>%2Fposts%2Faea02818.html</url>
-    <content type="text"><![CDATA[curlGET 请求1curl http://www.baidu.com?q=xxxxPOST 请求1curl http://ip:port/weixin_v3/w -XPOST -d "send message..."发送 POST JSON 请求1curl -H "Content-Type: application/json" -X POST --data '&#123;"data":"1"&#125;' http://127.0.0.1/使用代理1curl -x 192.168.2.5:3128 http://www.baidu.com?q=xxxx输出请求信息12345678# http_code# time_connect# time_starttransfer# time_total# size_download# speed_download# 参考地址：curl http://www.baidu.com?q=xxxx -so /dev/null -w "%&#123;http_code&#125;\t%&#123;time_connect&#125;\t%&#123;time_starttransfer&#125;\t%&#123;time_total&#125;\t%&#123;size_download&#125;\t%&#123;speed_download&#125;\t"]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>curl</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux sed 命令]]></title>
-    <url>%2Fposts%2Fb8ec468d.html</url>
-    <content type="text"><![CDATA[sed打印指定行数1sed -n '12457431, 12457440p' tomcat/logs/catalina.out]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>sed</tag>
+        <tag>tail</tag>
       </tags>
   </entry>
   <entry>
@@ -724,6 +700,42 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Linux sed 命令]]></title>
+    <url>%2Fposts%2Fb8ec468d.html</url>
+    <content type="text"><![CDATA[sed打印指定行数1sed -n '12457431, 12457440p' tomcat/logs/catalina.out]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>sed</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux curl 命令]]></title>
+    <url>%2Fposts%2Faea02818.html</url>
+    <content type="text"><![CDATA[curlGET 请求1curl http://www.baidu.com?q=xxxxPOST 请求1curl http://ip:port/weixin_v3/w -XPOST -d "send message..."发送 POST JSON 请求1curl -H "Content-Type: application/json" -X POST --data '&#123;"data":"1"&#125;' http://127.0.0.1/使用代理1curl -x 192.168.2.5:3128 http://www.baidu.com?q=xxxx输出请求信息12345678# http_code# time_connect# time_starttransfer# time_total# size_download# speed_download# 参考地址：curl http://www.baidu.com?q=xxxx -so /dev/null -w "%&#123;http_code&#125;\t%&#123;time_connect&#125;\t%&#123;time_starttransfer&#125;\t%&#123;time_total&#125;\t%&#123;size_download&#125;\t%&#123;speed_download&#125;\t"]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>curl</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux lsof 命令]]></title>
+    <url>%2Fposts%2Ffc091577.html</url>
+    <content type="text"><![CDATA[lsof检测端口未被占用1lsof -i:8080]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>lsof</tag>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Linux netstat 命令]]></title>
     <url>%2Fposts%2F6c05ba39.html</url>
     <content type="text"><![CDATA[netstat查看进程的网络状态1netstat -anp | grep 7646]]></content>
@@ -733,18 +745,6 @@
       <tags>
         <tag>netstat</tag>
         <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux tail 命令]]></title>
-    <url>%2Fposts%2F29bd046e.html</url>
-    <content type="text"><![CDATA[tail]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>tail</tag>
       </tags>
   </entry>
   <entry>
@@ -829,6 +829,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[pagehelper 使用笔记]]></title>
+    <url>%2Fposts%2F4f0d5500.html</url>
+    <content type="text"><![CDATA[主要是记录一些在使用mybatis + pagehelper过程中遇到的一些问题，和要注意的知识点PageHelper 分页12345// 获取第1页，10条内容，默认查询总数countPageHelper.startPage(1, 10);// 获取第1页，10条内容，不查询总数countPageHelper.startPage(1, 10, false);]]></content>
+      <categories>
+        <category>mybatis</category>
+      </categories>
+      <tags>
+        <tag>pagehelper</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[spring-data-jpa 使用笔记]]></title>
     <url>%2Fposts%2F43f916ea.html</url>
     <content type="text"><![CDATA[主要是记录一些在使用spring-data-jpa + Hibernate过程中遇到的一些问题，和要注意的知识点Pageable 和 PageRequest 分页在Mysql、Oracle中分页从0开始1Pageable pageable = new PageRequest(0, 10);查看org.springframework.data.domain.PageRequest源码可知，分页从0开始123public Pageable first() &#123; return new PageRequest(0, this.getPageSize(), this.getSort());&#125;]]></content>
@@ -838,17 +849,6 @@
       <tags>
         <tag>Hibernate</tag>
         <tag>spring-data-jpa</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[pagehelper 使用笔记]]></title>
-    <url>%2Fposts%2F4f0d5500.html</url>
-    <content type="text"><![CDATA[主要是记录一些在使用mybatis + pagehelper过程中遇到的一些问题，和要注意的知识点PageHelper 分页12345// 获取第1页，10条内容，默认查询总数countPageHelper.startPage(1, 10);// 获取第1页，10条内容，不查询总数countPageHelper.startPage(1, 10, false);]]></content>
-      <categories>
-        <category>mybatis</category>
-      </categories>
-      <tags>
-        <tag>pagehelper</tag>
       </tags>
   </entry>
   <entry>
