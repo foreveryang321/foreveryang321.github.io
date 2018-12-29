@@ -1,6 +1,3 @@
 User-agent: *
-Allow: /
-Allow: /archives/
-Allow: /categories/
-Allow: /tags/
+Allow: /posts/
 Sitemap: https://blog.yl-online.top/sitemap.xml
