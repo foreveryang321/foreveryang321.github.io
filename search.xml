@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[Dubbo 2.7.x使用]]></title>
     <url>%2Fposts%2Fed805d7d.html</url>
-    <content type="text"><![CDATA[环境代码地址dubbo-spring-boot-example-2.7.xdubbo 2.7.0duboo-spring-boot-starter 2.7.0启动 provider访问以下地址来判断provider端使用多协议是否正常[http://localhost:9090/top.ylonline.dubbo27x.api.RestService/single/echo?message=rest-protocol](http://localhost:9090/top.ylonline.dubbo27x.api.RestService/single/echo?message=rest-protocol)[http://localhost:9090/top.ylonline.dubbo27x.api.MultipleService/multiple/echo?message=dubbo-or-rest-protocol](http://localhost:9090/top.ylonline.dubbo27x.api.MultipleService/multiple/echo?message=dubbo-or-rest-protocol)使用接口的全限类名作为contextpath是dubbo-2.7.0的bug，请看issue，此PR修复了这个问题启动 consumer分别访问以下地址来判断consumer端使用多协议是否正常http://localhost:8080/demo/dubbo?message=dubbo-protocolhttp://localhost:8080/demo/rest?message=rest-protocolhttp://localhost:8080/demo/multiple?message=dubbo-or-rest-protocol异常问题java.lang.NoClassDefFoundError: org/jboss/resteasy/client/jaxrs/engines/ApacheHttpClient4Engine需要添加以下依赖包，该依赖 provider 端无需依赖，consumer 端需要依赖12345&lt;dependency&gt; &lt;groupId&gt;org.jboss.resteasy&lt;/groupId&gt; &lt;artifactId&gt;resteasy-client&lt;/artifactId&gt; &lt;version&gt;$&#123;resteasy-client.version&#125;&lt;/version&gt;&lt;/dependency&gt;java.lang.RuntimeException: You must use at least one, but no more than one http method annotation on: top.ylonline.dubbo.spring.boot.example.api.EchoService.echo..出现这个异常，说明要在使用的接口标注：@Path、@POST、@Get等javax.ws.rs.*这个路径下相关注解，不应该在实现类标注12345678910111213141516171819202122package top.ylonline.dubbo.spring.boot.api;import javax.ws.rs.GET;import javax.ws.rs.Path;import javax.ws.rs.QueryParam;/** * @author YL */@Path("/single")public interface RestService &#123; /** * echo * * @param message msg * * @return 信息 */ @GET @Path("/echo") String echo(@QueryParam("message") String message);&#125;Duplicate application configs本人提了一个issue当使用org.apache.dubbo:dubbo-spring-boot-starter 2.7.0，同时使用xml作为dubbo的配置时，会出现以下异常：1Caused by: java.lang.IllegalStateException: Duplicate application configs: &lt;dubbo:application name=&quot;dubbo-consumer-2.7.x&quot; valid=&quot;true&quot; id=&quot;dubbo-consumer-2.7.x&quot; prefix=&quot;dubbo.application&quot; /&gt; and &lt;dubbo:application valid=&quot;false&quot; prefix=&quot;dubbo.application&quot; /&gt;main 类123456789101112131415@SpringBootApplication( exclude = &#123; DataSourceAutoConfiguration.class, WebSocketServletAutoConfiguration.class, JmxAutoConfiguration.class &#125;)@ImportResource(locations = &#123;"classpath:dubbo.xml"&#125;)@Slf4jpublic class DubboConsumer270 &#123; public static void main(String[] args) &#123; SpringApplication.run(DubboConsumer270.class, args); &#125;&#125;dubbo.xml1234567891011121314151617181920&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://dubbo.apache.org/schema/dubbo" xmlns="http://www.springframework.org/schema/beans" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd"&gt; &lt;dubbo:application name="dubbo-consumer-2.7.x"&gt; &lt;dubbo:parameter key="qos.enable" value="false"/&gt; &lt;/dubbo:application&gt; &lt;dubbo:registry address="zookeeper://192.168.56.101:2181" client="curator"/&gt; &lt;dubbo:consumer check="false" client="netty"/&gt; &lt;dubbo:reference id="dubboService" interface="top.ylonline.dubbo27x.api.DubboService"/&gt;&lt;/beans&gt;pom.xml123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114&lt;properties&gt; &lt;dubbo.version&gt;2.7.0&lt;/dubbo.version&gt; &lt;spring-boot.version&gt;2.0.6.RELEASE&lt;/spring-boot.version&gt;&lt;/properties&gt;&lt;dependencyManagement&gt; &lt;dependencies&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-dependencies&lt;/artifactId&gt; &lt;version&gt;$&#123;spring-boot.version&#125;&lt;/version&gt; &lt;type&gt;pom&lt;/type&gt; &lt;scope&gt;import&lt;/scope&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;org.apache.dubbo&lt;/groupId&gt; &lt;artifactId&gt;dubbo&lt;/artifactId&gt; &lt;version&gt;$&#123;dubbo.version&#125;&lt;/version&gt; &lt;exclusions&gt; &lt;exclusion&gt; &lt;groupId&gt;com.google.code.gson&lt;/groupId&gt; &lt;artifactId&gt;gson&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;exclusion&gt; &lt;groupId&gt;io.netty&lt;/groupId&gt; &lt;artifactId&gt;netty-all&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;/exclusions&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;org.apache.dubbo&lt;/groupId&gt; &lt;artifactId&gt;dubbo-spring-boot-starter&lt;/artifactId&gt; &lt;version&gt;$&#123;dubbo.version&#125;&lt;/version&gt; &lt;/dependency&gt; &lt;!-- Dubbo zookeeper registry dependency --&gt; &lt;dependency&gt; &lt;groupId&gt;org.apache.zookeeper&lt;/groupId&gt; &lt;artifactId&gt;zookeeper&lt;/artifactId&gt; &lt;version&gt;3.4.9&lt;/version&gt; &lt;exclusions&gt; &lt;exclusion&gt; &lt;groupId&gt;org.slf4j&lt;/groupId&gt; &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;exclusion&gt; &lt;groupId&gt;org.slf4j&lt;/groupId&gt; &lt;artifactId&gt;slf4j-log4j12&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;exclusion&gt; &lt;groupId&gt;log4j&lt;/groupId&gt; &lt;artifactId&gt;log4j&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;exclusion&gt; &lt;groupId&gt;io.netty&lt;/groupId&gt; &lt;artifactId&gt;netty&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;/exclusions&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;org.apache.curator&lt;/groupId&gt; &lt;artifactId&gt;curator-framework&lt;/artifactId&gt; &lt;version&gt;2.12.0&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;org.apache.curator&lt;/groupId&gt; &lt;artifactId&gt;curator-recipes&lt;/artifactId&gt; &lt;version&gt;2.12.0&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;io.netty&lt;/groupId&gt; &lt;artifactId&gt;netty-all&lt;/artifactId&gt; &lt;version&gt;4.1.29.Final&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;com.google.guava&lt;/groupId&gt; &lt;artifactId&gt;guava&lt;/artifactId&gt; &lt;version&gt;21.0&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;commons-io&lt;/groupId&gt; &lt;artifactId&gt;commons-io&lt;/artifactId&gt; &lt;version&gt;2.5&lt;/version&gt; &lt;/dependency&gt; &lt;/dependencies&gt;&lt;/dependencyManagement&gt;&lt;!-- dubbo --&gt;&lt;dependency&gt; &lt;groupId&gt;org.apache.dubbo&lt;/groupId&gt; &lt;artifactId&gt;dubbo&lt;/artifactId&gt;&lt;/dependency&gt;&lt;dependency&gt; &lt;groupId&gt;org.apache.dubbo&lt;/groupId&gt; &lt;artifactId&gt;dubbo-spring-boot-starter&lt;/artifactId&gt;&lt;/dependency&gt;&lt;dependency&gt; &lt;groupId&gt;io.netty&lt;/groupId&gt; &lt;artifactId&gt;netty-all&lt;/artifactId&gt;&lt;/dependency&gt;&lt;!-- zk registry dependency --&gt;&lt;dependency&gt; &lt;groupId&gt;org.apache.zookeeper&lt;/groupId&gt; &lt;artifactId&gt;zookeeper&lt;/artifactId&gt;&lt;/dependency&gt;&lt;dependency&gt; &lt;groupId&gt;org.apache.curator&lt;/groupId&gt; &lt;artifactId&gt;curator-framework&lt;/artifactId&gt;&lt;/dependency&gt;&lt;dependency&gt; &lt;groupId&gt;org.apache.curator&lt;/groupId&gt; &lt;artifactId&gt;curator-recipes&lt;/artifactId&gt;&lt;/dependency&gt;解决方法：去掉dubbo-spring-boot-starter依赖，使用xml方式配置dubbo不使用xml方式配置dubbo，单单使用dubbo-spring-boot-starter方式No such extension org.apache.dubbo.metadata.store.MetadataReportFactory by name redis问题描述请看：issue本人提交了一个PR修复了此问题同时，也可以添加以下依赖来解决这个问题1234567891011&lt;dependency&gt; &lt;groupId&gt;org.apache.dubbo&lt;/groupId&gt; &lt;artifactId&gt;dubbo-metadata-report-redis&lt;/artifactId&gt; &lt;version&gt;2.7.0&lt;/version&gt; &lt;exclusions&gt; &lt;exclusion&gt; &lt;groupId&gt;org.apache.dubbo&lt;/groupId&gt; &lt;artifactId&gt;dubbo-metadata-report-api&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;/exclusions&gt;&lt;/dependency&gt;]]></content>
+    <content type="text"><![CDATA[环境代码地址dubbo-v2.7.xdubbo 2.7.0duboo-spring-boot-starter 2.7.0启动 provider访问以下地址来判断provider端使用多协议是否正常[http://localhost:9090/top.ylonline.dubbo27x.api.RestService/single/echo?message=rest-protocol](http://localhost:9090/top.ylonline.dubbo27x.api.RestService/single/echo?message=rest-protocol)[http://localhost:9090/top.ylonline.dubbo27x.api.MultipleService/multiple/echo?message=dubbo-or-rest-protocol](http://localhost:9090/top.ylonline.dubbo27x.api.MultipleService/multiple/echo?message=dubbo-or-rest-protocol)使用接口的全限类名作为contextpath是dubbo-2.7.0的bug，请看issue，此PR修复了这个问题启动 consumer分别访问以下地址来判断consumer端使用多协议是否正常http://localhost:8080/demo/dubbo?message=dubbo-protocolhttp://localhost:8080/demo/rest?message=rest-protocolhttp://localhost:8080/demo/multiple?message=dubbo-or-rest-protocol异常问题java.lang.NoClassDefFoundError: org/jboss/resteasy/client/jaxrs/engines/ApacheHttpClient4Engine需要添加以下依赖包，该依赖 provider 端无需依赖，consumer 端需要依赖12345&lt;dependency&gt; &lt;groupId&gt;org.jboss.resteasy&lt;/groupId&gt; &lt;artifactId&gt;resteasy-client&lt;/artifactId&gt; &lt;version&gt;$&#123;resteasy-client.version&#125;&lt;/version&gt;&lt;/dependency&gt;java.lang.RuntimeException: You must use at least one, but no more than one http method annotation on: top.ylonline.dubbo.spring.boot.example.api.EchoService.echo..出现这个异常，说明要在使用的接口标注：@Path、@POST、@Get等javax.ws.rs.*这个路径下相关注解，不应该在实现类标注12345678910111213141516171819202122package top.ylonline.dubbo.spring.boot.api;import javax.ws.rs.GET;import javax.ws.rs.Path;import javax.ws.rs.QueryParam;/** * @author YL */@Path("/single")public interface RestService &#123; /** * echo * * @param message msg * * @return 信息 */ @GET @Path("/echo") String echo(@QueryParam("message") String message);&#125;Duplicate application configs本人提了一个issue当使用org.apache.dubbo:dubbo-spring-boot-starter 2.7.0，同时使用xml作为dubbo的配置时，会出现以下异常：1Caused by: java.lang.IllegalStateException: Duplicate application configs: &lt;dubbo:application name=&quot;dubbo-consumer-2.7.x&quot; valid=&quot;true&quot; id=&quot;dubbo-consumer-2.7.x&quot; prefix=&quot;dubbo.application&quot; /&gt; and &lt;dubbo:application valid=&quot;false&quot; prefix=&quot;dubbo.application&quot; /&gt;main 类123456789101112131415@SpringBootApplication( exclude = &#123; DataSourceAutoConfiguration.class, WebSocketServletAutoConfiguration.class, JmxAutoConfiguration.class &#125;)@ImportResource(locations = &#123;"classpath:dubbo.xml"&#125;)@Slf4jpublic class DubboConsumer270 &#123; public static void main(String[] args) &#123; SpringApplication.run(DubboConsumer270.class, args); &#125;&#125;dubbo.xml1234567891011121314151617181920&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://dubbo.apache.org/schema/dubbo" xmlns="http://www.springframework.org/schema/beans" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd"&gt; &lt;dubbo:application name="dubbo-consumer-2.7.x"&gt; &lt;dubbo:parameter key="qos.enable" value="false"/&gt; &lt;/dubbo:application&gt; &lt;dubbo:registry address="zookeeper://192.168.56.101:2181" client="curator"/&gt; &lt;dubbo:consumer check="false" client="netty"/&gt; &lt;dubbo:reference id="dubboService" interface="top.ylonline.dubbo27x.api.DubboService"/&gt;&lt;/beans&gt;pom.xml123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114&lt;properties&gt; &lt;dubbo.version&gt;2.7.0&lt;/dubbo.version&gt; &lt;spring-boot.version&gt;2.0.6.RELEASE&lt;/spring-boot.version&gt;&lt;/properties&gt;&lt;dependencyManagement&gt; &lt;dependencies&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-dependencies&lt;/artifactId&gt; &lt;version&gt;$&#123;spring-boot.version&#125;&lt;/version&gt; &lt;type&gt;pom&lt;/type&gt; &lt;scope&gt;import&lt;/scope&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;org.apache.dubbo&lt;/groupId&gt; &lt;artifactId&gt;dubbo&lt;/artifactId&gt; &lt;version&gt;$&#123;dubbo.version&#125;&lt;/version&gt; &lt;exclusions&gt; &lt;exclusion&gt; &lt;groupId&gt;com.google.code.gson&lt;/groupId&gt; &lt;artifactId&gt;gson&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;exclusion&gt; &lt;groupId&gt;io.netty&lt;/groupId&gt; &lt;artifactId&gt;netty-all&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;/exclusions&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;org.apache.dubbo&lt;/groupId&gt; &lt;artifactId&gt;dubbo-spring-boot-starter&lt;/artifactId&gt; &lt;version&gt;$&#123;dubbo.version&#125;&lt;/version&gt; &lt;/dependency&gt; &lt;!-- Dubbo zookeeper registry dependency --&gt; &lt;dependency&gt; &lt;groupId&gt;org.apache.zookeeper&lt;/groupId&gt; &lt;artifactId&gt;zookeeper&lt;/artifactId&gt; &lt;version&gt;3.4.9&lt;/version&gt; &lt;exclusions&gt; &lt;exclusion&gt; &lt;groupId&gt;org.slf4j&lt;/groupId&gt; &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;exclusion&gt; &lt;groupId&gt;org.slf4j&lt;/groupId&gt; &lt;artifactId&gt;slf4j-log4j12&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;exclusion&gt; &lt;groupId&gt;log4j&lt;/groupId&gt; &lt;artifactId&gt;log4j&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;exclusion&gt; &lt;groupId&gt;io.netty&lt;/groupId&gt; &lt;artifactId&gt;netty&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;/exclusions&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;org.apache.curator&lt;/groupId&gt; &lt;artifactId&gt;curator-framework&lt;/artifactId&gt; &lt;version&gt;2.12.0&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;org.apache.curator&lt;/groupId&gt; &lt;artifactId&gt;curator-recipes&lt;/artifactId&gt; &lt;version&gt;2.12.0&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;io.netty&lt;/groupId&gt; &lt;artifactId&gt;netty-all&lt;/artifactId&gt; &lt;version&gt;4.1.29.Final&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;com.google.guava&lt;/groupId&gt; &lt;artifactId&gt;guava&lt;/artifactId&gt; &lt;version&gt;21.0&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;commons-io&lt;/groupId&gt; &lt;artifactId&gt;commons-io&lt;/artifactId&gt; &lt;version&gt;2.5&lt;/version&gt; &lt;/dependency&gt; &lt;/dependencies&gt;&lt;/dependencyManagement&gt;&lt;!-- dubbo --&gt;&lt;dependency&gt; &lt;groupId&gt;org.apache.dubbo&lt;/groupId&gt; &lt;artifactId&gt;dubbo&lt;/artifactId&gt;&lt;/dependency&gt;&lt;dependency&gt; &lt;groupId&gt;org.apache.dubbo&lt;/groupId&gt; &lt;artifactId&gt;dubbo-spring-boot-starter&lt;/artifactId&gt;&lt;/dependency&gt;&lt;dependency&gt; &lt;groupId&gt;io.netty&lt;/groupId&gt; &lt;artifactId&gt;netty-all&lt;/artifactId&gt;&lt;/dependency&gt;&lt;!-- zk registry dependency --&gt;&lt;dependency&gt; &lt;groupId&gt;org.apache.zookeeper&lt;/groupId&gt; &lt;artifactId&gt;zookeeper&lt;/artifactId&gt;&lt;/dependency&gt;&lt;dependency&gt; &lt;groupId&gt;org.apache.curator&lt;/groupId&gt; &lt;artifactId&gt;curator-framework&lt;/artifactId&gt;&lt;/dependency&gt;&lt;dependency&gt; &lt;groupId&gt;org.apache.curator&lt;/groupId&gt; &lt;artifactId&gt;curator-recipes&lt;/artifactId&gt;&lt;/dependency&gt;解决方法：去掉dubbo-spring-boot-starter依赖，使用xml方式配置dubbo不使用xml方式配置dubbo，单单使用dubbo-spring-boot-starter方式No such extension org.apache.dubbo.metadata.store.MetadataReportFactory by name redis问题描述请看：issue本人提交了一个PR修复了此问题同时，也可以添加以下依赖来解决这个问题1234567891011&lt;dependency&gt; &lt;groupId&gt;org.apache.dubbo&lt;/groupId&gt; &lt;artifactId&gt;dubbo-metadata-report-redis&lt;/artifactId&gt; &lt;version&gt;2.7.0&lt;/version&gt; &lt;exclusions&gt; &lt;exclusion&gt; &lt;groupId&gt;org.apache.dubbo&lt;/groupId&gt; &lt;artifactId&gt;dubbo-metadata-report-api&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;/exclusions&gt;&lt;/dependency&gt;]]></content>
       <categories>
         <category>Java</category>
       </categories>
@@ -15,9 +15,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Dubbo 2.6.5 使用]]></title>
+    <title><![CDATA[Dubbo 2.6.x使用]]></title>
     <url>%2Fposts%2F61ed87a1.html</url>
-    <content type="text"><![CDATA[环境代码地址dubbo-spring-boot-exampledubbo 2.6.5dubbo-spring-boot-starter 0.2.0由于 dubbo-2.6.5 及以下版本的 Reference 还不支持 protocol 属性（dubbo-2.7.0支持了），注解暂时无法指定协议，但是可以使用xml配置指定协议启动 provider 端访问以下地址来判断provider端使用多协议是否正常http://localhost:9090/demo/echo?message=rest协议启动 consumer 端分别访问以下地址来判断consumer端使用多协议是否正常http://localhost:8080/demo/dubbo?message=使用dubbo协议http://localhost:8080/demo/rest?message=使用rest协议提示 AnnotationInjectedBeanPostProcessor 异常issue1Caused by: java.lang.ClassNotFoundException: com.alibaba.spring.beans.factory.annotation.AnnotationInjectedBeanPostProcessor解决，添加以下依赖12345&lt;dependency&gt; &lt;groupId&gt;com.alibaba.spring&lt;/groupId&gt; &lt;artifactId&gt;spring-context-support&lt;/artifactId&gt; &lt;version&gt;1.0.2&lt;/version&gt;&lt;/dependency&gt;异常问题java.lang.NoClassDefFoundError: org/jboss/resteasy/client/jaxrs/engines/ApacheHttpClient4Engine需要添加以下依赖包，该依赖 provider 端无需依赖，consumer 端需要依赖12345&lt;dependency&gt; &lt;groupId&gt;org.jboss.resteasy&lt;/groupId&gt; &lt;artifactId&gt;resteasy-client&lt;/artifactId&gt; &lt;version&gt;$&#123;resteasy-client.version&#125;&lt;/version&gt;&lt;/dependency&gt;java.lang.RuntimeException: You must use at least one, but no more than one http method annotation on: top.ylonline.dubbo.spring.boot.example.api.EchoService.echo..出现这个异常，说明要在使用的接口标注：@Path、@POST、@Get等javax.ws.rs.*这个路径下相关注解，不应该在实现类标注12345678910111213141516171819202122package top.ylonline.dubbo.spring.boot.example.api;import javax.ws.rs.GET;import javax.ws.rs.Path;import javax.ws.rs.QueryParam;/** * @author YL */@Path("/demo")public interface EchoService &#123; /** * echo * * @param message msg * * @return 信息 */ @GET @Path("/echo") String echo(@QueryParam("message") String message);&#125;dubbo-spring-boot-starter 中 spring-boot-starter scope 传递问题1234567891011&lt;dependency&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt; &lt;scope&gt;test&lt;/scope&gt;&lt;/dependency&gt;&lt;dependency&gt; &lt;groupId&gt;com.alibaba.boot&lt;/groupId&gt; &lt;artifactId&gt;dubbo-spring-boot-starter&lt;/artifactId&gt; &lt;version&gt;0.2.0&lt;/version&gt;&lt;/dependency&gt;由于dubbo-spring-boot-starter中依赖了spring-boot-starter的scope是true，会导致其继承spring-boot-starter-test的scope，使其变成test123456&lt;!-- Spring Boot dependencies --&gt;&lt;dependency&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-starter&lt;/artifactId&gt; &lt;scope&gt;true&lt;/scope&gt;&lt;/dependency&gt;spring 版本不一致问题项目中 pom.xml12345678910111213141516171819202122&lt;parent&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt; &lt;version&gt;2.0.6.RELEASE&lt;/version&gt; &lt;relativePath/&gt;&lt;/parent&gt;&lt;properties&gt; &lt;dubbo.version&gt;2.6.5&lt;/dubbo.version&gt;&lt;/properties&gt;&lt;dependencyManagement&gt; &lt;dependencies&gt; &lt;dependency&gt; &lt;groupId&gt;com.alibaba&lt;/groupId&gt; &lt;artifactId&gt;dubbo-dependencies-bom&lt;/artifactId&gt; &lt;version&gt;$&#123;dubbo.version&#125;&lt;/version&gt; &lt;type&gt;pom&lt;/type&gt; &lt;scope&gt;import&lt;/scope&gt; &lt;/dependency&gt; &lt;/dependencies&gt;&lt;/dependencyManagement&gt;dubbo-dependencies-bom pom.xml1234567891011121314151617&lt;properties&gt; &lt;!-- Common libs --&gt; &lt;spring_version&gt;4.3.16.RELEASE&lt;/spring_version&gt;&lt;/properties&gt;&lt;dependencyManagement&gt; &lt;dependencies&gt; &lt;!-- Common libs --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework&lt;/groupId&gt; &lt;artifactId&gt;spring-framework-bom&lt;/artifactId&gt; &lt;version&gt;$&#123;spring_version&#125;&lt;/version&gt; &lt;type&gt;pom&lt;/type&gt; &lt;scope&gt;import&lt;/scope&gt; &lt;/dependency&gt; &lt;/dependencies&gt;&lt;/dependencyManagement&gt;由于spring-boot-starter-parent中的依赖的spring版本是5.0.10 .RELEASE，dubbo-dependencies-bom中依赖了spring-framework-bom，版本是4.3.16 .RELEASE，会导致spring的版本不一致问题解决方法：将dubbo-dependencies-bom作为parent，spring-boot-starter-parent放到dependencyManagement中，但是如果这样的话，有可能引发其他依赖问题]]></content>
+    <content type="text"><![CDATA[环境代码地址dubbo-v2.6.xdubbo 2.6.5dubbo-spring-boot-starter 0.2.0由于 dubbo-2.6.5 及以下版本的 Reference 还不支持 protocol 属性（dubbo-2.7.0支持了），注解暂时无法指定协议，但是可以使用xml配置指定协议启动 provider 端访问以下地址来判断provider端使用多协议是否正常http://localhost:9090/demo/echo?message=rest协议启动 consumer 端分别访问以下地址来判断consumer端使用多协议是否正常http://localhost:8080/demo/dubbo?message=使用dubbo协议http://localhost:8080/demo/rest?message=使用rest协议提示 AnnotationInjectedBeanPostProcessor 异常issue1Caused by: java.lang.ClassNotFoundException: com.alibaba.spring.beans.factory.annotation.AnnotationInjectedBeanPostProcessor解决，添加以下依赖12345&lt;dependency&gt; &lt;groupId&gt;com.alibaba.spring&lt;/groupId&gt; &lt;artifactId&gt;spring-context-support&lt;/artifactId&gt; &lt;version&gt;1.0.2&lt;/version&gt;&lt;/dependency&gt;异常问题java.lang.NoClassDefFoundError: org/jboss/resteasy/client/jaxrs/engines/ApacheHttpClient4Engine需要添加以下依赖包，该依赖 provider 端无需依赖，consumer 端需要依赖12345&lt;dependency&gt; &lt;groupId&gt;org.jboss.resteasy&lt;/groupId&gt; &lt;artifactId&gt;resteasy-client&lt;/artifactId&gt; &lt;version&gt;$&#123;resteasy-client.version&#125;&lt;/version&gt;&lt;/dependency&gt;java.lang.RuntimeException: You must use at least one, but no more than one http method annotation on: top.ylonline.dubbo.spring.boot.example.api.EchoService.echo..出现这个异常，说明要在使用的接口标注：@Path、@POST、@Get等javax.ws.rs.*这个路径下相关注解，不应该在实现类标注12345678910111213141516171819202122package top.ylonline.dubbo.spring.boot.example.api;import javax.ws.rs.GET;import javax.ws.rs.Path;import javax.ws.rs.QueryParam;/** * @author YL */@Path("/demo")public interface EchoService &#123; /** * echo * * @param message msg * * @return 信息 */ @GET @Path("/echo") String echo(@QueryParam("message") String message);&#125;dubbo-spring-boot-starter 中 spring-boot-starter scope 传递问题1234567891011&lt;dependency&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt; &lt;scope&gt;test&lt;/scope&gt;&lt;/dependency&gt;&lt;dependency&gt; &lt;groupId&gt;com.alibaba.boot&lt;/groupId&gt; &lt;artifactId&gt;dubbo-spring-boot-starter&lt;/artifactId&gt; &lt;version&gt;0.2.0&lt;/version&gt;&lt;/dependency&gt;由于dubbo-spring-boot-starter中依赖了spring-boot-starter的scope是true，会导致其继承spring-boot-starter-test的scope，使其变成test123456&lt;!-- Spring Boot dependencies --&gt;&lt;dependency&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-starter&lt;/artifactId&gt; &lt;scope&gt;true&lt;/scope&gt;&lt;/dependency&gt;spring 版本不一致问题项目中 pom.xml12345678910111213141516171819202122&lt;parent&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt; &lt;version&gt;2.0.6.RELEASE&lt;/version&gt; &lt;relativePath/&gt;&lt;/parent&gt;&lt;properties&gt; &lt;dubbo.version&gt;2.6.5&lt;/dubbo.version&gt;&lt;/properties&gt;&lt;dependencyManagement&gt; &lt;dependencies&gt; &lt;dependency&gt; &lt;groupId&gt;com.alibaba&lt;/groupId&gt; &lt;artifactId&gt;dubbo-dependencies-bom&lt;/artifactId&gt; &lt;version&gt;$&#123;dubbo.version&#125;&lt;/version&gt; &lt;type&gt;pom&lt;/type&gt; &lt;scope&gt;import&lt;/scope&gt; &lt;/dependency&gt; &lt;/dependencies&gt;&lt;/dependencyManagement&gt;dubbo-dependencies-bom pom.xml1234567891011121314151617&lt;properties&gt; &lt;!-- Common libs --&gt; &lt;spring_version&gt;4.3.16.RELEASE&lt;/spring_version&gt;&lt;/properties&gt;&lt;dependencyManagement&gt; &lt;dependencies&gt; &lt;!-- Common libs --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework&lt;/groupId&gt; &lt;artifactId&gt;spring-framework-bom&lt;/artifactId&gt; &lt;version&gt;$&#123;spring_version&#125;&lt;/version&gt; &lt;type&gt;pom&lt;/type&gt; &lt;scope&gt;import&lt;/scope&gt; &lt;/dependency&gt; &lt;/dependencies&gt;&lt;/dependencyManagement&gt;由于spring-boot-starter-parent中的依赖的spring版本是5.0.10 .RELEASE，dubbo-dependencies-bom中依赖了spring-framework-bom，版本是4.3.16 .RELEASE，会导致spring的版本不一致问题解决方法：将dubbo-dependencies-bom作为parent，spring-boot-starter-parent放到dependencyManagement中，但是如果这样的话，有可能引发其他依赖问题]]></content>
       <categories>
         <category>Java</category>
       </categories>
@@ -78,7 +78,7 @@
   <entry>
     <title><![CDATA[Nacos 实现 gateway 路由动态更新]]></title>
     <url>%2Fposts%2Fda547d1d.html</url>
-    <content type="text"><![CDATA[通过Nacos配置spring-cloud-gateway的路由规则，实现路由规则的动态更新代码在托管nacos-spring-cloud-gateway-example依赖123456789101112131415161718192021222324252627&lt;properties&gt; &lt;spring-cloud.version&gt;Finchley.SR2&lt;/spring-cloud.version&gt;&lt;/properties&gt;&lt;dependencyManagement&gt; &lt;dependencies&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt; &lt;artifactId&gt;spring-cloud-dependencies&lt;/artifactId&gt; &lt;version&gt;$&#123;spring-cloud.version&#125;&lt;/version&gt; &lt;type&gt;pom&lt;/type&gt; &lt;scope&gt;import&lt;/scope&gt; &lt;/dependency&gt; &lt;/dependencies&gt;&lt;/dependencyManagement&gt;&lt;dependencies&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt; &lt;artifactId&gt;spring-cloud-starter-gateway&lt;/artifactId&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt; &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-config&lt;/artifactId&gt; &lt;version&gt;0.2.1.RELEASE&lt;/version&gt; &lt;/dependency&gt;&lt;/dependencies&gt;spring-cloud-starter-alibaba-nacos-config 的原理是将配置信息注入到Spring的environment中，并在配置更新时自动触发context refresh事件，从而将environment环境中的配置变更为最新配置application.yml12server: port: 8080bootstrap.properties12345spring.application.name=nacos-spring-cloud-gateway-examplespring.cloud.nacos.config.server-addr=192.168.56.101:8848spring.cloud.nacos.config.ext-config[0].data-id=gateway.yamlspring.cloud.nacos.config.ext-config[0].refresh=truerefresh要配置为true，否则不能动态更新 gateway.yaml 的配置项App.java12345678910import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;@SpringBootApplicationpublic class App &#123; public static void main(String[] args) &#123; SpringApplication.run(App.class, args); &#125;&#125;在 Nacos 控制台新建 gateway.yaml 配置Data ID: gateway.yamlGroup: DEFAULT_GROUP123456789101112spring: cloud: gateway: routes: - id: baidu uri: https://www.baidu.com predicates: - Path=/s - id: taobao uri: https://www.taobao.com/ predicates: - Path=/markets/3c/tbdc配置完成后，执行 App.java 启动网关项目浏览器访问分别访问http://localhost:8080/s和http://localhost:8080/markets/3c/tbdc，能正常转发到百度、淘宝网站修改 gateway.yaml 配置12345678spring: cloud: gateway: routes: - id: baidu uri: https://www.baidu.com predicates: - Path=/s控制台打印以下日志，说明配置修改已经被监听到12org.springframework.cloud.endpoint.event.RefreshEventListener.handle(37) | Refresh keys changed: [spring.cloud.gateway.routes.xxx]再次访问http://localhost:8080/markets/3c/tbdc，会返回404页面说明修改的配置已经动态更新了动态更新原理Nacos 配置更新的时候，spring-cloud-starter-alibaba-nacos-config会 publish 一个 RefreshEvent 事件，从而使 spring-cloud-commons 的 RefreshEventListener 监听到并触发 ContextRefresher.refresh() 方法。spring-cloud-gateway 的 RouteRefreshListener 监听了 ApplicationEvent 事件，当 Nacos 触发 ContextRefresher.refresh()后，会监听到 RefreshScopeRefreshedEvent事件并调用RouteRefreshListener.reset() 方法 publish 一个 RefreshRoutesEvent 路由更新事件，达到路由动态更新的目的。spring-cloud-alibaba-nacos-config在spring-cloud-alibaba-nacos-config中，会默认监听配置的更新，并publish refresh事件NacosRefreshProperties.java1234567891011121314@Componentpublic class NacosRefreshProperties &#123; @Value("$&#123;spring.cloud.nacos.config.refresh.enabled:true&#125;") private boolean enabled = true; public boolean isEnabled() &#123; return enabled; &#125; public void setEnabled(boolean enabled) &#123; this.enabled = enabled; &#125;&#125;...refresh.enabled:true默认开启配置更新事件推送NacosContextRefresher.java1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192939495public class NacosContextRefresher implements ApplicationListener&lt;ApplicationReadyEvent&gt;, ApplicationContextAware &#123; private final static Logger LOGGER = LoggerFactory .getLogger(NacosContextRefresher.class); public static final AtomicLong loadCount = new AtomicLong(0); private final NacosRefreshProperties refreshProperties; private final NacosRefreshHistory refreshHistory; private final ConfigService configService; private ApplicationContext applicationContext; private AtomicBoolean ready = new AtomicBoolean(false); private Map&lt;String, Listener&gt; listenerMap = new ConcurrentHashMap&lt;&gt;(16); public NacosContextRefresher(NacosRefreshProperties refreshProperties, NacosRefreshHistory refreshHistory, ConfigService configService) &#123; this.refreshProperties = refreshProperties; this.refreshHistory = refreshHistory; this.configService = configService; &#125; @Override public void onApplicationEvent(ApplicationReadyEvent event) &#123; // many Spring context if (this.ready.compareAndSet(false, true)) &#123; this.registerNacosListenersForApplications(); &#125; &#125; @Override public void setApplicationContext(ApplicationContext applicationContext) &#123; this.applicationContext = applicationContext; &#125; private void registerNacosListenersForApplications() &#123; if (refreshProperties.isEnabled()) &#123; for (NacosPropertySource nacosPropertySource : NacosPropertySourceRepository .getAll()) &#123; if (!nacosPropertySource.isRefreshable()) &#123; continue; &#125; String dataId = nacosPropertySource.getDataId(); registerNacosListener(nacosPropertySource.getGroup(), dataId); &#125; &#125; &#125; private void registerNacosListener(final String group, final String dataId) &#123; Listener listener = listenerMap.computeIfAbsent(dataId, i -&gt; new Listener() &#123; @Override public void receiveConfigInfo(String configInfo) &#123; loadCount.incrementAndGet(); String md5 = ""; if (!StringUtils.isEmpty(configInfo)) &#123; try &#123; MessageDigest md = MessageDigest.getInstance("MD5"); md5 = new BigInteger(1, md.digest(configInfo.getBytes("UTF-8"))) .toString(16); &#125; catch (NoSuchAlgorithmException | UnsupportedEncodingException e) &#123; LOGGER.warn("[Nacos] unable to get md5 for dataId: " + dataId, e); &#125; &#125; refreshHistory.add(dataId, md5); applicationContext.publishEvent( new RefreshEvent(this, null, "Refresh Nacos config")); if (LOGGER.isDebugEnabled()) &#123; LOGGER.debug("Refresh Nacos config group&#123;&#125;,dataId&#123;&#125;", group, dataId); &#125; &#125; @Override public Executor getExecutor() &#123; return null; &#125; &#125;); try &#123; configService.addListener(dataId, group, listener); &#125; catch (NacosException e) &#123; e.printStackTrace(); &#125; &#125;&#125;spring-cloud-gatewayRefreshEventListener.java1234567891011121314151617181920212223public class RefreshEventListener &#123; private static Log log = LogFactory.getLog(RefreshEventListener.class); private ContextRefresher refresh; private AtomicBoolean ready = new AtomicBoolean(false); public RefreshEventListener(ContextRefresher refresh) &#123; this.refresh = refresh; &#125; @EventListener public void handle(ApplicationReadyEvent event) &#123; this.ready.compareAndSet(false, true); &#125; @EventListener public void handle(RefreshEvent event) &#123; if (this.ready.get()) &#123; // don't handle events before app is ready log.debug("Event received " + event.getEventDesc()); Set&lt;String&gt; keys = this.refresh.refresh(); log.info("Refresh keys changed: " + keys); &#125; &#125;&#125;RouteRefreshListener.java123456789101112131415161718192021222324252627282930313233343536373839public class RouteRefreshListener implements ApplicationListener&lt;ApplicationEvent&gt; &#123; private HeartbeatMonitor monitor = new HeartbeatMonitor(); private final ApplicationEventPublisher publisher; public RouteRefreshListener(ApplicationEventPublisher publisher) &#123; Assert.notNull(publisher, "publisher may not be null"); this.publisher = publisher; &#125; @Override public void onApplicationEvent(ApplicationEvent event) &#123; if (event instanceof ContextRefreshedEvent || event instanceof RefreshScopeRefreshedEvent || event instanceof InstanceRegisteredEvent) &#123; reset(); &#125; else if (event instanceof ParentHeartbeatEvent) &#123; ParentHeartbeatEvent e = (ParentHeartbeatEvent) event; resetIfNeeded(e.getValue()); &#125; else if (event instanceof HeartbeatEvent) &#123; HeartbeatEvent e = (HeartbeatEvent) event; resetIfNeeded(e.getValue()); &#125; &#125; private void resetIfNeeded(Object value) &#123; if (this.monitor.update(value)) &#123; reset(); &#125; &#125; private void reset() &#123; this.publisher.publishEvent(new RefreshRoutesEvent(this)); &#125;&#125;]]></content>
+    <content type="text"><![CDATA[通过Nacos配置spring-cloud-gateway的路由规则，实现路由规则的动态更新代码在托管gateway-nacos依赖123456789101112131415161718192021222324252627&lt;properties&gt; &lt;spring-cloud.version&gt;Finchley.SR2&lt;/spring-cloud.version&gt;&lt;/properties&gt;&lt;dependencyManagement&gt; &lt;dependencies&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt; &lt;artifactId&gt;spring-cloud-dependencies&lt;/artifactId&gt; &lt;version&gt;$&#123;spring-cloud.version&#125;&lt;/version&gt; &lt;type&gt;pom&lt;/type&gt; &lt;scope&gt;import&lt;/scope&gt; &lt;/dependency&gt; &lt;/dependencies&gt;&lt;/dependencyManagement&gt;&lt;dependencies&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt; &lt;artifactId&gt;spring-cloud-starter-gateway&lt;/artifactId&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt; &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-config&lt;/artifactId&gt; &lt;version&gt;0.2.1.RELEASE&lt;/version&gt; &lt;/dependency&gt;&lt;/dependencies&gt;spring-cloud-starter-alibaba-nacos-config 的原理是将配置信息注入到Spring的environment中，并在配置更新时自动触发context refresh事件，从而将environment环境中的配置变更为最新配置application.yml12server: port: 8080bootstrap.properties12345spring.application.name=nacos-spring-cloud-gateway-examplespring.cloud.nacos.config.server-addr=192.168.56.101:8848spring.cloud.nacos.config.ext-config[0].data-id=gateway.yamlspring.cloud.nacos.config.ext-config[0].refresh=truerefresh要配置为true，否则不能动态更新 gateway.yaml 的配置项App.java12345678910import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;@SpringBootApplicationpublic class App &#123; public static void main(String[] args) &#123; SpringApplication.run(App.class, args); &#125;&#125;在 Nacos 控制台新建 gateway.yaml 配置Data ID: gateway.yamlGroup: DEFAULT_GROUP123456789101112spring: cloud: gateway: routes: - id: baidu uri: https://www.baidu.com predicates: - Path=/s - id: taobao uri: https://www.taobao.com/ predicates: - Path=/markets/3c/tbdc配置完成后，执行 App.java 启动网关项目浏览器访问分别访问http://localhost:8080/s和http://localhost:8080/markets/3c/tbdc，能正常转发到百度、淘宝网站修改 gateway.yaml 配置12345678spring: cloud: gateway: routes: - id: baidu uri: https://www.baidu.com predicates: - Path=/s控制台打印以下日志，说明配置修改已经被监听到12org.springframework.cloud.endpoint.event.RefreshEventListener.handle(37) | Refresh keys changed: [spring.cloud.gateway.routes.xxx]再次访问http://localhost:8080/markets/3c/tbdc，会返回404页面说明修改的配置已经动态更新了动态更新原理Nacos 配置更新的时候，spring-cloud-starter-alibaba-nacos-config会 publish 一个 RefreshEvent 事件，从而使 spring-cloud-commons 的 RefreshEventListener 监听到并触发 ContextRefresher.refresh() 方法。spring-cloud-gateway 的 RouteRefreshListener 监听了 ApplicationEvent 事件，当 Nacos 触发 ContextRefresher.refresh()后，会监听到 RefreshScopeRefreshedEvent事件并调用RouteRefreshListener.reset() 方法 publish 一个 RefreshRoutesEvent 路由更新事件，达到路由动态更新的目的。spring-cloud-alibaba-nacos-config在spring-cloud-alibaba-nacos-config中，会默认监听配置的更新，并publish refresh事件NacosRefreshProperties.java1234567891011121314@Componentpublic class NacosRefreshProperties &#123; @Value("$&#123;spring.cloud.nacos.config.refresh.enabled:true&#125;") private boolean enabled = true; public boolean isEnabled() &#123; return enabled; &#125; public void setEnabled(boolean enabled) &#123; this.enabled = enabled; &#125;&#125;...refresh.enabled:true默认开启配置更新事件推送NacosContextRefresher.java1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192939495public class NacosContextRefresher implements ApplicationListener&lt;ApplicationReadyEvent&gt;, ApplicationContextAware &#123; private final static Logger LOGGER = LoggerFactory .getLogger(NacosContextRefresher.class); public static final AtomicLong loadCount = new AtomicLong(0); private final NacosRefreshProperties refreshProperties; private final NacosRefreshHistory refreshHistory; private final ConfigService configService; private ApplicationContext applicationContext; private AtomicBoolean ready = new AtomicBoolean(false); private Map&lt;String, Listener&gt; listenerMap = new ConcurrentHashMap&lt;&gt;(16); public NacosContextRefresher(NacosRefreshProperties refreshProperties, NacosRefreshHistory refreshHistory, ConfigService configService) &#123; this.refreshProperties = refreshProperties; this.refreshHistory = refreshHistory; this.configService = configService; &#125; @Override public void onApplicationEvent(ApplicationReadyEvent event) &#123; // many Spring context if (this.ready.compareAndSet(false, true)) &#123; this.registerNacosListenersForApplications(); &#125; &#125; @Override public void setApplicationContext(ApplicationContext applicationContext) &#123; this.applicationContext = applicationContext; &#125; private void registerNacosListenersForApplications() &#123; if (refreshProperties.isEnabled()) &#123; for (NacosPropertySource nacosPropertySource : NacosPropertySourceRepository .getAll()) &#123; if (!nacosPropertySource.isRefreshable()) &#123; continue; &#125; String dataId = nacosPropertySource.getDataId(); registerNacosListener(nacosPropertySource.getGroup(), dataId); &#125; &#125; &#125; private void registerNacosListener(final String group, final String dataId) &#123; Listener listener = listenerMap.computeIfAbsent(dataId, i -&gt; new Listener() &#123; @Override public void receiveConfigInfo(String configInfo) &#123; loadCount.incrementAndGet(); String md5 = ""; if (!StringUtils.isEmpty(configInfo)) &#123; try &#123; MessageDigest md = MessageDigest.getInstance("MD5"); md5 = new BigInteger(1, md.digest(configInfo.getBytes("UTF-8"))) .toString(16); &#125; catch (NoSuchAlgorithmException | UnsupportedEncodingException e) &#123; LOGGER.warn("[Nacos] unable to get md5 for dataId: " + dataId, e); &#125; &#125; refreshHistory.add(dataId, md5); applicationContext.publishEvent( new RefreshEvent(this, null, "Refresh Nacos config")); if (LOGGER.isDebugEnabled()) &#123; LOGGER.debug("Refresh Nacos config group&#123;&#125;,dataId&#123;&#125;", group, dataId); &#125; &#125; @Override public Executor getExecutor() &#123; return null; &#125; &#125;); try &#123; configService.addListener(dataId, group, listener); &#125; catch (NacosException e) &#123; e.printStackTrace(); &#125; &#125;&#125;spring-cloud-gatewayRefreshEventListener.java1234567891011121314151617181920212223public class RefreshEventListener &#123; private static Log log = LogFactory.getLog(RefreshEventListener.class); private ContextRefresher refresh; private AtomicBoolean ready = new AtomicBoolean(false); public RefreshEventListener(ContextRefresher refresh) &#123; this.refresh = refresh; &#125; @EventListener public void handle(ApplicationReadyEvent event) &#123; this.ready.compareAndSet(false, true); &#125; @EventListener public void handle(RefreshEvent event) &#123; if (this.ready.get()) &#123; // don't handle events before app is ready log.debug("Event received " + event.getEventDesc()); Set&lt;String&gt; keys = this.refresh.refresh(); log.info("Refresh keys changed: " + keys); &#125; &#125;&#125;RouteRefreshListener.java123456789101112131415161718192021222324252627282930313233343536373839public class RouteRefreshListener implements ApplicationListener&lt;ApplicationEvent&gt; &#123; private HeartbeatMonitor monitor = new HeartbeatMonitor(); private final ApplicationEventPublisher publisher; public RouteRefreshListener(ApplicationEventPublisher publisher) &#123; Assert.notNull(publisher, "publisher may not be null"); this.publisher = publisher; &#125; @Override public void onApplicationEvent(ApplicationEvent event) &#123; if (event instanceof ContextRefreshedEvent || event instanceof RefreshScopeRefreshedEvent || event instanceof InstanceRegisteredEvent) &#123; reset(); &#125; else if (event instanceof ParentHeartbeatEvent) &#123; ParentHeartbeatEvent e = (ParentHeartbeatEvent) event; resetIfNeeded(e.getValue()); &#125; else if (event instanceof HeartbeatEvent) &#123; HeartbeatEvent e = (HeartbeatEvent) event; resetIfNeeded(e.getValue()); &#125; &#125; private void resetIfNeeded(Object value) &#123; if (this.monitor.update(value)) &#123; reset(); &#125; &#125; private void reset() &#123; this.publisher.publishEvent(new RefreshRoutesEvent(this)); &#125;&#125;]]></content>
       <categories>
         <category>Java</category>
       </categories>
@@ -91,14 +91,14 @@
   <entry>
     <title><![CDATA[Nacos 初探]]></title>
     <url>%2Fposts%2Fc706fd60.html</url>
-    <content type="text"><![CDATA[Nacos 是一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。以下内容都是基于spring-boot + nacos依赖管理项目：nacos-spring-boot-project12345&lt;dependency&gt; &lt;groupId&gt;com.alibaba.boot&lt;/groupId&gt; &lt;artifactId&gt;nacos-config-spring-boot-starter&lt;/artifactId&gt; &lt;version&gt;0.2.1&lt;/version&gt;&lt;/dependency&gt;application.yml1234nacos: config: server-addr: 192.168.56.101:8848# namespace: '0278390f-21e8-40ae-b46d-fac0ebb7af97'namespace是命名空间 ID，不能配置命名空间名称。如果不配置namespace，默认使用public在 Nacos 控制台新建配置Data ID：szim.propertiesGroup：DEFAULT_GROUP配置内容：12id=1name=forever杨App.java12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849import com.alibaba.nacos.api.config.annotation.NacosConfigListener;import com.alibaba.nacos.api.config.annotation.NacosValue;import com.alibaba.nacos.spring.context.annotation.config.EnableNacosConfig;import com.alibaba.nacos.spring.context.annotation.config.NacosPropertySource;import org.springframework.boot.CommandLineRunner;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.context.annotation.Bean;import org.springframework.core.Ordered;import org.springframework.core.annotation.Order;import lombok.extern.slf4j.Slf4j;@SpringBootApplication@EnableNacosConfig@NacosPropertySource(dataId = App.DATA_ID)@Slf4jpublic class App &#123; static final String DATA_ID = "szim.properties"; public static void main(String[] args) &#123; SpringApplication.run(App.class, args); &#125; @NacosConfigListener( dataId = App.DATA_ID, timeout = 500 ) public void onChange(String newContent) throws Exception &#123; log.info("onChange: &#123;&#125;", newContent); &#125; @Bean @Order(Ordered.LOWEST_PRECEDENCE - 1) public CommandLineRunner secondCommandLineRunner() &#123; return new SecondCommandLineRunner(); &#125; public static class SecondCommandLineRunner implements CommandLineRunner &#123; @NacosValue("$&#123;id:unknown&#125;") private String id; @NacosValue("$&#123;name:unknown&#125;") private String name; @Override public void run(String... args) throws Exception &#123; log.info("id: &#123;&#125;, name: &#123;&#125;", id, name); &#125; &#125;&#125;支持的配置方式yaml文件支持的格式12spring.redis.host: 192.168.199.101spring.redis.port: 6379不支持的格式1234spring: redis: host: 192.168.199.101 port: 6379据说后续版本会支持这种格式properties文件12spring.redis.host = 192.168.199.101spring.redis.port = 6379读取配置12345@Value("$&#123;spring.redis.port&#125;")private String host;@NacosValue(value = "$&#123;spring.redis.port&#125;", autoRefreshed = true)private String port;Spring @Value注解和 Nacos @NacosValue 注解注解是否支持动态更新补充@Value否@NacosValue是前提需配置autoRefreshed=true]]></content>
+    <content type="text"><![CDATA[Nacos 是一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。以下内容都是基于spring-boot + nacos依赖管理项目：nacos-spring-boot-example12345&lt;dependency&gt; &lt;groupId&gt;com.alibaba.boot&lt;/groupId&gt; &lt;artifactId&gt;nacos-config-spring-boot-starter&lt;/artifactId&gt; &lt;version&gt;0.2.1&lt;/version&gt;&lt;/dependency&gt;application.yml1234nacos: config: server-addr: 192.168.56.101:8848# namespace: '0278390f-21e8-40ae-b46d-fac0ebb7af97'namespace是命名空间 ID，不能配置命名空间名称。如果不配置namespace，默认使用public在 Nacos 控制台新建配置Data ID：szim.propertiesGroup：DEFAULT_GROUP配置内容：12id=1name=forever杨App.java12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849import com.alibaba.nacos.api.config.annotation.NacosConfigListener;import com.alibaba.nacos.api.config.annotation.NacosValue;import com.alibaba.nacos.spring.context.annotation.config.EnableNacosConfig;import com.alibaba.nacos.spring.context.annotation.config.NacosPropertySource;import org.springframework.boot.CommandLineRunner;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.context.annotation.Bean;import org.springframework.core.Ordered;import org.springframework.core.annotation.Order;import lombok.extern.slf4j.Slf4j;@SpringBootApplication@EnableNacosConfig@NacosPropertySource(dataId = App.DATA_ID)@Slf4jpublic class App &#123; static final String DATA_ID = "szim.properties"; public static void main(String[] args) &#123; SpringApplication.run(App.class, args); &#125; @NacosConfigListener( dataId = App.DATA_ID, timeout = 500 ) public void onChange(String newContent) throws Exception &#123; log.info("onChange: &#123;&#125;", newContent); &#125; @Bean @Order(Ordered.LOWEST_PRECEDENCE - 1) public CommandLineRunner secondCommandLineRunner() &#123; return new SecondCommandLineRunner(); &#125; public static class SecondCommandLineRunner implements CommandLineRunner &#123; @NacosValue("$&#123;id:unknown&#125;") private String id; @NacosValue("$&#123;name:unknown&#125;") private String name; @Override public void run(String... args) throws Exception &#123; log.info("id: &#123;&#125;, name: &#123;&#125;", id, name); &#125; &#125;&#125;支持的配置方式yaml文件支持的格式12spring.redis.host: 192.168.199.101spring.redis.port: 6379不支持的格式1234spring: redis: host: 192.168.199.101 port: 6379据说后续版本会支持这种格式properties文件12spring.redis.host = 192.168.199.101spring.redis.port = 6379读取配置12345@Value("$&#123;spring.redis.port&#125;")private String host;@NacosValue(value = "$&#123;spring.redis.port&#125;", autoRefreshed = true)private String port;Spring @Value注解和 Nacos @NacosValue 注解注解是否支持动态更新补充@Value否@NacosValue是前提需配置autoRefreshed=true]]></content>
       <categories>
         <category>Java</category>
       </categories>
       <tags>
         <tag>spring-boot</tag>
-        <tag>Nacos</tag>
         <tag>alibaba</tag>
+        <tag>Nacos</tag>
       </tags>
   </entry>
   <entry>
@@ -109,8 +109,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>spring-boot</tag>
         <tag>Hibernate</tag>
+        <tag>spring-boot</tag>
         <tag>Oracle</tag>
         <tag>DataJpaTest</tag>
         <tag>jpa</tag>
@@ -213,17 +213,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[docker 命令]]></title>
-    <url>%2Fposts%2F71631b3f.html</url>
-    <content type="text"><![CDATA[docker container ls列出所有容器用法1docker container ls [options]选项| 参数 | 默认值 | 描述 || ————– | —— | ——————————– || -all, -a | false | 显示所有容器(默认只显示运行的) || --filter, -f | | 根据提供的条件过滤输出 || --format | | 使用Go模板打印容器 || -last, -n | -1 | 显示最后创建的容器(包括所有状态) || --latest, -l | false | 显示最新创建的容器(包括所有状态) || -no-trunc | false | 不要截断输出 || --quiet, -q | false | 只显示数字ID || -size, -s | false | 显示文件大小 |docker container rm删除一个或多个容器用法1docker container rm [options] CONTAINER [CONTAINER...]选项| 参数 | 默认值 | 描述 || ————— | —— | ———————————– || --force, -f | false | 强制移走正在运行的容器(使用SIGKILL) || --link, -l | false | 删除指定的链接 || --volumes, -v | false | 删除与容器关联的卷 |相关命令命令描述docker container attach附加到正在运行的容器docker container commit从容器的更改创建一个新的映像docker container cp在容器和本地文件系统之间复制文件/文件夹docker container create创建一个新的容器docker container diff检查容器文件系统上文件或目录的更改docker container exec在运行容器中运行命令docker container export将容器的文件系统导出为tar存档docker container inspect显示一个或多个容器的详细信息docker container kill杀死一个或多个运行容器docker container logs获取容器的日志docker container ls列出容器docker container pause暂停一个或多个容器内的所有进程docker container port列出端口映射或容器的特定映射docker container prune取出所有停止的容器docker container rename重命名容器docker container restart重新启动一个或多个容器docker container rm删除(移除)一个或多个容器docker container run在新容器中运行命令docker container start启动一个或多个停止的容器docker container stats显示容器的实时流资源使用统计信息docker container stop停止一个或多个运行容器docker container top显示容器的正在运行的进程docker container unpause取消暂停一个或多个容器内的所有流程docker container update更新一个或多个容器的配置docker container wait阻止一个或多个容器停止，然后打印退出代码]]></content>
-      <categories>
-        <category>docker</category>
-      </categories>
-      <tags>
-        <tag>container</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[安装 docker 环境 for CentOS]]></title>
     <url>%2Fposts%2F2fff8f5e.html</url>
     <content type="text"><![CDATA[安装 docker删除老版本12345678910$ sudo yum remove docker \ docker-client \ docker-client-latest \ docker-common \ docker-latest \ docker-latest-logrotate \ docker-logrotate \ docker-selinux \ docker-engine-selinux \ docker-engine配置 repo123456789101112$ sudo yum install -y yum-utils \ device-mapper-persistent-data \ lvm2 $ sudo yum-config-manager \ --add-repo \ https://download.docker.com/linux/centos/docker-ce.repo# Optional$ sudo yum-config-manager --enable docker-ce-edge$ sudo yum-config-manager --enable docker-ce-test$ sudo yum-config-manager --disable docker-ce-edge安装 docker1$ sudo yum install docker-ce安装指定版本 docker12345# List and sort the versions available in your repo# 可以查看所有仓库中所有docker版本，并选择特定版本安装$ yum list docker-ce --showduplicates | sort -rdocker-ce.x86_64 18.03.0.ce-1.el7.centos docker-ce-stable$ sudo yum install docker-ce-&lt;VERSION STRING&gt;启动并加入开机启动12345678# 启动 docker$ sudo systemctl start docker# 停止运行 docker$ sudo systemctl stop docker# 开机启动$ sudo systemctl enable docker# 禁止开机启动$ sudo systemctl disable docker验证安装12345678910111213141516171819$ docker versionClient: Version: 18.06.1-ce API version: 1.38 Go version: go1.10.3 Git commit: e68fc7a Built: Tue Aug 21 17:23:03 2018 OS/Arch: linux/amd64 Experimental: falseServer: Engine: Version: 18.06.1-ce API version: 1.38 (minimum version 1.12) Go version: go1.10.3 Git commit: e68fc7a Built: Tue Aug 21 17:25:29 2018 OS/Arch: linux/amd64 Experimental: falsedocker-compose安装安装1$ sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose可执行权限1$ sudo chmod +x /usr/local/bin/docker-compose验证安装12$ docker-compose --versiondocker-compose version 1.22.0, build 1719ceb]]></content>
@@ -232,6 +221,17 @@
       </categories>
       <tags>
         <tag>docker-compose</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[docker 命令]]></title>
+    <url>%2Fposts%2F71631b3f.html</url>
+    <content type="text"><![CDATA[docker container ls列出所有容器用法1docker container ls [options]选项| 参数 | 默认值 | 描述 || ————– | —— | ——————————– || -all, -a | false | 显示所有容器(默认只显示运行的) || --filter, -f | | 根据提供的条件过滤输出 || --format | | 使用Go模板打印容器 || -last, -n | -1 | 显示最后创建的容器(包括所有状态) || --latest, -l | false | 显示最新创建的容器(包括所有状态) || -no-trunc | false | 不要截断输出 || --quiet, -q | false | 只显示数字ID || -size, -s | false | 显示文件大小 |docker container rm删除一个或多个容器用法1docker container rm [options] CONTAINER [CONTAINER...]选项| 参数 | 默认值 | 描述 || ————— | —— | ———————————– || --force, -f | false | 强制移走正在运行的容器(使用SIGKILL) || --link, -l | false | 删除指定的链接 || --volumes, -v | false | 删除与容器关联的卷 |相关命令命令描述docker container attach附加到正在运行的容器docker container commit从容器的更改创建一个新的映像docker container cp在容器和本地文件系统之间复制文件/文件夹docker container create创建一个新的容器docker container diff检查容器文件系统上文件或目录的更改docker container exec在运行容器中运行命令docker container export将容器的文件系统导出为tar存档docker container inspect显示一个或多个容器的详细信息docker container kill杀死一个或多个运行容器docker container logs获取容器的日志docker container ls列出容器docker container pause暂停一个或多个容器内的所有进程docker container port列出端口映射或容器的特定映射docker container prune取出所有停止的容器docker container rename重命名容器docker container restart重新启动一个或多个容器docker container rm删除(移除)一个或多个容器docker container run在新容器中运行命令docker container start启动一个或多个停止的容器docker container stats显示容器的实时流资源使用统计信息docker container stop停止一个或多个运行容器docker container top显示容器的正在运行的进程docker container unpause取消暂停一个或多个容器内的所有流程docker container update更新一个或多个容器的配置docker container wait阻止一个或多个容器停止，然后打印退出代码]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>container</tag>
       </tags>
   </entry>
   <entry>
@@ -298,9 +298,9 @@
         <category>Java</category>
       </categories>
       <tags>
+        <tag>BigPipe</tag>
         <tag>jsp</tag>
         <tag>freemarker</tag>
-        <tag>BigPipe</tag>
         <tag>spring-boot</tag>
       </tags>
   </entry>
@@ -584,54 +584,6 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[jar启动脚本]]></title>
-    <url>%2Fposts%2F6d838077.html</url>
-    <content type="text"><![CDATA[jar启动脚本123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263#!/usr/bin/env bash# @Author: YL# @Date: 2017-08-31 15:52:30# @Last Modified by: YL# @Last Modified time: 2017-12-18 14:12:45export LANG=en_US.UTF-8export JAVA_HOME=/usr/java/jdk1.8.0_144export PATH=$PATH:$JAVA_HOME/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHcd `dirname $0`PROJECT_HOME=`pwd`PROJECT_LIB=$PROJECT_HOME/libPROJECT_LOGS=$PROJECT_HOME/logsSTDOUT_FILE=$PROJECT_HOME/logs/stdout.logPROJECT_JAR=$PROJECT_HOME/tisson-ftp.jar# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $PROJECT_JAR"# pidPROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'`function operate()&#123; if [[ "$1" = "kill" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN kill $PROJECT_PID begining" | tee -a $STDOUT_FILE kill -9 $PROJECT_PID echo "$DATE_PATTERN kill $PROJECT_PID success" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not alive" | tee -a $STDOUT_FILE fi elif [[ "$1" = "start" ]] ; then # cd $PROJECT_HOME # starting nohup java -server -Xms512m -Xmx512m -Xss256k -Dloader.path=$PROJECT_LIB -Djava.io.tmpdir=$PROJECT_LOGS -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$PROJECT_LOGS/$PROJECT_PID.hprof -jar $PROJECT_JAR &gt;&gt; $STDOUT_FILE 2&gt;&amp;1 &amp; PROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'` echo "$DATE_PATTERN The $PROJECT_JAR started OK! pid: $PROJECT_PID" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILE fi&#125;if [[ "$1" = "start" || "$1" = "check" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN already started! pid: $PROJECT_PID" &gt;&gt; $STDOUT_FILE exit 1 fi operate startelif [[ "$1" = "" || "$1" = "restart" ]]; then operate kill echo "$DATE_PATTERN starting" | tee -a $STDOUT_FILE operate startelif [[ "$1" = "kill" ]]; then operate killelse echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILEfi-Djava.ext.dirs和-Dloader.path区别-Djava.ext.dirs使用-Djava.ext.dirs配置外部jar包引用时，会覆盖jdk默认的lib/ext下的扩展包-Dloader.path]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>jar</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[zookeeper evn 环境变量配置脚本]]></title>
-    <url>%2Fposts%2F57428144.html</url>
-    <content type="text"><![CDATA[zookeeper-env1234567891011121314151617181920#!/usr/bin/env bash# @Author: YL# @Date: 2017-10-31 10:27:16# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:43# 此文件放到 zookeeper 的 conf 目录下# java envexport JAVA_HOME=/usr/java/jdk1.8.0_131export PATH=$JAVA_HOME/bin:$PATHexport JVMFLAGS="-Xms1536m -Xmx1536m $JVMFLAGS"cd `dirname $0`cd ..NODE_HOME=`pwd`# zookeeper envZOO_LOG_DIR=$NODE_HOME/logsZOO_LOG4J_PROP="INFO,ROLLINGFILE"]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux unzip 命令]]></title>
-    <url>%2Fposts%2F64f75729.html</url>
-    <content type="text"><![CDATA[unzip解压war、jar、zip、rar等文件1unzip -oq /opt/xxx.war -d /opt/ddd]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>unzip</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[zookeeper stop脚本]]></title>
-    <url>%2Fposts%2F7bd064dc.html</url>
-    <content type="text"><![CDATA[stop12345678910#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:00# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:49# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stop]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[zookeeper 启动脚本]]></title>
-    <url>%2Fposts%2Faf01b9a2.html</url>
-    <content type="text"><![CDATA[start12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-28 10:23:20# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:41# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`NODE_BIN_DIR=`pwd`NODE_LIB_DIR=$NODE_BIN_DIR/../lib/cd ..NODE_HOME=`pwd`# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"# mkdir logs dirNODE_DATA_LOG_DIR=`sed '/dataLogDir/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`NODE_LOGS_DIR=""if [ -n "$NODE_DATA_LOG_DIR" ]; then NODE_LOGS_DIR=$NODE_DATA_LOG_DIRelse NODE_LOGS_DIR=$NODE_HOME/logsfiif [ ! -d $NODE_LOGS_DIR ]; then mkdir $NODE_LOGS_DIRfiSTDOUT_FILE=$NODE_LOGS_DIR/stdout.logecho "$DATE_PATTERN NODE_BIN_DIR: $NODE_BIN_DIR" | tee -a $STDOUT_FILE# pidNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`if [ -n "$NODE_PID" ]; then echo "$DATE_PATTERN ERROR: The $NODE_LIB_DIR already started! pid: $NODE_PID" | tee -a $STDOUT_FILE exit 1fi# portNODE_PORT=`sed '/clientPort/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`if [ -n "$NODE_PORT" ]; then NODE_PORT_COUNT=`netstat -tln | grep $NODE_PORT | wc -l` if [ $NODE_PORT_COUNT -gt 0 ]; then echo "$DATE_PATTERN ERROR: The $NODE_LIB_DIR port $NODE_PORT already used!" | tee -a $STDOUT_FILE exit 1 fifi# startingcd $NODE_BIN_DIR./zkServer.sh startNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`echo "$DATE_PATTERN The $NODE_LIB_DIR started OK! pid: $NODE_PID" | tee -a $STDOUT_FILE]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
     <title><![CDATA[Linux curl 命令]]></title>
     <url>%2Fposts%2Faea02818.html</url>
     <content type="text"><![CDATA[curlGET 请求1curl http://www.baidu.com?q=xxxxPOST 请求1curl http://ip:port/weixin_v3/w -XPOST -d "send message..."发送 POST JSON 请求1curl -H "Content-Type: application/json" -X POST --data '&#123;"data":"1"&#125;' http://127.0.0.1/使用代理1curl -x 192.168.2.5:3128 http://www.baidu.com?q=xxxx输出请求信息12345678# http_code# time_connect# time_starttransfer# time_total# size_download# speed_download# 参考地址：curl http://www.baidu.com?q=xxxx -so /dev/null -w "%&#123;http_code&#125;\t%&#123;time_connect&#125;\t%&#123;time_starttransfer&#125;\t%&#123;time_total&#125;\t%&#123;size_download&#125;\t%&#123;speed_download&#125;\t"]]></content>
@@ -641,162 +593,6 @@
       <tags>
         <tag>shell</tag>
         <tag>curl</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[zookeeper重启脚本]]></title>
-    <url>%2Fposts%2F6c1ad93d.html</url>
-    <content type="text"><![CDATA[restart12345678910111213#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:10# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:30# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stopsleep 3./zkServer.sh start]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[zookeeper 清理日志文件]]></title>
-    <url>%2Fposts%2Fc0bbcacd.html</url>
-    <content type="text"><![CDATA[clear123456789101112131415161718192021222324252627282930#!/usr/bin/env bash# @Author: YL# @Date: 2017-11-01 08:59:34# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:09# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`cd ..NODE_HOME=`pwd`# snapshotNODE_DATA_DIR=$NODE_HOME/data/version-2# snapshot logNODE_LOG_DIR=$NODE_HOME/logs/version-2# zk logNODE_LOGS=$NODE_HOME/logs# 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中count=3count=$[$count+1]ls -t $NODE_LOG_DIR/log.* | tail -n +$count | xargs rm -fls -t $NODE_DATA_DIR/snapshot.* | tail -n +$count | xargs rm -fls -t $NODE_LOGS/zookeeper.log.* | tail -n +$count | xargs rm -f# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"STDOUT_FILE=$NODE_LOGS/stdout.logecho "$DATE_PATTERN clear logs success" | tee -a $STDOUT_FILE]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[Tomcat 启动脚本]]></title>
-    <url>%2Fposts%2Fe22f47ab.html</url>
-    <content type="text"><![CDATA[Tomcat 启动脚本start.sh12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455#!/usr/bin/env bash# @Author: YL# @Date: 2017-01-25 14:50:43# @Last Modified by: YL# @Last Modified time: 2017-12-18 14:12:23cd `dirname $0`PROJECT_HOME=`pwd`# Tomcat 服务器路径TC_HOME="$PROJECT_HOME/tomcat"# crontab 检测日记文件TC_STDOUT_FILE="$TC_HOME/logs/stdout.out"# 检测 Tomcat 是否启动（进程ID）TC_PID=`ps -ef | grep $TC_HOME/bin | grep -v grep | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# 检测输出的日记格式DATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME"function operate()&#123; if [[ "$1" = "kill" ]] ; then if [[ "$TC_PID" = "" ]] ; then echo "$DATE_PATTERN is not alive" | tee -a $TC_STDOUT_FILE else echo "$DATE_PATTERN kill $TC_PID begining" | tee -a $TC_STDOUT_FILE kill -9 $TC_PID echo "$DATE_PATTERN kill $TC_PID success" | tee -a $TC_STDOUT_FILE fi elif [[ "$1" = "start" ]]; then cd $TC_HOME/bin sh startup.sh else echo "$DATE_PATTERN is not support $1" | tee -a $TC_STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "$DATE_PATTERN starting" | tee -a $TC_STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$TC_PID" = "" ]] ; then echo "$DATE_PATTERN starting" &gt;&gt; $TC_STDOUT_FILE operate start else echo "$DATE_PATTERN pid $TC_PID" &gt;&gt; $TC_STDOUT_FILE fielse echo "$DATE_PATTERN is not support $1" | tee -a $TC_STDOUT_FILEfi使用说明12345sh start.sh start # 重启sh start.sh # 重启sh start.sh restart # 重启sh start.sh check # 检测服务是否启动，没有启动，则启动之，否则不做其他操作sh start.sh kill # kill掉已启动的服务进程]]></content>
-      <categories>
-        <category>Tomcat</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux tar 命令]]></title>
-    <url>%2Fposts%2Fbd083454.html</url>
-    <content type="text"><![CDATA[tar1tar -zxvf xxx.tar.gz]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>tar</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux tail 命令]]></title>
-    <url>%2Fposts%2F29bd046e.html</url>
-    <content type="text"><![CDATA[tail]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>tail</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux cp 命令]]></title>
-    <url>%2Fposts%2F2835e3e.html</url>
-    <content type="text"><![CDATA[cp复制文件夹1cp -r [old source] -d [new source]]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>cp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux sed 命令]]></title>
-    <url>%2Fposts%2Fb8ec468d.html</url>
-    <content type="text"><![CDATA[sed打印指定行数1sed -n '12457431, 12457440p' tomcat/logs/catalina.out]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>sed</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux netstat 命令]]></title>
-    <url>%2Fposts%2F6c05ba39.html</url>
-    <content type="text"><![CDATA[netstat查看进程的网络状态1netstat -anp | grep 7646]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>netstat</tag>
-        <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux vi 命令]]></title>
-    <url>%2Fposts%2F87207300.html</url>
-    <content type="text"><![CDATA[vilinux文件格式的问题（使用unix格式）123456789# 查看文件格式vi 文件名:set ff # :set fileencoding# 设置文件格式为unix:set ff=unix# 保存退出:wq# 也可以直接使用dos2unix 文件名]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>vi</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux lsof 命令]]></title>
-    <url>%2Fposts%2Ffc091577.html</url>
-    <content type="text"><![CDATA[lsof检测端口未被占用1lsof -i:8080]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>lsof</tag>
-        <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux du 命令]]></title>
-    <url>%2Fposts%2F2e023d93.html</url>
-    <content type="text"><![CDATA[du计算当前文件夹下占用空间，排序1du -sh * | sort -nr]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>du</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux find 命令]]></title>
-    <url>%2Fposts%2F7b744fec.html</url>
-    <content type="text"><![CDATA[find查找文件并删除12345678# 删除指定时间前的 jpg 文件find /opt/upload/ -mtime +30 -type f -name *.jpg -exec rm -f &#123;&#125; \;# 删除隐藏文件（-fr）find /opt/upload/ -type d -name .svn -exec rm -fr &#123;&#125; \;# 删除30天前的文件find /opt/upload -mtime +30 -type f -name "*.jpg" -exec rm -rf &#123;&#125; \;打印指定时间前的文件1find project/upload/ -mtime +30 -type f -print]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>find</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux ls 命令]]></title>
-    <url>%2Fposts%2F53b5960c.html</url>
-    <content type="text"><![CDATA[ls12# 统计文件夹中文件数ls -l |grep "^-"|wc -l保留最新的1个文件夹，删除其他文件夹（使用-d）1ls -t -d /home/txrd/tisson-web-open/logs/undertow-* | tail -n +2 | xargs rm -rf]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>ls</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux cat 命令]]></title>
-    <url>%2Fposts%2Fbe15a742.html</url>
-    <content type="text"><![CDATA[cat统计出现次数12# linux统计某一文件中字符串“sent ip”出现的次数：cat nohup.log |grep "sent ip" |wc -l清空默认文件中的内容1cat /dev/null &gt; filename]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>cat</tag>
       </tags>
   </entry>
   <entry>
@@ -812,6 +608,150 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[zookeeper evn 环境变量配置脚本]]></title>
+    <url>%2Fposts%2F57428144.html</url>
+    <content type="text"><![CDATA[zookeeper-env1234567891011121314151617181920#!/usr/bin/env bash# @Author: YL# @Date: 2017-10-31 10:27:16# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:43# 此文件放到 zookeeper 的 conf 目录下# java envexport JAVA_HOME=/usr/java/jdk1.8.0_131export PATH=$JAVA_HOME/bin:$PATHexport JVMFLAGS="-Xms1536m -Xmx1536m $JVMFLAGS"cd `dirname $0`cd ..NODE_HOME=`pwd`# zookeeper envZOO_LOG_DIR=$NODE_HOME/logsZOO_LOG4J_PROP="INFO,ROLLINGFILE"]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux netstat 命令]]></title>
+    <url>%2Fposts%2F6c05ba39.html</url>
+    <content type="text"><![CDATA[netstat查看进程的网络状态1netstat -anp | grep 7646]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>netstat</tag>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux sed 命令]]></title>
+    <url>%2Fposts%2Fb8ec468d.html</url>
+    <content type="text"><![CDATA[sed打印指定行数1sed -n '12457431, 12457440p' tomcat/logs/catalina.out]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>sed</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper 启动脚本]]></title>
+    <url>%2Fposts%2Faf01b9a2.html</url>
+    <content type="text"><![CDATA[start12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-28 10:23:20# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:41# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`NODE_BIN_DIR=`pwd`NODE_LIB_DIR=$NODE_BIN_DIR/../lib/cd ..NODE_HOME=`pwd`# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"# mkdir logs dirNODE_DATA_LOG_DIR=`sed '/dataLogDir/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`NODE_LOGS_DIR=""if [ -n "$NODE_DATA_LOG_DIR" ]; then NODE_LOGS_DIR=$NODE_DATA_LOG_DIRelse NODE_LOGS_DIR=$NODE_HOME/logsfiif [ ! -d $NODE_LOGS_DIR ]; then mkdir $NODE_LOGS_DIRfiSTDOUT_FILE=$NODE_LOGS_DIR/stdout.logecho "$DATE_PATTERN NODE_BIN_DIR: $NODE_BIN_DIR" | tee -a $STDOUT_FILE# pidNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`if [ -n "$NODE_PID" ]; then echo "$DATE_PATTERN ERROR: The $NODE_LIB_DIR already started! pid: $NODE_PID" | tee -a $STDOUT_FILE exit 1fi# portNODE_PORT=`sed '/clientPort/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`if [ -n "$NODE_PORT" ]; then NODE_PORT_COUNT=`netstat -tln | grep $NODE_PORT | wc -l` if [ $NODE_PORT_COUNT -gt 0 ]; then echo "$DATE_PATTERN ERROR: The $NODE_LIB_DIR port $NODE_PORT already used!" | tee -a $STDOUT_FILE exit 1 fifi# startingcd $NODE_BIN_DIR./zkServer.sh startNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`echo "$DATE_PATTERN The $NODE_LIB_DIR started OK! pid: $NODE_PID" | tee -a $STDOUT_FILE]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux vi 命令]]></title>
+    <url>%2Fposts%2F87207300.html</url>
+    <content type="text"><![CDATA[vilinux文件格式的问题（使用unix格式）123456789# 查看文件格式vi 文件名:set ff # :set fileencoding# 设置文件格式为unix:set ff=unix# 保存退出:wq# 也可以直接使用dos2unix 文件名]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>vi</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper stop脚本]]></title>
+    <url>%2Fposts%2F7bd064dc.html</url>
+    <content type="text"><![CDATA[stop12345678910#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:00# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:49# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stop]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper 清理日志文件]]></title>
+    <url>%2Fposts%2Fc0bbcacd.html</url>
+    <content type="text"><![CDATA[clear123456789101112131415161718192021222324252627282930#!/usr/bin/env bash# @Author: YL# @Date: 2017-11-01 08:59:34# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:09# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`cd ..NODE_HOME=`pwd`# snapshotNODE_DATA_DIR=$NODE_HOME/data/version-2# snapshot logNODE_LOG_DIR=$NODE_HOME/logs/version-2# zk logNODE_LOGS=$NODE_HOME/logs# 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中count=3count=$[$count+1]ls -t $NODE_LOG_DIR/log.* | tail -n +$count | xargs rm -fls -t $NODE_DATA_DIR/snapshot.* | tail -n +$count | xargs rm -fls -t $NODE_LOGS/zookeeper.log.* | tail -n +$count | xargs rm -f# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"STDOUT_FILE=$NODE_LOGS/stdout.logecho "$DATE_PATTERN clear logs success" | tee -a $STDOUT_FILE]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper重启脚本]]></title>
+    <url>%2Fposts%2F6c1ad93d.html</url>
+    <content type="text"><![CDATA[restart12345678910111213#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:10# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:30# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stopsleep 3./zkServer.sh start]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Tomcat 启动脚本]]></title>
+    <url>%2Fposts%2Fe22f47ab.html</url>
+    <content type="text"><![CDATA[Tomcat 启动脚本start.sh12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455#!/usr/bin/env bash# @Author: YL# @Date: 2017-01-25 14:50:43# @Last Modified by: YL# @Last Modified time: 2017-12-18 14:12:23cd `dirname $0`PROJECT_HOME=`pwd`# Tomcat 服务器路径TC_HOME="$PROJECT_HOME/tomcat"# crontab 检测日记文件TC_STDOUT_FILE="$TC_HOME/logs/stdout.out"# 检测 Tomcat 是否启动（进程ID）TC_PID=`ps -ef | grep $TC_HOME/bin | grep -v grep | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# 检测输出的日记格式DATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME"function operate()&#123; if [[ "$1" = "kill" ]] ; then if [[ "$TC_PID" = "" ]] ; then echo "$DATE_PATTERN is not alive" | tee -a $TC_STDOUT_FILE else echo "$DATE_PATTERN kill $TC_PID begining" | tee -a $TC_STDOUT_FILE kill -9 $TC_PID echo "$DATE_PATTERN kill $TC_PID success" | tee -a $TC_STDOUT_FILE fi elif [[ "$1" = "start" ]]; then cd $TC_HOME/bin sh startup.sh else echo "$DATE_PATTERN is not support $1" | tee -a $TC_STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "$DATE_PATTERN starting" | tee -a $TC_STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$TC_PID" = "" ]] ; then echo "$DATE_PATTERN starting" &gt;&gt; $TC_STDOUT_FILE operate start else echo "$DATE_PATTERN pid $TC_PID" &gt;&gt; $TC_STDOUT_FILE fielse echo "$DATE_PATTERN is not support $1" | tee -a $TC_STDOUT_FILEfi使用说明12345sh start.sh start # 重启sh start.sh # 重启sh start.sh restart # 重启sh start.sh check # 检测服务是否启动，没有启动，则启动之，否则不做其他操作sh start.sh kill # kill掉已启动的服务进程]]></content>
+      <categories>
+        <category>Tomcat</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux lsof 命令]]></title>
+    <url>%2Fposts%2Ffc091577.html</url>
+    <content type="text"><![CDATA[lsof检测端口未被占用1lsof -i:8080]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>lsof</tag>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux tar 命令]]></title>
+    <url>%2Fposts%2Fbd083454.html</url>
+    <content type="text"><![CDATA[tar1tar -zxvf xxx.tar.gz]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>tar</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux ls 命令]]></title>
+    <url>%2Fposts%2F53b5960c.html</url>
+    <content type="text"><![CDATA[ls12# 统计文件夹中文件数ls -l |grep "^-"|wc -l保留最新的1个文件夹，删除其他文件夹（使用-d）1ls -t -d /home/txrd/tisson-web-open/logs/undertow-* | tail -n +2 | xargs rm -rf]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>ls</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[jar启动脚本]]></title>
+    <url>%2Fposts%2F6d838077.html</url>
+    <content type="text"><![CDATA[jar启动脚本123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263#!/usr/bin/env bash# @Author: YL# @Date: 2017-08-31 15:52:30# @Last Modified by: YL# @Last Modified time: 2017-12-18 14:12:45export LANG=en_US.UTF-8export JAVA_HOME=/usr/java/jdk1.8.0_144export PATH=$PATH:$JAVA_HOME/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHcd `dirname $0`PROJECT_HOME=`pwd`PROJECT_LIB=$PROJECT_HOME/libPROJECT_LOGS=$PROJECT_HOME/logsSTDOUT_FILE=$PROJECT_HOME/logs/stdout.logPROJECT_JAR=$PROJECT_HOME/tisson-ftp.jar# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $PROJECT_JAR"# pidPROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'`function operate()&#123; if [[ "$1" = "kill" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN kill $PROJECT_PID begining" | tee -a $STDOUT_FILE kill -9 $PROJECT_PID echo "$DATE_PATTERN kill $PROJECT_PID success" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not alive" | tee -a $STDOUT_FILE fi elif [[ "$1" = "start" ]] ; then # cd $PROJECT_HOME # starting nohup java -server -Xms512m -Xmx512m -Xss256k -Dloader.path=$PROJECT_LIB -Djava.io.tmpdir=$PROJECT_LOGS -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$PROJECT_LOGS/$PROJECT_PID.hprof -jar $PROJECT_JAR &gt;&gt; $STDOUT_FILE 2&gt;&amp;1 &amp; PROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'` echo "$DATE_PATTERN The $PROJECT_JAR started OK! pid: $PROJECT_PID" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILE fi&#125;if [[ "$1" = "start" || "$1" = "check" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN already started! pid: $PROJECT_PID" &gt;&gt; $STDOUT_FILE exit 1 fi operate startelif [[ "$1" = "" || "$1" = "restart" ]]; then operate kill echo "$DATE_PATTERN starting" | tee -a $STDOUT_FILE operate startelif [[ "$1" = "kill" ]]; then operate killelse echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILEfi-Djava.ext.dirs和-Dloader.path区别-Djava.ext.dirs使用-Djava.ext.dirs配置外部jar包引用时，会覆盖jdk默认的lib/ext下的扩展包-Dloader.path]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>jar</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux tail 命令]]></title>
+    <url>%2Fposts%2F29bd046e.html</url>
+    <content type="text"><![CDATA[tail]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>tail</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Linux crontab 命令]]></title>
     <url>%2Fposts%2Fb0b79272.html</url>
     <content type="text"><![CDATA[crontab 使用注意事项如果通过 crontab 执行1、crontab 无法获取 jdk 变量，要在 java 命令之前写入jdk绝对路径2、要把路径切换到要执行的 sh 路径下注意：二者缺一不可查找 jdk 路径的方法112$ echo $JAVA_HOME/usr/java/jdk1.6.0_45/bin/java2123456$ which java/usr/bin/java$ ls -lrt /usr/bin/java #/usr/bin/java是which java查出来的路径lrwxrwxrwx. 1 root root 22 Sep 16 2015 /usr/bin/java -&gt; /etc/alternatives/java$ ls -lrt /etc/alternatives/java #/etc/alternatives/java是ls -lrt /usr/bin/java查出来的路径 lrwxrwxrwx. 1 root root 46 Sep 16 2015 /etc/alternatives/java -&gt; /usr/lib/jvm/jre-1.6.0-openjdk.x86_64/bin/java查询 crontab 定时器配置情况1crontab -l编辑 crontab 定时器1234567crontab -e# 当 crontab 调用时，错误和标准输出会写成 mail 通知你* * * * * /opt/restart.sh# 标准输出重定向到 /dev/null，输出到这里就找不回来了* * * * * /opt/restart.sh &gt; /dev/null# 标准输出和错误输出都重定向到 /dev/null* * * * * /opt/restart.sh &gt; /dev/null 2&gt;&amp;1]]></content>
@@ -821,6 +761,66 @@
       <tags>
         <tag>shell</tag>
         <tag>crontab</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux cat 命令]]></title>
+    <url>%2Fposts%2Fbe15a742.html</url>
+    <content type="text"><![CDATA[cat统计出现次数12# linux统计某一文件中字符串“sent ip”出现的次数：cat nohup.log |grep "sent ip" |wc -l清空默认文件中的内容1cat /dev/null &gt; filename]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>cat</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux find 命令]]></title>
+    <url>%2Fposts%2F7b744fec.html</url>
+    <content type="text"><![CDATA[find查找文件并删除12345678# 删除指定时间前的 jpg 文件find /opt/upload/ -mtime +30 -type f -name *.jpg -exec rm -f &#123;&#125; \;# 删除隐藏文件（-fr）find /opt/upload/ -type d -name .svn -exec rm -fr &#123;&#125; \;# 删除30天前的文件find /opt/upload -mtime +30 -type f -name "*.jpg" -exec rm -rf &#123;&#125; \;打印指定时间前的文件1find project/upload/ -mtime +30 -type f -print]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>find</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux cp 命令]]></title>
+    <url>%2Fposts%2F2835e3e.html</url>
+    <content type="text"><![CDATA[cp复制文件夹1cp -r [old source] -d [new source]]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>cp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux du 命令]]></title>
+    <url>%2Fposts%2F2e023d93.html</url>
+    <content type="text"><![CDATA[du计算当前文件夹下占用空间，排序1du -sh * | sort -nr]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>du</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux unzip 命令]]></title>
+    <url>%2Fposts%2F64f75729.html</url>
+    <content type="text"><![CDATA[unzip解压war、jar、zip、rar等文件1unzip -oq /opt/xxx.war -d /opt/ddd]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>unzip</tag>
       </tags>
   </entry>
   <entry>
@@ -951,6 +951,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Hibernate的DynamicInsert、DynamicUpdate介绍]]></title>
+    <url>%2Fposts%2F2ed26d9a.html</url>
+    <content type="text"><![CDATA[作用使用 Dynamic Update如果使用了 Dynamic Update，需要注意的是，当select后，显式的把某些字段set为NULL，hibernate 会认为你修改了该字段，会生成到 update 语句中。一般先 select 实体出来，再 save 的话，只会 update 该实体被修改的字段。否则会 update 所有表字段。添加Dynamic Update配置可以减少被 update 的字段。使用 Dynamic Insert如果使用了 Dynamic Insert，并且数据库配置了默认值，当 insert，并且new 实体时，该属性没有 set 值的话，会使用数据库默认值，否则会使用实体的值。配置方式第一种：使用注解配置12345678910111213@Entiry(name = "t_user")@DynamicInsert@DynamicUpdatepublic class User &#123; @Id @GeneratedValue private Long id; private Strin name; private Integer age; private Integer status; // getter setter&#125;第二种：使用.hbm.xml配置12345&lt;hibernate-mapping&gt; &lt;class name="xxx.User" table="t_user" dynamic-insert="true" dynamic-update="true"&gt; &lt;!-- 省略配置 --&gt; &lt;/class&gt;&lt;/hibernate-mapping&gt;效果主要比较一下insert、update语句的区别，其中update一个已有的实体对象时，hibernate会再执行一次select操作再去update123456789101112131415161718192021222324252627282930@RunWith(SpringJUnit4ClassRunner.class)@SpringBootTestpublic class ApplicationTests &#123; @Autowired private UserRepository repository; @Test public void test() throws Exception &#123; // 1、插入新记录 // 配置 dynamic insert // insert into user (name) values (?) // 未配置 dynamic insert // insert into user (age, name, status) values (?, ?, ?) User user = new User("AAA"); User save = repository.save(user); // 2、更新记录 // 配置 dynamic update // select user0_.id as id1_1_0_, user0_.age as age2_1_0_, user0_.name as name3_1_0_, user0_.status as status4_1_0_ from user user0_ where user0_.id=? // update user set name=? where id=? // 未配置 dynamic update // select user0_.id as id1_1_0_, user0_.age as age2_1_0_, user0_.name as name3_1_0_, user0_.status as status4_1_0_ from user user0_ where user0_.id=? // update user set age=?, name=?, status=? where id=? save.setName("BBB"); repository.save(save); &#125;&#125;]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Hibernate</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[hibernate显示sql中的参数值（logback）]]></title>
     <url>%2Fposts%2F9eea8fb4.html</url>
     <content type="text"><![CDATA[以下是 logback 的日志输出配置，只要是在 logback 的配置文件中添加以下配置12&lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt;&lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt;完整的 logback 配置如下123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;!-- For assistance related to logback-translator or configuration --&gt;&lt;!-- files in general, please contact the logback user mailing list --&gt;&lt;!-- at http://www.qos.ch/mailman/listinfo/logback-user --&gt;&lt;!-- --&gt;&lt;!-- For professional support please see --&gt;&lt;!-- http://www.qos.ch/shop/products/professionalSupport --&gt;&lt;!-- --&gt;&lt;configuration scan="true" scanPeriod="60 seconds" debug="false"&gt; &lt;property name="logger.charset" value="UTF-8"/&gt; &lt;property name="logger.path" value="$&#123;catalina.home&#125;/logs"/&gt; &lt;property name="logger.pattern" value="[%d&#123;yyyy-MM-dd HH:mm:ss&#125; %highlight(%-5p)] %yellow(%t) %cyan(%c.%M\\(%L\\)) | %m%n"/&gt; &lt;property name="logger.maxHistory" value="15"/&gt; &lt;!--&amp;lt;!&amp;ndash; https://logback.qos.ch/manual/layouts.html#coloring &amp;ndash;&amp;gt; &amp;lt;!&amp;ndash; 彩色日志依赖的渲染类 &amp;ndash;&amp;gt; &lt;conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" /&gt; &lt;conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" /&gt; &lt;conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" /&gt; &amp;lt;!&amp;ndash; 彩色日志格式 &amp;ndash;&amp;gt; &lt;property name="logger.pattern" value="$&#123;CONSOLE_LOG_PATTERN:-%clr([%d&#123;yyyy-MM-dd HH:mm:ss&#125; %clr($&#123;LOG_LEVEL_PATTERN:-%5p&#125;)])&#123;faint&#125; %clr(%c.%M\\(%L\\))&#123;cyan&#125; | %m%n&#125;" /&gt;--&gt; &lt;springProfile name="dev, local"&gt; &lt;appender name="stdout" class="ch.qos.logback.core.ConsoleAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;/appender&gt; &lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt; &lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt; &lt;!--&lt;logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="DEBUG"/&gt; &lt;logger name="org.hibernate.SQL" level="DEBUG"/&gt; &lt;logger name="org.hibernate.type" level="INFO"/&gt; &lt;logger name="org.hibernate.engine.QueryParameters" level="DEBUG"/&gt; &lt;logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG"/&gt;--&gt; &lt;!--&lt;logger name="org.apache.ibatis" level="debug"/&gt; &lt;logger name="java.sql.Connection" level="debug"/&gt; &lt;logger name="java.sql.Statement" level="debug"/&gt; &lt;logger name="java.sql.PreparedStatement" level="debug"/&gt;--&gt; &lt;root level="info"&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt; &lt;springProfile name="prod"&gt; &lt;!--See http://logback.qos.ch/manual/appenders.html#RollingFileAppender --&gt; &lt;!--and http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy --&gt; &lt;!--for further documentation --&gt; &lt;appender name="stdout" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;File&gt;$&#123;logger.path&#125;/info.log&lt;/File&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/info.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="warn" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/warn.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;WARN&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/warn.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/error.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;ERROR&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/error.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;logger name="warn" level="WARN"/&gt; &lt;logger name="error" level="ERROR"/&gt; &lt;root level="info"&gt; &lt;appender-ref ref="warn"/&gt; &lt;appender-ref ref="error"/&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt;&lt;/configuration&gt;]]></content>
@@ -960,17 +971,6 @@
       <tags>
         <tag>Hibernate</tag>
         <tag>logback</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Hibernate的DynamicInsert、DynamicUpdate介绍]]></title>
-    <url>%2Fposts%2F2ed26d9a.html</url>
-    <content type="text"><![CDATA[作用使用 Dynamic Update如果使用了 Dynamic Update，需要注意的是，当select后，显式的把某些字段set为NULL，hibernate 会认为你修改了该字段，会生成到 update 语句中。一般先 select 实体出来，再 save 的话，只会 update 该实体被修改的字段。否则会 update 所有表字段。添加Dynamic Update配置可以减少被 update 的字段。使用 Dynamic Insert如果使用了 Dynamic Insert，并且数据库配置了默认值，当 insert，并且new 实体时，该属性没有 set 值的话，会使用数据库默认值，否则会使用实体的值。配置方式第一种：使用注解配置12345678910111213@Entiry(name = "t_user")@DynamicInsert@DynamicUpdatepublic class User &#123; @Id @GeneratedValue private Long id; private Strin name; private Integer age; private Integer status; // getter setter&#125;第二种：使用.hbm.xml配置12345&lt;hibernate-mapping&gt; &lt;class name="xxx.User" table="t_user" dynamic-insert="true" dynamic-update="true"&gt; &lt;!-- 省略配置 --&gt; &lt;/class&gt;&lt;/hibernate-mapping&gt;效果主要比较一下insert、update语句的区别，其中update一个已有的实体对象时，hibernate会再执行一次select操作再去update123456789101112131415161718192021222324252627282930@RunWith(SpringJUnit4ClassRunner.class)@SpringBootTestpublic class ApplicationTests &#123; @Autowired private UserRepository repository; @Test public void test() throws Exception &#123; // 1、插入新记录 // 配置 dynamic insert // insert into user (name) values (?) // 未配置 dynamic insert // insert into user (age, name, status) values (?, ?, ?) User user = new User("AAA"); User save = repository.save(user); // 2、更新记录 // 配置 dynamic update // select user0_.id as id1_1_0_, user0_.age as age2_1_0_, user0_.name as name3_1_0_, user0_.status as status4_1_0_ from user user0_ where user0_.id=? // update user set name=? where id=? // 未配置 dynamic update // select user0_.id as id1_1_0_, user0_.age as age2_1_0_, user0_.name as name3_1_0_, user0_.status as status4_1_0_ from user user0_ where user0_.id=? // update user set age=?, name=?, status=? where id=? save.setName("BBB"); repository.save(save); &#125;&#125;]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Hibernate</tag>
       </tags>
   </entry>
   <entry>
@@ -1046,18 +1046,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[nodejs 使用]]></title>
-    <url>%2Fposts%2F8d0f4649.html</url>
-    <content type="text"><![CDATA[配置淘宝npm国内访问外网是很慢的，安装NodeJS是自带的npm地址默认是：http://registry.npmjs.org，访问很慢，所以一般换成国内镜像地址。通过config命令123npm config set registry https://registry.npm.taobao.org/ npm info underscore#（如果配置成功，这个命令会有字符串response）npm --registry=https://registry.npm.taobao.org命令行指定1npm --registry https://registry.npm.taobao.org/ info underscore编辑node_modules/npm/.npmrc加入下面内容1registry = https://registry.npm.taobao.org/如果上面的npm地址不行的话，可以试试淘宝的npmhttps://registry.npm.taobao.org123npm set registry https://registry.npm.taobao.org/# 或者npm --registry https://registry.npm.taobao.org/ info underscore下载路径在安装完nodejs后，npm install -g jshint是被安装在默认路径（C:\Users\用户名\AppData\Roaming\npm）下的可以通过修改nodejs安装路径下的node_modules/npm/.npmrc文件prefix=D:\MyTools\nodejs\node_global （修改全局路径）cache=D:\MyTools\nodejs\node_cache （修改全局路径）请注意prefix、cache不能设置成一样的路径，否则通过npm安装模块时，会报错npm 使用123456789# -S 是--save 的缩写，它可以让你安装的模块记录到package.json文件当中npm install -S xxx# 这是删除模块，也可以删除全局模块npm uninstall xxxnpm uninstall -g xxx# -D就是--save-dev 这样安装的包的名称及版本号就会存在package.json的devDependencies这个里面，而--save会将包的名称及版本号放在dependencies里面npm install -D xxxnpm registry 设置1234567891011121314$ npm install -g nrm$ nrm lsD:\Workspace\vuejs-project&gt;nrm ls* npm ---- https://registry.npmjs.org/ cnpm --- http://r.cnpmjs.org/ taobao - https://registry.npm.taobao.org/ nj ----- https://registry.nodejitsu.com/ rednpm - http://registry.mirror.cqupt.edu.cn/ npmMirror https://skimdb.npmjs.com/registry/ edunpm - http://registry.enpmjs.org/# 切换源$ nrm use taobaoRegistry has been set to: https://registry.npm.taobao.org/npm-check检查依赖包版本123456# 安装 npm-checknpm install -g npm-check# 检查 npm 包版本npm-check -u -gnpm-check -u -Snpm-check -u -D]]></content>
-      <categories>
-        <category>nodejs</category>
-      </categories>
-      <tags>
-        <tag>npm</tag>
-        <tag>cnpm</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[xampp 安装 memcache 监控]]></title>
     <url>%2Fposts%2Fd01399d3.html</url>
     <content type="text"><![CDATA[xampp安装memcache监控现在 memadmin下载memadmin，解压到xampp/htdocs下查看 php 版本信息123&lt;?php echo phpinfo();?&gt;下载 php-memcache.dll根据查看到的php的信息，在php-memcache下载对应本版的Thread Safe，里面包含了php-memcache.dll。解压下载包，然后把php-memcache.dll拷贝到xampp/php/ext下在xampp/php/php.ini最后添加以下内容12345678;php-memcachedextension=php_memcache.dll[Memcache]memcache.allow_failover = 1memcache.max_failover_attempts=20memcache.chunk_size =8192memcache.default_port = 11211访问 memadminhttp://host:port/memadmin]]></content>
@@ -1068,6 +1056,18 @@
         <tag>xampp</tag>
         <tag>memcache</tag>
         <tag>php</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[nodejs 使用]]></title>
+    <url>%2Fposts%2F8d0f4649.html</url>
+    <content type="text"><![CDATA[配置淘宝npm国内访问外网是很慢的，安装NodeJS是自带的npm地址默认是：http://registry.npmjs.org，访问很慢，所以一般换成国内镜像地址。通过config命令123npm config set registry https://registry.npm.taobao.org/ npm info underscore#（如果配置成功，这个命令会有字符串response）npm --registry=https://registry.npm.taobao.org命令行指定1npm --registry https://registry.npm.taobao.org/ info underscore编辑node_modules/npm/.npmrc加入下面内容1registry = https://registry.npm.taobao.org/如果上面的npm地址不行的话，可以试试淘宝的npmhttps://registry.npm.taobao.org123npm set registry https://registry.npm.taobao.org/# 或者npm --registry https://registry.npm.taobao.org/ info underscore下载路径在安装完nodejs后，npm install -g jshint是被安装在默认路径（C:\Users\用户名\AppData\Roaming\npm）下的可以通过修改nodejs安装路径下的node_modules/npm/.npmrc文件prefix=D:\MyTools\nodejs\node_global （修改全局路径）cache=D:\MyTools\nodejs\node_cache （修改全局路径）请注意prefix、cache不能设置成一样的路径，否则通过npm安装模块时，会报错npm 使用123456789# -S 是--save 的缩写，它可以让你安装的模块记录到package.json文件当中npm install -S xxx# 这是删除模块，也可以删除全局模块npm uninstall xxxnpm uninstall -g xxx# -D就是--save-dev 这样安装的包的名称及版本号就会存在package.json的devDependencies这个里面，而--save会将包的名称及版本号放在dependencies里面npm install -D xxxnpm registry 设置1234567891011121314$ npm install -g nrm$ nrm lsD:\Workspace\vuejs-project&gt;nrm ls* npm ---- https://registry.npmjs.org/ cnpm --- http://r.cnpmjs.org/ taobao - https://registry.npm.taobao.org/ nj ----- https://registry.nodejitsu.com/ rednpm - http://registry.mirror.cqupt.edu.cn/ npmMirror https://skimdb.npmjs.com/registry/ edunpm - http://registry.enpmjs.org/# 切换源$ nrm use taobaoRegistry has been set to: https://registry.npm.taobao.org/npm-check检查依赖包版本123456# 安装 npm-checknpm install -g npm-check# 检查 npm 包版本npm-check -u -gnpm-check -u -Snpm-check -u -D]]></content>
+      <categories>
+        <category>nodejs</category>
+      </categories>
+      <tags>
+        <tag>npm</tag>
+        <tag>cnpm</tag>
       </tags>
   </entry>
   <entry>
@@ -1265,6 +1265,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Linux安装FTP]]></title>
+    <url>%2Fposts%2F9c4dd72b.html</url>
+    <content type="text"><![CDATA[Linux安装FTPubuntu开启ftp服务安装vsftpd1、打开”终端窗口”，输入”sudo apt-get install vsftpd”–&gt;回车–&gt;安装完成。2、判断vsftpd是否安装成功打开”终端窗口”，输入”sudo service vsftpd restart”重启vsftpd服务–&gt;回车–&gt;vsftpd处于运行状态，说明安装成功。3、使用gedit修改配置文件/etc/vsftpd.conf打开”终端窗口”，输入”sudo gedit /etc/vsftpd.conf”–&gt;回车–&gt;打开了vsftpd.conf文设置：write_enable=YESubuntu开启SSH服务SSH分客户端openssh-client和openssh-server如果你只是想登陆别的机器的SSH只需要安装openssh-client（ubuntu有默认安装，如果没有则sudo apt-get install openssh-client），如果要使本机开放SSH服务就需要安装openssh-serversudo apt-get install openssh-server然后确认sshserver是否启动了：ps -e |grep ssh如果看到sshd那说明ssh-server已经启动了。如果没有则可以这样启动：sudo /etc/init.d/ssh startssh-server配置文件位于/ etc/ssh/sshd_config，在这里可以定义SSH的服务端口，默认端口是22，你可以自己定义成其他端口号，如222。然后重启SSH服务：sudo /etc/init.d/ssh stopsudo /etc/init.d/ssh start然后使用以下方式登陆SSH：ssh username@192.168.1.112 username为192.168.1.112 机器上的用户，需要输入密码。断开连接：exit最近一直在Ubuntu下用终端操作，看着他长长的路径名实在不爽， 动手来改改咯～$: sudo gedit ~/.bashrc这个文件记录了用户终端配置找到if [ “$color_prompt “ = yes ]; thenPS1 =’${debian_chroot:+($debian_chroot)}[\033[01;32m]\u@\h[\033[00m]:[\033[01;34m]\W [\033[00m]\$ ‘elsePS1 =’${debian_chroot:+($debian_chroot)}\u@\h:\W \$ ‘将蓝色的w由小写改成大写，可以表示只显示当前目录名称.]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>FTP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[CentOS安装JDK]]></title>
     <url>%2Fposts%2Fd08f134.html</url>
     <content type="text"><![CDATA[1、准备创建目录12$ mkdir /usr/java$ cd /usr/java下载 jdk-8u73-linux-x64.tar.gz，解压1$ tar -zxvf jdk-8u73-linux-x64.tar.gz会解压到 /usr/java/jdk1.8.0_73 下2、配置环境变量(两种方式二选一配置即可)2.1 编辑 /etc/profile 文件修改 /etc/profile 文件当本机仅仅作为开发使用时推荐使用这种方法，因为此种配置时所有用户的 shell 都有权使用这些环境变量，可能会给系统带来安全性问题。1$ vi /etc/profile增加如下内容123export JAVA_HOME=/usr/java/jdkexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH保存退出 :wq12$ . /etc/profile$ echo $JAVA_HOME2.2 编辑用户目录下的 .bash_profile修改 .bash_profile 文件这种方法更为安全，它可以把使用这些环境变量的权限控制到用户级别，如果需要给某个用户权限使用这些环境变量，只需要修改其个人用户主目录下的 .bash_profile 文件就可以了123export JAVA_HOME=/usr/java/jdkexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH然后执行使之生效1source .bash_profile可以看到 JAVA_HOME 不是指向真实的 jdk 目录 /usr/java/jdk1.8.0_73，而是指向 /usr/java/jdk3、创建软链接为jdk真实目录创建一个命名更加间洁快捷方式123$ ln -s /usr/java/jdk1.8.0_73 /usr/java/jdk$ source /etc/profile#$ source .bash_profile至此，配置完成]]></content>
@@ -1274,17 +1285,6 @@
       <tags>
         <tag>Java</tag>
         <tag>JDK</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux安装FTP]]></title>
-    <url>%2Fposts%2F9c4dd72b.html</url>
-    <content type="text"><![CDATA[Linux安装FTPubuntu开启ftp服务安装vsftpd1、打开”终端窗口”，输入”sudo apt-get install vsftpd”–&gt;回车–&gt;安装完成。2、判断vsftpd是否安装成功打开”终端窗口”，输入”sudo service vsftpd restart”重启vsftpd服务–&gt;回车–&gt;vsftpd处于运行状态，说明安装成功。3、使用gedit修改配置文件/etc/vsftpd.conf打开”终端窗口”，输入”sudo gedit /etc/vsftpd.conf”–&gt;回车–&gt;打开了vsftpd.conf文设置：write_enable=YESubuntu开启SSH服务SSH分客户端openssh-client和openssh-server如果你只是想登陆别的机器的SSH只需要安装openssh-client（ubuntu有默认安装，如果没有则sudo apt-get install openssh-client），如果要使本机开放SSH服务就需要安装openssh-serversudo apt-get install openssh-server然后确认sshserver是否启动了：ps -e |grep ssh如果看到sshd那说明ssh-server已经启动了。如果没有则可以这样启动：sudo /etc/init.d/ssh startssh-server配置文件位于/ etc/ssh/sshd_config，在这里可以定义SSH的服务端口，默认端口是22，你可以自己定义成其他端口号，如222。然后重启SSH服务：sudo /etc/init.d/ssh stopsudo /etc/init.d/ssh start然后使用以下方式登陆SSH：ssh username@192.168.1.112 username为192.168.1.112 机器上的用户，需要输入密码。断开连接：exit最近一直在Ubuntu下用终端操作，看着他长长的路径名实在不爽， 动手来改改咯～$: sudo gedit ~/.bashrc这个文件记录了用户终端配置找到if [ “$color_prompt “ = yes ]; thenPS1 =’${debian_chroot:+($debian_chroot)}[\033[01;32m]\u@\h[\033[00m]:[\033[01;34m]\W [\033[00m]\$ ‘elsePS1 =’${debian_chroot:+($debian_chroot)}\u@\h:\W \$ ‘将蓝色的w由小写改成大写，可以表示只显示当前目录名称.]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>FTP</tag>
       </tags>
   </entry>
 </search>
