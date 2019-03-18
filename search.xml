@@ -1,9 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Dubbo 配置相关说明]]></title>
+    <url>%2Fposts%2F1432ba6.html</url>
+    <content type="text"><![CDATA[线程池类型dubbo 提供了4中线程池类型fixedcore-size默认值：200，可配置max-size默认值：200，可配置queue-size默认值：0，可配置等于 0 时：SynchronousQueue不等于 0 时：LinkedBlockingQueuekeep-alive默认值：0cachedcore-size默认值：0，可配置max-size默认值：Integer.MAX_VALUE，可配置queue-size默认值：0，可配置等于 0 时：SynchronousQueue不等于 0 时：LinkedBlockingQueuekeep-alive默认值：60 * 1000(ms)，可配置limitedcore-size默认值：0，可配置max-size默认值：200，可配置queue-size默认值：0，可配置等于 0 时：SynchronousQueue不等于 0 时：LinkedBlockingQueuekeep-alive默认值：Long.MAX_VALUEeagercore-size默认值：0，可配置max-size默认值：Integer.MAX_VALUE，可配置queue-size默认值：1，可配置等于 0 时：SynchronousQueue不等于 0 时：LinkedBlockingQueuekeep-alive默认值：60 * 1000(ms)，可配置ThreadPoolExecutor参数对应Dubbo URL参数对应Dubbo配置项core-sizecorethreadsfixed：dubbo.provider.threadsdubbo.protocol.threads其他（没有在配置类中暴露出来）：dubbo.provider.corethreadsdubbo.protocol.corethreadsmax-sizethreadsdubbo.provider.threadsdubbo.protocol.threadsqueue-sizequeuesdubbo.provider.queuesdubbo.protocol.queueskeep-alivealive没有在配置类中暴露出来dubbo.provider.alivedubbo.protocol.alive]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Apache</tag>
+        <tag>alibaba</tag>
+        <tag>Dubbo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[分布式Id生成器]]></title>
+    <url>%2Fposts%2Ff9490f40.html</url>
+    <content type="text"><![CDATA[Id生成的几种方式数据库自增优势简单，无需额外操作保持定长自增保持单表唯一性劣势主键生成依赖数据库，高并发下会造成数据库服务器压力较大水平扩展困难，在分布式数据库环境下，无法保证唯一性UUID（GUID）优势本地生成，无需远程调用（无需网络通信）全局唯一水平扩展好劣势ID 128 bits，占用空间大字符串类型，索引效率低无法保证趋势递增时间戳略Twitter Snowflake 雪花算法优势本地生产，无需远程调用（无需网络通信）单机每秒可生成400w个IDID 64 bits，占用空间小long类型，对索引效率有提升趋势递增劣势时间回拨问题集群部署时，集群内机器时间同步问题基于雪花算法的分布式Id生成器实现123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147import java.util.Calendar;/** * 该生成器采用 Twitter Snowflake 算法实现，生成 64 Bits 的 Long 型编号 * &lt;pre&gt; * 1 bit 41 bits 10 bits 12 bits * sign bit 时间戳 工作ID 序列号ID * &lt;/pre&gt; * * @author YL */public final class SnowflakeKeyGenerator implements KeyGenerator &#123; /** * 基准时间：时间偏移量 */ private static final long EPOCH; static &#123; // 从2017年01月01日零点开始 Calendar calendar = Calendar.getInstance(); calendar.set(2017, Calendar.JANUARY, 1); calendar.set(Calendar.HOUR_OF_DAY, 0); calendar.set(Calendar.MINUTE, 0); calendar.set(Calendar.SECOND, 0); calendar.set(Calendar.MILLISECOND, 0); EPOCH = calendar.getTimeInMillis(); &#125; /** * 序列号ID位数 */ private static final long SEQUENCE_BITS = 12L; /** * 工作ID位数 */ private static final long WORKER_ID_BITS = 10L; /** * 序列号ID最大值 */ private static final long SEQUENCE_MASK = (1 &lt;&lt; SEQUENCE_BITS) - 1; /** * 工作ID最大值 */ private static final long WORKER_ID_MAX_VALUE = 1L &lt;&lt; WORKER_ID_BITS; /** * 工作ID左移12位 */ private static final long WORKER_ID_LEFT_SHIFT_BITS = SEQUENCE_BITS; /** * 时间戳左移22数 */ private static final long TIMESTAMP_LEFT_SHIFT_BITS = WORKER_ID_LEFT_SHIFT_BITS + WORKER_ID_BITS; /** * 序列号ID */ private long sequence; /** * 序列号ID偏移量 */ private byte sequenceOffset; /** * 最后生成编号时间戳，单位：毫秒 */ private long lastTime; /** * 工作ID */ private long workerId; public SnowflakeKeyGenerator(long workerId) &#123; if (workerId &gt;= WORKER_ID_MAX_VALUE || workerId &lt; 0) &#123; throw new IllegalArgumentException(String.format("worker Id can't be greater than %d or less than 0", WORKER_ID_MAX_VALUE)); &#125; this.workerId = workerId; &#125; /** * 生成 ID * * @return 返回@&#123;@link Long&#125;类型的Id */ @Override public synchronized long nextId() &#123; // 保证当前时间大于最后时间。时间回退会导致产生重复id long currentMillis = System.currentTimeMillis(); if (currentMillis &lt; this.lastTime) &#123; throw new IllegalArgumentException(String.format("clock moved backwards.Refusing to generate id for %d " + "milliseconds", (this.lastTime - currentMillis))); &#125; // 获取序列号 if (this.lastTime == currentMillis) &#123; // 当获得序号超过最大值时，归0，并去获得新的时间 if (0L == (this.sequence = ++this.sequence &amp; SEQUENCE_MASK)) &#123; currentMillis = tailNextMillis(currentMillis); &#125; &#125; else &#123; // 1、在跨毫秒时，序列号总是归0，导致序列号为0的ID较多，导致生成的ID取模后不均匀 // this.sequence = 0; // 2、序列号取[0-9]之间的随机数，可以初步解决【1】中的问题，也会导致ID取模不均匀 // this.sequence = new SecureRandom().nextInt(10); // 3、交替使用[0-1] this.sequence = vibrateSequenceOffset(); &#125; // 设置最后时间戳 this.lastTime = currentMillis; // 生成编号 return ((currentMillis - EPOCH) &lt;&lt; TIMESTAMP_LEFT_SHIFT_BITS) | (this.workerId &lt;&lt; WORKER_ID_LEFT_SHIFT_BITS) | this.sequence; &#125; /** * 不停获得时间，直到大于最后时间 * &lt;p&gt; * 从 Snowflake 的官方文档 (https://github.com/twitter/snowflake/#system-clock-dependency) 中也可以看到, 它明确要求 "You should * use NTP to keep your system clock accurate". 而且最好把 NTP 配置成不会向后调整的模式. 也就是说, NTP 纠正时间时, 不会向后回拨机器时钟. * ntpd 和 ntpdate 的区别，使用 ntpd 影响不大 * todo 如果时间回拨，会导致这个逻辑等待，等待时间可能会很长 * &lt;/p&gt; * * @param lastTime 最后时间 * * @return 时间 */ private long tailNextMillis(final long lastTime) &#123; long time = System.currentTimeMillis(); while (time &lt;= lastTime) &#123; time = System.currentTimeMillis(); &#125; return time; &#125; /** * 只会交替返回0和1 */ private byte vibrateSequenceOffset() &#123; this.sequenceOffset = (byte) (~this.sequenceOffset &amp; 1); return this.sequenceOffset; &#125;&#125;]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Twitter</tag>
+        <tag>Snowflake</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Oracle SYSDATE]]></title>
+    <url>%2Fposts%2Fb9e67bce.html</url>
+    <content type="text"><![CDATA[sysdate12345678910111213141516171819SELECT '当前时间' AS 描述, TO_CHAR(SYSDATE, 'yyyy-mm-dd hh24:mi:ss') AS 时间 FROM DUALUNION ALLSELECT '1天前' AS 描述, TO_CHAR(SYSDATE - 1, 'yyyy-mm-dd hh24:mi:ss') AS 时间 FROM DUALUNION ALLSELECT '1小时前' AS 描述, TO_CHAR(SYSDATE - 1 / 24, 'yyyy-mm-dd hh24:mi:ss') AS 时间 FROM DUALUNION ALLSELECT '1分钟前' AS 描述, TO_CHAR(SYSDATE - 1 / (24 * 60), 'yyyy-mm-dd hh24:mi:ss') AS 时间 FROM DUALUNION ALLSELECT '1秒钟前' AS 描述, TO_CHAR(SYSDATE - 1 / (24 * 60 * 60), 'yyyy-mm-dd hh24:mi:ss') AS 时间 FROM DUAL打印结果123456描述 时间当前时间 2019-03-10 10:53:361天前 2019-03-09 10:53:361小时前 2019-03-10 09:53:361分钟前 2019-03-10 10:52:361秒钟前 2019-03-10 10:53:35]]></content>
+      <categories>
+        <category>Oracle</category>
+      </categories>
+      <tags>
+        <tag>SYSDATE</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[logstash 使用]]></title>
     <url>%2Fposts%2F1e58019c.html</url>
-    <content type="text"><![CDATA[logstash config 命名思考：如果logstash配置了多个config(多个input或多个filter)，怎样来控制它们被执行的顺序呢？答案是logstash是按照config file的文件名，按照字母顺序合并了所有的config file，然后才处理的。最佳命名实践1234567800_input.conf10_filter_global.conf20_filter_nginx.conf21_filter_vsftpd.conf999_output.conf条件判断12345678910111213output &#123; if [index_prefix] &#123; elasticsearch &#123; hosts =&gt; [ &quot;elasticsearch:9200&quot; ] index =&gt; &quot;%&#123;index_prefix&#125;-%&#123;+YYYY.MM.dd&#125;&quot; &#125; &#125; else &#123; elasticsearch &#123; hosts =&gt; [ &quot;elasticsearch:9200&quot; ] index =&gt; &quot;logstash-%&#123;+YYYY.MM.dd&#125;&quot; &#125; &#125;&#125;比较操作有：相等: ==, !=, &lt;, &gt;, &lt;=, &gt;=正则: =~(匹配正则), !~(不匹配正则)包含: in(包含), not in(不包含)布尔操作：and(与), or(或), nand(非与), xor(非或)一元运算符：!(取反)()(复合表达式), !()(对复合表达式结果取反)remove _field删除字段123mutate &#123; remove_field =&gt; [ &quot;source&quot; ]&#125;删除嵌套字段（Nested fields）123mutate &#123; remove_field =&gt; [ &quot;[host][name]&quot; ]&#125;注意：如果没有host字段，[host][name]引用会创建一个空的host字典，为了避免这种情况，可以按以下方式去做：12345if [host] and [host][name] == &quot;null&quot; &#123; mutate &#123; remove_field =&gt; [ &quot;[host][name]&quot; ] &#125;&#125;logstash-logback-encoderlogback发送日志到logstash解决logstash到elasticsearch时区差8小时的问题123&lt;timestamp&gt; &lt;timeZone&gt;GMT+8&lt;/timeZone&gt;&lt;/timestamp&gt;配置过滤器，过滤掉不需要的日志1234567&lt;filter class="ch.qos.logback.core.filter.EvaluatorFilter"&gt; &lt;evaluator class="ch.qos.logback.classic.boolex.JaninoEventEvaluator"&gt; &lt;expression&gt;return message.contains("api_monitor");&lt;/expression&gt; &lt;/evaluator&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt;&lt;/filter&gt;pom.xml12345678910&lt;dependency&gt; &lt;groupId&gt;net.logstash.logback&lt;/groupId&gt; &lt;artifactId&gt;logstash-logback-encoder&lt;/artifactId&gt; &lt;version&gt;5.3&lt;/version&gt;&lt;/dependency&gt;&lt;dependency&gt; &lt;groupId&gt;org.codehaus.janino&lt;/groupId&gt; &lt;artifactId&gt;janino&lt;/artifactId&gt; &lt;version&gt;3.0.12&lt;/version&gt;&lt;/dependency&gt;logback-spring.xml1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071&lt;springProfile name="pro"&gt; &lt;appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender"&gt; &lt;destination&gt;192.168.56.101:5044&lt;/destination&gt; &lt;keepAliveDuration&gt;5 minutes&lt;/keepAliveDuration&gt; &lt;reconnectionDelay&gt;1 second&lt;/reconnectionDelay&gt; &lt;filter class="ch.qos.logback.core.filter.EvaluatorFilter"&gt; &lt;evaluator class="ch.qos.logback.classic.boolex.JaninoEventEvaluator"&gt; &lt;expression&gt;return message.contains("api_monitor");&lt;/expression&gt; &lt;/evaluator&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;encoder charset="$&#123;logger.charset&#125;" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder"&gt; &lt;providers&gt; &lt;timestamp&gt; &lt;timeZone&gt;GMT+8&lt;/timeZone&gt; &lt;/timestamp&gt; &lt;pattern&gt; &lt;pattern&gt; &#123; "time": "%d&#123;yy-MM-dd HH:mm:ss&#125;", "level": "%p", "thread": "%t", "class": "%c&#123;2&#125;.%M\\(%L\\)", "message": "%m" &#125; &lt;/pattern&gt; &lt;/pattern&gt; &lt;stackTrace&gt; &lt;throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter"&gt; &lt;maxDepthPerThrowable&gt;full&lt;/maxDepthPerThrowable&gt; &lt;maxLength&gt;full&lt;/maxLength&gt; &lt;shortenedClassNameLength&gt;20&lt;/shortenedClassNameLength&gt; &lt;rootCauseFirst&gt;true&lt;/rootCauseFirst&gt; &lt;inlineHash&gt;true&lt;/inlineHash&gt; &lt;!-- generated class names --&gt; &lt;exclude&gt;\$\$FastClassByCGLIB\$\$&lt;/exclude&gt; &lt;exclude&gt;\$\$EnhancerBySpringCGLIB\$\$&lt;/exclude&gt; &lt;exclude&gt;^sun\.reflect\..*\.invoke&lt;/exclude&gt; &lt;!-- JDK internals --&gt; &lt;exclude&gt;^com\.sun\.&lt;/exclude&gt; &lt;exclude&gt;^sun\.net\.&lt;/exclude&gt; &lt;!-- dynamic invocation --&gt; &lt;exclude&gt;^net\.sf\.cglib\.proxy\.MethodProxy\.invoke&lt;/exclude&gt; &lt;exclude&gt;^org\.springframework\.cglib\.&lt;/exclude&gt; &lt;exclude&gt;^org\.springframework\.transaction\.&lt;/exclude&gt; &lt;exclude&gt;^org\.springframework\.validation\.&lt;/exclude&gt; &lt;exclude&gt;^org\.springframework\.app\.&lt;/exclude&gt; &lt;exclude&gt;^org\.springframework\.aop\.&lt;/exclude&gt; &lt;exclude&gt;^java\.lang\.reflect\.Method\.invoke&lt;/exclude&gt; &lt;!-- Spring plumbing --&gt; &lt;exclude&gt;^org\.springframework\.ws\..*\.invoke&lt;/exclude&gt; &lt;exclude&gt;^org\.springframework\.ws\.transport\.&lt;/exclude&gt; &lt;exclude&gt;^org\.springframework\.ws\.soap\.saaj\.SaajSoapMessage\.&lt;/exclude&gt; &lt;exclude&gt;^org\.springframework\.ws\.client\.core\.WebServiceTemplate\.&lt;/exclude&gt; &lt;exclude&gt;^org\.springframework\.web\.filter\.&lt;/exclude&gt; &lt;!-- Tomcat internals --&gt; &lt;exclude&gt;^org\.apache\.tomcat\.&lt;/exclude&gt; &lt;exclude&gt;^org\.apache\.catalina\.&lt;/exclude&gt; &lt;exclude&gt;^org\.apache\.coyote\.&lt;/exclude&gt; &lt;exclude&gt;^java\.util\.concurrent\.ThreadPoolExecutor\.runWorker&lt;/exclude&gt; &lt;exclude&gt;^java\.lang\.Thread\.run$&lt;/exclude&gt; &lt;/throwableConverter&gt; &lt;/stackTrace&gt; &lt;/providers&gt; &lt;/encoder&gt; &lt;/appender&gt; &lt;root level="info"&gt; &lt;appender-ref ref="logstash"/&gt; &lt;/root&gt;&lt;/springProfile&gt;]]></content>
+    <content type="text"><![CDATA[启动logstash1$ bin/logstash -f /opt/logstash/conf.d/ -r truestart.sh 启动脚本1234567891011121314151617181920212223242526272829303132333435363738394041424344454647#!/bin/sh# @Author: YL# @Date: 2019-03-07 17:19:33# @Last Modified by: YL# @Last Modified time: 2019-03-08 10:31:06cd `dirname $0`LS_HOME=`pwd`LS_CONF="$LS_HOME/conf.d/"LS_HOME_CORE_LIB="$LS_HOME/logstash-core/lib"# 检测Tomcat是否启动（进程ID）LS_PID=`ps -ef | grep $LS_HOME_CORE_LIB | grep -v grep | awk '&#123;print $2&#125;'`#==================================================================================# JVM Configuration#==================================================================================export LANG=en_US.UTF-8export JAVA_HOME=/usr/java/jdk1.8.0_144function operate()&#123; if [[ "$1" = "kill" ]] ; then if [[ "$LS_PID" = "" ]] ; then echo "logstash not alive" else kill -9 $LS_PID fi elif [[ "$1" = "start" ]]; then nohup $LS_HOME/bin/logstash -f $LS_CONF -r true &gt;/dev/null 2&gt;&amp;1 &amp; else echo "not support: $1" fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$LS_PID" = "" ]] ; then operate start fielse echo "not support: $1"ficrontab1* * * * * /opt/logstash/start.sh checklogstash config 命名思考：如果logstash配置了多个config(多个input或多个filter)，怎样来控制它们被执行的顺序呢？答案是logstash是按照config file的文件名，按照字母顺序合并了所有的config file，然后才处理的。最佳命名实践1234567800_input.conf10_filter_global.conf20_filter_nginx.conf21_filter_vsftpd.conf999_output.conf条件判断12345678910111213output &#123; if [index_prefix] &#123; elasticsearch &#123; hosts =&gt; [ &quot;elasticsearch:9200&quot; ] index =&gt; &quot;%&#123;index_prefix&#125;-%&#123;+YYYY.MM.dd&#125;&quot; &#125; &#125; else &#123; elasticsearch &#123; hosts =&gt; [ &quot;elasticsearch:9200&quot; ] index =&gt; &quot;logstash-%&#123;+YYYY.MM.dd&#125;&quot; &#125; &#125;&#125;比较操作有：相等: ==, !=, &lt;, &gt;, &lt;=, &gt;=正则: =~(匹配正则), !~(不匹配正则)包含: in(包含), not in(不包含)布尔操作：and(与), or(或), nand(非与), xor(非或)一元运算符：!(取反)()(复合表达式), !()(对复合表达式结果取反)remove _field删除字段123mutate &#123; remove_field =&gt; [ &quot;source&quot; ]&#125;删除嵌套字段（Nested fields）123mutate &#123; remove_field =&gt; [ &quot;[host][name]&quot; ]&#125;注意：如果没有host字段，[host][name]引用会创建一个空的host字典，为了避免这种情况，可以按以下方式去做：12345if [host] and [host][name] == &quot;null&quot; &#123; mutate &#123; remove_field =&gt; [ &quot;[host][name]&quot; ] &#125;&#125;logstash-logback-encoderlogback发送日志到logstash解决logstash到elasticsearch时区差8小时的问题123&lt;timestamp&gt; &lt;timeZone&gt;GMT+8&lt;/timeZone&gt;&lt;/timestamp&gt;配置过滤器，过滤掉不需要的日志1234567&lt;filter class="ch.qos.logback.core.filter.EvaluatorFilter"&gt; &lt;evaluator class="ch.qos.logback.classic.boolex.JaninoEventEvaluator"&gt; &lt;expression&gt;return message.contains("api_monitor");&lt;/expression&gt; &lt;/evaluator&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt;&lt;/filter&gt;pom.xml12345678910&lt;dependency&gt; &lt;groupId&gt;net.logstash.logback&lt;/groupId&gt; &lt;artifactId&gt;logstash-logback-encoder&lt;/artifactId&gt; &lt;version&gt;5.3&lt;/version&gt;&lt;/dependency&gt;&lt;dependency&gt; &lt;groupId&gt;org.codehaus.janino&lt;/groupId&gt; &lt;artifactId&gt;janino&lt;/artifactId&gt; &lt;version&gt;3.0.12&lt;/version&gt;&lt;/dependency&gt;logback-spring.xml12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273&lt;springProfile name="pro"&gt; &lt;appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender"&gt; &lt;destination&gt;192.168.56.101:5044&lt;/destination&gt; &lt;keepAliveDuration&gt;5 minutes&lt;/keepAliveDuration&gt; &lt;reconnectionDelay&gt;1 second&lt;/reconnectionDelay&gt; &lt;filter class="ch.qos.logback.core.filter.EvaluatorFilter"&gt; &lt;evaluator class="ch.qos.logback.classic.boolex.JaninoEventEvaluator"&gt; &lt;expression&gt; return message.contains("api_monitor"); &lt;/expression&gt; &lt;/evaluator&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;encoder charset="$&#123;logger.charset&#125;" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder"&gt; &lt;providers&gt; &lt;timestamp&gt; &lt;timeZone&gt;GMT+8&lt;/timeZone&gt; &lt;/timestamp&gt; &lt;pattern&gt; &lt;pattern&gt; &#123; "time": "%d&#123;yy-MM-dd HH:mm:ss&#125;", "level": "%p", "thread": "%t", "class": "%c&#123;2&#125;.%M\\(%L\\)", "message": "%m" &#125; &lt;/pattern&gt; &lt;/pattern&gt; &lt;stackTrace&gt; &lt;throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter"&gt; &lt;maxDepthPerThrowable&gt;full&lt;/maxDepthPerThrowable&gt; &lt;maxLength&gt;full&lt;/maxLength&gt; &lt;shortenedClassNameLength&gt;20&lt;/shortenedClassNameLength&gt; &lt;rootCauseFirst&gt;true&lt;/rootCauseFirst&gt; &lt;inlineHash&gt;true&lt;/inlineHash&gt; &lt;!-- generated class names --&gt; &lt;exclude&gt;\$\$FastClassByCGLIB\$\$&lt;/exclude&gt; &lt;exclude&gt;\$\$EnhancerBySpringCGLIB\$\$&lt;/exclude&gt; &lt;exclude&gt;^sun\.reflect\..*\.invoke&lt;/exclude&gt; &lt;!-- JDK internals --&gt; &lt;exclude&gt;^com\.sun\.&lt;/exclude&gt; &lt;exclude&gt;^sun\.net\.&lt;/exclude&gt; &lt;!-- dynamic invocation --&gt; &lt;exclude&gt;^net\.sf\.cglib\.proxy\.MethodProxy\.invoke&lt;/exclude&gt; &lt;exclude&gt;^org\.springframework\.cglib\.&lt;/exclude&gt; &lt;exclude&gt;^org\.springframework\.transaction\.&lt;/exclude&gt; &lt;exclude&gt;^org\.springframework\.validation\.&lt;/exclude&gt; &lt;exclude&gt;^org\.springframework\.app\.&lt;/exclude&gt; &lt;exclude&gt;^org\.springframework\.aop\.&lt;/exclude&gt; &lt;exclude&gt;^java\.lang\.reflect\.Method\.invoke&lt;/exclude&gt; &lt;!-- Spring plumbing --&gt; &lt;exclude&gt;^org\.springframework\.ws\..*\.invoke&lt;/exclude&gt; &lt;exclude&gt;^org\.springframework\.ws\.transport\.&lt;/exclude&gt; &lt;exclude&gt;^org\.springframework\.ws\.soap\.saaj\.SaajSoapMessage\.&lt;/exclude&gt; &lt;exclude&gt;^org\.springframework\.ws\.client\.core\.WebServiceTemplate\.&lt;/exclude&gt; &lt;exclude&gt;^org\.springframework\.web\.filter\.&lt;/exclude&gt; &lt;!-- Tomcat internals --&gt; &lt;exclude&gt;^org\.apache\.tomcat\.&lt;/exclude&gt; &lt;exclude&gt;^org\.apache\.catalina\.&lt;/exclude&gt; &lt;exclude&gt;^org\.apache\.coyote\.&lt;/exclude&gt; &lt;exclude&gt;^java\.util\.concurrent\.ThreadPoolExecutor\.runWorker&lt;/exclude&gt; &lt;exclude&gt;^java\.lang\.Thread\.run$&lt;/exclude&gt; &lt;/throwableConverter&gt; &lt;/stackTrace&gt; &lt;/providers&gt; &lt;/encoder&gt; &lt;/appender&gt; &lt;root level="info"&gt; &lt;appender-ref ref="logstash"/&gt; &lt;/root&gt;&lt;/springProfile&gt;使用中遇到的问题gsub有问题12345678910mutate &#123; gsub =&gt; [ &quot;city&quot;, &quot;5&quot;, &quot;深圳&quot;, &quot;city&quot;, &quot;50&quot;, &quot;东莞&quot;, &quot;city&quot;, &quot;51&quot;, &quot;江门&quot; ]&#125;# 5进来，替换成“深圳”# 50进来，会被替换成“深圳0”# 51进来，会被替换成“深圳1”正常12345678910mutate &#123; gsub =&gt; [ &quot;city&quot;, &quot;^5$&quot;, &quot;深圳&quot;, &quot;city&quot;, &quot;^50$&quot;, &quot;东莞&quot;, &quot;city&quot;, &quot;^51$&quot;, &quot;江门&quot; ]&#125;# 5进来，替换成“深圳”# 50进来，会被替换成“东莞”# 51进来，会被替换成“江门”12345678910mutate &#123; gsub =&gt; [ &quot;city&quot;, &quot;50&quot;, &quot;东莞&quot;, &quot;city&quot;, &quot;51&quot;, &quot;江门&quot;, &quot;city&quot;, &quot;5&quot;, &quot;深圳&quot; ]&#125;# 5进来，替换成“深圳”# 50进来，会被替换成“东莞”# 51进来，会被替换成“江门”]]></content>
       <categories>
         <category>elk</category>
       </categories>
@@ -132,10 +168,10 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>spring-boot</tag>
         <tag>Hibernate</tag>
         <tag>Oracle</tag>
         <tag>DataJpaTest</tag>
+        <tag>spring-boot</tag>
         <tag>jpa</tag>
       </tags>
   </entry>
@@ -321,10 +357,10 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>BigPipe</tag>
+        <tag>spring-boot</tag>
         <tag>jsp</tag>
         <tag>freemarker</tag>
-        <tag>spring-boot</tag>
+        <tag>BigPipe</tag>
       </tags>
   </entry>
   <entry>
@@ -607,18 +643,6 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[Linux lsof 命令]]></title>
-    <url>%2Fposts%2Ffc091577.html</url>
-    <content type="text"><![CDATA[lsof检测端口未被占用1lsof -i:8080]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>lsof</tag>
-        <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Linux unzip 命令]]></title>
     <url>%2Fposts%2F64f75729.html</url>
     <content type="text"><![CDATA[unzip解压war、jar、zip、rar等文件1unzip -oq /opt/xxx.war -d /opt/ddd]]></content>
@@ -631,6 +655,66 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Linux netstat 命令]]></title>
+    <url>%2Fposts%2F6c05ba39.html</url>
+    <content type="text"><![CDATA[netstat查看进程的网络状态1netstat -anp | grep 7646]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>netstat</tag>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux vi 命令]]></title>
+    <url>%2Fposts%2F87207300.html</url>
+    <content type="text"><![CDATA[vilinux文件格式的问题（使用unix格式）123456789# 查看文件格式vi 文件名:set ff # :set fileencoding# 设置文件格式为unix:set ff=unix# 保存退出:wq# 也可以直接使用dos2unix 文件名]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>vi</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux tail 命令]]></title>
+    <url>%2Fposts%2F29bd046e.html</url>
+    <content type="text"><![CDATA[tail]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>tail</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux lsof 命令]]></title>
+    <url>%2Fposts%2Ffc091577.html</url>
+    <content type="text"><![CDATA[lsof检测端口未被占用1lsof -i:8080]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>lsof</tag>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux cp 命令]]></title>
+    <url>%2Fposts%2F2835e3e.html</url>
+    <content type="text"><![CDATA[cp复制文件夹1cp -r [old source] -d [new source]]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>cp</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Tomcat 启动脚本]]></title>
     <url>%2Fposts%2Fe22f47ab.html</url>
     <content type="text"><![CDATA[Tomcat 启动脚本start.sh12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455#!/usr/bin/env bash# @Author: YL# @Date: 2017-01-25 14:50:43# @Last Modified by: YL# @Last Modified time: 2017-12-18 14:12:23cd `dirname $0`PROJECT_HOME=`pwd`# Tomcat 服务器路径TC_HOME="$PROJECT_HOME/tomcat"# crontab 检测日记文件TC_STDOUT_FILE="$TC_HOME/logs/stdout.out"# 检测 Tomcat 是否启动（进程ID）TC_PID=`ps -ef | grep $TC_HOME/bin | grep -v grep | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# 检测输出的日记格式DATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME"function operate()&#123; if [[ "$1" = "kill" ]] ; then if [[ "$TC_PID" = "" ]] ; then echo "$DATE_PATTERN is not alive" | tee -a $TC_STDOUT_FILE else echo "$DATE_PATTERN kill $TC_PID begining" | tee -a $TC_STDOUT_FILE kill -9 $TC_PID echo "$DATE_PATTERN kill $TC_PID success" | tee -a $TC_STDOUT_FILE fi elif [[ "$1" = "start" ]]; then cd $TC_HOME/bin sh startup.sh else echo "$DATE_PATTERN is not support $1" | tee -a $TC_STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "$DATE_PATTERN starting" | tee -a $TC_STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$TC_PID" = "" ]] ; then echo "$DATE_PATTERN starting" &gt;&gt; $TC_STDOUT_FILE operate start else echo "$DATE_PATTERN pid $TC_PID" &gt;&gt; $TC_STDOUT_FILE fielse echo "$DATE_PATTERN is not support $1" | tee -a $TC_STDOUT_FILEfi使用说明12345sh start.sh start # 重启sh start.sh # 重启sh start.sh restart # 重启sh start.sh check # 检测服务是否启动，没有启动，则启动之，否则不做其他操作sh start.sh kill # kill掉已启动的服务进程]]></content>
@@ -639,17 +723,9 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[zookeeper 清理日志文件]]></title>
-    <url>%2Fposts%2Fc0bbcacd.html</url>
-    <content type="text"><![CDATA[clear123456789101112131415161718192021222324252627282930#!/usr/bin/env bash# @Author: YL# @Date: 2017-11-01 08:59:34# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:09# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`cd ..NODE_HOME=`pwd`# snapshotNODE_DATA_DIR=$NODE_HOME/data/version-2# snapshot logNODE_LOG_DIR=$NODE_HOME/logs/version-2# zk logNODE_LOGS=$NODE_HOME/logs# 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中count=3count=$[$count+1]ls -t $NODE_LOG_DIR/log.* | tail -n +$count | xargs rm -fls -t $NODE_DATA_DIR/snapshot.* | tail -n +$count | xargs rm -fls -t $NODE_LOGS/zookeeper.log.* | tail -n +$count | xargs rm -f# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"STDOUT_FILE=$NODE_LOGS/stdout.logecho "$DATE_PATTERN clear logs success" | tee -a $STDOUT_FILE]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[zookeeper重启脚本]]></title>
-    <url>%2Fposts%2F6c1ad93d.html</url>
-    <content type="text"><![CDATA[restart12345678910111213#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:10# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:30# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stopsleep 3./zkServer.sh start]]></content>
+    <title><![CDATA[zookeeper evn 环境变量配置脚本]]></title>
+    <url>%2Fposts%2F57428144.html</url>
+    <content type="text"><![CDATA[zookeeper-env1234567891011121314151617181920#!/usr/bin/env bash# @Author: YL# @Date: 2017-10-31 10:27:16# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:43# 此文件放到 zookeeper 的 conf 目录下# java envexport JAVA_HOME=/usr/java/jdk1.8.0_131export PATH=$JAVA_HOME/bin:$PATHexport JVMFLAGS="-Xms1536m -Xmx1536m $JVMFLAGS"cd `dirname $0`cd ..NODE_HOME=`pwd`# zookeeper envZOO_LOG_DIR=$NODE_HOME/logsZOO_LOG4J_PROP="INFO,ROLLINGFILE"]]></content>
       <categories>
         <category>zookeeper</category>
       </categories>
@@ -663,6 +739,14 @@
       </categories>
   </entry>
   <entry>
+    <title><![CDATA[zookeeper 清理日志文件]]></title>
+    <url>%2Fposts%2Fc0bbcacd.html</url>
+    <content type="text"><![CDATA[clear123456789101112131415161718192021222324252627282930#!/usr/bin/env bash# @Author: YL# @Date: 2017-11-01 08:59:34# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:09# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`cd ..NODE_HOME=`pwd`# snapshotNODE_DATA_DIR=$NODE_HOME/data/version-2# snapshot logNODE_LOG_DIR=$NODE_HOME/logs/version-2# zk logNODE_LOGS=$NODE_HOME/logs# 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中count=3count=$[$count+1]ls -t $NODE_LOG_DIR/log.* | tail -n +$count | xargs rm -fls -t $NODE_DATA_DIR/snapshot.* | tail -n +$count | xargs rm -fls -t $NODE_LOGS/zookeeper.log.* | tail -n +$count | xargs rm -f# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"STDOUT_FILE=$NODE_LOGS/stdout.logecho "$DATE_PATTERN clear logs success" | tee -a $STDOUT_FILE]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
     <title><![CDATA[zookeeper stop脚本]]></title>
     <url>%2Fposts%2F7bd064dc.html</url>
     <content type="text"><![CDATA[stop12345678910#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:00# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:49# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stop]]></content>
@@ -671,9 +755,9 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[zookeeper evn 环境变量配置脚本]]></title>
-    <url>%2Fposts%2F57428144.html</url>
-    <content type="text"><![CDATA[zookeeper-env1234567891011121314151617181920#!/usr/bin/env bash# @Author: YL# @Date: 2017-10-31 10:27:16# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:43# 此文件放到 zookeeper 的 conf 目录下# java envexport JAVA_HOME=/usr/java/jdk1.8.0_131export PATH=$JAVA_HOME/bin:$PATHexport JVMFLAGS="-Xms1536m -Xmx1536m $JVMFLAGS"cd `dirname $0`cd ..NODE_HOME=`pwd`# zookeeper envZOO_LOG_DIR=$NODE_HOME/logsZOO_LOG4J_PROP="INFO,ROLLINGFILE"]]></content>
+    <title><![CDATA[zookeeper重启脚本]]></title>
+    <url>%2Fposts%2F6c1ad93d.html</url>
+    <content type="text"><![CDATA[restart12345678910111213#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:10# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:30# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stopsleep 3./zkServer.sh start]]></content>
       <categories>
         <category>zookeeper</category>
       </categories>
@@ -691,51 +775,15 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux tar 命令]]></title>
-    <url>%2Fposts%2Fbd083454.html</url>
-    <content type="text"><![CDATA[tar1tar -zxvf xxx.tar.gz]]></content>
+    <title><![CDATA[Linux ls 命令]]></title>
+    <url>%2Fposts%2F53b5960c.html</url>
+    <content type="text"><![CDATA[ls12# 统计文件夹中文件数ls -l |grep "^-"|wc -l保留最新的1个文件夹，删除其他文件夹（使用-d）1ls -t -d /home/txrd/tisson-web-open/logs/undertow-* | tail -n +2 | xargs rm -rf]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>tar</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux tail 命令]]></title>
-    <url>%2Fposts%2F29bd046e.html</url>
-    <content type="text"><![CDATA[tail]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>tail</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux find 命令]]></title>
-    <url>%2Fposts%2F7b744fec.html</url>
-    <content type="text"><![CDATA[find查找文件并删除12345678# 删除指定时间前的 jpg 文件find /opt/upload/ -mtime +30 -type f -name *.jpg -exec rm -f &#123;&#125; \;# 删除隐藏文件（-fr）find /opt/upload/ -type d -name .svn -exec rm -fr &#123;&#125; \;# 删除30天前的文件find /opt/upload -mtime +30 -type f -name "*.jpg" -exec rm -rf &#123;&#125; \;打印指定时间前的文件1find project/upload/ -mtime +30 -type f -print]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>find</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[jar启动脚本]]></title>
-    <url>%2Fposts%2F6d838077.html</url>
-    <content type="text"><![CDATA[jar启动脚本123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263#!/usr/bin/env bash# @Author: YL# @Date: 2017-08-31 15:52:30# @Last Modified by: YL# @Last Modified time: 2017-12-18 14:12:45export LANG=en_US.UTF-8export JAVA_HOME=/usr/java/jdk1.8.0_144export PATH=$PATH:$JAVA_HOME/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHcd `dirname $0`PROJECT_HOME=`pwd`PROJECT_LIB=$PROJECT_HOME/libPROJECT_LOGS=$PROJECT_HOME/logsSTDOUT_FILE=$PROJECT_HOME/logs/stdout.logPROJECT_JAR=$PROJECT_HOME/tisson-ftp.jar# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $PROJECT_JAR"# pidPROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'`function operate()&#123; if [[ "$1" = "kill" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN kill $PROJECT_PID begining" | tee -a $STDOUT_FILE kill -9 $PROJECT_PID echo "$DATE_PATTERN kill $PROJECT_PID success" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not alive" | tee -a $STDOUT_FILE fi elif [[ "$1" = "start" ]] ; then # cd $PROJECT_HOME # starting nohup java -server -Xms512m -Xmx512m -Xss256k -Dloader.path=$PROJECT_LIB -Djava.io.tmpdir=$PROJECT_LOGS -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$PROJECT_LOGS/$PROJECT_PID.hprof -jar $PROJECT_JAR &gt;&gt; $STDOUT_FILE 2&gt;&amp;1 &amp; PROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'` echo "$DATE_PATTERN The $PROJECT_JAR started OK! pid: $PROJECT_PID" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILE fi&#125;if [[ "$1" = "start" || "$1" = "check" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN already started! pid: $PROJECT_PID" &gt;&gt; $STDOUT_FILE exit 1 fi operate startelif [[ "$1" = "" || "$1" = "restart" ]]; then operate kill echo "$DATE_PATTERN starting" | tee -a $STDOUT_FILE operate startelif [[ "$1" = "kill" ]]; then operate killelse echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILEfi-Djava.ext.dirs和-Dloader.path区别-Djava.ext.dirs使用-Djava.ext.dirs配置外部jar包引用时，会覆盖jdk默认的lib/ext下的扩展包-Dloader.path]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>jar</tag>
+        <tag>ls</tag>
       </tags>
   </entry>
   <entry>
@@ -751,39 +799,27 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux curl 命令]]></title>
-    <url>%2Fposts%2Faea02818.html</url>
-    <content type="text"><![CDATA[curlGET 请求1curl http://www.baidu.com?q=xxxxPOST 请求1curl http://ip:port/weixin_v3/w -XPOST -d "send message..."发送 POST JSON 请求1curl -H "Content-Type: application/json" -X POST --data '&#123;"data":"1"&#125;' http://127.0.0.1/使用代理1curl -x 192.168.2.5:3128 http://www.baidu.com?q=xxxx输出请求信息12345678# http_code# time_connect# time_starttransfer# time_total# size_download# speed_download# 参考地址：curl http://www.baidu.com?q=xxxx -so /dev/null -w "%&#123;http_code&#125;\t%&#123;time_connect&#125;\t%&#123;time_starttransfer&#125;\t%&#123;time_total&#125;\t%&#123;size_download&#125;\t%&#123;speed_download&#125;\t"]]></content>
+    <title><![CDATA[Linux sed 命令]]></title>
+    <url>%2Fposts%2Fb8ec468d.html</url>
+    <content type="text"><![CDATA[sed打印指定行数1sed -n '12457431, 12457440p' tomcat/logs/catalina.out]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>curl</tag>
+        <tag>sed</tag>
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux ls 命令]]></title>
-    <url>%2Fposts%2F53b5960c.html</url>
-    <content type="text"><![CDATA[ls12# 统计文件夹中文件数ls -l |grep "^-"|wc -l保留最新的1个文件夹，删除其他文件夹（使用-d）1ls -t -d /home/txrd/tisson-web-open/logs/undertow-* | tail -n +2 | xargs rm -rf]]></content>
+    <title><![CDATA[jar启动脚本]]></title>
+    <url>%2Fposts%2F6d838077.html</url>
+    <content type="text"><![CDATA[jar启动脚本123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263#!/usr/bin/env bash# @Author: YL# @Date: 2017-08-31 15:52:30# @Last Modified by: YL# @Last Modified time: 2017-12-18 14:12:45export LANG=en_US.UTF-8export JAVA_HOME=/usr/java/jdk1.8.0_144export PATH=$PATH:$JAVA_HOME/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHcd `dirname $0`PROJECT_HOME=`pwd`PROJECT_LIB=$PROJECT_HOME/libPROJECT_LOGS=$PROJECT_HOME/logsSTDOUT_FILE=$PROJECT_HOME/logs/stdout.logPROJECT_JAR=$PROJECT_HOME/tisson-ftp.jar# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $PROJECT_JAR"# pidPROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'`function operate()&#123; if [[ "$1" = "kill" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN kill $PROJECT_PID begining" | tee -a $STDOUT_FILE kill -9 $PROJECT_PID echo "$DATE_PATTERN kill $PROJECT_PID success" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not alive" | tee -a $STDOUT_FILE fi elif [[ "$1" = "start" ]] ; then # cd $PROJECT_HOME # starting nohup java -server -Xms512m -Xmx512m -Xss256k -Dloader.path=$PROJECT_LIB -Djava.io.tmpdir=$PROJECT_LOGS -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$PROJECT_LOGS/$PROJECT_PID.hprof -jar $PROJECT_JAR &gt;&gt; $STDOUT_FILE 2&gt;&amp;1 &amp; PROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'` echo "$DATE_PATTERN The $PROJECT_JAR started OK! pid: $PROJECT_PID" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILE fi&#125;if [[ "$1" = "start" || "$1" = "check" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN already started! pid: $PROJECT_PID" &gt;&gt; $STDOUT_FILE exit 1 fi operate startelif [[ "$1" = "" || "$1" = "restart" ]]; then operate kill echo "$DATE_PATTERN starting" | tee -a $STDOUT_FILE operate startelif [[ "$1" = "kill" ]]; then operate killelse echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILEfi-Djava.ext.dirs和-Dloader.path区别-Djava.ext.dirs使用-Djava.ext.dirs配置外部jar包引用时，会覆盖jdk默认的lib/ext下的扩展包-Dloader.path]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>shell</tag>
-        <tag>ls</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux crontab 命令]]></title>
-    <url>%2Fposts%2Fb0b79272.html</url>
-    <content type="text"><![CDATA[crontab 使用注意事项如果通过 crontab 执行1、crontab 无法获取 jdk 变量，要在 java 命令之前写入jdk绝对路径2、要把路径切换到要执行的 sh 路径下注意：二者缺一不可查找 jdk 路径的方法112$ echo $JAVA_HOME/usr/java/jdk1.6.0_45/bin/java2123456$ which java/usr/bin/java$ ls -lrt /usr/bin/java #/usr/bin/java是which java查出来的路径lrwxrwxrwx. 1 root root 22 Sep 16 2015 /usr/bin/java -&gt; /etc/alternatives/java$ ls -lrt /etc/alternatives/java #/etc/alternatives/java是ls -lrt /usr/bin/java查出来的路径 lrwxrwxrwx. 1 root root 46 Sep 16 2015 /etc/alternatives/java -&gt; /usr/lib/jvm/jre-1.6.0-openjdk.x86_64/bin/java查询 crontab 定时器配置情况1crontab -l编辑 crontab 定时器1234567crontab -e# 当 crontab 调用时，错误和标准输出会写成 mail 通知你* * * * * /opt/restart.sh# 标准输出重定向到 /dev/null，输出到这里就找不回来了* * * * * /opt/restart.sh &gt; /dev/null# 标准输出和错误输出都重定向到 /dev/null* * * * * /opt/restart.sh &gt; /dev/null 2&gt;&amp;1]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>crontab</tag>
+        <tag>Java</tag>
+        <tag>jar</tag>
       </tags>
   </entry>
   <entry>
@@ -799,51 +835,51 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux cp 命令]]></title>
-    <url>%2Fposts%2F2835e3e.html</url>
-    <content type="text"><![CDATA[cp复制文件夹1cp -r [old source] -d [new source]]]></content>
+    <title><![CDATA[Linux tar 命令]]></title>
+    <url>%2Fposts%2Fbd083454.html</url>
+    <content type="text"><![CDATA[tar1tar -zxvf xxx.tar.gz]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>cp</tag>
+        <tag>tar</tag>
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux vi 命令]]></title>
-    <url>%2Fposts%2F87207300.html</url>
-    <content type="text"><![CDATA[vilinux文件格式的问题（使用unix格式）123456789# 查看文件格式vi 文件名:set ff # :set fileencoding# 设置文件格式为unix:set ff=unix# 保存退出:wq# 也可以直接使用dos2unix 文件名]]></content>
+    <title><![CDATA[Linux crontab 命令]]></title>
+    <url>%2Fposts%2Fb0b79272.html</url>
+    <content type="text"><![CDATA[crontab 使用注意事项如果通过 crontab 执行1、crontab 无法获取 jdk 变量，要在 java 命令之前写入jdk绝对路径2、要把路径切换到要执行的 sh 路径下注意：二者缺一不可查找 jdk 路径的方法112$ echo $JAVA_HOME/usr/java/jdk1.6.0_45/bin/java2123456$ which java/usr/bin/java$ ls -lrt /usr/bin/java #/usr/bin/java是which java查出来的路径lrwxrwxrwx. 1 root root 22 Sep 16 2015 /usr/bin/java -&gt; /etc/alternatives/java$ ls -lrt /etc/alternatives/java #/etc/alternatives/java是ls -lrt /usr/bin/java查出来的路径 lrwxrwxrwx. 1 root root 46 Sep 16 2015 /etc/alternatives/java -&gt; /usr/lib/jvm/jre-1.6.0-openjdk.x86_64/bin/java查询 crontab 定时器配置情况1crontab -l编辑 crontab 定时器1234567crontab -e# 当 crontab 调用时，错误和标准输出会写成 mail 通知你* * * * * /opt/restart.sh# 标准输出重定向到 /dev/null，输出到这里就找不回来了* * * * * /opt/restart.sh &gt; /dev/null# 标准输出和错误输出都重定向到 /dev/null* * * * * /opt/restart.sh &gt; /dev/null 2&gt;&amp;1]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>vi</tag>
+        <tag>crontab</tag>
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux netstat 命令]]></title>
-    <url>%2Fposts%2F6c05ba39.html</url>
-    <content type="text"><![CDATA[netstat查看进程的网络状态1netstat -anp | grep 7646]]></content>
+    <title><![CDATA[Linux curl 命令]]></title>
+    <url>%2Fposts%2Faea02818.html</url>
+    <content type="text"><![CDATA[curlGET 请求1curl http://www.baidu.com?q=xxxxPOST 请求1curl http://ip:port/weixin_v3/w -XPOST -d "send message..."发送 POST JSON 请求1curl -H "Content-Type: application/json" -X POST --data '&#123;"data":"1"&#125;' http://127.0.0.1/使用代理1curl -x 192.168.2.5:3128 http://www.baidu.com?q=xxxx输出请求信息12345678# http_code# time_connect# time_starttransfer# time_total# size_download# speed_download# 参考地址：curl http://www.baidu.com?q=xxxx -so /dev/null -w "%&#123;http_code&#125;\t%&#123;time_connect&#125;\t%&#123;time_starttransfer&#125;\t%&#123;time_total&#125;\t%&#123;size_download&#125;\t%&#123;speed_download&#125;\t"]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>netstat</tag>
         <tag>shell</tag>
+        <tag>curl</tag>
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux sed 命令]]></title>
-    <url>%2Fposts%2Fb8ec468d.html</url>
-    <content type="text"><![CDATA[sed打印指定行数1sed -n '12457431, 12457440p' tomcat/logs/catalina.out]]></content>
+    <title><![CDATA[Linux find 命令]]></title>
+    <url>%2Fposts%2F7b744fec.html</url>
+    <content type="text"><![CDATA[find查找文件并删除12345678# 删除指定时间前的 jpg 文件find /opt/upload/ -mtime +30 -type f -name *.jpg -exec rm -f &#123;&#125; \;# 删除隐藏文件（-fr）find /opt/upload/ -type d -name .svn -exec rm -fr &#123;&#125; \;# 删除30天前的文件find /opt/upload -mtime +30 -type f -name "*.jpg" -exec rm -rf &#123;&#125; \;打印指定时间前的文件1find project/upload/ -mtime +30 -type f -print]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>sed</tag>
+        <tag>find</tag>
       </tags>
   </entry>
   <entry>
@@ -987,7 +1023,7 @@
   <entry>
     <title><![CDATA[hibernate显示sql中的参数值（logback）]]></title>
     <url>%2Fposts%2F9eea8fb4.html</url>
-    <content type="text"><![CDATA[以下是 logback 的日志输出配置，只要是在 logback 的配置文件中添加以下配置12&lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt;&lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt;完整的 logback 配置如下123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;!-- For assistance related to logback-translator or configuration --&gt;&lt;!-- files in general, please contact the logback user mailing list --&gt;&lt;!-- at http://www.qos.ch/mailman/listinfo/logback-user --&gt;&lt;!-- --&gt;&lt;!-- For professional support please see --&gt;&lt;!-- http://www.qos.ch/shop/products/professionalSupport --&gt;&lt;!-- --&gt;&lt;configuration scan="true" scanPeriod="60 seconds" debug="false"&gt; &lt;property name="logger.charset" value="UTF-8"/&gt; &lt;property name="logger.path" value="$&#123;catalina.home&#125;/logs"/&gt; &lt;property name="logger.pattern" value="[%d&#123;yyyy-MM-dd HH:mm:ss&#125; %highlight(%-5p)] %yellow(%t) %cyan(%c.%M\\(%L\\)) | %m%n"/&gt; &lt;property name="logger.maxHistory" value="15"/&gt; &lt;!--&amp;lt;!&amp;ndash; https://logback.qos.ch/manual/layouts.html#coloring &amp;ndash;&amp;gt; &amp;lt;!&amp;ndash; 彩色日志依赖的渲染类 &amp;ndash;&amp;gt; &lt;conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" /&gt; &lt;conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" /&gt; &lt;conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" /&gt; &amp;lt;!&amp;ndash; 彩色日志格式 &amp;ndash;&amp;gt; &lt;property name="logger.pattern" value="$&#123;CONSOLE_LOG_PATTERN:-%clr([%d&#123;yyyy-MM-dd HH:mm:ss&#125; %clr($&#123;LOG_LEVEL_PATTERN:-%5p&#125;)])&#123;faint&#125; %clr(%c.%M\\(%L\\))&#123;cyan&#125; | %m%n&#125;" /&gt;--&gt; &lt;springProfile name="dev, local"&gt; &lt;appender name="stdout" class="ch.qos.logback.core.ConsoleAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;/appender&gt; &lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt; &lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt; &lt;!--&lt;logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="DEBUG"/&gt; &lt;logger name="org.hibernate.SQL" level="DEBUG"/&gt; &lt;logger name="org.hibernate.type" level="INFO"/&gt; &lt;logger name="org.hibernate.engine.QueryParameters" level="DEBUG"/&gt; &lt;logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG"/&gt;--&gt; &lt;!--&lt;logger name="org.apache.ibatis" level="debug"/&gt; &lt;logger name="java.sql.Connection" level="debug"/&gt; &lt;logger name="java.sql.Statement" level="debug"/&gt; &lt;logger name="java.sql.PreparedStatement" level="debug"/&gt;--&gt; &lt;root level="info"&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt; &lt;springProfile name="prod"&gt; &lt;!--See http://logback.qos.ch/manual/appenders.html#RollingFileAppender --&gt; &lt;!--and http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy --&gt; &lt;!--for further documentation --&gt; &lt;appender name="stdout" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;File&gt;$&#123;logger.path&#125;/info.log&lt;/File&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/info.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="warn" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/warn.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;WARN&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/warn.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/error.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;ERROR&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/error.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;logger name="warn" level="WARN"/&gt; &lt;logger name="error" level="ERROR"/&gt; &lt;root level="info"&gt; &lt;appender-ref ref="warn"/&gt; &lt;appender-ref ref="error"/&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt;&lt;/configuration&gt;]]></content>
+    <content type="text"><![CDATA[以下是 logback 的日志输出配置，只要是在 logback 的配置文件中添加以下配置12&lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt;&lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt;完整的 logback 配置如下1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;configuration scan="true" scanPeriod="60 seconds" debug="false"&gt; &lt;property name="logger.charset" value="UTF-8"/&gt; &lt;property name="logger.path" value="$&#123;catalina.home&#125;/logs"/&gt; &lt;property name="logger.pattern" value="[%d&#123;yyyy-MM-dd HH:mm:ss&#125; %highlight(%-5p)] %yellow(%t) %cyan(%c.%M\\(%L\\)) | %m%n"/&gt; &lt;property name="logger.maxHistory" value="15"/&gt; &lt;springProfile name="dev, local"&gt; &lt;appender name="stdout" class="ch.qos.logback.core.ConsoleAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;/appender&gt; &lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt; &lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt; &lt;!--&lt;logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="DEBUG"/&gt; &lt;logger name="org.hibernate.SQL" level="DEBUG"/&gt; &lt;logger name="org.hibernate.type" level="INFO"/&gt; &lt;logger name="org.hibernate.engine.QueryParameters" level="DEBUG"/&gt; &lt;logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG"/&gt;--&gt; &lt;!--&lt;logger name="org.apache.ibatis" level="debug"/&gt; &lt;logger name="java.sql.Connection" level="debug"/&gt; &lt;logger name="java.sql.Statement" level="debug"/&gt; &lt;logger name="java.sql.PreparedStatement" level="debug"/&gt;--&gt; &lt;root level="info"&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt; &lt;springProfile name="prod"&gt; &lt;!--See http://logback.qos.ch/manual/appenders.html#RollingFileAppender --&gt; &lt;!--and http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy --&gt; &lt;!--for further documentation --&gt; &lt;appender name="stdout" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;File&gt;$&#123;logger.path&#125;/info.log&lt;/File&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/info.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="warn" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/warn.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;WARN&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/warn.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/error.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;ERROR&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/error.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;logger name="warn" level="WARN"/&gt; &lt;logger name="error" level="ERROR"/&gt; &lt;root level="info"&gt; &lt;appender-ref ref="warn"/&gt; &lt;appender-ref ref="error"/&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt;&lt;/configuration&gt;]]></content>
       <categories>
         <category>Java</category>
       </categories>
@@ -1069,6 +1105,18 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[nodejs 使用]]></title>
+    <url>%2Fposts%2F8d0f4649.html</url>
+    <content type="text"><![CDATA[配置淘宝npm国内访问外网是很慢的，安装NodeJS是自带的npm地址默认是：http://registry.npmjs.org，访问很慢，所以一般换成国内镜像地址。通过config命令123npm config set registry https://registry.npm.taobao.org/ npm info underscore#（如果配置成功，这个命令会有字符串response）npm --registry=https://registry.npm.taobao.org命令行指定1npm --registry https://registry.npm.taobao.org/ info underscore编辑node_modules/npm/.npmrc加入下面内容1registry = https://registry.npm.taobao.org/如果上面的npm地址不行的话，可以试试淘宝的npmhttps://registry.npm.taobao.org123npm set registry https://registry.npm.taobao.org/# 或者npm --registry https://registry.npm.taobao.org/ info underscore下载路径在安装完nodejs后，npm install -g jshint是被安装在默认路径（C:\Users\用户名\AppData\Roaming\npm）下的可以通过修改nodejs安装路径下的node_modules/npm/.npmrc文件prefix=D:\MyTools\nodejs\node_global （修改全局路径）cache=D:\MyTools\nodejs\node_cache （修改全局路径）请注意prefix、cache不能设置成一样的路径，否则通过npm安装模块时，会报错npm 使用123456789# -S 是--save 的缩写，它可以让你安装的模块记录到package.json文件当中npm install -S xxx# 这是删除模块，也可以删除全局模块npm uninstall xxxnpm uninstall -g xxx# -D就是--save-dev 这样安装的包的名称及版本号就会存在package.json的devDependencies这个里面，而--save会将包的名称及版本号放在dependencies里面npm install -D xxxnpm registry 设置1234567891011121314$ npm install -g nrm$ nrm lsD:\Workspace\vuejs-project&gt;nrm ls* npm ---- https://registry.npmjs.org/ cnpm --- http://r.cnpmjs.org/ taobao - https://registry.npm.taobao.org/ nj ----- https://registry.nodejitsu.com/ rednpm - http://registry.mirror.cqupt.edu.cn/ npmMirror https://skimdb.npmjs.com/registry/ edunpm - http://registry.enpmjs.org/# 切换源$ nrm use taobaoRegistry has been set to: https://registry.npm.taobao.org/npm-check检查依赖包版本123456# 安装 npm-checknpm install -g npm-check# 检查 npm 包版本npm-check -u -gnpm-check -u -Snpm-check -u -D]]></content>
+      <categories>
+        <category>nodejs</category>
+      </categories>
+      <tags>
+        <tag>npm</tag>
+        <tag>cnpm</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[xampp 安装 memcache 监控]]></title>
     <url>%2Fposts%2Fd01399d3.html</url>
     <content type="text"><![CDATA[xampp安装memcache监控现在 memadmin下载memadmin，解压到xampp/htdocs下查看 php 版本信息123&lt;?php echo phpinfo();?&gt;下载 php-memcache.dll根据查看到的php的信息，在php-memcache下载对应本版的Thread Safe，里面包含了php-memcache.dll。解压下载包，然后把php-memcache.dll拷贝到xampp/php/ext下在xampp/php/php.ini最后添加以下内容12345678;php-memcachedextension=php_memcache.dll[Memcache]memcache.allow_failover = 1memcache.max_failover_attempts=20memcache.chunk_size =8192memcache.default_port = 11211访问 memadminhttp://host:port/memadmin]]></content>
@@ -1079,18 +1127,6 @@
         <tag>xampp</tag>
         <tag>memcache</tag>
         <tag>php</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[nodejs 使用]]></title>
-    <url>%2Fposts%2F8d0f4649.html</url>
-    <content type="text"><![CDATA[配置淘宝npm国内访问外网是很慢的，安装NodeJS是自带的npm地址默认是：http://registry.npmjs.org，访问很慢，所以一般换成国内镜像地址。通过config命令123npm config set registry https://registry.npm.taobao.org/ npm info underscore#（如果配置成功，这个命令会有字符串response）npm --registry=https://registry.npm.taobao.org命令行指定1npm --registry https://registry.npm.taobao.org/ info underscore编辑node_modules/npm/.npmrc加入下面内容1registry = https://registry.npm.taobao.org/如果上面的npm地址不行的话，可以试试淘宝的npmhttps://registry.npm.taobao.org123npm set registry https://registry.npm.taobao.org/# 或者npm --registry https://registry.npm.taobao.org/ info underscore下载路径在安装完nodejs后，npm install -g jshint是被安装在默认路径（C:\Users\用户名\AppData\Roaming\npm）下的可以通过修改nodejs安装路径下的node_modules/npm/.npmrc文件prefix=D:\MyTools\nodejs\node_global （修改全局路径）cache=D:\MyTools\nodejs\node_cache （修改全局路径）请注意prefix、cache不能设置成一样的路径，否则通过npm安装模块时，会报错npm 使用123456789# -S 是--save 的缩写，它可以让你安装的模块记录到package.json文件当中npm install -S xxx# 这是删除模块，也可以删除全局模块npm uninstall xxxnpm uninstall -g xxx# -D就是--save-dev 这样安装的包的名称及版本号就会存在package.json的devDependencies这个里面，而--save会将包的名称及版本号放在dependencies里面npm install -D xxxnpm registry 设置1234567891011121314$ npm install -g nrm$ nrm lsD:\Workspace\vuejs-project&gt;nrm ls* npm ---- https://registry.npmjs.org/ cnpm --- http://r.cnpmjs.org/ taobao - https://registry.npm.taobao.org/ nj ----- https://registry.nodejitsu.com/ rednpm - http://registry.mirror.cqupt.edu.cn/ npmMirror https://skimdb.npmjs.com/registry/ edunpm - http://registry.enpmjs.org/# 切换源$ nrm use taobaoRegistry has been set to: https://registry.npm.taobao.org/npm-check检查依赖包版本123456# 安装 npm-checknpm install -g npm-check# 检查 npm 包版本npm-check -u -gnpm-check -u -Snpm-check -u -D]]></content>
-      <categories>
-        <category>nodejs</category>
-      </categories>
-      <tags>
-        <tag>npm</tag>
-        <tag>cnpm</tag>
       </tags>
   </entry>
   <entry>
@@ -1288,17 +1324,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux安装FTP]]></title>
-    <url>%2Fposts%2F9c4dd72b.html</url>
-    <content type="text"><![CDATA[Linux安装FTPubuntu开启ftp服务安装vsftpd1、打开”终端窗口”，输入”sudo apt-get install vsftpd”–&gt;回车–&gt;安装完成。2、判断vsftpd是否安装成功打开”终端窗口”，输入”sudo service vsftpd restart”重启vsftpd服务–&gt;回车–&gt;vsftpd处于运行状态，说明安装成功。3、使用gedit修改配置文件/etc/vsftpd.conf打开”终端窗口”，输入”sudo gedit /etc/vsftpd.conf”–&gt;回车–&gt;打开了vsftpd.conf文设置：write_enable=YESubuntu开启SSH服务SSH分客户端openssh-client和openssh-server如果你只是想登陆别的机器的SSH只需要安装openssh-client（ubuntu有默认安装，如果没有则sudo apt-get install openssh-client），如果要使本机开放SSH服务就需要安装openssh-serversudo apt-get install openssh-server然后确认sshserver是否启动了：ps -e |grep ssh如果看到sshd那说明ssh-server已经启动了。如果没有则可以这样启动：sudo /etc/init.d/ssh startssh-server配置文件位于/ etc/ssh/sshd_config，在这里可以定义SSH的服务端口，默认端口是22，你可以自己定义成其他端口号，如222。然后重启SSH服务：sudo /etc/init.d/ssh stopsudo /etc/init.d/ssh start然后使用以下方式登陆SSH：ssh username@192.168.1.112 username为192.168.1.112 机器上的用户，需要输入密码。断开连接：exit最近一直在Ubuntu下用终端操作，看着他长长的路径名实在不爽， 动手来改改咯～$: sudo gedit ~/.bashrc这个文件记录了用户终端配置找到if [ “$color_prompt “ = yes ]; thenPS1 =’${debian_chroot:+($debian_chroot)}[\033[01;32m]\u@\h[\033[00m]:[\033[01;34m]\W [\033[00m]\$ ‘elsePS1 =’${debian_chroot:+($debian_chroot)}\u@\h:\W \$ ‘将蓝色的w由小写改成大写，可以表示只显示当前目录名称.]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>FTP</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[CentOS安装JDK]]></title>
     <url>%2Fposts%2Fd08f134.html</url>
     <content type="text"><![CDATA[1、准备创建目录12$ mkdir /usr/java$ cd /usr/java下载 jdk-8u73-linux-x64.tar.gz，解压1$ tar -zxvf jdk-8u73-linux-x64.tar.gz会解压到 /usr/java/jdk1.8.0_73 下2、配置环境变量(两种方式二选一配置即可)2.1 编辑 /etc/profile 文件修改 /etc/profile 文件当本机仅仅作为开发使用时推荐使用这种方法，因为此种配置时所有用户的 shell 都有权使用这些环境变量，可能会给系统带来安全性问题。1$ vi /etc/profile增加如下内容123export JAVA_HOME=/usr/java/jdkexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH保存退出 :wq12$ . /etc/profile$ echo $JAVA_HOME2.2 编辑用户目录下的 .bash_profile修改 .bash_profile 文件这种方法更为安全，它可以把使用这些环境变量的权限控制到用户级别，如果需要给某个用户权限使用这些环境变量，只需要修改其个人用户主目录下的 .bash_profile 文件就可以了123export JAVA_HOME=/usr/java/jdkexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH然后执行使之生效1source .bash_profile可以看到 JAVA_HOME 不是指向真实的 jdk 目录 /usr/java/jdk1.8.0_73，而是指向 /usr/java/jdk3、创建软链接为jdk真实目录创建一个命名更加间洁快捷方式123$ ln -s /usr/java/jdk1.8.0_73 /usr/java/jdk$ source /etc/profile#$ source .bash_profile至此，配置完成]]></content>
@@ -1308,6 +1333,17 @@
       <tags>
         <tag>Java</tag>
         <tag>JDK</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux安装FTP]]></title>
+    <url>%2Fposts%2F9c4dd72b.html</url>
+    <content type="text"><![CDATA[Linux安装FTPubuntu开启ftp服务安装vsftpd1、打开”终端窗口”，输入”sudo apt-get install vsftpd”–&gt;回车–&gt;安装完成。2、判断vsftpd是否安装成功打开”终端窗口”，输入”sudo service vsftpd restart”重启vsftpd服务–&gt;回车–&gt;vsftpd处于运行状态，说明安装成功。3、使用gedit修改配置文件/etc/vsftpd.conf打开”终端窗口”，输入”sudo gedit /etc/vsftpd.conf”–&gt;回车–&gt;打开了vsftpd.conf文设置：write_enable=YESubuntu开启SSH服务SSH分客户端openssh-client和openssh-server如果你只是想登陆别的机器的SSH只需要安装openssh-client（ubuntu有默认安装，如果没有则sudo apt-get install openssh-client），如果要使本机开放SSH服务就需要安装openssh-serversudo apt-get install openssh-server然后确认sshserver是否启动了：ps -e |grep ssh如果看到sshd那说明ssh-server已经启动了。如果没有则可以这样启动：sudo /etc/init.d/ssh startssh-server配置文件位于/ etc/ssh/sshd_config，在这里可以定义SSH的服务端口，默认端口是22，你可以自己定义成其他端口号，如222。然后重启SSH服务：sudo /etc/init.d/ssh stopsudo /etc/init.d/ssh start然后使用以下方式登陆SSH：ssh username@192.168.1.112 username为192.168.1.112 机器上的用户，需要输入密码。断开连接：exit最近一直在Ubuntu下用终端操作，看着他长长的路径名实在不爽， 动手来改改咯～$: sudo gedit ~/.bashrc这个文件记录了用户终端配置找到if [ “$color_prompt “ = yes ]; thenPS1 =’${debian_chroot:+($debian_chroot)}[\033[01;32m]\u@\h[\033[00m]:[\033[01;34m]\W [\033[00m]\$ ‘elsePS1 =’${debian_chroot:+($debian_chroot)}\u@\h:\W \$ ‘将蓝色的w由小写改成大写，可以表示只显示当前目录名称.]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>FTP</tag>
       </tags>
   </entry>
 </search>
