@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[阿里云仓库 + 自建私库配置]]></title>
+    <url>%2Fposts%2F746cc841.html</url>
+    <content type="text"><![CDATA[setting.xml12345678910111213141516171819202122232425262728293031323334353637383940&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd"&gt; &lt;localRepository&gt;D:/Workspace/Maven/repository&lt;/localRepository&gt; &lt;pluginGroups&gt; &lt;/pluginGroups&gt; &lt;proxies&gt; &lt;/proxies&gt; &lt;servers&gt; &lt;server&gt; &lt;id&gt;maven2-weixin-public&lt;/id&gt; &lt;username&gt;***&lt;/username&gt; &lt;password&gt;***&lt;/password&gt; &lt;/server&gt; &lt;server&gt; &lt;id&gt;maven2-weixin-release&lt;/id&gt; &lt;username&gt;***&lt;/username&gt; &lt;password&gt;***&lt;/password&gt; &lt;/server&gt; &lt;server&gt; &lt;id&gt;maven2-weixin-snapshots&lt;/id&gt; &lt;username&gt;***&lt;/username&gt; &lt;password&gt;***&lt;/password&gt; &lt;/server&gt; &lt;/servers&gt; &lt;mirrors&gt; &lt;!-- 阿里云仓库 --&gt; &lt;mirror&gt; &lt;id&gt;aliyun-nexus&lt;/id&gt; &lt;mirrorOf&gt;*&lt;/mirrorOf&gt; &lt;url&gt;https://maven.aliyun.com/repository/public&lt;/url&gt; &lt;/mirror&gt; &lt;!-- 自建私有库 --&gt; &lt;mirror&gt; &lt;id&gt;maven2-weixin-public&lt;/id&gt; &lt;!-- mirrorOf 不能配置成 * --&gt; &lt;mirrorOf&gt;maven2-weixin-public&lt;/mirrorOf&gt; &lt;url&gt;http://maven.ctim:8081/repository/maven2-weixin-public/&lt;/url&gt; &lt;/mirror&gt; &lt;/mirrors&gt;&lt;/settings&gt;pom.xml123456789101112131415&lt;repositories&gt; &lt;repository&gt; &lt;id&gt;maven2-weixin-public&lt;/id&gt; &lt;name&gt;maven2-weixin-public&lt;/name&gt; &lt;url&gt;http://maven.ctim:8081/repository/maven2-weixin-public/&lt;/url&gt; &lt;releases&gt; &lt;enabled&gt;true&lt;/enabled&gt; &lt;/releases&gt; &lt;snapshots&gt; &lt;enabled&gt;true&lt;/enabled&gt; &lt;updatePolicy&gt;always&lt;/updatePolicy&gt; &lt;checksumPolicy&gt;fail&lt;/checksumPolicy&gt; &lt;/snapshots&gt; &lt;/repository&gt;&lt;/repositories&gt;]]></content>
+      <categories>
+        <category>Maven</category>
+      </categories>
+      <tags>
+        <tag>Maven</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Windows 默认软件不可用的问题]]></title>
     <url>%2Fposts%2Fd6d2f549.html</url>
     <content type="text"><![CDATA[1Get-AppXPackage -AllUsers | Foreach &#123;Add-AppxPackage -DisableDevelopmentMode -Register "$($_.InstallLocation)\AppXManifest.xml"&#125;要关闭360等软件，开启Windows Defender、防火墙]]></content>
@@ -241,7 +252,7 @@
   <entry>
     <title><![CDATA[BigPipe 分块输出遇到的问题]]></title>
     <url>%2Fposts%2Fb0407ea6.html</url>
-    <content type="text"><![CDATA[buffer 问题由于“各路”buffer的存在，如果包比较小的话BigPipe的chunked输出很可能会被buffer住。解决方案填充空格：将一次flush的数据填充到 buffer_size。调小buffer，让数据更容易达到 buffer_size。关闭buffer。Nginx 负载 buffer解决方案在需要关闭 nginx 的 buffer 的请求响应添加 X-Accel-Buffering 头：response.addHeader(“X-Accel-Buffering”, “no”);ios 系统 buffer 问题经过 nginx 负载首屏内容最少要 200 个字符（html标签、css样式、js代码不算在内），同时需要配置 X-Accel-Buffering 头才会分块 flush不经过 nginx 负载首屏内容最少要 200 个字符（html标签、css样式、js代码不算在内），无需配置 X-Accel-Buffering 头android 系统 buffer 问题配置 X-Accel-Buffering 头，首屏内容超过 200 字符都不能分块 flush]]></content>
+    <content type="text"><![CDATA[buffer 问题由于“各路”buffer的存在，如果包比较小的话BigPipe的chunked输出很可能会被buffer住。解决方案填充空格：将一次flush的数据填充到 buffer_size。调小buffer，让数据更容易达到 buffer_size。关闭buffer。Nginx 负载 buffer解决方案在需要关闭 nginx 的 buffer 的请求响应添加 X-Accel-Buffering 头：response.addHeader(“X-Accel-Buffering”, “no”);123456http &#123; .... fastcgi_buffer_size 1k; fastcgi_buffers 16 1k; ....&#125;其实读可以这么理解上面的配置，nginx会在攒够一块儿缓冲区的量后，将一块儿数据发出去。上面我们配置了fastcgi_buffers 16 1k; 就是16块儿，大小为1K的缓存。我们的数据量太小了，连默认的一块儿缓冲区都填不满，没法看到分块儿发送的效果，所以这里我们将缓冲区给调小为1K，这样就能1K为单位分块儿，1K一发，体现出实验效果了。ios 系统 buffer 问题经过 nginx 负载首屏内容最少要 200 个字符（html标签、css样式、js代码不算在内），同时需要配置 X-Accel-Buffering 头才会分块 flush不经过 nginx 负载首屏内容最少要 200 个字符（html标签、css样式、js代码不算在内），无需配置 X-Accel-Buffering 头android 系统 buffer 问题配置 X-Accel-Buffering 头，首屏内容超过 200 字符都不能分块 flush]]></content>
       <categories>
         <category>Java</category>
       </categories>
@@ -272,8 +283,8 @@
       </categories>
       <tags>
         <tag>spring-boot</tag>
-        <tag>Nacos</tag>
         <tag>alibaba</tag>
+        <tag>Nacos</tag>
       </tags>
   </entry>
   <entry>
@@ -284,10 +295,10 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>spring-boot</tag>
         <tag>Hibernate</tag>
         <tag>Oracle</tag>
         <tag>DataJpaTest</tag>
+        <tag>spring-boot</tag>
         <tag>jpa</tag>
       </tags>
   </entry>
@@ -484,10 +495,10 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>BigPipe</tag>
+        <tag>spring-boot</tag>
         <tag>jsp</tag>
         <tag>freemarker</tag>
-        <tag>spring-boot</tag>
+        <tag>BigPipe</tag>
       </tags>
   </entry>
   <entry>
@@ -515,17 +526,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[restful api 规范]]></title>
-    <url>%2Fposts%2Ffea0c721.html</url>
-    <content type="text"><![CDATA[RESTful API 设计规范原文地址：https://github.com/godruoyi/restful-api-specification关于「能愿动词」的使用为了避免歧义，文档大量使用了「能愿动词」，对应的解释如下：必须 (MUST)：绝对，严格遵循，请照做，无条件遵守；一定不可 (MUST NOT)：禁令，严令禁止；应该 (SHOULD) ：强烈建议这样做，但是不强求；不该 (SHOULD NOT)：强烈不建议这样做，但是不强求；可以 (MAY) 和 可选 (OPTIONAL) ：选择性高一点，在这个文档内，此词语使用较少；参见：RFC 2119Protocol客户端在通过 API 与后端服务通信的过程中，应该 使用 HTTPS 协议。API Root URLAPI 的根入口点应尽可能保持足够简单，这里有两个常见的 URL 根例子：api.example.com/*example.com/api/*如果你的应用很庞大或者你预计它将会变的很庞大，那 应该 将 API 放到子域下（api.example.com）。这种做法可以保持某些规模化上的灵活性。Versioning所有的 API 必须保持向后兼容，你 必须 在引入新版本 API 的同时确保旧版本 API 仍然可用。所以 应该 为其提供版本支持。目前比较常见的两种版本号形式：在 URL 中嵌入版本编号1api.example.com/v1/*这种做法是版本号直观、易于调试；另一种做法是，将版本号放在 HTTP Header 头中：Endpoints端点就是指向特定资源或资源集合的 URL。在端点的设计中，你 必须 遵守下列约定：URL 的命名 必须 全部小写URL 中资源（resource）的命名 必须 是名词，并且 必须 是复数形式必须 优先使用 Restful 类型的 URLURL 必须 是易读的URL 一定不可 暴露服务器架构至于 URL 是否必须使用连字符（-） 或下划线（_），不做硬性规定，但 必须 根据团队情况统一一种风格。来看一个反例https://api.example.com/getUserInfo?userid=1https://api.example.com/getusershttps://api.example.com/sv/uhttps://api.example.com/cgi-bin/users/get_user.php?userid=1再来看一个正列https://api.example.com/zooshttps://api.example.com/animalshttps://api.example.com/zoos/{zoo}/animalshttps://api.example.com/animal_typeshttps://api.example.com/employeesHTTP 动词对于资源的具体操作类型，由 HTTP 动词表示。常用的 HTTP 动词有下面五个（括号里是对应的 SQL 命令）。GET（SELECT）：从服务器取出资源（一项或多项）。POST（CREATE）：在服务器新建一个资源。PUT（UPDATE）：在服务器更新资源（客户端提供改变后的完整资源）。PATCH（UPDATE）：在服务器更新资源（客户端提供改变的属性）。DELETE（DELETE）：从服务器删除资源。其中1 删除资源 必须 用 DELETE 方法2 创建新的资源 必须 使用 POST 方法3 更新资源 应该 使用 PUT 方法4 获取资源信息 必须 使用 GET 方法针对每一个端点来说，下面列出所有可行的 HTTP 动词和端点的组合请求方法URL描述GET/zoos列出所有的动物园(ID和名称，不要太详细)POST/zoos新增一个新的动物园GET/zoos/{zoo}获取指定动物园详情PUT/zoos/{zoo}更新指定动物园(整个对象)PATCH/zoos/{zoo}更新动物园(部分对象)DELETE/zoos/{zoo}删除指定动物园GET/zoos/{zoo}/animals检索指定动物园下的动物列表(ID和名称，不要太详细)GET/animals列出所有动物(ID和名称)。POST/animals新增新的动物GET/animals/{animal}获取指定的动物详情PUT/animals/{animal}更新指定的动物(整个对象)PATCH/animals/{animal}更新指定的动物(部分对象)GET/animal_types获取所有动物类型(ID和名称，不要太详细)GET/animal_types/{type}获取指定的动物类型详情GET/employees检索整个雇员列表GET/employees/{employee}检索指定特定的员工GET/zoos/{zoo}/employees检索在这个动物园工作的雇员的名单(身份证和姓名)POST/employees新增指定新员工POST/zoos/{zoo}/employees在特定的动物园雇佣一名员工DELETE/zoos/{zoo}/employees/{employee}从某个动物园解雇一名员工超出 Restful 端点的，应该 模仿上表的方式来定义端点。Filtering如果记录数量很多，服务器不可能都将它们返回给用户。API 应该 提供参数，过滤返回结果。下面是一些常见的参数。?limit=10：指定返回记录的数量?offset=10：指定返回记录的开始位置。?page=2&amp;per_page=100：指定第几页，以及每页的记录数。?sortby=name&amp;order=asc：指定返回结果按照哪个属性排序，以及排序顺序。?animal_type_id=1：指定筛选条件所有 URL 参数 必须 是全小写，必须 使用下划线类型的参数形式。分页参数 必须 固定为 page、per_page经常使用的、复杂的查询 应该 标签化，降低维护成本。如1234GET /trades?status=closed&amp;sort=sortby=name&amp;order=asc# 可为其定制快捷方式GET /trades/recently_closedAuthentication应该 使用 OAuth2.0 的方式为 API 调用者提供登录认证。必须 先通过登录接口获取 Access Token 后再通过该 token 调用需要身份认证的 API。Oauth 的端点设计示列RFC 6749 /tokenTwitter /oauth2/tokenFackbook /oauth/access_tokenGoogle /o/oauth2/tokenGithub /login/oauth/access_tokenInstagram /oauth/authorize客户端在获得 access token 的同时 必须 在响应中包含一个名为 expires_in 的数据，它表示当前获得的 token 会在多少 秒 后失效。12345&#123; "access_token": "token....", "token_type": "Bearer", "expires_in": 3600&#125;客户端在请求需要认证的 API 时，必须 在请求头 Authorization 中带上 access_token。1Authorization: Bearer token...当超过指定的秒数后，access token 就会过期，再次用过期/或无效的 token 访问时，服务端 应该 返回 invalid_token 的错误或 401 错误码。12345678HTTP/1.1 401 UnauthorizedContent-Type: application/jsonCache-Control: no-storePragma: no-cache&#123; "error": "invalid_token"&#125;Laravel 开发中，应该 使用 JWT 来为管理你的 Token，并且 一定不可 在 api 中间件中开启请求 session。Response所有的 API 响应，必须 遵守 HTTP 设计规范，必须 选择合适的 HTTP 状态码。一定不可 所有接口都返回状态码为 200 的 HTTP 响应，如：1234567891011HTTP/1.1 200 okContent-Type: application/jsonServer: example.com&#123; "code": 0, "msg": "success", "data": &#123; "username": "username" &#125;&#125;或12345678HTTP/1.1 200 okContent-Type: application/jsonServer: example.com&#123; "code": -1, "msg": "该活动不存在",&#125;下表列举了常见的 HTTP 状态码状态码描述1xx代表请求已被接受，需要继续处理2xx请求已成功，请求所希望的响应头或数据体将随此响应返回3xx重定向4xx客户端原因引起的错误5xx服务端原因引起的错误只有来自客户端的请求被正确的处理后才能返回 2xx 的响应，所以当 API 返回 2xx 类型的状态码时，前端 必须 认定该请求已处理成功。必须强调的是，所有 API 一定不可 返回 1xx 类型的状态码。当 API 发生错误时，必须 返回出错时的详细信息。目前常见返回错误信息的方法有两种：1、将错误详细放入 HTTP 响应首部；123X-MYNAME-ERROR-CODE: 4001X-MYNAME-ERROR-MESSAGE: Bad authentication tokenX-MYNAME-ERROR-INFO: http://docs.example.com/api/v1/authentication2、直接放入响应实体中；123456789HTTP/1.1 401 UnauthorizedServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 10:02:59 GMTConnection: keep-alive&#123;"error_code":40100,"message":"Unauthorized"&#125;考虑到易读性和客户端的易处理性，我们 必须 把错误信息直接放到响应实体中，并且错误格式 应该 满足如下格式：1234&#123; "message": "您查找的资源不存在", "error_code": 404001&#125;其中错误码（error_code）必须 和 HTTP 状态码对应，也方便错误码归类，如：123456789HTTP/1.1 429 Too Many RequestsServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 10:15:52 GMTConnection: keep-alive&#123;"error_code":429001,"message":"你操作太频繁了"&#125;123456789HTTP/1.1 403 ForbiddenServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 10:19:27 GMTConnection: keep-alive&#123;"error_code":403002,"message":"用户已禁用"&#125;应该 在返回的错误信息中，同时包含面向开发者和面向用户的提示信息，前者可方便开发人员调试，后者可直接展示给终端用户查看如：12345678&#123; "message": "直接展示给终端用户的错误信息", "error_code": "业务错误码", "error": "供开发者查看的错误信息", "debug": [ "错误堆栈，必须开启 debug 才存在" ]&#125;下面详细列举了各种情况 API 的返回说明。200 ok200 状态码是最常见的 HTTP 状态码，在所有 成功 的 GET 请求中，必须 返回此状态码。HTTP 响应实体部分 必须 直接就是数据，不要做多余的包装。错误示例：1234567891011HTTP/1.1 200 okContent-Type: application/jsonServer: example.com&#123; "user": &#123; "id":1, "nickname":"fwest", "username": "example" &#125;&#125;正确示例：1、获取单个资源详情12345&#123; "id": 1, "username": "godruoyi", "age": 88,&#125;2、获取资源集合123456789101112[ &#123; "id": 1, "username": "godruoyi", "age": 88, &#125;, &#123; "id": 2, "username": "foo", "age": 88, &#125;]3、额外的媒体信息123456789101112131415161718192021222324252627282930&#123; "data": [ &#123; "id": 1, "avatar": "https://lorempixel.com/640/480/?32556", "nickname": "fwest", "last_logined_time": "2018-05-29 04:56:43", "has_registed": true &#125;, &#123; "id": 2, "avatar": "https://lorempixel.com/640/480/?86144", "nickname": "zschowalter", "last_logined_time": "2018-06-16 15:18:34", "has_registed": true &#125; ], "meta": &#123; "pagination": &#123; "total": 101, "count": 2, "per_page": 2, "current_page": 1, "total_pages": 51, "links": &#123; "next": "http://api.example.com?page=2" &#125; &#125; &#125;&#125;其中，分页和其他额外的媒体信息，必须放到 meta 字段中。201 Created当服务器创建数据成功时，应该 返回此状态码。常见的应用场景是使用 POST 提交用户信息，如：添加了新用户上传了图片创建了新活动等，都可以返回 201 状态码。需要注意的是，你可以选择在用户创建成功后返回新用户的数据123456789101112131415HTTP/1.1 201 CreatedServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedDate: Sun, 24 Jun 2018 09:13:40 GMTConnection: keep-alive&#123; "id": 1, "avatar": "https:\/\/lorempixel.com\/640\/480\/?32556", "nickname": "fwest", "last_logined_time": "2018-05-29 04:56:43", "created_at": "2018-06-16 17:55:55", "updated_at": "2018-06-16 17:55:55"&#125;也可以返回一个响应实体为空的 HTTP Response 如：123456HTTP/1.1 201 CreatedServer: nginx/1.11.9Content-Type: text/html; charset=UTF-8Transfer-Encoding: chunkedDate: Sun, 24 Jun 2018 09:12:20 GMTConnection: keep-alive这里我们 应该 采用第二种方式，因为大多数情况下，客户端只需要知道该请求操作成功与否，并不需要返回新资源的信息。202 Accepted该状态码表示服务器已经接受到了来自客户端的请求，但还未开始处理。常用短信发送、邮件通知、模板消息推送等这类很耗时需要队列支持的场景中；返回该状态码时，响应实体 必须 为空。123456HTTP/1.1 202 AcceptedServer: nginx/1.11.9Content-Type: text/html; charset=UTF-8Transfer-Encoding: chunkedDate: Sun, 24 Jun 2018 09:25:15 GMTConnection: keep-alive204 No Content该状态码表示响应实体不包含任何数据，其中：在使用 DELETE 方法删除资源 成功 时，必须 返回该状态码使用 PUT、PATCH 方法更新数据 成功 时，也 应该 返回此状态码1234HTTP/1.1 204 No ContentServer: nginx/1.11.9Date: Sun, 24 Jun 2018 09:29:12 GMTConnection: keep-alive3xx 重定向所有 API 不该 返回 3xx 类型的状态码。因为 3xx 类型的响应格式一般为下列格式：123456789101112131415161718192021HTTP/1.1 302 FoundServer: nginx/1.11.9Content-Type: text/html; charset=UTF-8Transfer-Encoding: chunkedCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 09:41:50 GMTLocation: https://example.comConnection: keep-alive&lt;!DOCTYPE html&gt;&lt;html&gt; &lt;head&gt; &lt;meta charset="UTF-8" /&gt; &lt;meta http-equiv="refresh" content="0;url=https://example.com" /&gt; &lt;title&gt;Redirecting to https://example.com&lt;/title&gt; &lt;/head&gt; &lt;body&gt; Redirecting to &lt;a href="https://example.com"&gt;https://example.com&lt;/a&gt;. &lt;/body&gt;&lt;/html&gt;所有 API 一定不可 返回纯 HTML 结构的响应；若一定要使用重定向功能，可以 返回一个响应实体为空的 3xx 响应，并在响应头中加上 Location 字段:1234567HTTP/1.1 302 FoundServer: nginx/1.11.9Content-Type: text/html; charset=UTF-8Transfer-Encoding: chunkedDate: Sun, 24 Jun 2018 09:52:50 GMTLocation: https://godruoyi.comConnection: keep-alive400 Bad Request由于明显的客户端错误（例如，请求语法格式错误、无效的请求、无效的签名等），服务器 应该 放弃该请求。当服务器无法从其他 4xx 类型的状态码中找出合适的来表示错误类型时，都 必须 返回该状态码。123456789HTTP/1.1 400 Bad RequestServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 13:22:36 GMTConnection: keep-alive&#123;"error_code":40000,"message":"无效的签名"&#125;401 Unauthorized该状态码表示当前请求需要身份认证，以下情况都 必须 返回该状态码。未认证用户访问需要认证的 APIaccess_token 无效/过期客户端在收到 401 响应后，都 应该 提示用户进行下一步的登录操作。12345678910HTTP/1.1 401 UnauthorizedServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedWWW-Authenticate: JWTAuthCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 13:17:02 GMTConnection: keep-alive"message":"Token Signature could not be verified.","error_code": "40100"&#125;403 Forbidden该状态码可以简单的理解为没有权限访问该请求，服务器收到请求但拒绝提供服务。如当普通用户请求操作管理员用户时，必须 返回该状态码。123456789HTTP/1.1 403 ForbiddenServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 13:05:34 GMTConnection: keep-alive&#123;"error_code":40301,"message":"权限不足"&#125;404 Not Found该状态码表示用户请求的资源不存在，如获取不存在的用户信息 （get /users/9999999）访问不存在的端点都 必须 返回该状态码，若该资源已永久不存在，则 应该 返回 401 响应。405 Method Not Allowed当客户端使用的 HTTP 请求方法不被服务器允许时，必须 返回该状态码。如客户端调用了 POST 方法来访问只支持 GET 方法的 API该响应 必须 返回一个 Allow 头信息用以表示出当前资源能够接受的请求方法的列表。12345678910HTTP/1.1 405 Method Not AllowedServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedAllow: GET, HEADCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 12:30:57 GMTConnection: keep-alive&#123;"message":"405 Method Not Allowed","error_code": 40500&#125;406 Not AcceptableAPI 在不支持客户端指定的数据格式时，应该返回此状态码。如支持 JSON 和 XML 输出的 API 被指定返回 YAML 格式的数据时。Http 协议一般通过请求首部的 Accept 来指定数据格式408 Request Timeout客户端请求超时时 必须 返回该状态码，需要注意的时，该状态码表示 客户端请求超时，在涉及第三方 API 调用超时时，一定不可 返回该状态码。409 Confilct该状态码表示因为请求存在冲突无法处理。如通过手机号码提供注册功能的 API，当用户提交的手机号已存在时，必须 返回此状态码。123456789HTTP/1.1 409 ConflictServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 12:19:04 GMTConnection: keep-alive&#123;"error_code":40900,"message":"手机号已存在"&#125;410 Gone和 404 类似，该状态码也表示请求的资源不存在，只是 410 状态码进一步表示所请求的资源已不存在，并且未来也不会存在。在收到 410 状态码后，客户端 应该 停止再次请求该资源。413 Request Entity Too Large该状态码表示服务器拒绝处理当前请求，因为该请求提交的实体数据大小超过了服务器愿意或者能够处理的范围。此种情况下，服务器可以关闭连接以免客户端继续发送此请求。如果这个状况是临时的，服务器 应该 返回一个 Retry-After 的响应头，以告知客户端可以在多少时间以后重新尝试。414 Request-URI Too Long该状态码表示请求的 URI 长度超过了服务器能够解释的长度，因此服务器拒绝对该请求提供服务。415 Unsupported Media Type通常表示服务器不支持客户端请求首部 Content-Type 指定的数据格式。如在只接受 JSON 格式的 API 中放入 XML 类型的数据并向服务器发送，都 应该 返回该状态码。该状态码也可用于如：只允许上传图片格式的文件，但是客户端提交媒体文件非法或不是图片类型，这时 应该 返回该状态码：123456789HTTP/1.1 415 Unsupported Media TypeServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 12:09:40 GMTConnection: keep-alive&#123;"error_code":41500,"message":"不允许上传的图片格式"&#125;429 Too Many Requests该状态码表示用户请求次数超过允许范围。如 API 设定为 60次/分钟，当用户在一分钟内请求次数超过 60 次后，都 应该 返回该状态码。并且也 应该 在响应首部中加上下列头部：1234X-RateLimit-Limit: 10 请求速率（由应用设定，其单位一般为小时/分钟等，这里是 10次/5分钟）X-RateLimit-Remaining: 0 当前剩余的请求数量X-RateLimit-Reset: 1529839462 重置时间Retry-After: 120 下一次访问应该等待的时间（秒）列子12345678910111213HTTP/1.1 429 Too Many RequestsServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedX-RateLimit-Limit: 10X-RateLimit-Remaining: 0X-RateLimit-Reset: 1529839462Retry-After: 290Cache-Control: no-cache, privateDate: Sun, 24 Jun 2018 11:19:32 GMTConnection: keep-alive&#123;"message":"You have exceeded your rate limit.","error_code":42900&#125;必须 为所有的 API 设置 Rate Limit 支持。500 Internal Server Error该状态码 必须 在服务器出错时抛出，对于所有的 500 错误，都 应该 提供完整的错误信息支持，也方便跟踪调试。503 Service Unavailable该状态码表示服务器暂时处理不可用状态，当服务器需要维护或第三方 API 请求超时/不可达时，都 应该 返回该状态码，其中若是主动关闭 API 服务，应该在返回的响应首部加上 Retry-After 头部，表示多少秒后可以再次访问。12345678910HTTP/1.1 503 Service UnavailableServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 10:56:20 GMTRetry-After: 60Connection: keep-alive&#123;"error_code":50300,"message":"服务维护中"&#125;其他 HTTP 状态码请参考 HTTP 状态码- 维基百科]]></content>
-      <categories>
-        <category>规范</category>
-      </categories>
-      <tags>
-        <tag>restful api</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Redis 使用场景]]></title>
     <url>%2Fposts%2Fc77ba0b2.html</url>
     <content type="text"><![CDATA[场景一：取最新N条数据网站最新文章、最新评论等。使用 Redis 列表(List)集合，LPUSH 命令向 list 集合头部插入数据，LTRIM 命令对 list 集合进行修剪(trim)123456789# 将一个或多个值插入到列表头部# LPUSH key value1 [value2] 127.0.0.1:6379&gt; LPUSH latest.comments "foo"(integer) 1# 对一个列表进行修剪(trim)，就是说，让列表只保留指定区间内的元素，不在指定区间之内的元素都将被删除# LTRIM key start stop 127.0.0.1:6379&gt; LTRIM latest.comments 0 10OK场景二：排行榜应用，取 TOP N操作场景二和场景一不同之处在于，场景一操作以时间为权重，场景二是以某一个条件为权重。比如：赞次数、评论次数等。这个时候就需要使用 Redis 有序集合(sorted set)。将需要排序的值设置为有序集合的 score，将具体的数据设置为相应的 value，每次只需要执行 ZDAA 命令即可。123# 向有序集合添加一个或多个成员，或者更新已存在成员的分数# ZADD key score1 value1 [score2 value12] 127.0.0.1:6379&gt; ZADD myzset 1 "one"场景三：计数器Redis 命令是原子性的，可以利用 INCR、DECR 命令来构建计数器系统，其底层写入是单线程模型，并发写入会按先后顺序执行。12345678910111213141516# 将 key 中储存的数字值增一# INCR key127.0.0.1:6379&gt; INCR KEY_NAME# 延伸# 将 key 所储存的值加上给定的增量值（increment）# INCRBY key increment# 将 key 所储存的值加上给定的浮点增量值（increment）# INCRBYFLOAT key increment# 将 key 中储存的数字值减一# DECR key127.0.0.1:6379&gt; DECR KEY_NAME # 延伸# key 所储存的值减去给定的减量值（decrement）# DECRBY key decrement场景四：缓存Redis 作为分布式缓存中间件，其性能优于 Memcached，且数据结构更加多样化。场景五：队列使用 Redis 列表(List) 可以构建队列系统，使用 Redis 有序集合(sorted set)甚至可以构建有优先级的队列系统。场景六：Pub、Sub实时消息系统使用 Redis 的 Pub/Sub 可以构建实时的消息系统。场景七：Unique 操作获取所有数据去重。使用 Redis 集合(Set)数据结构最合适不过了，只需要不断将数据往 set 中丢就行了，set 会自动去重。场景八：精确设置过期时间比如场景二中，score 可以设置成过期时间的时间戳，这样就可以简单的通过过期时间排序，定时清除过期数据。…更多使用场景待挖掘]]></content>
@@ -534,6 +534,17 @@
       </categories>
       <tags>
         <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[restful api 规范]]></title>
+    <url>%2Fposts%2Ffea0c721.html</url>
+    <content type="text"><![CDATA[RESTful API 设计规范原文地址：https://github.com/godruoyi/restful-api-specification关于「能愿动词」的使用为了避免歧义，文档大量使用了「能愿动词」，对应的解释如下：必须 (MUST)：绝对，严格遵循，请照做，无条件遵守；一定不可 (MUST NOT)：禁令，严令禁止；应该 (SHOULD) ：强烈建议这样做，但是不强求；不该 (SHOULD NOT)：强烈不建议这样做，但是不强求；可以 (MAY) 和 可选 (OPTIONAL) ：选择性高一点，在这个文档内，此词语使用较少；参见：RFC 2119Protocol客户端在通过 API 与后端服务通信的过程中，应该 使用 HTTPS 协议。API Root URLAPI 的根入口点应尽可能保持足够简单，这里有两个常见的 URL 根例子：api.example.com/*example.com/api/*如果你的应用很庞大或者你预计它将会变的很庞大，那 应该 将 API 放到子域下（api.example.com）。这种做法可以保持某些规模化上的灵活性。Versioning所有的 API 必须保持向后兼容，你 必须 在引入新版本 API 的同时确保旧版本 API 仍然可用。所以 应该 为其提供版本支持。目前比较常见的两种版本号形式：在 URL 中嵌入版本编号1api.example.com/v1/*这种做法是版本号直观、易于调试；另一种做法是，将版本号放在 HTTP Header 头中：Endpoints端点就是指向特定资源或资源集合的 URL。在端点的设计中，你 必须 遵守下列约定：URL 的命名 必须 全部小写URL 中资源（resource）的命名 必须 是名词，并且 必须 是复数形式必须 优先使用 Restful 类型的 URLURL 必须 是易读的URL 一定不可 暴露服务器架构至于 URL 是否必须使用连字符（-） 或下划线（_），不做硬性规定，但 必须 根据团队情况统一一种风格。来看一个反例https://api.example.com/getUserInfo?userid=1https://api.example.com/getusershttps://api.example.com/sv/uhttps://api.example.com/cgi-bin/users/get_user.php?userid=1再来看一个正列https://api.example.com/zooshttps://api.example.com/animalshttps://api.example.com/zoos/{zoo}/animalshttps://api.example.com/animal_typeshttps://api.example.com/employeesHTTP 动词对于资源的具体操作类型，由 HTTP 动词表示。常用的 HTTP 动词有下面五个（括号里是对应的 SQL 命令）。GET（SELECT）：从服务器取出资源（一项或多项）。POST（CREATE）：在服务器新建一个资源。PUT（UPDATE）：在服务器更新资源（客户端提供改变后的完整资源）。PATCH（UPDATE）：在服务器更新资源（客户端提供改变的属性）。DELETE（DELETE）：从服务器删除资源。其中1 删除资源 必须 用 DELETE 方法2 创建新的资源 必须 使用 POST 方法3 更新资源 应该 使用 PUT 方法4 获取资源信息 必须 使用 GET 方法针对每一个端点来说，下面列出所有可行的 HTTP 动词和端点的组合请求方法URL描述GET/zoos列出所有的动物园(ID和名称，不要太详细)POST/zoos新增一个新的动物园GET/zoos/{zoo}获取指定动物园详情PUT/zoos/{zoo}更新指定动物园(整个对象)PATCH/zoos/{zoo}更新动物园(部分对象)DELETE/zoos/{zoo}删除指定动物园GET/zoos/{zoo}/animals检索指定动物园下的动物列表(ID和名称，不要太详细)GET/animals列出所有动物(ID和名称)。POST/animals新增新的动物GET/animals/{animal}获取指定的动物详情PUT/animals/{animal}更新指定的动物(整个对象)PATCH/animals/{animal}更新指定的动物(部分对象)GET/animal_types获取所有动物类型(ID和名称，不要太详细)GET/animal_types/{type}获取指定的动物类型详情GET/employees检索整个雇员列表GET/employees/{employee}检索指定特定的员工GET/zoos/{zoo}/employees检索在这个动物园工作的雇员的名单(身份证和姓名)POST/employees新增指定新员工POST/zoos/{zoo}/employees在特定的动物园雇佣一名员工DELETE/zoos/{zoo}/employees/{employee}从某个动物园解雇一名员工超出 Restful 端点的，应该 模仿上表的方式来定义端点。Filtering如果记录数量很多，服务器不可能都将它们返回给用户。API 应该 提供参数，过滤返回结果。下面是一些常见的参数。?limit=10：指定返回记录的数量?offset=10：指定返回记录的开始位置。?page=2&amp;per_page=100：指定第几页，以及每页的记录数。?sortby=name&amp;order=asc：指定返回结果按照哪个属性排序，以及排序顺序。?animal_type_id=1：指定筛选条件所有 URL 参数 必须 是全小写，必须 使用下划线类型的参数形式。分页参数 必须 固定为 page、per_page经常使用的、复杂的查询 应该 标签化，降低维护成本。如1234GET /trades?status=closed&amp;sort=sortby=name&amp;order=asc# 可为其定制快捷方式GET /trades/recently_closedAuthentication应该 使用 OAuth2.0 的方式为 API 调用者提供登录认证。必须 先通过登录接口获取 Access Token 后再通过该 token 调用需要身份认证的 API。Oauth 的端点设计示列RFC 6749 /tokenTwitter /oauth2/tokenFackbook /oauth/access_tokenGoogle /o/oauth2/tokenGithub /login/oauth/access_tokenInstagram /oauth/authorize客户端在获得 access token 的同时 必须 在响应中包含一个名为 expires_in 的数据，它表示当前获得的 token 会在多少 秒 后失效。12345&#123; "access_token": "token....", "token_type": "Bearer", "expires_in": 3600&#125;客户端在请求需要认证的 API 时，必须 在请求头 Authorization 中带上 access_token。1Authorization: Bearer token...当超过指定的秒数后，access token 就会过期，再次用过期/或无效的 token 访问时，服务端 应该 返回 invalid_token 的错误或 401 错误码。12345678HTTP/1.1 401 UnauthorizedContent-Type: application/jsonCache-Control: no-storePragma: no-cache&#123; "error": "invalid_token"&#125;Laravel 开发中，应该 使用 JWT 来为管理你的 Token，并且 一定不可 在 api 中间件中开启请求 session。Response所有的 API 响应，必须 遵守 HTTP 设计规范，必须 选择合适的 HTTP 状态码。一定不可 所有接口都返回状态码为 200 的 HTTP 响应，如：1234567891011HTTP/1.1 200 okContent-Type: application/jsonServer: example.com&#123; "code": 0, "msg": "success", "data": &#123; "username": "username" &#125;&#125;或12345678HTTP/1.1 200 okContent-Type: application/jsonServer: example.com&#123; "code": -1, "msg": "该活动不存在",&#125;下表列举了常见的 HTTP 状态码状态码描述1xx代表请求已被接受，需要继续处理2xx请求已成功，请求所希望的响应头或数据体将随此响应返回3xx重定向4xx客户端原因引起的错误5xx服务端原因引起的错误只有来自客户端的请求被正确的处理后才能返回 2xx 的响应，所以当 API 返回 2xx 类型的状态码时，前端 必须 认定该请求已处理成功。必须强调的是，所有 API 一定不可 返回 1xx 类型的状态码。当 API 发生错误时，必须 返回出错时的详细信息。目前常见返回错误信息的方法有两种：1、将错误详细放入 HTTP 响应首部；123X-MYNAME-ERROR-CODE: 4001X-MYNAME-ERROR-MESSAGE: Bad authentication tokenX-MYNAME-ERROR-INFO: http://docs.example.com/api/v1/authentication2、直接放入响应实体中；123456789HTTP/1.1 401 UnauthorizedServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 10:02:59 GMTConnection: keep-alive&#123;"error_code":40100,"message":"Unauthorized"&#125;考虑到易读性和客户端的易处理性，我们 必须 把错误信息直接放到响应实体中，并且错误格式 应该 满足如下格式：1234&#123; "message": "您查找的资源不存在", "error_code": 404001&#125;其中错误码（error_code）必须 和 HTTP 状态码对应，也方便错误码归类，如：123456789HTTP/1.1 429 Too Many RequestsServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 10:15:52 GMTConnection: keep-alive&#123;"error_code":429001,"message":"你操作太频繁了"&#125;123456789HTTP/1.1 403 ForbiddenServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 10:19:27 GMTConnection: keep-alive&#123;"error_code":403002,"message":"用户已禁用"&#125;应该 在返回的错误信息中，同时包含面向开发者和面向用户的提示信息，前者可方便开发人员调试，后者可直接展示给终端用户查看如：12345678&#123; "message": "直接展示给终端用户的错误信息", "error_code": "业务错误码", "error": "供开发者查看的错误信息", "debug": [ "错误堆栈，必须开启 debug 才存在" ]&#125;下面详细列举了各种情况 API 的返回说明。200 ok200 状态码是最常见的 HTTP 状态码，在所有 成功 的 GET 请求中，必须 返回此状态码。HTTP 响应实体部分 必须 直接就是数据，不要做多余的包装。错误示例：1234567891011HTTP/1.1 200 okContent-Type: application/jsonServer: example.com&#123; "user": &#123; "id":1, "nickname":"fwest", "username": "example" &#125;&#125;正确示例：1、获取单个资源详情12345&#123; "id": 1, "username": "godruoyi", "age": 88,&#125;2、获取资源集合123456789101112[ &#123; "id": 1, "username": "godruoyi", "age": 88, &#125;, &#123; "id": 2, "username": "foo", "age": 88, &#125;]3、额外的媒体信息123456789101112131415161718192021222324252627282930&#123; "data": [ &#123; "id": 1, "avatar": "https://lorempixel.com/640/480/?32556", "nickname": "fwest", "last_logined_time": "2018-05-29 04:56:43", "has_registed": true &#125;, &#123; "id": 2, "avatar": "https://lorempixel.com/640/480/?86144", "nickname": "zschowalter", "last_logined_time": "2018-06-16 15:18:34", "has_registed": true &#125; ], "meta": &#123; "pagination": &#123; "total": 101, "count": 2, "per_page": 2, "current_page": 1, "total_pages": 51, "links": &#123; "next": "http://api.example.com?page=2" &#125; &#125; &#125;&#125;其中，分页和其他额外的媒体信息，必须放到 meta 字段中。201 Created当服务器创建数据成功时，应该 返回此状态码。常见的应用场景是使用 POST 提交用户信息，如：添加了新用户上传了图片创建了新活动等，都可以返回 201 状态码。需要注意的是，你可以选择在用户创建成功后返回新用户的数据123456789101112131415HTTP/1.1 201 CreatedServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedDate: Sun, 24 Jun 2018 09:13:40 GMTConnection: keep-alive&#123; "id": 1, "avatar": "https:\/\/lorempixel.com\/640\/480\/?32556", "nickname": "fwest", "last_logined_time": "2018-05-29 04:56:43", "created_at": "2018-06-16 17:55:55", "updated_at": "2018-06-16 17:55:55"&#125;也可以返回一个响应实体为空的 HTTP Response 如：123456HTTP/1.1 201 CreatedServer: nginx/1.11.9Content-Type: text/html; charset=UTF-8Transfer-Encoding: chunkedDate: Sun, 24 Jun 2018 09:12:20 GMTConnection: keep-alive这里我们 应该 采用第二种方式，因为大多数情况下，客户端只需要知道该请求操作成功与否，并不需要返回新资源的信息。202 Accepted该状态码表示服务器已经接受到了来自客户端的请求，但还未开始处理。常用短信发送、邮件通知、模板消息推送等这类很耗时需要队列支持的场景中；返回该状态码时，响应实体 必须 为空。123456HTTP/1.1 202 AcceptedServer: nginx/1.11.9Content-Type: text/html; charset=UTF-8Transfer-Encoding: chunkedDate: Sun, 24 Jun 2018 09:25:15 GMTConnection: keep-alive204 No Content该状态码表示响应实体不包含任何数据，其中：在使用 DELETE 方法删除资源 成功 时，必须 返回该状态码使用 PUT、PATCH 方法更新数据 成功 时，也 应该 返回此状态码1234HTTP/1.1 204 No ContentServer: nginx/1.11.9Date: Sun, 24 Jun 2018 09:29:12 GMTConnection: keep-alive3xx 重定向所有 API 不该 返回 3xx 类型的状态码。因为 3xx 类型的响应格式一般为下列格式：123456789101112131415161718192021HTTP/1.1 302 FoundServer: nginx/1.11.9Content-Type: text/html; charset=UTF-8Transfer-Encoding: chunkedCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 09:41:50 GMTLocation: https://example.comConnection: keep-alive&lt;!DOCTYPE html&gt;&lt;html&gt; &lt;head&gt; &lt;meta charset="UTF-8" /&gt; &lt;meta http-equiv="refresh" content="0;url=https://example.com" /&gt; &lt;title&gt;Redirecting to https://example.com&lt;/title&gt; &lt;/head&gt; &lt;body&gt; Redirecting to &lt;a href="https://example.com"&gt;https://example.com&lt;/a&gt;. &lt;/body&gt;&lt;/html&gt;所有 API 一定不可 返回纯 HTML 结构的响应；若一定要使用重定向功能，可以 返回一个响应实体为空的 3xx 响应，并在响应头中加上 Location 字段:1234567HTTP/1.1 302 FoundServer: nginx/1.11.9Content-Type: text/html; charset=UTF-8Transfer-Encoding: chunkedDate: Sun, 24 Jun 2018 09:52:50 GMTLocation: https://godruoyi.comConnection: keep-alive400 Bad Request由于明显的客户端错误（例如，请求语法格式错误、无效的请求、无效的签名等），服务器 应该 放弃该请求。当服务器无法从其他 4xx 类型的状态码中找出合适的来表示错误类型时，都 必须 返回该状态码。123456789HTTP/1.1 400 Bad RequestServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 13:22:36 GMTConnection: keep-alive&#123;"error_code":40000,"message":"无效的签名"&#125;401 Unauthorized该状态码表示当前请求需要身份认证，以下情况都 必须 返回该状态码。未认证用户访问需要认证的 APIaccess_token 无效/过期客户端在收到 401 响应后，都 应该 提示用户进行下一步的登录操作。12345678910HTTP/1.1 401 UnauthorizedServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedWWW-Authenticate: JWTAuthCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 13:17:02 GMTConnection: keep-alive"message":"Token Signature could not be verified.","error_code": "40100"&#125;403 Forbidden该状态码可以简单的理解为没有权限访问该请求，服务器收到请求但拒绝提供服务。如当普通用户请求操作管理员用户时，必须 返回该状态码。123456789HTTP/1.1 403 ForbiddenServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 13:05:34 GMTConnection: keep-alive&#123;"error_code":40301,"message":"权限不足"&#125;404 Not Found该状态码表示用户请求的资源不存在，如获取不存在的用户信息 （get /users/9999999）访问不存在的端点都 必须 返回该状态码，若该资源已永久不存在，则 应该 返回 401 响应。405 Method Not Allowed当客户端使用的 HTTP 请求方法不被服务器允许时，必须 返回该状态码。如客户端调用了 POST 方法来访问只支持 GET 方法的 API该响应 必须 返回一个 Allow 头信息用以表示出当前资源能够接受的请求方法的列表。12345678910HTTP/1.1 405 Method Not AllowedServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedAllow: GET, HEADCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 12:30:57 GMTConnection: keep-alive&#123;"message":"405 Method Not Allowed","error_code": 40500&#125;406 Not AcceptableAPI 在不支持客户端指定的数据格式时，应该返回此状态码。如支持 JSON 和 XML 输出的 API 被指定返回 YAML 格式的数据时。Http 协议一般通过请求首部的 Accept 来指定数据格式408 Request Timeout客户端请求超时时 必须 返回该状态码，需要注意的时，该状态码表示 客户端请求超时，在涉及第三方 API 调用超时时，一定不可 返回该状态码。409 Confilct该状态码表示因为请求存在冲突无法处理。如通过手机号码提供注册功能的 API，当用户提交的手机号已存在时，必须 返回此状态码。123456789HTTP/1.1 409 ConflictServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 12:19:04 GMTConnection: keep-alive&#123;"error_code":40900,"message":"手机号已存在"&#125;410 Gone和 404 类似，该状态码也表示请求的资源不存在，只是 410 状态码进一步表示所请求的资源已不存在，并且未来也不会存在。在收到 410 状态码后，客户端 应该 停止再次请求该资源。413 Request Entity Too Large该状态码表示服务器拒绝处理当前请求，因为该请求提交的实体数据大小超过了服务器愿意或者能够处理的范围。此种情况下，服务器可以关闭连接以免客户端继续发送此请求。如果这个状况是临时的，服务器 应该 返回一个 Retry-After 的响应头，以告知客户端可以在多少时间以后重新尝试。414 Request-URI Too Long该状态码表示请求的 URI 长度超过了服务器能够解释的长度，因此服务器拒绝对该请求提供服务。415 Unsupported Media Type通常表示服务器不支持客户端请求首部 Content-Type 指定的数据格式。如在只接受 JSON 格式的 API 中放入 XML 类型的数据并向服务器发送，都 应该 返回该状态码。该状态码也可用于如：只允许上传图片格式的文件，但是客户端提交媒体文件非法或不是图片类型，这时 应该 返回该状态码：123456789HTTP/1.1 415 Unsupported Media TypeServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 12:09:40 GMTConnection: keep-alive&#123;"error_code":41500,"message":"不允许上传的图片格式"&#125;429 Too Many Requests该状态码表示用户请求次数超过允许范围。如 API 设定为 60次/分钟，当用户在一分钟内请求次数超过 60 次后，都 应该 返回该状态码。并且也 应该 在响应首部中加上下列头部：1234X-RateLimit-Limit: 10 请求速率（由应用设定，其单位一般为小时/分钟等，这里是 10次/5分钟）X-RateLimit-Remaining: 0 当前剩余的请求数量X-RateLimit-Reset: 1529839462 重置时间Retry-After: 120 下一次访问应该等待的时间（秒）列子12345678910111213HTTP/1.1 429 Too Many RequestsServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedX-RateLimit-Limit: 10X-RateLimit-Remaining: 0X-RateLimit-Reset: 1529839462Retry-After: 290Cache-Control: no-cache, privateDate: Sun, 24 Jun 2018 11:19:32 GMTConnection: keep-alive&#123;"message":"You have exceeded your rate limit.","error_code":42900&#125;必须 为所有的 API 设置 Rate Limit 支持。500 Internal Server Error该状态码 必须 在服务器出错时抛出，对于所有的 500 错误，都 应该 提供完整的错误信息支持，也方便跟踪调试。503 Service Unavailable该状态码表示服务器暂时处理不可用状态，当服务器需要维护或第三方 API 请求超时/不可达时，都 应该 返回该状态码，其中若是主动关闭 API 服务，应该在返回的响应首部加上 Retry-After 头部，表示多少秒后可以再次访问。12345678910HTTP/1.1 503 Service UnavailableServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 10:56:20 GMTRetry-After: 60Connection: keep-alive&#123;"error_code":50300,"message":"服务维护中"&#125;其他 HTTP 状态码请参考 HTTP 状态码- 维基百科]]></content>
+      <categories>
+        <category>规范</category>
+      </categories>
+      <tags>
+        <tag>restful api</tag>
       </tags>
   </entry>
   <entry>
@@ -618,7 +629,7 @@
   <entry>
     <title><![CDATA[Oracle 分区]]></title>
     <url>%2Fposts%2F7150914.html</url>
-    <content type="text"><![CDATA[自增分区numtoyminterval 按年、月分区numtoyminterval(1, ‘year’)、numtoyminterval(1, ‘month’)numtodsinterval 按天、时、分、秒分区numtodsinterval(1, ‘day’)、numtodsinterval(1, ‘hour’)、numtodsinterval(1, ‘minute’)、numtodsinterval(1, ‘second’)例子1234567create table user (id number, create_dt date) tablespace users partition by range (create_dt) interval(numtoyminterval(1, 'month')) ( partition p1 values less than (to_date('2018-06-01 00:00:00', 'yyyy-mm-dd hh24:mi:ss')) );]]></content>
+    <content type="text"><![CDATA[自增分区numtoyminterval 按年、月分区numtoyminterval(1, ‘year’)、numtoyminterval(1, ‘month’)numtodsinterval 按天、时、分、秒分区numtodsinterval(1, ‘day’)、numtodsinterval(1, ‘hour’)、numtodsinterval(1, ‘minute’)、numtodsinterval(1, ‘second’)例子1234567create table user (id number, create_dt date) tablespace users partition by range (create_dt) interval(numtoyminterval(1, 'month')) ( partition p1 values less than (to_date('2018-06-01 00:00:00', 'yyyy-mm-dd hh24:mi:ss')) );清空、删除分区操作1234567891011121314151617181920212223242526272829303132333435# 创建分区表略# 检查分区表及数据sql&gt; select t.table_name,t.partition_name,t.num_rows,t.blocks,t.interval,t.high_value from USER_TAB_PARTITIONS t;# 创建主键和索引sql&gt; alter table TEST_PARTAS add constraint pk_id primary key(ID);sql&gt; CREATE INDEX IND_ACCOUNT_ID ON TEST_PARTAS (ACCOUNT_ID);# 检查索引状态，当前状态可用sql&gt; select T.INDEX_NAME,T.TABLE_NAME,T.STATUS from user_indexes t where t.table_name='TEST_PARTAS';INDEX_NAME TABLE_NAME STATUS------------------------------ ------------------------------ --------PK_ID TEST_PARTAS VALIDIND_ACCOUNT_ID TEST_PARTAS VALID# 用truncate 删除p0分区数据，不加update index参数sql&gt; alter table test_partas truncate partition p0;# 检查索引状态，状态不可用INDEX_NAME TABLE_NAME STATUS------------------------------ ------------------------------ --------PK_ID TEST_PARTAS UNUSABLEIND_ACCOUNT_ID TEST_PARTAS UNUSABLE# 重建立索引，要加online ，尽量减小对业务的冲击sql&gt; alter index PK_ID rebuild online;sql&gt; alter index IND_ACCOUNT_ID rebuild online;此时索引恢复正常可用状态# 用truncate 删除p1分区数据，增加update index参数sql&gt; alter table test_partas truncate partition p1 update indexes;此时索引是正常可用状态扩展如果 truncate 清空分区数据、drop 删除分区，索引都会失效1sql&gt; alter table test_partas drop partition SYS_P1611;]]></content>
       <categories>
         <category>Oracle</category>
       </categories>
@@ -770,54 +781,6 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[Linux lsof 命令]]></title>
-    <url>%2Fposts%2Ffc091577.html</url>
-    <content type="text"><![CDATA[lsof检测端口未被占用1lsof -i:&lt;port&gt;指定进程号，可以查看该进程打开的文件1lsof -p &lt;pid&gt;]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>lsof</tag>
-        <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux netstat 命令]]></title>
-    <url>%2Fposts%2F6c05ba39.html</url>
-    <content type="text"><![CDATA[netstat查看进程的网络状态1netstat -anp | grep 7646]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>netstat</tag>
-        <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux unzip 命令]]></title>
-    <url>%2Fposts%2F64f75729.html</url>
-    <content type="text"><![CDATA[unzip解压war、jar、zip、rar等文件1unzip -oq /opt/xxx.war -d /opt/ddd]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>unzip</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[jar启动脚本]]></title>
-    <url>%2Fposts%2F6d838077.html</url>
-    <content type="text"><![CDATA[jar启动脚本123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263#!/usr/bin/env bash# @Author: YL# @Date: 2017-08-31 15:52:30# @Last Modified by: YL# @Last Modified time: 2017-12-18 14:12:45export LANG=en_US.UTF-8export JAVA_HOME=/usr/java/jdk1.8.0_144export PATH=$PATH:$JAVA_HOME/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHcd `dirname $0`PROJECT_HOME=`pwd`PROJECT_LIB=$PROJECT_HOME/libPROJECT_LOGS=$PROJECT_HOME/logsSTDOUT_FILE=$PROJECT_HOME/logs/stdout.logPROJECT_JAR=$PROJECT_HOME/tisson-ftp.jar# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $PROJECT_JAR"# pidPROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'`function operate()&#123; if [[ "$1" = "kill" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN kill $PROJECT_PID begining" | tee -a $STDOUT_FILE kill -9 $PROJECT_PID echo "$DATE_PATTERN kill $PROJECT_PID success" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not alive" | tee -a $STDOUT_FILE fi elif [[ "$1" = "start" ]] ; then # cd $PROJECT_HOME # starting nohup java -server -Xms512m -Xmx512m -Xss256k -Dloader.path=$PROJECT_LIB -Djava.io.tmpdir=$PROJECT_LOGS -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$PROJECT_LOGS/$PROJECT_PID.hprof -jar $PROJECT_JAR &gt;&gt; $STDOUT_FILE 2&gt;&amp;1 &amp; PROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'` echo "$DATE_PATTERN The $PROJECT_JAR started OK! pid: $PROJECT_PID" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILE fi&#125;if [[ "$1" = "start" || "$1" = "check" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN already started! pid: $PROJECT_PID" &gt;&gt; $STDOUT_FILE exit 1 fi operate startelif [[ "$1" = "" || "$1" = "restart" ]]; then operate kill echo "$DATE_PATTERN starting" | tee -a $STDOUT_FILE operate startelif [[ "$1" = "kill" ]]; then operate killelse echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILEfi-Djava.ext.dirs和-Dloader.path区别-Djava.ext.dirs使用-Djava.ext.dirs配置外部jar包引用时，会覆盖jdk默认的lib/ext下的扩展包-Dloader.path]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>jar</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Linux tail 命令]]></title>
     <url>%2Fposts%2F29bd046e.html</url>
     <content type="text"><![CDATA[tail]]></content>
@@ -830,30 +793,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[zookeeper重启脚本]]></title>
-    <url>%2Fposts%2F6c1ad93d.html</url>
-    <content type="text"><![CDATA[restart12345678910111213#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:10# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:30# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stopsleep 3./zkServer.sh start]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[zookeeper evn 环境变量配置脚本]]></title>
-    <url>%2Fposts%2F57428144.html</url>
-    <content type="text"><![CDATA[zookeeper-env1234567891011121314151617181920#!/usr/bin/env bash# @Author: YL# @Date: 2017-10-31 10:27:16# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:43# 此文件放到 zookeeper 的 conf 目录下# java envexport JAVA_HOME=/usr/java/jdk1.8.0_131export PATH=$JAVA_HOME/bin:$PATHexport JVMFLAGS="-Xms1536m -Xmx1536m $JVMFLAGS"cd `dirname $0`cd ..NODE_HOME=`pwd`# zookeeper envZOO_LOG_DIR=$NODE_HOME/logsZOO_LOG4J_PROP="INFO,ROLLINGFILE"]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[zookeeper 启动脚本]]></title>
-    <url>%2Fposts%2Faf01b9a2.html</url>
-    <content type="text"><![CDATA[start12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-28 10:23:20# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:41# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`NODE_BIN_DIR=`pwd`NODE_LIB_DIR=$NODE_BIN_DIR/../lib/cd ..NODE_HOME=`pwd`# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"# mkdir logs dirNODE_DATA_LOG_DIR=`sed '/dataLogDir/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`NODE_LOGS_DIR=""if [ -n "$NODE_DATA_LOG_DIR" ]; then NODE_LOGS_DIR=$NODE_DATA_LOG_DIRelse NODE_LOGS_DIR=$NODE_HOME/logsfiif [ ! -d $NODE_LOGS_DIR ]; then mkdir $NODE_LOGS_DIRfiSTDOUT_FILE=$NODE_LOGS_DIR/stdout.logecho "$DATE_PATTERN NODE_BIN_DIR: $NODE_BIN_DIR" | tee -a $STDOUT_FILE# pidNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`if [ -n "$NODE_PID" ]; then echo "$DATE_PATTERN ERROR: The $NODE_LIB_DIR already started! pid: $NODE_PID" | tee -a $STDOUT_FILE exit 1fi# portNODE_PORT=`sed '/clientPort/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`if [ -n "$NODE_PORT" ]; then NODE_PORT_COUNT=`netstat -tln | grep $NODE_PORT | wc -l` if [ $NODE_PORT_COUNT -gt 0 ]; then echo "$DATE_PATTERN ERROR: The $NODE_LIB_DIR port $NODE_PORT already used!" | tee -a $STDOUT_FILE exit 1 fifi# startingcd $NODE_BIN_DIR./zkServer.sh startNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`echo "$DATE_PATTERN The $NODE_LIB_DIR started OK! pid: $NODE_PID" | tee -a $STDOUT_FILE]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
     <title><![CDATA[zookeeper 清理日志文件]]></title>
     <url>%2Fposts%2Fc0bbcacd.html</url>
     <content type="text"><![CDATA[clear123456789101112131415161718192021222324252627282930#!/usr/bin/env bash# @Author: YL# @Date: 2017-11-01 08:59:34# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:09# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`cd ..NODE_HOME=`pwd`# snapshotNODE_DATA_DIR=$NODE_HOME/data/version-2# snapshot logNODE_LOG_DIR=$NODE_HOME/logs/version-2# zk logNODE_LOGS=$NODE_HOME/logs# 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中count=3count=$[$count+1]ls -t $NODE_LOG_DIR/log.* | tail -n +$count | xargs rm -fls -t $NODE_DATA_DIR/snapshot.* | tail -n +$count | xargs rm -fls -t $NODE_LOGS/zookeeper.log.* | tail -n +$count | xargs rm -f# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"STDOUT_FILE=$NODE_LOGS/stdout.logecho "$DATE_PATTERN clear logs success" | tee -a $STDOUT_FILE]]></content>
@@ -862,56 +801,12 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[zookeeper stop脚本]]></title>
-    <url>%2Fposts%2F7bd064dc.html</url>
-    <content type="text"><![CDATA[stop12345678910#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:00# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:49# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stop]]></content>
+    <title><![CDATA[zookeeper重启脚本]]></title>
+    <url>%2Fposts%2F6c1ad93d.html</url>
+    <content type="text"><![CDATA[restart12345678910111213#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:10# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:30# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stopsleep 3./zkServer.sh start]]></content>
       <categories>
         <category>zookeeper</category>
       </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux sed 命令]]></title>
-    <url>%2Fposts%2Fb8ec468d.html</url>
-    <content type="text"><![CDATA[sed打印指定行数1sed -n '12457431, 12457440p' tomcat/logs/catalina.out]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>sed</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Tomcat 启动脚本]]></title>
-    <url>%2Fposts%2Fe22f47ab.html</url>
-    <content type="text"><![CDATA[Tomcat 启动脚本start.sh12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455#!/usr/bin/env bash# @Author: YL# @Date: 2017-01-25 14:50:43# @Last Modified by: YL# @Last Modified time: 2017-12-18 14:12:23cd `dirname $0`PROJECT_HOME=`pwd`# Tomcat 服务器路径TC_HOME="$PROJECT_HOME/tomcat"# crontab 检测日记文件TC_STDOUT_FILE="$TC_HOME/logs/stdout.out"# 检测 Tomcat 是否启动（进程ID）TC_PID=`ps -ef | grep $TC_HOME/bin | grep -v grep | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# 检测输出的日记格式DATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME"function operate()&#123; if [[ "$1" = "kill" ]] ; then if [[ "$TC_PID" = "" ]] ; then echo "$DATE_PATTERN is not alive" | tee -a $TC_STDOUT_FILE else echo "$DATE_PATTERN kill $TC_PID begining" | tee -a $TC_STDOUT_FILE kill -9 $TC_PID echo "$DATE_PATTERN kill $TC_PID success" | tee -a $TC_STDOUT_FILE fi elif [[ "$1" = "start" ]]; then cd $TC_HOME/bin sh startup.sh else echo "$DATE_PATTERN is not support $1" | tee -a $TC_STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "$DATE_PATTERN starting" | tee -a $TC_STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$TC_PID" = "" ]] ; then echo "$DATE_PATTERN starting" &gt;&gt; $TC_STDOUT_FILE operate start else echo "$DATE_PATTERN pid $TC_PID" &gt;&gt; $TC_STDOUT_FILE fielse echo "$DATE_PATTERN is not support $1" | tee -a $TC_STDOUT_FILEfi使用说明12345sh start.sh start # 重启sh start.sh # 重启sh start.sh restart # 重启sh start.sh check # 检测服务是否启动，没有启动，则启动之，否则不做其他操作sh start.sh kill # kill掉已启动的服务进程]]></content>
-      <categories>
-        <category>Tomcat</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux crontab 命令]]></title>
-    <url>%2Fposts%2Fb0b79272.html</url>
-    <content type="text"><![CDATA[crontab 使用注意事项如果通过 crontab 执行1、crontab 无法获取 jdk 变量，要在 java 命令之前写入jdk绝对路径2、要把路径切换到要执行的 sh 路径下注意：二者缺一不可查找 jdk 路径的方法112$ echo $JAVA_HOME/usr/java/jdk1.6.0_45/bin/java2123456$ which java/usr/bin/java$ ls -lrt /usr/bin/java #/usr/bin/java是which java查出来的路径lrwxrwxrwx. 1 root root 22 Sep 16 2015 /usr/bin/java -&gt; /etc/alternatives/java$ ls -lrt /etc/alternatives/java #/etc/alternatives/java是ls -lrt /usr/bin/java查出来的路径 lrwxrwxrwx. 1 root root 46 Sep 16 2015 /etc/alternatives/java -&gt; /usr/lib/jvm/jre-1.6.0-openjdk.x86_64/bin/java查询 crontab 定时器配置情况1crontab -l编辑 crontab 定时器1234567crontab -e# 当 crontab 调用时，错误和标准输出会写成 mail 通知你* * * * * /opt/restart.sh# 标准输出重定向到 /dev/null，输出到这里就找不回来了* * * * * /opt/restart.sh &gt; /dev/null# 标准输出和错误输出都重定向到 /dev/null* * * * * /opt/restart.sh &gt; /dev/null 2&gt;&amp;1]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>crontab</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux tar 命令]]></title>
-    <url>%2Fposts%2Fbd083454.html</url>
-    <content type="text"><![CDATA[tar1tar -zxvf xxx.tar.gz]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>tar</tag>
-      </tags>
   </entry>
   <entry>
     <title><![CDATA[Linux curl 命令]]></title>
@@ -923,18 +818,6 @@
       <tags>
         <tag>shell</tag>
         <tag>curl</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux ls 命令]]></title>
-    <url>%2Fposts%2F53b5960c.html</url>
-    <content type="text"><![CDATA[ls12# 统计文件夹中文件数ls -l |grep "^-"|wc -l保留最新的1个文件夹，删除其他文件夹（使用-d）1ls -t -d /home/txrd/tisson-web-open/logs/undertow-* | tail -n +2 | xargs rm -rf]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>ls</tag>
       </tags>
   </entry>
   <entry>
@@ -962,16 +845,52 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux vi 命令]]></title>
-    <url>%2Fposts%2F87207300.html</url>
-    <content type="text"><![CDATA[vilinux文件格式的问题（使用unix格式）123456789# 查看文件格式vi 文件名:set ff # :set fileencoding# 设置文件格式为unix:set ff=unix# 保存退出:wq# 也可以直接使用dos2unix 文件名]]></content>
+    <title><![CDATA[Linux cp 命令]]></title>
+    <url>%2Fposts%2F2835e3e.html</url>
+    <content type="text"><![CDATA[cp复制文件夹1cp -r [old source] -d [new source]]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>vi</tag>
+        <tag>cp</tag>
       </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux crontab 命令]]></title>
+    <url>%2Fposts%2Fb0b79272.html</url>
+    <content type="text"><![CDATA[crontab 使用注意事项如果通过 crontab 执行1、crontab 无法获取 jdk 变量，要在 java 命令之前写入jdk绝对路径2、要把路径切换到要执行的 sh 路径下注意：二者缺一不可查找 jdk 路径的方法112$ echo $JAVA_HOME/usr/java/jdk1.6.0_45/bin/java2123456$ which java/usr/bin/java$ ls -lrt /usr/bin/java #/usr/bin/java是which java查出来的路径lrwxrwxrwx. 1 root root 22 Sep 16 2015 /usr/bin/java -&gt; /etc/alternatives/java$ ls -lrt /etc/alternatives/java #/etc/alternatives/java是ls -lrt /usr/bin/java查出来的路径 lrwxrwxrwx. 1 root root 46 Sep 16 2015 /etc/alternatives/java -&gt; /usr/lib/jvm/jre-1.6.0-openjdk.x86_64/bin/java查询 crontab 定时器配置情况1crontab -l编辑 crontab 定时器1234567crontab -e# 当 crontab 调用时，错误和标准输出会写成 mail 通知你* * * * * /opt/restart.sh# 标准输出重定向到 /dev/null，输出到这里就找不回来了* * * * * /opt/restart.sh &gt; /dev/null# 标准输出和错误输出都重定向到 /dev/null* * * * * /opt/restart.sh &gt; /dev/null 2&gt;&amp;1]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>crontab</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper 启动脚本]]></title>
+    <url>%2Fposts%2Faf01b9a2.html</url>
+    <content type="text"><![CDATA[start12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-28 10:23:20# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:41# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`NODE_BIN_DIR=`pwd`NODE_LIB_DIR=$NODE_BIN_DIR/../lib/cd ..NODE_HOME=`pwd`# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"# mkdir logs dirNODE_DATA_LOG_DIR=`sed '/dataLogDir/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`NODE_LOGS_DIR=""if [ -n "$NODE_DATA_LOG_DIR" ]; then NODE_LOGS_DIR=$NODE_DATA_LOG_DIRelse NODE_LOGS_DIR=$NODE_HOME/logsfiif [ ! -d $NODE_LOGS_DIR ]; then mkdir $NODE_LOGS_DIRfiSTDOUT_FILE=$NODE_LOGS_DIR/stdout.logecho "$DATE_PATTERN NODE_BIN_DIR: $NODE_BIN_DIR" | tee -a $STDOUT_FILE# pidNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`if [ -n "$NODE_PID" ]; then echo "$DATE_PATTERN ERROR: The $NODE_LIB_DIR already started! pid: $NODE_PID" | tee -a $STDOUT_FILE exit 1fi# portNODE_PORT=`sed '/clientPort/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`if [ -n "$NODE_PORT" ]; then NODE_PORT_COUNT=`netstat -tln | grep $NODE_PORT | wc -l` if [ $NODE_PORT_COUNT -gt 0 ]; then echo "$DATE_PATTERN ERROR: The $NODE_LIB_DIR port $NODE_PORT already used!" | tee -a $STDOUT_FILE exit 1 fifi# startingcd $NODE_BIN_DIR./zkServer.sh startNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`echo "$DATE_PATTERN The $NODE_LIB_DIR started OK! pid: $NODE_PID" | tee -a $STDOUT_FILE]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Tomcat 启动脚本]]></title>
+    <url>%2Fposts%2Fe22f47ab.html</url>
+    <content type="text"><![CDATA[Tomcat 启动脚本start.sh12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455#!/usr/bin/env bash# @Author: YL# @Date: 2017-01-25 14:50:43# @Last Modified by: YL# @Last Modified time: 2017-12-18 14:12:23cd `dirname $0`PROJECT_HOME=`pwd`# Tomcat 服务器路径TC_HOME="$PROJECT_HOME/tomcat"# crontab 检测日记文件TC_STDOUT_FILE="$TC_HOME/logs/stdout.out"# 检测 Tomcat 是否启动（进程ID）TC_PID=`ps -ef | grep $TC_HOME/bin | grep -v grep | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# 检测输出的日记格式DATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME"function operate()&#123; if [[ "$1" = "kill" ]] ; then if [[ "$TC_PID" = "" ]] ; then echo "$DATE_PATTERN is not alive" | tee -a $TC_STDOUT_FILE else echo "$DATE_PATTERN kill $TC_PID begining" | tee -a $TC_STDOUT_FILE kill -9 $TC_PID echo "$DATE_PATTERN kill $TC_PID success" | tee -a $TC_STDOUT_FILE fi elif [[ "$1" = "start" ]]; then cd $TC_HOME/bin sh startup.sh else echo "$DATE_PATTERN is not support $1" | tee -a $TC_STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "$DATE_PATTERN starting" | tee -a $TC_STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$TC_PID" = "" ]] ; then echo "$DATE_PATTERN starting" &gt;&gt; $TC_STDOUT_FILE operate start else echo "$DATE_PATTERN pid $TC_PID" &gt;&gt; $TC_STDOUT_FILE fielse echo "$DATE_PATTERN is not support $1" | tee -a $TC_STDOUT_FILEfi使用说明12345sh start.sh start # 重启sh start.sh # 重启sh start.sh restart # 重启sh start.sh check # 检测服务是否启动，没有启动，则启动之，否则不做其他操作sh start.sh kill # kill掉已启动的服务进程]]></content>
+      <categories>
+        <category>Tomcat</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper stop脚本]]></title>
+    <url>%2Fposts%2F7bd064dc.html</url>
+    <content type="text"><![CDATA[stop12345678910#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:00# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:49# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stop]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
   </entry>
   <entry>
     <title><![CDATA[Linux cat 命令]]></title>
@@ -986,15 +905,39 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux cp 命令]]></title>
-    <url>%2Fposts%2F2835e3e.html</url>
-    <content type="text"><![CDATA[cp复制文件夹1cp -r [old source] -d [new source]]]></content>
+    <title><![CDATA[jar启动脚本]]></title>
+    <url>%2Fposts%2F6d838077.html</url>
+    <content type="text"><![CDATA[jar启动脚本123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263#!/usr/bin/env bash# @Author: YL# @Date: 2017-08-31 15:52:30# @Last Modified by: YL# @Last Modified time: 2017-12-18 14:12:45export LANG=en_US.UTF-8export JAVA_HOME=/usr/java/jdk1.8.0_144export PATH=$PATH:$JAVA_HOME/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHcd `dirname $0`PROJECT_HOME=`pwd`PROJECT_LIB=$PROJECT_HOME/libPROJECT_LOGS=$PROJECT_HOME/logsSTDOUT_FILE=$PROJECT_HOME/logs/stdout.logPROJECT_JAR=$PROJECT_HOME/tisson-ftp.jar# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $PROJECT_JAR"# pidPROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'`function operate()&#123; if [[ "$1" = "kill" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN kill $PROJECT_PID begining" | tee -a $STDOUT_FILE kill -9 $PROJECT_PID echo "$DATE_PATTERN kill $PROJECT_PID success" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not alive" | tee -a $STDOUT_FILE fi elif [[ "$1" = "start" ]] ; then # cd $PROJECT_HOME # starting nohup java -server -Xms512m -Xmx512m -Xss256k -Dloader.path=$PROJECT_LIB -Djava.io.tmpdir=$PROJECT_LOGS -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$PROJECT_LOGS/$PROJECT_PID.hprof -jar $PROJECT_JAR &gt;&gt; $STDOUT_FILE 2&gt;&amp;1 &amp; PROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'` echo "$DATE_PATTERN The $PROJECT_JAR started OK! pid: $PROJECT_PID" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILE fi&#125;if [[ "$1" = "start" || "$1" = "check" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN already started! pid: $PROJECT_PID" &gt;&gt; $STDOUT_FILE exit 1 fi operate startelif [[ "$1" = "" || "$1" = "restart" ]]; then operate kill echo "$DATE_PATTERN starting" | tee -a $STDOUT_FILE operate startelif [[ "$1" = "kill" ]]; then operate killelse echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILEfi-Djava.ext.dirs和-Dloader.path区别-Djava.ext.dirs使用-Djava.ext.dirs配置外部jar包引用时，会覆盖jdk默认的lib/ext下的扩展包-Dloader.path]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>jar</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux netstat 命令]]></title>
+    <url>%2Fposts%2F6c05ba39.html</url>
+    <content type="text"><![CDATA[netstat查看进程的网络状态1netstat -anp | grep 7646]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>netstat</tag>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux ls 命令]]></title>
+    <url>%2Fposts%2F53b5960c.html</url>
+    <content type="text"><![CDATA[ls12# 统计文件夹中文件数ls -l |grep "^-"|wc -l保留最新的1个文件夹，删除其他文件夹（使用-d）1ls -t -d /home/txrd/tisson-web-open/logs/undertow-* | tail -n +2 | xargs rm -rf]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>cp</tag>
+        <tag>ls</tag>
       </tags>
   </entry>
   <entry>
@@ -1007,6 +950,74 @@
       <tags>
         <tag>shell</tag>
         <tag>grep</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux sed 命令]]></title>
+    <url>%2Fposts%2Fb8ec468d.html</url>
+    <content type="text"><![CDATA[sed打印指定行数1sed -n '12457431, 12457440p' tomcat/logs/catalina.out]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>sed</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux unzip 命令]]></title>
+    <url>%2Fposts%2F64f75729.html</url>
+    <content type="text"><![CDATA[unzip解压war、jar、zip、rar等文件1unzip -oq /opt/xxx.war -d /opt/ddd]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>unzip</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux vi 命令]]></title>
+    <url>%2Fposts%2F87207300.html</url>
+    <content type="text"><![CDATA[vilinux文件格式的问题（使用unix格式）123456789# 查看文件格式vi 文件名:set ff # :set fileencoding# 设置文件格式为unix:set ff=unix# 保存退出:wq# 也可以直接使用dos2unix 文件名]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>vi</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux tar 命令]]></title>
+    <url>%2Fposts%2Fbd083454.html</url>
+    <content type="text"><![CDATA[tar1tar -zxvf xxx.tar.gz]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>tar</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper evn 环境变量配置脚本]]></title>
+    <url>%2Fposts%2F57428144.html</url>
+    <content type="text"><![CDATA[zookeeper-env1234567891011121314151617181920#!/usr/bin/env bash# @Author: YL# @Date: 2017-10-31 10:27:16# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:43# 此文件放到 zookeeper 的 conf 目录下# java envexport JAVA_HOME=/usr/java/jdk1.8.0_131export PATH=$JAVA_HOME/bin:$PATHexport JVMFLAGS="-Xms1536m -Xmx1536m $JVMFLAGS"cd `dirname $0`cd ..NODE_HOME=`pwd`# zookeeper envZOO_LOG_DIR=$NODE_HOME/logsZOO_LOG4J_PROP="INFO,ROLLINGFILE"]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux lsof 命令]]></title>
+    <url>%2Fposts%2Ffc091577.html</url>
+    <content type="text"><![CDATA[lsof检测端口未被占用1lsof -i:&lt;port&gt;指定进程号，可以查看该进程打开的文件1lsof -p &lt;pid&gt;]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>lsof</tag>
+        <tag>shell</tag>
       </tags>
   </entry>
   <entry>
@@ -1125,18 +1136,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[hibernate格式化输出sql语句（spring-data-jpa）]]></title>
-    <url>%2Fposts%2F723691b5.html</url>
-    <content type="text"><![CDATA[以下配置是基于 spring-boot 的 application.yml 配置123456789spring: jpa:# hibernate:# ddl-auto: create show-sql: true# database: mysql properties: hibernate: format_sql: true]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Hibernate</tag>
-        <tag>spring-data-jpa</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[hibernate显示sql中的参数值（logback）]]></title>
     <url>%2Fposts%2F9eea8fb4.html</url>
     <content type="text"><![CDATA[以下是 logback 的日志输出配置，只要是在 logback 的配置文件中添加以下配置12&lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt;&lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt;完整的 logback 配置如下1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;configuration scan="true" scanPeriod="60 seconds" debug="false"&gt; &lt;property name="logger.charset" value="UTF-8"/&gt; &lt;property name="logger.path" value="$&#123;catalina.home&#125;/logs"/&gt; &lt;property name="logger.pattern" value="[%d&#123;yyyy-MM-dd HH:mm:ss&#125; %highlight(%-5p)] %yellow(%t) %cyan(%c.%M\\(%L\\)) | %m%n"/&gt; &lt;property name="logger.maxHistory" value="15"/&gt; &lt;springProfile name="dev, local"&gt; &lt;appender name="stdout" class="ch.qos.logback.core.ConsoleAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;/appender&gt; &lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt; &lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt; &lt;!--&lt;logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="DEBUG"/&gt; &lt;logger name="org.hibernate.SQL" level="DEBUG"/&gt; &lt;logger name="org.hibernate.type" level="INFO"/&gt; &lt;logger name="org.hibernate.engine.QueryParameters" level="DEBUG"/&gt; &lt;logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG"/&gt;--&gt; &lt;!--&lt;logger name="org.apache.ibatis" level="debug"/&gt; &lt;logger name="java.sql.Connection" level="debug"/&gt; &lt;logger name="java.sql.Statement" level="debug"/&gt; &lt;logger name="java.sql.PreparedStatement" level="debug"/&gt;--&gt; &lt;root level="info"&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt; &lt;springProfile name="prod"&gt; &lt;!--See http://logback.qos.ch/manual/appenders.html#RollingFileAppender --&gt; &lt;!--and http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy --&gt; &lt;!--for further documentation --&gt; &lt;appender name="stdout" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;File&gt;$&#123;logger.path&#125;/info.log&lt;/File&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/info.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="warn" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/warn.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;WARN&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/warn.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/error.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;ERROR&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/error.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;logger name="warn" level="WARN"/&gt; &lt;logger name="error" level="ERROR"/&gt; &lt;root level="info"&gt; &lt;appender-ref ref="warn"/&gt; &lt;appender-ref ref="error"/&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt;&lt;/configuration&gt;]]></content>
@@ -1146,6 +1145,18 @@
       <tags>
         <tag>Hibernate</tag>
         <tag>logback</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[hibernate格式化输出sql语句（spring-data-jpa）]]></title>
+    <url>%2Fposts%2F723691b5.html</url>
+    <content type="text"><![CDATA[以下配置是基于 spring-boot 的 application.yml 配置123456789spring: jpa:# hibernate:# ddl-auto: create show-sql: true# database: mysql properties: hibernate: format_sql: true]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Hibernate</tag>
+        <tag>spring-data-jpa</tag>
       </tags>
   </entry>
   <entry>
@@ -1232,18 +1243,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[nodejs 使用]]></title>
-    <url>%2Fposts%2F8d0f4649.html</url>
-    <content type="text"><![CDATA[配置淘宝npm国内访问外网是很慢的，安装NodeJS是自带的npm地址默认是：http://registry.npmjs.org，访问很慢，所以一般换成国内镜像地址。通过config命令123npm config set registry https://registry.npm.taobao.org/ npm info underscore#（如果配置成功，这个命令会有字符串response）npm --registry=https://registry.npm.taobao.org命令行指定1npm --registry https://registry.npm.taobao.org/ info underscore编辑node_modules/npm/.npmrc加入下面内容1registry = https://registry.npm.taobao.org/如果上面的npm地址不行的话，可以试试淘宝的npmhttps://registry.npm.taobao.org123npm set registry https://registry.npm.taobao.org/# 或者npm --registry https://registry.npm.taobao.org/ info underscore下载路径在安装完nodejs后，npm install -g jshint是被安装在默认路径（C:\Users\用户名\AppData\Roaming\npm）下的可以通过修改nodejs安装路径下的node_modules/npm/.npmrc文件prefix=D:\MyTools\nodejs\node_global （修改全局路径）cache=D:\MyTools\nodejs\node_cache （修改全局路径）请注意prefix、cache不能设置成一样的路径，否则通过npm安装模块时，会报错npm 使用123456789# -S 是--save 的缩写，它可以让你安装的模块记录到package.json文件当中npm install -S xxx# 这是删除模块，也可以删除全局模块npm uninstall xxxnpm uninstall -g xxx# -D就是--save-dev 这样安装的包的名称及版本号就会存在package.json的devDependencies这个里面，而--save会将包的名称及版本号放在dependencies里面npm install -D xxxnpm registry 设置1234567891011121314$ npm install -g nrm$ nrm lsD:\Workspace\vuejs-project&gt;nrm ls* npm ---- https://registry.npmjs.org/ cnpm --- http://r.cnpmjs.org/ taobao - https://registry.npm.taobao.org/ nj ----- https://registry.nodejitsu.com/ rednpm - http://registry.mirror.cqupt.edu.cn/ npmMirror https://skimdb.npmjs.com/registry/ edunpm - http://registry.enpmjs.org/# 切换源$ nrm use taobaoRegistry has been set to: https://registry.npm.taobao.org/npm-check检查依赖包版本123456# 安装 npm-checknpm install -g npm-check# 检查 npm 包版本npm-check -u -gnpm-check -u -Snpm-check -u -D]]></content>
-      <categories>
-        <category>nodejs</category>
-      </categories>
-      <tags>
-        <tag>npm</tag>
-        <tag>cnpm</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[xampp 安装 memcache 监控]]></title>
     <url>%2Fposts%2Fd01399d3.html</url>
     <content type="text"><![CDATA[xampp安装memcache监控现在 memadmin下载memadmin，解压到xampp/htdocs下查看 php 版本信息123&lt;?php echo phpinfo();?&gt;下载 php-memcache.dll根据查看到的php的信息，在php-memcache下载对应本版的Thread Safe，里面包含了php-memcache.dll。解压下载包，然后把php-memcache.dll拷贝到xampp/php/ext下在xampp/php/php.ini最后添加以下内容12345678;php-memcachedextension=php_memcache.dll[Memcache]memcache.allow_failover = 1memcache.max_failover_attempts=20memcache.chunk_size =8192memcache.default_port = 11211访问 memadminhttp://host:port/memadmin]]></content>
@@ -1254,6 +1253,18 @@
         <tag>xampp</tag>
         <tag>memcache</tag>
         <tag>php</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[nodejs 使用]]></title>
+    <url>%2Fposts%2F8d0f4649.html</url>
+    <content type="text"><![CDATA[配置淘宝npm国内访问外网是很慢的，安装NodeJS是自带的npm地址默认是：http://registry.npmjs.org，访问很慢，所以一般换成国内镜像地址。通过config命令123npm config set registry https://registry.npm.taobao.org/ npm info underscore#（如果配置成功，这个命令会有字符串response）npm --registry=https://registry.npm.taobao.org命令行指定1npm --registry https://registry.npm.taobao.org/ info underscore编辑node_modules/npm/.npmrc加入下面内容1registry = https://registry.npm.taobao.org/如果上面的npm地址不行的话，可以试试淘宝的npmhttps://registry.npm.taobao.org123npm set registry https://registry.npm.taobao.org/# 或者npm --registry https://registry.npm.taobao.org/ info underscore下载路径在安装完nodejs后，npm install -g jshint是被安装在默认路径（C:\Users\用户名\AppData\Roaming\npm）下的可以通过修改nodejs安装路径下的node_modules/npm/.npmrc文件prefix=D:\MyTools\nodejs\node_global （修改全局路径）cache=D:\MyTools\nodejs\node_cache （修改全局路径）请注意prefix、cache不能设置成一样的路径，否则通过npm安装模块时，会报错npm 使用123456789# -S 是--save 的缩写，它可以让你安装的模块记录到package.json文件当中npm install -S xxx# 这是删除模块，也可以删除全局模块npm uninstall xxxnpm uninstall -g xxx# -D就是--save-dev 这样安装的包的名称及版本号就会存在package.json的devDependencies这个里面，而--save会将包的名称及版本号放在dependencies里面npm install -D xxxnpm registry 设置1234567891011121314$ npm install -g nrm$ nrm lsD:\Workspace\vuejs-project&gt;nrm ls* npm ---- https://registry.npmjs.org/ cnpm --- http://r.cnpmjs.org/ taobao - https://registry.npm.taobao.org/ nj ----- https://registry.nodejitsu.com/ rednpm - http://registry.mirror.cqupt.edu.cn/ npmMirror https://skimdb.npmjs.com/registry/ edunpm - http://registry.enpmjs.org/# 切换源$ nrm use taobaoRegistry has been set to: https://registry.npm.taobao.org/npm-check检查依赖包版本123456# 安装 npm-checknpm install -g npm-check# 检查 npm 包版本npm-check -u -gnpm-check -u -Snpm-check -u -D]]></content>
+      <categories>
+        <category>nodejs</category>
+      </categories>
+      <tags>
+        <tag>npm</tag>
+        <tag>cnpm</tag>
       </tags>
   </entry>
   <entry>
@@ -1335,17 +1346,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[使用RSA注意事项]]></title>
-    <url>%2Fposts%2Fef742936.html</url>
-    <content type="text"><![CDATA[比较以下两种写法12// 第一种：这种写法会造成内存溢出Cipher cipher = Cipher.getInstance("RSA", new BouncyCastleProvider());123456// 第二种：推荐这种写法// BC可用BouncyCastleProvider.PROVIDER_NAME代替if (StringUtils.isNullOrEmpty(Security.getProperty("BC"))) &#123; Security.addProvider(new BouncyCastleProvider());&#125;Cipher cipher = Cipher.getInstance("RSA", "BC");还有一种写法是要替换jdk的jar包，不推荐要依赖bcprov-jdk16包12345&lt;dependency&gt; &lt;groupId&gt;org.bouncycastle&lt;/groupId&gt; &lt;artifactId&gt;bcprov-jdk16&lt;/artifactId&gt; &lt;version&gt;1.46&lt;/version&gt;&lt;/dependency&gt;]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>RSA</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[store.js的使用]]></title>
     <url>%2Fposts%2F78a81828.html</url>
     <content type="text"><![CDATA[基于store.js实现localStorage缓存过期策略123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150151152153154155156157158159160161162163164165166167168169170171172173174175176177178179180181182183184185186187188189190191192193194195196197198199200201202203204205206207208209210211212213214215216217218219220221222223224225226227228229230231232233234235236237238239240241242243244245246"use strict";(function(s) &#123; /** * 判断是否支持localStorage本地存储 */ if (!s.enabled) &#123; console.error('localStorage is not supported by your browser.') return; &#125; /** * 规定日期格式 * 比如：yyyy年MM月dd日 HH:mm:ss S、yyyy-MM-dd HH:mm:ss S...... */ function _checkFormat(fmt) &#123; if (!/^y+[\u5e74-]?M+[\u6708-]?(d+)[\u65e5]? H+[\u65f6:]?m+[\u5206:]?s+[\u79d2]?(( S)?)$/.test(fmt)) &#123; throw new Error('"' + fmt + '" is not supported by the format.'); return false; &#125; return true; &#125; /** * 时间格式化：时间毫秒数、Date对象 ---&gt; 时间字符串 默认格式化格式：yyyy-MM-dd HH:mm:ss */ function _date2str(str, fmt) &#123; if (fmt === undefined) &#123; fmt = 'yyyy-MM-dd HH:mm:ss'; &#125; _checkFormat(fmt); var date; if (typeof str === 'number') &#123; date = new Date(str); &#125; else if (_isValidDate(str)) &#123; date = str; &#125; var o = &#123; 'M+' : date.getMonth() + 1, // 月 'd+' : date.getDate(), // 日 'H+' : date.getHours(), // 小时（24小时制） 'm+' : date.getMinutes(), // 分 's+' : date.getSeconds(), // 秒 'S' : date.getMilliseconds() // 毫秒 &#125;; if (/(y+)/.test(fmt)) &#123; fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '') .substr(4 - RegExp.$1.length)); &#125; for ( var k in o) &#123; if (new RegExp('(' + k + ')').test(fmt)) &#123; fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length))); &#125; &#125; return fmt; &#125; /** * 时间格式化：将时间字符串 ---&gt; Date对象 默认格式化格式：yyyy-MM-dd HH:mm:ss，使用中文不能格式化 */ function _str2date(str, fmt) &#123; if (fmt === undefined) &#123; fmt = 'yyyy-MM-dd HH:mm:ss'; &#125; _checkFormat(fmt); var o = [ 'y+', // 年 'M+', // 月 'd+', // 日 'H+', // 小时（24小时制） 'm+', // 分 's+', // 秒 'S' // 毫秒 ]; var date = new Date(); for (var k = 0; k &lt; o.length; k++) &#123; var s = o[k]; if (new RegExp('(' + s + ')').test(fmt)) &#123; var r = RegExp.$1; var rl = RegExp.$1.length; var si = fmt.indexOf(RegExp.$1); var ei = si + rl; var n = 0; if (r.indexOf('S') &gt; -1) &#123; n = parseInt(str.substr(si)); date.setMilliseconds(n); // 设置 Date 对象中的毫秒 (0 ~ 999)。 &#125; else &#123; n = parseInt(str.substring(si, ei)); if (r.indexOf('y') &gt; -1) &#123; date.setFullYear(n); // 设置 Date 对象中的年份（四位数字）。 &#125; else if (r.indexOf('M') &gt; -1) &#123; date.setMonth(n - 1); // 设置 Date 对象中月份 (0 ~ 11)。 &#125; else if (r.indexOf('d') &gt; -1) &#123; date.setDate(n); // 设置 Date 对象中月的某一天 (1 ~ 31)。 &#125; else if (r.indexOf('H') &gt; -1) &#123; date.setHours(n); // 设置 Date 对象中的小时 (0 ~ 23)。 &#125; else if (r.indexOf('m') &gt; -1) &#123; date.setMinutes(n); // 设置 Date 对象中的分钟 (0 ~ 59)。 &#125; else if (r.indexOf('s') &gt; -1) &#123; date.setSeconds(n); // 设置 Date 对象中的秒钟 (0 ~ 59)。 &#125; &#125; &#125; &#125; return date; &#125; /** * 转换：毫秒 ---&gt; 天时分秒毫秒 */ function _ms2s(ms) &#123; var s = parseInt(ms / 1000);// 秒 var m = 0;// 分 var h = 0;// 小时 var d = 0;// 天 if (s &gt;= 60) &#123; m = parseInt(s / 60); s = parseInt(s % 60); if (m &gt;= 60) &#123; h = parseInt(m / 60); m = parseInt(m % 60); if (h &gt;= 24) &#123; d = parseInt(h / 24); h = parseInt(h % 24); &#125; &#125; &#125; var str = ''; if (s &gt; 0) str = '' + parseInt(s) + '\u79d2' + str; if (m &gt; 0) str = '' + parseInt(m) + '\u5206' + str; if (h &gt; 0) str = '' + parseInt(h) + '\u5c0f\u65f6' + str; if (d &gt; 0) str = '' + parseInt(d) + '\u5929' + str; return str; &#125; /** * 设置有效时间，返回对象 */ function VConstructor(val, exp) &#123; var item = &#123;&#125;; // 创建时间、有效时间 var createTime = (new Date()).getTime(), effectiveTime; if (typeof exp === 'number') &#123; effectiveTime = new Date(createTime + exp * 60000); &#125; else if (typeof exp === 'string') &#123; effectiveTime = _str2date(exp); &#125; if (effectiveTime &amp;&amp; !_isValidDate(effectiveTime)) &#123; throw new Error('effectiveTime cannot be converted to a valid Date instance'); &#125; effectiveTime = effectiveTime.getTime(); item['c'] = _date2str(createTime); item['e'] = _date2str(effectiveTime); item['t'] = _ms2s(effectiveTime - createTime); item['v'] = val; return item; &#125; /** * 判断是否是Date对象 */ function _isValidDate(date) &#123; return Object.prototype.toString.call(date) === '[object Date]' &amp;&amp; !isNaN(date.getTime()); &#125; /** * 判断是否设置了有效时间 */ function _hasEffective(item) &#123; if (item) &#123; if (typeof item === 'object' &amp;&amp; 'c' in item &amp;&amp; 'e' in item &amp;&amp; 'v' in item) &#123; return true; &#125; &#125; return false; &#125; /** * 判断是否是有效 */ function _isEffective(item) &#123; var ntime = (new Date()).getTime(); return ntime &lt; _str2date(item.e); &#125; /** * 判断key是否是字符串，如果不是，则转换成字符串 */ function _keyAsString(key) &#123; if (typeof key !== 'string') &#123; console.warn(key + ' used as a key, but it is not a string.'); key = String(key); &#125; return key; &#125; /** * exp 失效时间：默认为0（单位：分钟） */ s.setExp = function(key, val, exp) &#123; key = _keyAsString(key); if (exp === undefined) &#123; exp = 0; &#125; s.set(key, new VConstructor(val, exp)); &#125;; s.getExp = function(key) &#123; key = _keyAsString(key); var item = null; try &#123; item = s.get(key); &#125; catch (e) &#123; return null; &#125; if (_hasEffective(item)) &#123; if (_isEffective(item)) &#123; return item.v; &#125; else &#123; s.remove(key); return null; &#125; &#125; else &#123; return item; &#125; &#125;; s.getAllExp = function() &#123; var ret = &#123;&#125;; s.forEachExp(function(key, val) &#123; ret[key] = val; &#125;) return ret; &#125;; s.forEachExp = function(callback) &#123; var storage = s.getAll(); for ( var key in storage) &#123; callback(key, s.getExp(key)); &#125; &#125;;&#125;)(store);]]></content>
@@ -1355,6 +1355,17 @@
       <tags>
         <tag>localStorage</tag>
         <tag>store.js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[使用RSA注意事项]]></title>
+    <url>%2Fposts%2Fef742936.html</url>
+    <content type="text"><![CDATA[比较以下两种写法12// 第一种：这种写法会造成内存溢出Cipher cipher = Cipher.getInstance("RSA", new BouncyCastleProvider());123456// 第二种：推荐这种写法// BC可用BouncyCastleProvider.PROVIDER_NAME代替if (StringUtils.isNullOrEmpty(Security.getProperty("BC"))) &#123; Security.addProvider(new BouncyCastleProvider());&#125;Cipher cipher = Cipher.getInstance("RSA", "BC");还有一种写法是要替换jdk的jar包，不推荐要依赖bcprov-jdk16包12345&lt;dependency&gt; &lt;groupId&gt;org.bouncycastle&lt;/groupId&gt; &lt;artifactId&gt;bcprov-jdk16&lt;/artifactId&gt; &lt;version&gt;1.46&lt;/version&gt;&lt;/dependency&gt;]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>RSA</tag>
       </tags>
   </entry>
   <entry>
