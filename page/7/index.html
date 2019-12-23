@@ -251,7 +251,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">138</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">137</span></a>
 
   </li>
         
@@ -408,7 +408,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/b0b79272.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/29bd046e.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
@@ -428,7 +428,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/posts/b0b79272.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/7/index.html">Linux crontab 命令</a>
+                <a href="/posts/29bd046e.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/7/index.html">Linux tail 命令</a>
               
             
           </h2>
@@ -470,7 +470,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-08 10:26:19" itemprop="dateModified" datetime="2019-03-08T10:26:19+08:00">2019-03-08</time>
+                <time title="修改时间：2018-05-17 10:50:44" itemprop="dateModified" datetime="2018-05-17T10:50:44+08:00">2018-05-17</time>
               
             
           </span>
@@ -517,7 +517,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">813</span>
+                <span title="字数">4</span>
               
 
               
@@ -551,7 +551,7 @@
         
            <a href="/tags/shell/" rel="tag" class="color1">shell</a>
         
-           <a href="/tags/crontab/" rel="tag" class="color2">crontab</a>
+           <a href="/tags/tail/" rel="tag" class="color2">tail</a>
         
       </div>
     
@@ -567,18 +567,7 @@
       
         
           
-            <h1 id="crontab-使用注意事项"><a href="#crontab-使用注意事项" class="headerlink" title="crontab 使用注意事项"></a>crontab 使用注意事项</h1><p>如果通过 crontab 执行<br>1、crontab 无法获取 jdk 变量，要在 java 命令之前写入jdk绝对路径<br>2、要把路径切换到要执行的 sh 路径下<br>注意：二者缺一不可</p>
-<h2 id="查找-jdk-路径的方法"><a href="#查找-jdk-路径的方法" class="headerlink" title="查找 jdk 路径的方法"></a>查找 jdk 路径的方法</h2><ul>
-<li><p>1</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$JAVA_HOME</span></span><br><span class="line">/usr/java/jdk1.6.0_45/bin/java</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>2</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">which</span> java</span><br><span class="line">/usr/bin/java</span><br><span class="line">$ ls -lrt /usr/bin/java <span class="comment">#/usr/bin/java是which java查出来的路径</span></span><br><span class="line">lrwxrwxrwx. 1 root root 22 Sep 16  2015 /usr/bin/java -&gt; /etc/alternatives/java</span><br><span class="line">$ ls -lrt /etc/alternatives/java <span class="comment">#/etc/alternatives/java是ls -lrt /usr/bin/java查出来的路径</span></span><br><span class="line"> lrwxrwxrwx. 1 root root 46 Sep 16  2015 /etc/alternatives/java -&gt; /usr/lib/jvm/jre-1.6.0-openjdk.x86_64/bin/java</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="查询-crontab-定时器配置情况"><a href="#查询-crontab-定时器配置情况" class="headerlink" title="查询 crontab 定时器配置情况"></a>查询 crontab 定时器配置情况</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crontab -l</span><br></pre></td></tr></table></figure>
-<h2 id="编辑-crontab-定时器"><a href="#编辑-crontab-定时器" class="headerlink" title="编辑 crontab 定时器"></a>编辑 crontab 定时器</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">crontab -e</span><br><span class="line"><span class="comment"># 当 crontab 调用时，错误和标准输出会写成 mail 通知你</span></span><br><span class="line">* * * * * /opt/restart.sh</span><br><span class="line"><span class="comment"># 标准输出重定向到 /dev/null，输出到这里就找不回来了</span></span><br><span class="line">* * * * * /opt/restart.sh &gt; /dev/null</span><br><span class="line"><span class="comment"># 标准输出和错误输出都重定向到 /dev/null</span></span><br><span class="line">* * * * * /opt/restart.sh &gt; /dev/null 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
-
+            <h1 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h1>
           
         
       
@@ -634,7 +623,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/2835e3e.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/7bd064dc.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
@@ -654,7 +643,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/posts/2835e3e.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/7/index.html">Linux cp 命令</a>
+                <a href="/posts/7bd064dc.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/7/index.html">zookeeper stop脚本</a>
               
             
           </h2>
@@ -696,7 +685,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-05-17 10:50:01" itemprop="dateModified" datetime="2018-05-17T10:50:01+08:00">2018-05-17</time>
+                <time title="修改时间：2018-05-17 10:52:59" itemprop="dateModified" datetime="2018-05-17T10:52:59+08:00">2018-05-17</time>
               
             
           </span>
@@ -713,7 +702,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/zookeeper/" itemprop="url" rel="index"><span itemprop="name">zookeeper</span></a></span>
 
                 
                 
@@ -743,7 +732,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">43</span>
+                <span title="字数">205</span>
               
 
               
@@ -769,18 +758,6 @@
     
 
     
-      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
-        <span class="post-meta-item-icon">
-          <i class="fa fa-tags"></i>
-        </span>
-        <span class="post-meta-item-text">标签</span>
-        
-           <a href="/tags/shell/" rel="tag" class="color1">shell</a>
-        
-           <a href="/tags/cp/" rel="tag" class="color2">cp</a>
-        
-      </div>
-    
 
     
     
@@ -793,7 +770,7 @@
       
         
           
-            <h1 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h1><h2 id="复制文件夹"><a href="#复制文件夹" class="headerlink" title="复制文件夹"></a>复制文件夹</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp -r [old <span class="built_in">source</span>] -d [new <span class="built_in">source</span>]</span><br></pre></td></tr></table></figure>
+            <h1 id="stop"><a href="#stop" class="headerlink" title="stop"></a>stop</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># @Author: YL</span></span><br><span class="line"><span class="comment"># @Date:   2017-06-29 09:00:00</span></span><br><span class="line"><span class="comment"># @Last Modified by:   YL</span></span><br><span class="line"><span class="comment"># @Last Modified time: 2017-11-01 09:37:49</span></span><br><span class="line"><span class="comment"># 此文件放到 zookeeper 的 bin 目录下</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> `dirname <span class="variable">$0</span>`</span><br><span class="line">./zkServer.sh stop</span><br></pre></td></tr></table></figure>
 
           
         
@@ -1066,7 +1043,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/fc091577.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/6c1ad93d.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
@@ -1086,7 +1063,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/posts/fc091577.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/7/index.html">Linux lsof 命令</a>
+                <a href="/posts/6c1ad93d.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/7/index.html">zookeeper重启脚本</a>
               
             
           </h2>
@@ -1128,7 +1105,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-15 18:07:36" itemprop="dateModified" datetime="2019-04-15T18:07:36+08:00">2019-04-15</time>
+                <time title="修改时间：2018-05-17 10:52:53" itemprop="dateModified" datetime="2018-05-17T10:52:53+08:00">2018-05-17</time>
               
             
           </span>
@@ -1145,7 +1122,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/zookeeper/" itemprop="url" rel="index"><span itemprop="name">zookeeper</span></a></span>
 
                 
                 
@@ -1175,7 +1152,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">74</span>
+                <span title="字数">240</span>
               
 
               
@@ -1201,18 +1178,6 @@
     
 
     
-      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
-        <span class="post-meta-item-icon">
-          <i class="fa fa-tags"></i>
-        </span>
-        <span class="post-meta-item-text">标签</span>
-        
-           <a href="/tags/lsof/" rel="tag" class="color1">lsof</a>
-        
-           <a href="/tags/shell/" rel="tag" class="color2">shell</a>
-        
-      </div>
-    
 
     
     
@@ -1225,9 +1190,7 @@
       
         
           
-            <h1 id="lsof"><a href="#lsof" class="headerlink" title="lsof"></a>lsof</h1><h2 id="检测端口未被占用"><a href="#检测端口未被占用" class="headerlink" title="检测端口未被占用"></a>检测端口未被占用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -i:&lt;port&gt;</span><br></pre></td></tr></table></figure>
-<p>指定进程号，可以查看该进程打开的文件</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -p &lt;pid&gt;</span><br></pre></td></tr></table></figure>
+            <h1 id="restart"><a href="#restart" class="headerlink" title="restart"></a>restart</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># @Author: YL</span></span><br><span class="line"><span class="comment"># @Date:   2017-06-29 09:00:10</span></span><br><span class="line"><span class="comment"># @Last Modified by:   YL</span></span><br><span class="line"><span class="comment"># @Last Modified time: 2017-11-01 09:37:30</span></span><br><span class="line"><span class="comment"># 此文件放到 zookeeper 的 bin 目录下</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> `dirname <span class="variable">$0</span>`</span><br><span class="line"></span><br><span class="line">./zkServer.sh stop</span><br><span class="line">sleep 3</span><br><span class="line">./zkServer.sh start</span><br></pre></td></tr></table></figure>
 
           
         
@@ -1284,7 +1247,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/6c05ba39.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/57428144.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
@@ -1304,7 +1267,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/posts/6c05ba39.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/7/index.html">Linux netstat 命令</a>
+                <a href="/posts/57428144.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/7/index.html">zookeeper evn 环境变量配置脚本</a>
               
             
           </h2>
@@ -1346,7 +1309,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-11-07 10:19:18" itemprop="dateModified" datetime="2019-11-07T10:19:18+08:00">2019-11-07</time>
+                <time title="修改时间：2018-05-17 10:53:02" itemprop="dateModified" datetime="2018-05-17T10:53:02+08:00">2018-05-17</time>
               
             
           </span>
@@ -1363,7 +1326,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/zookeeper/" itemprop="url" rel="index"><span itemprop="name">zookeeper</span></a></span>
 
                 
                 
@@ -1393,7 +1356,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">87</span>
+                <span title="字数">440</span>
               
 
               
@@ -1419,18 +1382,6 @@
     
 
     
-      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
-        <span class="post-meta-item-icon">
-          <i class="fa fa-tags"></i>
-        </span>
-        <span class="post-meta-item-text">标签</span>
-        
-           <a href="/tags/netstat/" rel="tag" class="color1">netstat</a>
-        
-           <a href="/tags/shell/" rel="tag" class="color2">shell</a>
-        
-      </div>
-    
 
     
     
@@ -1443,235 +1394,7 @@
       
         
           
-            <h1 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h1><blockquote>
-<p>netstat</p>
-</blockquote>
-<h2 id="通过进程查看占用端口"><a href="#通过进程查看占用端口" class="headerlink" title="通过进程查看占用端口"></a>通过进程查看占用端口</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># netstat -nap | grep 9836</span></span><br><span class="line">netstat -anp | grep &lt;pid&gt;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/bd083454.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/bd083454.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/7/index.html">Linux tar 命令</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-02-06 09:35:05" itemprop="dateCreated datePublished" datetime="2018-02-06T09:35:05+08:00">2018-02-06</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-12-13 10:07:41" itemprop="dateModified" datetime="2019-12-13T10:07:41+08:00">2019-12-13</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数：</span>
-                
-                <span title="字数">119</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
-        <span class="post-meta-item-icon">
-          <i class="fa fa-tags"></i>
-        </span>
-        <span class="post-meta-item-text">标签</span>
-        
-           <a href="/tags/shell/" rel="tag" class="color1">shell</a>
-        
-           <a href="/tags/tar/" rel="tag" class="color2">tar</a>
-        
-      </div>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h1><blockquote>
-<p>解压</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf xxx.tar.gz</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>打包</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zcvf xxx.tar.gz 待压缩的文件名</span><br></pre></td></tr></table></figure>
-<p>解压 tar zxvf 文件名.tar.gz</p>
-<p>压缩 tar zcvf 文件名.tar.gz 待压缩的文件名</p>
+            <h1 id="zookeeper-env"><a href="#zookeeper-env" class="headerlink" title="zookeeper-env"></a>zookeeper-env</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># @Author: YL</span></span><br><span class="line"><span class="comment"># @Date:   2017-10-31 10:27:16</span></span><br><span class="line"><span class="comment"># @Last Modified by:   YL</span></span><br><span class="line"><span class="comment"># @Last Modified time: 2017-11-01 09:36:43</span></span><br><span class="line"><span class="comment"># 此文件放到 zookeeper 的 conf 目录下</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># java env</span></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/java/jdk1.8.0_131</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> JVMFLAGS=<span class="string">"-Xms1536m -Xmx1536m <span class="variable">$JVMFLAGS</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> `dirname <span class="variable">$0</span>`</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line">NODE_HOME=`<span class="built_in">pwd</span>`</span><br><span class="line"></span><br><span class="line"><span class="comment"># zookeeper env</span></span><br><span class="line">ZOO_LOG_DIR=<span class="variable">$NODE_HOME</span>/logs</span><br><span class="line">ZOO_LOG4J_PROP=<span class="string">"INFO,ROLLINGFILE"</span></span><br></pre></td></tr></table></figure>
 
           
         
@@ -1950,229 +1673,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/47aa1712.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/47aa1712.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/7/index.html">spring boot 使用注意事项</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-09-11 14:11:20" itemprop="dateCreated datePublished" datetime="2017-09-11T14:11:20+08:00">2017-09-11</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-08-24 15:07:19" itemprop="dateModified" datetime="2018-08-24T15:07:19+08:00">2018-08-24</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数：</span>
-                
-                <span title="字数">7k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">6 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
-        <span class="post-meta-item-icon">
-          <i class="fa fa-tags"></i>
-        </span>
-        <span class="post-meta-item-text">标签</span>
-        
-           <a href="/tags/spring-boot/" rel="tag" class="color1">spring-boot</a>
-        
-      </div>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="兼容问题"><a href="#兼容问题" class="headerlink" title="兼容问题"></a>兼容问题</h2><p>spring-boot-starter-parent切换回1.5.2.RELEASE版本</p>
-<p>因为1.5.4.RELEASE、1.5.5.RELEASE、1.5.6.RELEASE、1.5.7.RELEASE、2.0.0.M1、2.0.0.M2、2.0.0.M3都存在使用spring-boot-starter-data-redis时，会出现异常</p>
-<p><code>java.lang.NoSuchMethodError: org.springframework.data.repository.config.AnnotationRepositoryConfigurationSource.&lt;init&gt;</code>异常</p>
-<p>请查看<a href="https://github.com/spring-projects/spring-boot/issues/9606" target="_blank" rel="noopener">https://github.com/spring-projects/spring-boot/issues/9606</a></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/47aa1712.html" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-         
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/6cc2492a.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2377,6 +1877,229 @@
           
             <div class="post-button text-center">
               <a class="btn" href="/posts/6cc2492a.html" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/47aa1712.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/47aa1712.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/7/index.html">spring boot 使用注意事项</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-09-11 14:11:20" itemprop="dateCreated datePublished" datetime="2017-09-11T14:11:20+08:00">2017-09-11</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-08-24 15:07:19" itemprop="dateModified" datetime="2018-08-24T15:07:19+08:00">2018-08-24</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数：</span>
+                
+                <span title="字数">7k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">6 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/spring-boot/" rel="tag" class="color1">spring-boot</a>
+        
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="兼容问题"><a href="#兼容问题" class="headerlink" title="兼容问题"></a>兼容问题</h2><p>spring-boot-starter-parent切换回1.5.2.RELEASE版本</p>
+<p>因为1.5.4.RELEASE、1.5.5.RELEASE、1.5.6.RELEASE、1.5.7.RELEASE、2.0.0.M1、2.0.0.M2、2.0.0.M3都存在使用spring-boot-starter-data-redis时，会出现异常</p>
+<p><code>java.lang.NoSuchMethodError: org.springframework.data.repository.config.AnnotationRepositoryConfigurationSource.&lt;init&gt;</code>异常</p>
+<p>请查看<a href="https://github.com/spring-projects/spring-boot/issues/9606" target="_blank" rel="noopener">https://github.com/spring-projects/spring-boot/issues/9606</a></p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/47aa1712.html" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -3306,6 +3029,229 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/43f916ea.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/43f916ea.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/7/index.html">spring-data-jpa 使用笔记</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-08-01 09:21:36" itemprop="dateCreated datePublished" datetime="2017-08-01T09:21:36+08:00">2017-08-01</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-06-03 10:08:18" itemprop="dateModified" datetime="2018-06-03T10:08:18+08:00">2018-06-03</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数：</span>
+                
+                <span title="字数">311</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/Hibernate/" rel="tag" class="color1">Hibernate</a>
+        
+           <a href="/tags/spring-data-jpa/" rel="tag" class="color2">spring-data-jpa</a>
+        
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>主要是记录一些在使用<code>spring-data-jpa</code> + <code>Hibernate</code>过程中遇到的一些问题，和要注意的知识点</p>
+<h1 id="Pageable-和-PageRequest-分页"><a href="#Pageable-和-PageRequest-分页" class="headerlink" title="Pageable 和 PageRequest 分页"></a>Pageable 和 PageRequest 分页</h1><p>在Mysql、Oracle中分页从0开始<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Pageable pageable = <span class="keyword">new</span> PageRequest(<span class="number">0</span>, <span class="number">10</span>);</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/43f916ea.html" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/4f0d5500.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -3527,7 +3473,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/43f916ea.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/6202485a.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
@@ -3547,7 +3493,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/posts/43f916ea.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/7/index.html">spring-data-jpa 使用笔记</a>
+                <a href="/posts/6202485a.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/7/index.html">JPA Criteria 查询</a>
               
             
           </h2>
@@ -3572,7 +3518,7 @@
                 
               
 
-              <time title="创建时间：2017-08-01 09:21:36" itemprop="dateCreated datePublished" datetime="2017-08-01T09:21:36+08:00">2017-08-01</time>
+              <time title="创建时间：2017-07-30 09:21:36" itemprop="dateCreated datePublished" datetime="2017-07-30T09:21:36+08:00">2017-07-30</time>
             
 
             
@@ -3589,7 +3535,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-06-03 10:08:18" itemprop="dateModified" datetime="2018-06-03T10:08:18+08:00">2018-06-03</time>
+                <time title="修改时间：2018-06-03 10:07:37" itemprop="dateModified" datetime="2018-06-03T10:07:37+08:00">2018-06-03</time>
               
             
           </span>
@@ -3636,7 +3582,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">311</span>
+                <span title="字数">2.2k</span>
               
 
               
@@ -3650,7 +3596,7 @@
                 
                   <span class="post-meta-item-text">时长 &asymp;</span>
                 
-                <span title="时长">1 分钟</span>
+                <span title="时长">2 分钟</span>
               
             </div>
           
@@ -3670,8 +3616,6 @@
         
            <a href="/tags/Hibernate/" rel="tag" class="color1">Hibernate</a>
         
-           <a href="/tags/spring-data-jpa/" rel="tag" class="color2">spring-data-jpa</a>
-        
       </div>
     
 
@@ -3685,12 +3629,12 @@
 
       
         
-          <p>主要是记录一些在使用<code>spring-data-jpa</code> + <code>Hibernate</code>过程中遇到的一些问题，和要注意的知识点</p>
-<h1 id="Pageable-和-PageRequest-分页"><a href="#Pageable-和-PageRequest-分页" class="headerlink" title="Pageable 和 PageRequest 分页"></a>Pageable 和 PageRequest 分页</h1><p>在Mysql、Oracle中分页从0开始<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Pageable pageable = <span class="keyword">new</span> PageRequest(<span class="number">0</span>, <span class="number">10</span>);</span><br></pre></td></tr></table></figure></p>
+          <p>#构建 CriteriaQuery 实例API说明</p>
+<h2 id="CriteriaBuilder-安全查询创建工厂"><a href="#CriteriaBuilder-安全查询创建工厂" class="headerlink" title="CriteriaBuilder 安全查询创建工厂"></a>CriteriaBuilder 安全查询创建工厂</h2><p><code>CriteriaBuilder</code>是一个工厂对象，可以从<code>EntityManager</code>或<code>EntityManagerFactory</code>类中获得。可以用于创建<code>CriteriaQuery</code>、<code>Predicate</code>等<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CriteriaBuilder builder = entityManager.getCriteriaBuilder();</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/posts/43f916ea.html" rel="contents">
+              <a class="btn" href="/posts/6202485a.html" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -3784,7 +3728,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">138</span>
+                    <span class="site-state-item-count">137</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -4171,7 +4115,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">472k</span>
+    <span title="站点总字数">470k</span>
   
 
   

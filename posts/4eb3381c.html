@@ -104,18 +104,18 @@
 
 
 
-  <meta name="description" content="spring-integration-redis1234567891011121314151617181920212223242526// 注册bean@Beanpublic RedisLockRegistry redisLockRegistry (RedisConnectionFactory factory) &amp;#123;  return RedisLockRegistry(factory, &quot;">
+  <meta name="description" content="spring-integration-redis123456789101112131415161718192021222324252627// 注册bean@Beanpublic RedisLockRegistry redisLockRegistry (RedisConnectionFactory factory) &amp;#123;  // 60s过期，单位：ms  return RedisLockR">
 <meta name="keywords" content="redis,spring">
 <meta property="og:type" content="article">
 <meta property="og:title" content="分布式锁">
 <meta property="og:url" content="https://blog.yl-online.top/posts/4eb3381c.html">
 <meta property="og:site_name" content="forever杨的个人博客">
-<meta property="og:description" content="spring-integration-redis1234567891011121314151617181920212223242526// 注册bean@Beanpublic RedisLockRegistry redisLockRegistry (RedisConnectionFactory factory) &amp;#123;  return RedisLockRegistry(factory, &quot;">
+<meta property="og:description" content="spring-integration-redis123456789101112131415161718192021222324252627// 注册bean@Beanpublic RedisLockRegistry redisLockRegistry (RedisConnectionFactory factory) &amp;#123;  // 60s过期，单位：ms  return RedisLockR">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-23T01:48:49.820Z">
+<meta property="og:updated_time" content="2019-12-23T07:14:58.854Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分布式锁">
-<meta name="twitter:description" content="spring-integration-redis1234567891011121314151617181920212223242526// 注册bean@Beanpublic RedisLockRegistry redisLockRegistry (RedisConnectionFactory factory) &amp;#123;  return RedisLockRegistry(factory, &quot;">
+<meta name="twitter:description" content="spring-integration-redis123456789101112131415161718192021222324252627// 注册bean@Beanpublic RedisLockRegistry redisLockRegistry (RedisConnectionFactory factory) &amp;#123;  // 60s过期，单位：ms  return RedisLockR">
 
 
 
@@ -252,7 +252,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">138</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">137</span></a>
 
   </li>
         
@@ -454,7 +454,7 @@
                 
               
 
-              <time title="创建时间：2019-12-23 09:43:05 / 修改时间：09:48:49" itemprop="dateCreated datePublished" datetime="2019-12-23T09:43:05+08:00">2019-12-23</time>
+              <time title="创建时间：2019-12-23 09:43:05 / 修改时间：15:14:58" itemprop="dateCreated datePublished" datetime="2019-12-23T09:43:05+08:00">2019-12-23</time>
             
 
             
@@ -513,7 +513,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">513</span>
+                <span title="字数">567</span>
               
 
               
@@ -561,7 +561,7 @@
       
 
       
-        <h1 id="spring-integration-redis"><a href="#spring-integration-redis" class="headerlink" title="spring-integration-redis"></a>spring-integration-redis</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注册bean</span></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> RedisLockRegistry <span class="title">redisLockRegistry</span> <span class="params">(RedisConnectionFactory factory)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> RedisLockRegistry(factory, <span class="string">"ts-template"</span>, <span class="number">60</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">实现类：</span><br><span class="line"><span class="meta">@Resource</span></span><br><span class="line"><span class="keyword">private</span> RedisLockRegistry redisLockRegistry;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">send</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 获取锁</span></span><br><span class="line">  Lock lock = redisLockRegistry.obtain();</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// 上锁</span></span><br><span class="line">    lock.lock();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 业务逻辑</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125; <span class="keyword">catch</span>() &#123;</span><br><span class="line">    <span class="comment">// 异常处理</span></span><br><span class="line">  &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    <span class="comment">// 释放锁</span></span><br><span class="line">    lock.unlock();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h1 id="spring-integration-redis"><a href="#spring-integration-redis" class="headerlink" title="spring-integration-redis"></a>spring-integration-redis</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注册bean</span></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> RedisLockRegistry <span class="title">redisLockRegistry</span> <span class="params">(RedisConnectionFactory factory)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 60s过期，单位：ms</span></span><br><span class="line">  <span class="keyword">return</span> RedisLockRegistry(factory, <span class="string">"ts-template"</span>, <span class="number">60000L</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">实现类：</span><br><span class="line"><span class="meta">@Resource</span></span><br><span class="line"><span class="keyword">private</span> RedisLockRegistry redisLockRegistry;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">send</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 获取锁</span></span><br><span class="line">  Lock lock = redisLockRegistry.obtain(<span class="string">"id"</span>);</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// 上锁</span></span><br><span class="line">    <span class="keyword">if</span> (lock.tryLock()) &#123;</span><br><span class="line">        <span class="comment">// 业务逻辑</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">catch</span>() &#123;</span><br><span class="line">    <span class="comment">// 异常处理</span></span><br><span class="line">  &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    <span class="comment">// 释放锁</span></span><br><span class="line">    lock.unlock();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -623,8 +623,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/16706a4.html" rel="next" title="Java代码-分布式Id生成器">
-                <i class="fa fa-chevron-left"></i> Java代码-分布式Id生成器
+              <a href="/posts/23adfb31.html" rel="next" title="spring cache 动态配置缓存过期时间">
+                <i class="fa fa-chevron-left"></i> spring cache 动态配置缓存过期时间
               </a>
             
           </div>
@@ -711,7 +711,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">138</span>
+                    <span class="site-state-item-count">137</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1114,7 +1114,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">472k</span>
+    <span title="站点总字数">470k</span>
   
 
   
