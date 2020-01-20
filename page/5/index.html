@@ -2390,7 +2390,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-29 15:10:29" itemprop="dateModified" datetime="2019-03-29T15:10:29+08:00">2019-03-29</time>
+                <time title="修改时间：2020-01-20 13:59:11" itemprop="dateModified" datetime="2020-01-20T13:59:11+08:00">2020-01-20</time>
               
             
           </span>
@@ -2486,7 +2486,8 @@
 
       
         
-          <h1 id="自定义CacheExpire注解"><a href="#自定义CacheExpire注解" class="headerlink" title="自定义CacheExpire注解"></a>自定义CacheExpire注解</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.core.annotation.AliasFor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Documented;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.ElementType;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Inherited;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Target</span>(&#123;ElementType.METHOD, ElementType.TYPE&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CacheExpire &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * expire time, default 60s</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@AliasFor</span>(<span class="string">"expire"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">long</span> <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> 60L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * expire time, default 60s</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@AliasFor</span>(<span class="string">"value"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">long</span> <span class="title">expire</span><span class="params">()</span> <span class="keyword">default</span> 60L</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h1><p><a href="https://github.com/foreveryang321/java-best-practice" target="_blank" rel="noopener">https://github.com/foreveryang321/java-best-practice</a></p>
+<h1 id="自定义CacheExpire注解"><a href="#自定义CacheExpire注解" class="headerlink" title="自定义CacheExpire注解"></a>自定义CacheExpire注解</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.core.annotation.AliasFor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Documented;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.ElementType;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Inherited;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Target</span>(&#123;ElementType.METHOD, ElementType.TYPE&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CacheExpire &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * expire time, default 60s</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@AliasFor</span>(<span class="string">"expire"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">long</span> <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> 60L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * expire time, default 60s</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@AliasFor</span>(<span class="string">"value"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">long</span> <span class="title">expire</span><span class="params">()</span> <span class="keyword">default</span> 60L</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -2612,7 +2613,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-29 15:10:24" itemprop="dateModified" datetime="2019-03-29T15:10:24+08:00">2019-03-29</time>
+                <time title="修改时间：2020-01-20 13:59:48" itemprop="dateModified" datetime="2020-01-20T13:59:48+08:00">2020-01-20</time>
               
             
           </span>
@@ -2711,6 +2712,7 @@
           <blockquote>
 <p>注意：该方法，不兼容spring-boot 2.0</p>
 </blockquote>
+<h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h1><p><a href="https://github.com/foreveryang321/java-best-practice" target="_blank" rel="noopener">https://github.com/foreveryang321/java-best-practice</a></p>
 <h1 id="自定义CacheExpire注解"><a href="#自定义CacheExpire注解" class="headerlink" title="自定义CacheExpire注解"></a>自定义CacheExpire注解</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123;ElementType.METHOD, ElementType.TYPE&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CacheExpire &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * expire time, default 60s</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@AliasFor</span>(<span class="string">"expire"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">long</span> <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> 60L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * expire time, default 60s</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@AliasFor</span>(<span class="string">"value"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">long</span> <span class="title">expire</span><span class="params">()</span> <span class="keyword">default</span> 60L</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           
@@ -3430,7 +3432,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/b0b79272.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/af01b9a2.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
@@ -3450,7 +3452,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/posts/b0b79272.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">Linux crontab 命令</a>
+                <a href="/posts/af01b9a2.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">zookeeper 启动脚本</a>
               
             
           </h2>
@@ -3492,7 +3494,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-08 10:26:19" itemprop="dateModified" datetime="2019-03-08T10:26:19+08:00">2019-03-08</time>
+                <time title="修改时间：2018-05-17 10:52:56" itemprop="dateModified" datetime="2018-05-17T10:52:56+08:00">2018-05-17</time>
               
             
           </span>
@@ -3509,7 +3511,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/zookeeper/" itemprop="url" rel="index"><span itemprop="name">zookeeper</span></a></span>
 
                 
                 
@@ -3539,7 +3541,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">813</span>
+                <span title="字数">1.5k</span>
               
 
               
@@ -3565,18 +3567,6 @@
     
 
     
-      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
-        <span class="post-meta-item-icon">
-          <i class="fa fa-tags"></i>
-        </span>
-        <span class="post-meta-item-text">标签</span>
-        
-           <a href="/tags/shell/" rel="tag" class="color1">shell</a>
-        
-           <a href="/tags/crontab/" rel="tag" class="color2">crontab</a>
-        
-      </div>
-    
 
     
     
@@ -3589,17 +3579,7 @@
       
         
           
-            <h1 id="crontab-使用注意事项"><a href="#crontab-使用注意事项" class="headerlink" title="crontab 使用注意事项"></a>crontab 使用注意事项</h1><p>如果通过 crontab 执行<br>1、crontab 无法获取 jdk 变量，要在 java 命令之前写入jdk绝对路径<br>2、要把路径切换到要执行的 sh 路径下<br>注意：二者缺一不可</p>
-<h2 id="查找-jdk-路径的方法"><a href="#查找-jdk-路径的方法" class="headerlink" title="查找 jdk 路径的方法"></a>查找 jdk 路径的方法</h2><ul>
-<li><p>1</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$JAVA_HOME</span></span><br><span class="line">/usr/java/jdk1.6.0_45/bin/java</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>2</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">which</span> java</span><br><span class="line">/usr/bin/java</span><br><span class="line">$ ls -lrt /usr/bin/java <span class="comment">#/usr/bin/java是which java查出来的路径</span></span><br><span class="line">lrwxrwxrwx. 1 root root 22 Sep 16  2015 /usr/bin/java -&gt; /etc/alternatives/java</span><br><span class="line">$ ls -lrt /etc/alternatives/java <span class="comment">#/etc/alternatives/java是ls -lrt /usr/bin/java查出来的路径</span></span><br><span class="line"> lrwxrwxrwx. 1 root root 46 Sep 16  2015 /etc/alternatives/java -&gt; /usr/lib/jvm/jre-1.6.0-openjdk.x86_64/bin/java</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="查询-crontab-定时器配置情况"><a href="#查询-crontab-定时器配置情况" class="headerlink" title="查询 crontab 定时器配置情况"></a>查询 crontab 定时器配置情况</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crontab -l</span><br></pre></td></tr></table></figure>
-<h2 id="编辑-crontab-定时器"><a href="#编辑-crontab-定时器" class="headerlink" title="编辑 crontab 定时器"></a>编辑 crontab 定时器</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">crontab -e</span><br><span class="line"><span class="comment"># 当 crontab 调用时，错误和标准输出会写成 mail 通知你</span></span><br><span class="line">* * * * * /opt/restart.sh</span><br><span class="line"><span class="comment"># 标准输出重定向到 /dev/null，输出到这里就找不回来了</span></span><br><span class="line">* * * * * /opt/restart.sh &gt; /dev/null</span><br><span class="line"><span class="comment"># 标准输出和错误输出都重定向到 /dev/null</span></span><br><span class="line">* * * * * /opt/restart.sh &gt; /dev/null 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+            <h1 id="start"><a href="#start" class="headerlink" title="start"></a>start</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># @Author: YL</span></span><br><span class="line"><span class="comment"># @Date:   2017-06-28 10:23:20</span></span><br><span class="line"><span class="comment"># @Last Modified by:   YL</span></span><br><span class="line"><span class="comment"># @Last Modified time: 2017-11-01 09:37:41</span></span><br><span class="line"><span class="comment"># 此文件放到 zookeeper 的 bin 目录下</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> `dirname <span class="variable">$0</span>`</span><br><span class="line">NODE_BIN_DIR=`<span class="built_in">pwd</span>`</span><br><span class="line">NODE_LIB_DIR=<span class="variable">$NODE_BIN_DIR</span>/../lib/</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line">NODE_HOME=`<span class="built_in">pwd</span>`</span><br><span class="line"></span><br><span class="line"><span class="comment"># date pattern</span></span><br><span class="line">DATE_PATTERN=<span class="string">"[<span class="variable">$(date '+%Y-%m-%d %H:%M:%S')</span>]"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># mkdir logs dir</span></span><br><span class="line">NODE_DATA_LOG_DIR=`sed <span class="string">'/dataLogDir/!d;s/.*=//'</span> conf/zoo.cfg | tr -d <span class="string">'\r'</span>`</span><br><span class="line">NODE_LOGS_DIR=<span class="string">""</span></span><br><span class="line"><span class="keyword">if</span> [ -n <span class="string">"<span class="variable">$NODE_DATA_LOG_DIR</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">  NODE_LOGS_DIR=<span class="variable">$NODE_DATA_LOG_DIR</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  NODE_LOGS_DIR=<span class="variable">$NODE_HOME</span>/logs</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d <span class="variable">$NODE_LOGS_DIR</span> ]; <span class="keyword">then</span></span><br><span class="line">  mkdir <span class="variable">$NODE_LOGS_DIR</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line">STDOUT_FILE=<span class="variable">$NODE_LOGS_DIR</span>/stdout.log</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> NODE_BIN_DIR: <span class="variable">$NODE_BIN_DIR</span>"</span> | tee -a <span class="variable">$STDOUT_FILE</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># pid</span></span><br><span class="line">NODE_PID=`ps -ef | grep <span class="string">"<span class="variable">$NODE_LIB_DIR</span>"</span> | grep -v grep | awk <span class="string">'&#123;print $2&#125;'</span>`</span><br><span class="line"><span class="keyword">if</span> [ -n <span class="string">"<span class="variable">$NODE_PID</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> ERROR: The <span class="variable">$NODE_LIB_DIR</span> already started! pid: <span class="variable">$NODE_PID</span>"</span> | tee -a <span class="variable">$STDOUT_FILE</span></span><br><span class="line">  <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># port</span></span><br><span class="line">NODE_PORT=`sed <span class="string">'/clientPort/!d;s/.*=//'</span> conf/zoo.cfg | tr -d <span class="string">'\r'</span>`</span><br><span class="line"><span class="keyword">if</span> [ -n <span class="string">"<span class="variable">$NODE_PORT</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">  NODE_PORT_COUNT=`netstat -tln | grep <span class="variable">$NODE_PORT</span> | wc -l`</span><br><span class="line">  <span class="keyword">if</span> [ <span class="variable">$NODE_PORT_COUNT</span> -gt 0 ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> ERROR: The <span class="variable">$NODE_LIB_DIR</span> port <span class="variable">$NODE_PORT</span> already used!"</span> | tee -a <span class="variable">$STDOUT_FILE</span></span><br><span class="line">    <span class="built_in">exit</span> 1</span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># starting</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$NODE_BIN_DIR</span></span><br><span class="line">./zkServer.sh start</span><br><span class="line"></span><br><span class="line">NODE_PID=`ps -ef | grep <span class="string">"<span class="variable">$NODE_LIB_DIR</span>"</span> | grep -v grep | awk <span class="string">'&#123;print $2&#125;'</span>`</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> The <span class="variable">$NODE_LIB_DIR</span> started OK! pid: <span class="variable">$NODE_PID</span>"</span> | tee -a <span class="variable">$STDOUT_FILE</span></span><br></pre></td></tr></table></figure>
 
           
         
@@ -4063,7 +4043,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-heart"></i>
   </span>
