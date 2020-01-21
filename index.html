@@ -675,7 +675,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-01-21 18:01:31" itemprop="dateModified" datetime="2020-01-21T18:01:31+08:00">2020-01-21</time>
+                <time title="修改时间：2020-01-21 18:07:36" itemprop="dateModified" datetime="2020-01-21T18:07:36+08:00">2020-01-21</time>
               
             
           </span>
@@ -722,7 +722,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">1k</span>
+                <span title="字数">1.1k</span>
               
 
               
@@ -771,7 +771,10 @@
 
       
         
-          <h1 id="spring-integration-redis"><a href="#spring-integration-redis" class="headerlink" title="spring-integration-redis"></a>spring-integration-redis</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注册bean</span></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> RedisLockRegistry <span class="title">redisLockRegistry</span> <span class="params">(RedisConnectionFactory factory)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 60s过期，单位：ms</span></span><br><span class="line">  <span class="keyword">return</span> RedisLockRegistry(factory, <span class="string">"ts-template"</span>, <span class="number">60000L</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">实现类：</span><br><span class="line"><span class="meta">@Resource</span></span><br><span class="line"><span class="keyword">private</span> RedisLockRegistry redisLockRegistry;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">send</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 获取锁</span></span><br><span class="line">  Lock lock = redisLockRegistry.obtain(<span class="string">"id"</span>);</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// 上锁</span></span><br><span class="line">    <span class="keyword">if</span> (lock.tryLock()) &#123;</span><br><span class="line">        <span class="comment">// 业务逻辑</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">catch</span>() &#123;</span><br><span class="line">    <span class="comment">// 异常处理</span></span><br><span class="line">  &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    <span class="comment">// 删除当前未锁定的旧锁：要手动调用一下这个函数，否则 RedisLockRegistry 中的 locks 对象会越来越大，因为调用 unlock 之后，不会自动删除 locks 中保存的当前锁的对象。但是调用这个删除逻辑最好是通过定时器去调用，因为如果 locks 对象中数据量很大，每次都要迭代一次会很耗时</span></span><br><span class="line">    redisLockRegistry.expireUnusedOlderThan(<span class="number">10</span>*<span class="number">60</span>*<span class="number">1000L</span>);</span><br><span class="line">    <span class="comment">// 释放锁</span></span><br><span class="line">    lock.unlock();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h1 id="spring-integration-redis"><a href="#spring-integration-redis" class="headerlink" title="spring-integration-redis"></a>spring-integration-redis</h1><blockquote>
+<p>初始化 RedisLockRegistry</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> RedisLockRegistry <span class="title">redisLockRegistry</span> <span class="params">(RedisConnectionFactory factory)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 60s过期，单位：ms</span></span><br><span class="line">  <span class="keyword">return</span> RedisLockRegistry(factory, <span class="string">"ts-template"</span>, <span class="number">60000L</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           
             <div class="post-button text-center">
