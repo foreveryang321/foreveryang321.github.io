@@ -111,7 +111,7 @@
 <meta property="og:site_name" content="forever杨的个人博客">
 <meta property="og:description" content="setenv.sh在Tomcat的bin目录下添加setenv.sh文件，在启动Tomcat的时候，该脚本会被自动执行。一般在该脚本配置一些环境变量、JVM参数等 123456789101112# @Author: YL# @Date:   2017-12-18 12:15:52# @Last Modified by:   YL# @Last Modified time: 2017-12-18 1">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-09T06:31:13.799Z">
+<meta property="og:updated_time" content="2020-02-21T03:54:24.219Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Tomcat 使用注意事项">
 <meta name="twitter:description" content="setenv.sh在Tomcat的bin目录下添加setenv.sh文件，在启动Tomcat的时候，该脚本会被自动执行。一般在该脚本配置一些环境变量、JVM参数等 123456789101112# @Author: YL# @Date:   2017-12-18 12:15:52# @Last Modified by:   YL# @Last Modified time: 2017-12-18 1">
@@ -470,7 +470,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-09 14:31:13" itemprop="dateModified" datetime="2019-08-09T14:31:13+08:00">2019-08-09</time>
+                <time title="修改时间：2020-02-21 11:54:24" itemprop="dateModified" datetime="2020-02-21T11:54:24+08:00">2020-02-21</time>
               
             
           </span>
@@ -564,7 +564,7 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># @Author: YL</span></span><br><span class="line"><span class="comment"># @Date:   2017-12-18 12:15:52</span></span><br><span class="line"><span class="comment"># @Last Modified by:   YL</span></span><br><span class="line"><span class="comment"># @Last Modified time: 2017-12-18 12:16:03</span></span><br><span class="line"><span class="comment"># 本文件放到 Tomcat 的 bin 目录下</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> LANG=en_US.UTF-8</span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/java/jdk1.8.0_144</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin</span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar:<span class="variable">$CLASSPATH</span></span><br><span class="line"></span><br><span class="line">JAVA_OPT=<span class="string">"<span class="variable">$JAVA_OPT</span> -Xss256k"</span></span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <h1 id="Tomcat-安全配置相关"><a href="#Tomcat-安全配置相关" class="headerlink" title="Tomcat 安全配置相关"></a>Tomcat 安全配置相关</h1><h2 id="删除默认项目"><a href="#删除默认项目" class="headerlink" title="删除默认项目"></a>删除默认项目</h2><p>删除 <code>webapps</code>目录下的 <code>docs</code>、<code>examples</code>、<code>host-manager</code>、<code>manager</code>、<code>ROOT</code>文件夹</p>
-<h1 id="tomcat-users-xml"><a href="#tomcat-users-xml" class="headerlink" title="# tomcat-users.xml"></a># tomcat-users.xml</h1><p>保持默认，不要添加帐号等信息</p>
+<h2 id="tomcat-users-xml"><a href="#tomcat-users-xml" class="headerlink" title="tomcat-users.xml"></a>tomcat-users.xml</h2><p>保持默认，不要添加帐号等信息</p>
 <h2 id="server-xml"><a href="#server-xml" class="headerlink" title="server.xml"></a>server.xml</h2><blockquote>
 <p>port 改成 -1</p>
 </blockquote>
@@ -588,7 +588,7 @@
 <blockquote>
 <p>context 配置</p>
 </blockquote>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Host</span> <span class="attr">name</span>=<span class="string">"localhost"</span>  <span class="attr">appBase</span>=<span class="string">"webapps"</span> <span class="attr">unpackWARs</span>=<span class="string">"true"</span> <span class="attr">autoDeploy</span>=<span class="string">"false"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">Context</span> <span class="attr">path</span>=<span class="string">"/outserver"</span> <span class="attr">docBase</span>=<span class="string">"../../project/outserver.war"</span> <span class="attr">privileged</span>=<span class="string">"true"</span> <span class="attr">reloadable</span>=<span class="string">"false"</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">Host</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Host</span> <span class="attr">name</span>=<span class="string">"localhost"</span>  <span class="attr">appBase</span>=<span class="string">"webapps"</span> <span class="attr">unpackWARs</span>=<span class="string">"true"</span> <span class="attr">autoDeploy</span>=<span class="string">"false"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Context</span> <span class="attr">path</span>=<span class="string">"/outserver"</span> <span class="attr">docBase</span>=<span class="string">"../../project/outserver.war"</span> <span class="attr">privileged</span>=<span class="string">"true"</span> <span class="attr">reloadable</span>=<span class="string">"false"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Host</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>这样配置，outserver.war会解压到tomcat/webapps下，也就是在webapps下生成outserver文件夹。</p>
 <p>docBase应该指定对应的war包全路径，不应该指定路径，比如：../../project/outserver。</p>
 <p>如果指定路径，有可以出现war包不会解压，到时项目没有更新的问题</p>
@@ -1102,7 +1102,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#setenv-sh"><span class="nav-number">1.</span> <span class="nav-text">setenv.sh</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tomcat-安全配置相关"><span class="nav-number">2.</span> <span class="nav-text">Tomcat 安全配置相关</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#删除默认项目"><span class="nav-number">2.1.</span> <span class="nav-text">删除默认项目</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tomcat-users-xml"><span class="nav-number">3.</span> <span class="nav-text"># tomcat-users.xml</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#server-xml"><span class="nav-number">3.1.</span> <span class="nav-text">server.xml</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#setenv-sh"><span class="nav-number">1.</span> <span class="nav-text">setenv.sh</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tomcat-安全配置相关"><span class="nav-number">2.</span> <span class="nav-text">Tomcat 安全配置相关</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#删除默认项目"><span class="nav-number">2.1.</span> <span class="nav-text">删除默认项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tomcat-users-xml"><span class="nav-number">2.2.</span> <span class="nav-text">tomcat-users.xml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#server-xml"><span class="nav-number">2.3.</span> <span class="nav-text">server.xml</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1310,19 +1310,19 @@
   
   <script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
 
-   <script>
-        var gitalk = new Gitalk({
-          clientID: '105db2a541a87c6d8a8a',
-          clientSecret: 'ec3dc85e450ce17e66227394916271c10396ff22',
-          repo: 'foreveryang321.github.io',
-          owner: 'foreveryang321',
-          admin: ['foreveryang321'],
-          id: md5(location.pathname),
-          distractionFreeMode: 'true',
-          body: location.href
-        })
-        gitalk.render('gitalk-container')
-       </script>
+  <script>
+    var gitalk = new Gitalk({
+      clientID: '105db2a541a87c6d8a8a',
+      clientSecret: 'ec3dc85e450ce17e66227394916271c10396ff22',
+      repo: 'foreveryang321.github.io',
+      owner: 'foreveryang321',
+      admin: ['foreveryang321'],
+      id: md5(location.pathname),
+      distractionFreeMode: 'true',
+      body: location.href
+    })
+    gitalk.render('gitalk-container')
+  </script>
 
 
   
