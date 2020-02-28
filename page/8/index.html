@@ -251,7 +251,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">138</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">139</span></a>
 
   </li>
         
@@ -289,7 +289,7 @@
       
     
 
-    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">111</span></a>
+    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">112</span></a>
 
   </li>
         
@@ -392,6 +392,227 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/4f0d5500.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/4f0d5500.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/8/index.html">pagehelper 使用笔记</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-08-01 09:21:36" itemprop="dateCreated datePublished" datetime="2017-08-01T09:21:36+08:00">2017-08-01</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-06-03 10:15:36" itemprop="dateModified" datetime="2018-06-03T10:15:36+08:00">2018-06-03</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/mybatis/" itemprop="url" rel="index"><span itemprop="name">mybatis</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数：</span>
+                
+                <span title="字数">184</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/pagehelper/" rel="tag" class="color1">pagehelper</a>
+        
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>主要是记录一些在使用<code>mybatis</code> + <code>pagehelper</code>过程中遇到的一些问题，和要注意的知识点</p>
+<h1 id="PageHelper-分页"><a href="#PageHelper-分页" class="headerlink" title="PageHelper 分页"></a>PageHelper 分页</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取第1页，10条内容，默认查询总数count</span></span><br><span class="line">PageHelper.startPage(<span class="number">1</span>, <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取第1页，10条内容，不查询总数count</span></span><br><span class="line">PageHelper.startPage(<span class="number">1</span>, <span class="number">10</span>, <span class="keyword">false</span>);</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/4f0d5500.html" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -629,7 +850,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/9eea8fb4.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/723691b5.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
@@ -649,7 +870,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/posts/9eea8fb4.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/8/index.html">hibernate显示sql中的参数值（logback）</a>
+                <a href="/posts/723691b5.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/8/index.html">hibernate格式化输出sql语句（spring-data-jpa）</a>
               
             
           </h2>
@@ -691,7 +912,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-12 09:04:53" itemprop="dateModified" datetime="2019-03-12T09:04:53+08:00">2019-03-12</time>
+                <time title="修改时间：2018-06-03 10:08:50" itemprop="dateModified" datetime="2018-06-03T10:08:50+08:00">2018-06-03</time>
               
             
           </span>
@@ -738,7 +959,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">5.5k</span>
+                <span title="字数">194</span>
               
 
               
@@ -752,7 +973,7 @@
                 
                   <span class="post-meta-item-text">时长 &asymp;</span>
                 
-                <span title="时长">5 分钟</span>
+                <span title="时长">1 分钟</span>
               
             </div>
           
@@ -770,9 +991,9 @@
         </span>
         <span class="post-meta-item-text">标签</span>
         
-           <a href="/tags/logback/" rel="tag" class="color1">logback</a>
+           <a href="/tags/Hibernate/" rel="tag" class="color1">Hibernate</a>
         
-           <a href="/tags/Hibernate/" rel="tag" class="color2">Hibernate</a>
+           <a href="/tags/spring-data-jpa/" rel="tag" class="color2">spring-data-jpa</a>
         
       </div>
     
@@ -787,17 +1008,10 @@
 
       
         
-          <p>以下是 logback 的日志输出配置，只要是在 logback 的配置文件中添加以下配置</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">logger</span> <span class="attr">name</span>=<span class="string">"org.hibernate.type.descriptor.sql.BasicBinder"</span> <span class="attr">level</span>=<span class="string">"TRACE"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
           
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/9eea8fb4.html" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-         
-          <!--/noindex-->
+            <p>以下配置是基于 spring-boot 的 application.yml 配置<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  jpa:</span></span><br><span class="line"><span class="comment">#    hibernate:</span></span><br><span class="line"><span class="comment">#      ddl-auto: create</span></span><br><span class="line"><span class="attr">    show-sql:</span> <span class="literal">true</span></span><br><span class="line"><span class="comment">#    database: mysql</span></span><br><span class="line"><span class="attr">    properties:</span></span><br><span class="line"><span class="attr">      hibernate:</span></span><br><span class="line"><span class="attr">        format_sql:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></p>
+
+          
         
       
     </div>
@@ -1079,7 +1293,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/723691b5.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/9eea8fb4.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
@@ -1099,7 +1313,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/posts/723691b5.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/8/index.html">hibernate格式化输出sql语句（spring-data-jpa）</a>
+                <a href="/posts/9eea8fb4.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/8/index.html">hibernate显示sql中的参数值（logback）</a>
               
             
           </h2>
@@ -1141,7 +1355,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-06-03 10:08:50" itemprop="dateModified" datetime="2018-06-03T10:08:50+08:00">2018-06-03</time>
+                <time title="修改时间：2019-03-12 09:04:53" itemprop="dateModified" datetime="2019-03-12T09:04:53+08:00">2019-03-12</time>
               
             
           </span>
@@ -1188,7 +1402,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">194</span>
+                <span title="字数">5.5k</span>
               
 
               
@@ -1202,7 +1416,7 @@
                 
                   <span class="post-meta-item-text">时长 &asymp;</span>
                 
-                <span title="时长">1 分钟</span>
+                <span title="时长">5 分钟</span>
               
             </div>
           
@@ -1220,9 +1434,9 @@
         </span>
         <span class="post-meta-item-text">标签</span>
         
-           <a href="/tags/Hibernate/" rel="tag" class="color1">Hibernate</a>
+           <a href="/tags/logback/" rel="tag" class="color1">logback</a>
         
-           <a href="/tags/spring-data-jpa/" rel="tag" class="color2">spring-data-jpa</a>
+           <a href="/tags/Hibernate/" rel="tag" class="color2">Hibernate</a>
         
       </div>
     
@@ -1237,10 +1451,17 @@
 
       
         
+          <p>以下是 logback 的日志输出配置，只要是在 logback 的配置文件中添加以下配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">logger</span> <span class="attr">name</span>=<span class="string">"org.hibernate.type.descriptor.sql.BasicBinder"</span> <span class="attr">level</span>=<span class="string">"TRACE"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
           
-            <p>以下配置是基于 spring-boot 的 application.yml 配置<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  jpa:</span></span><br><span class="line"><span class="comment">#    hibernate:</span></span><br><span class="line"><span class="comment">#      ddl-auto: create</span></span><br><span class="line"><span class="attr">    show-sql:</span> <span class="literal">true</span></span><br><span class="line"><span class="comment">#    database: mysql</span></span><br><span class="line"><span class="attr">    properties:</span></span><br><span class="line"><span class="attr">      hibernate:</span></span><br><span class="line"><span class="attr">        format_sql:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></p>
-
-          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/9eea8fb4.html" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -3491,216 +3712,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/4896de77.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/4896de77.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/8/index.html">git 使用</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-07-07 08:35:33" itemprop="dateCreated datePublished" datetime="2017-07-07T08:35:33+08:00">2017-07-07</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-04-24 14:05:18" itemprop="dateModified" datetime="2019-04-24T14:05:18+08:00">2019-04-24</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数：</span>
-                
-                <span title="字数">1.3k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">git add</span><br><span class="line">git commit</span><br><span class="line">git push</span><br><span class="line">git status</span><br><span class="line">git rm &lt;-f&gt;</span><br><span class="line"></span><br><span class="line">git fetch</span><br><span class="line">git merge</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/4896de77.html" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-         
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3750,7 +3761,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">138</span>
+                    <span class="site-state-item-count">139</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -4044,7 +4055,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">111</span>
+                      
+                    
+                    <span class="site-state-item-count">112</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -4137,7 +4150,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">473k</span>
+    <span title="站点总字数">477k</span>
   
 
   
