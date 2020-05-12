@@ -112,7 +112,7 @@
 <meta property="og:site_name" content="forever杨的个人博客">
 <meta property="og:description" content="需求A库中某些大表（1年数据量10+亿条）数据只保留最近3个月数据，超过3个月的数据，都迁移到B库中保存，然后删除A库中已经迁移的数据。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-05-12T01:27:03.747Z">
+<meta property="og:updated_time" content="2020-05-12T01:39:36.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Oracle 按分区同步数据到另一个库">
 <meta name="twitter:description" content="需求A库中某些大表（1年数据量10+亿条）数据只保留最近3个月数据，超过3个月的数据，都迁移到B库中保存，然后删除A库中已经迁移的数据。">
@@ -454,7 +454,7 @@
                 
               
 
-              <time title="创建时间：2020-05-12 09:01:05 / 修改时间：09:27:03" itemprop="dateCreated datePublished" datetime="2020-05-12T09:01:05+08:00">2020-05-12</time>
+              <time title="创建时间：2020-05-12 09:01:05 / 修改时间：09:39:36" itemprop="dateCreated datePublished" datetime="2020-05-12T09:01:05+08:00">2020-05-12</time>
             
 
             
@@ -513,7 +513,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">329</span>
+                <span title="字数">511</span>
               
 
               
@@ -563,6 +563,7 @@
 <a id="more"></a>
 <h1 id="A库"><a href="#A库" class="headerlink" title="A库"></a>A库</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--  创建视图，指定分区条件</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">OR</span> <span class="keyword">REPLACE</span> <span class="keyword">VIEW</span> V_IM_WX_LOG <span class="keyword">AS</span></span><br><span class="line">    <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> IM_WX_LOG <span class="keyword">PARTITION</span>(P2019Y03);</span><br></pre></td></tr></table></figure>
 <h1 id="B库"><a href="#B库" class="headerlink" title="B库"></a>B库</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 为A库视图创建同义词</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">SYNONYM</span> V_IM_WX_LOG <span class="keyword">FOR</span> V_IM_WX_LOG@DBLN_WEIXINDB_KBT;</span><br><span class="line"><span class="comment">-- 同步数据</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> IM_WX_LOG_P2019Y03 <span class="keyword">AS</span></span><br><span class="line">    <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> V_IM_WX_LOG;</span><br></pre></td></tr></table></figure>
+<h1 id="A库-1"><a href="#A库-1" class="headerlink" title="A库"></a>A库</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> IM_WX_LOG <span class="keyword">DROP</span> <span class="keyword">PARTITION</span> P2019Y03;</span><br><span class="line"><span class="comment">-- 如果索引不是nologging local类型，则需要重建索引</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">index</span> PK_ID <span class="keyword">rebuild</span> <span class="keyword">online</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> IM_WX_LOG <span class="keyword">DROP</span> <span class="keyword">PARTITION</span> P2019Y03 <span class="keyword">UPDATE</span> IDEXES;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -1079,7 +1080,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#需求"><span class="nav-number">1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#A库"><span class="nav-number">2.</span> <span class="nav-text">A库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#B库"><span class="nav-number">3.</span> <span class="nav-text">B库</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#需求"><span class="nav-number">1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#A库"><span class="nav-number">2.</span> <span class="nav-text">A库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#B库"><span class="nav-number">3.</span> <span class="nav-text">B库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#A库-1"><span class="nav-number">4.</span> <span class="nav-text">A库</span></a></li></ol></div>
             
 
           </div>
