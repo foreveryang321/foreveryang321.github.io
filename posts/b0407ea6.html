@@ -105,14 +105,14 @@
 
 
   <meta name="description" content="buffer 问题由于“各路”buffer的存在，如果包比较小的话BigPipe的chunked输出很可能会被buffer住。  解决方案   填充空格：将一次flush的数据填充到 buffer_size。 调小buffer，让数据更容易达到 buffer_size。 关闭buffer。">
-<meta name="keywords" content="BigPipe,Facebook">
+<meta name="keywords" content="BigPipe,Facebook,Nginx">
 <meta property="og:type" content="article">
 <meta property="og:title" content="BigPipe 分块输出遇到的问题">
 <meta property="og:url" content="https://blog.yl-online.top/posts/b0407ea6.html">
 <meta property="og:site_name" content="forever杨的个人博客">
 <meta property="og:description" content="buffer 问题由于“各路”buffer的存在，如果包比较小的话BigPipe的chunked输出很可能会被buffer住。  解决方案   填充空格：将一次flush的数据填充到 buffer_size。 调小buffer，让数据更容易达到 buffer_size。 关闭buffer。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-14T08:50:10.361Z">
+<meta property="og:updated_time" content="2020-04-24T06:34:00.674Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="BigPipe 分块输出遇到的问题">
 <meta name="twitter:description" content="buffer 问题由于“各路”buffer的存在，如果包比较小的话BigPipe的chunked输出很可能会被buffer住。  解决方案   填充空格：将一次flush的数据填充到 buffer_size。 调小buffer，让数据更容易达到 buffer_size。 关闭buffer。">
@@ -252,7 +252,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">139</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">141</span></a>
 
   </li>
         
@@ -290,7 +290,7 @@
       
     
 
-    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">112</span></a>
+    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">113</span></a>
 
   </li>
         
@@ -471,7 +471,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-11-14 16:50:10" itemprop="dateModified" datetime="2019-11-14T16:50:10+08:00">2019-11-14</time>
+                <time title="修改时间：2020-04-24 14:34:00" itemprop="dateModified" datetime="2020-04-24T14:34:00+08:00">2020-04-24</time>
               
             
           </span>
@@ -525,7 +525,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">787</span>
+                <span title="字数">1.6k</span>
               
 
               
@@ -561,6 +561,8 @@
         
            <a href="/tags/Facebook/" rel="tag" class="color2">Facebook</a>
         
+           <a href="/tags/Nginx/" rel="tag" class="color3">Nginx</a>
+        
       </div>
     
 
@@ -583,10 +585,25 @@
 <li>关闭<code>buffer</code>。</li>
 </ol>
 <a id="more"></a>
-<h2 id="Nginx-负载-buffer"><a href="#Nginx-负载-buffer" class="headerlink" title="Nginx 负载 buffer"></a>Nginx 负载 buffer</h2><ul>
-<li>解决方案</li>
+<h2 id="Nginx-负载-buffer"><a href="#Nginx-负载-buffer" class="headerlink" title="Nginx 负载 buffer"></a>Nginx 负载 buffer</h2><p>对于 Nginx 来说，会有 <code>proxy_buffer</code> 和 <code>fastcgi_buffer</code>。第一种方式，不用调整 buffer，但这种方式很不优雅，而且增加了带宽，并不是很合理。至于调小 buffer，这看起来是一个很好的思路，然而对于 gzip 过的数据来说，最小的 buffer 可能也比较大。</p>
+<ul>
+<li>选择了关闭 <code>proxy_buffer</code> 和 <code>fastcgi_buffer</code></li>
 </ul>
+<p>关闭 <code>proxy_buffer</code> 的指令 <code>proxy_buffering off</code> 原生就支持。而关闭 <code>fastcgi_buffer</code> 的 <code>fastcgi_buffering</code> 需要1.5.6版本。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Syntax: fastcgi_buffering on | off;</span><br><span class="line">Default: fastcgi_buffering on;</span><br><span class="line">Context: http, server, location</span><br><span class="line">This directive appeared in version 1.5.6.</span><br></pre></td></tr></table></figure>
+<p>这种方式对所有请求都关闭 buffer</p>
+<ul>
+<li>用 http header，用于关闭 buffer</li>
+</ul>
+<blockquote>
+<p>Buffering can also be enabled or disabled by passing “yes” or “no” in the “X-Accel-Buffering” response header field. This capability can be disabled using the fastcgi_ignore_headers directive.</p>
+</blockquote>
+<p>因此，配置上完全不用关闭 buffer，只需要在代码中加 header 就好，顺利把 buffer 优雅关闭</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">header(&apos;X-Accel-Buffering: no&apos;);</span><br></pre></td></tr></table></figure>
 <p>在需要关闭 nginx 的 buffer 的请求响应添加 X-Accel-Buffering 头：<br>response.addHeader(“X-Accel-Buffering”, “no”);</p>
+<ul>
+<li>其他问题</li>
+</ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">    ....</span><br><span class="line">    fastcgi_buffer_size 1k; </span><br><span class="line">    fastcgi_buffers 16 1k;</span><br><span class="line">    ....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>其实读可以这么理解上面的配置，nginx会在攒够一块儿缓冲区的量后，将一块儿数据发出去。上面我们配置了fastcgi_buffers 16 1k; 就是16块儿，大小为1K的缓存。</p>
 <p>我们的数据量太小了，连默认的一块儿缓冲区都填不满，没法看到分块儿发送的效果，所以这里我们将缓冲区给调小为1K，这样就能1K为单位分块儿，1K一发，体现出实验效果了。</p>
@@ -648,6 +665,8 @@
             <a href="/tags/BigPipe/" rel="tag"># BigPipe</a>
           
             <a href="/tags/Facebook/" rel="tag"># Facebook</a>
+          
+            <a href="/tags/Nginx/" rel="tag"># Nginx</a>
           
         </div>
       
@@ -748,7 +767,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">139</span>
+                    <span class="site-state-item-count">141</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1044,7 +1063,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">112</span>
+                      
+                    
+                    <span class="site-state-item-count">113</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1153,7 +1174,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">477k</span>
+    <span title="站点总字数">488k</span>
   
 
   

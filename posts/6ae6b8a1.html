@@ -104,18 +104,18 @@
 
 
 
-  <meta name="description" content="idempotentConsumer file  123456789101112// tmp 是一个路径：./../tmp// 通过文件名缓存，如果缓存中已经有这个文件名，怎不再处理这个文件ValueBuilder messageIdExpression = header(Exchange.FILE_PATH)                .append(&quot;#&quot;).append(header(E">
+  <meta name="description" content="解决中文目录乱码问题1ftpClient.controlEncoding=gb2312 idempotentConsumer file  123456789101112// tmp 是一个路径：./../tmp// 通过文件名缓存，如果缓存中已经有这个文件名，怎不再处理这个文件ValueBuilder messageIdExpression = header(Exchange.FILE_PATH)">
 <meta name="keywords" content="Apache,camel-ftp">
 <meta property="og:type" content="article">
 <meta property="og:title" content="camel-ftp 使用笔记">
 <meta property="og:url" content="https://blog.yl-online.top/posts/6ae6b8a1.html">
 <meta property="og:site_name" content="forever杨的个人博客">
-<meta property="og:description" content="idempotentConsumer file  123456789101112// tmp 是一个路径：./../tmp// 通过文件名缓存，如果缓存中已经有这个文件名，怎不再处理这个文件ValueBuilder messageIdExpression = header(Exchange.FILE_PATH)                .append(&quot;#&quot;).append(header(E">
+<meta property="og:description" content="解决中文目录乱码问题1ftpClient.controlEncoding=gb2312 idempotentConsumer file  123456789101112// tmp 是一个路径：./../tmp// 通过文件名缓存，如果缓存中已经有这个文件名，怎不再处理这个文件ValueBuilder messageIdExpression = header(Exchange.FILE_PATH)">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-14T08:56:02.257Z">
+<meta property="og:updated_time" content="2020-03-09T01:59:57.243Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="camel-ftp 使用笔记">
-<meta name="twitter:description" content="idempotentConsumer file  123456789101112// tmp 是一个路径：./../tmp// 通过文件名缓存，如果缓存中已经有这个文件名，怎不再处理这个文件ValueBuilder messageIdExpression = header(Exchange.FILE_PATH)                .append(&quot;#&quot;).append(header(E">
+<meta name="twitter:description" content="解决中文目录乱码问题1ftpClient.controlEncoding=gb2312 idempotentConsumer file  123456789101112// tmp 是一个路径：./../tmp// 通过文件名缓存，如果缓存中已经有这个文件名，怎不再处理这个文件ValueBuilder messageIdExpression = header(Exchange.FILE_PATH)">
 
 
 
@@ -252,7 +252,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">139</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">141</span></a>
 
   </li>
         
@@ -290,7 +290,7 @@
       
     
 
-    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">112</span></a>
+    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">113</span></a>
 
   </li>
         
@@ -471,7 +471,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-11-14 16:56:02" itemprop="dateModified" datetime="2019-11-14T16:56:02+08:00">2019-11-14</time>
+                <time title="修改时间：2020-03-09 09:59:57" itemprop="dateModified" datetime="2020-03-09T09:59:57+08:00">2020-03-09</time>
               
             
           </span>
@@ -573,7 +573,8 @@
       
 
       
-        <h1 id="idempotentConsumer"><a href="#idempotentConsumer" class="headerlink" title="idempotentConsumer"></a>idempotentConsumer</h1><blockquote>
+        <h1 id="解决中文目录乱码问题"><a href="#解决中文目录乱码问题" class="headerlink" title="解决中文目录乱码问题"></a>解决中文目录乱码问题</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ftpClient.controlEncoding=gb2312</span><br></pre></td></tr></table></figure>
+<h1 id="idempotentConsumer"><a href="#idempotentConsumer" class="headerlink" title="idempotentConsumer"></a>idempotentConsumer</h1><blockquote>
 <p>file</p>
 </blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// tmp 是一个路径：./../tmp</span></span><br><span class="line"><span class="comment">// 通过文件名缓存，如果缓存中已经有这个文件名，怎不再处理这个文件</span></span><br><span class="line">ValueBuilder messageIdExpression = header(Exchange.FILE_PATH)</span><br><span class="line">                .append(<span class="string">"#"</span>).append(header(Exchange.FILE_LAST_MODIFIED))</span><br><span class="line">                .append(<span class="string">"#"</span>).append(header(Exchange.FILE_LENGTH));</span><br><span class="line">FileIdempotentRepository idempotentRepository =</span><br><span class="line">    FileIdempotentRepository.fileIdempotentRepository(<span class="keyword">new</span> File(tmp, <span class="keyword">this</span>.getClass().getSimpleName() + <span class="string">".txt"</span>), <span class="number">100</span> * <span class="number">1024</span>, <span class="number">5</span> * <span class="number">1024</span> * <span class="number">1024</span>);</span><br><span class="line"></span><br><span class="line">from(url.toString())</span><br><span class="line">    .idempotentConsumer(messageIdExpression, idempotentRepository)</span><br><span class="line">    .process(arrearsProcessor)</span><br><span class="line">    .log(LoggingLevel.INFO, log, <span class="string">"finished processor the file $&#123;file:path&#125;."</span>);</span><br></pre></td></tr></table></figure>
@@ -742,7 +743,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">139</span>
+                    <span class="site-state-item-count">141</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1038,7 +1039,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">112</span>
+                      
+                    
+                    <span class="site-state-item-count">113</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1113,7 +1116,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#idempotentConsumer"><span class="nav-number">1.</span> <span class="nav-text">idempotentConsumer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#filter"><span class="nav-number">2.</span> <span class="nav-text">filter</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#readLock"><span class="nav-number">3.</span> <span class="nav-text">readLock</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#move"><span class="nav-number">4.</span> <span class="nav-text">move</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#解决中文目录乱码问题"><span class="nav-number">1.</span> <span class="nav-text">解决中文目录乱码问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#idempotentConsumer"><span class="nav-number">2.</span> <span class="nav-text">idempotentConsumer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#filter"><span class="nav-number">3.</span> <span class="nav-text">filter</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#readLock"><span class="nav-number">4.</span> <span class="nav-text">readLock</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#move"><span class="nav-number">5.</span> <span class="nav-text">move</span></a></li></ol></div>
             
 
           </div>
@@ -1147,7 +1150,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">477k</span>
+    <span title="站点总字数">488k</span>
   
 
   
