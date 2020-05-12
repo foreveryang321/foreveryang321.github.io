@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[Oracle 按分区同步数据到另一个库]]></title>
     <url>%2Fposts%2F4d2ee75e.html</url>
-    <content type="text"><![CDATA[需求A库中某些大表（1年数据量10+亿条）数据只保留最近3个月数据，超过3个月的数据，都迁移到B库中保存，然后删除A库中已经迁移的数据。 A库123-- 创建视图，指定分区条件CREATE OR REPLACE VIEW V_IM_WX_LOG AS SELECT * FROM IM_WX_LOG PARTITION(P2019Y03); B库12345-- 为生产库视图创建同义词CREATE SYNONYM V_IM_WX_LOG FOR V_IM_WX_LOG@DBLN_WEIXINDB_KBT;-- 同步数据CREATE TABLE IM_WX_LOG_P2019Y04 AS SELECT * FROM V_IM_WX_LOG;]]></content>
+    <content type="text"><![CDATA[需求A库中某些大表（1年数据量10+亿条）数据只保留最近3个月数据，超过3个月的数据，都迁移到B库中保存，然后删除A库中已经迁移的数据。 A库123-- 创建视图，指定分区条件CREATE OR REPLACE VIEW V_IM_WX_LOG AS SELECT * FROM IM_WX_LOG PARTITION(P2019Y03); B库12345-- 为A库视图创建同义词CREATE SYNONYM V_IM_WX_LOG FOR V_IM_WX_LOG@DBLN_WEIXINDB_KBT;-- 同步数据CREATE TABLE IM_WX_LOG_P2019Y03 AS SELECT * FROM V_IM_WX_LOG;]]></content>
       <categories>
         <category>Oracle</category>
       </categories>
@@ -497,14 +497,14 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[docker 命令]]></title>
-    <url>%2Fposts%2F71631b3f.html</url>
-    <content type="text"><![CDATA[docker container ls 列出所有容器 用法 1docker container ls [options] 选项 | 参数 | 默认值 | 描述 || ————– | —— | ——————————– || -all, -a | false | 显示所有容器(默认只显示运行的) || --filter, -f | | 根据提供的条件过滤输出 || --format | | 使用Go模板打印容器 || -last, -n | -1 | 显示最后创建的容器(包括所有状态) || --latest, -l | false | 显示最新创建的容器(包括所有状态) || -no-trunc | false | 不要截断输出 || --quiet, -q | false | 只显示数字ID || -size, -s | false | 显示文件大小 | docker container rm 删除一个或多个容器 用法 1docker container rm [options] CONTAINER [CONTAINER...] 选项 | 参数 | 默认值 | 描述 || ————— | —— | ———————————– || --force, -f | false | 强制移走正在运行的容器(使用SIGKILL) || --link, -l | false | 删除指定的链接 || --volumes, -v | false | 删除与容器关联的卷 | 相关命令 命令 描述 docker container attach 附加到正在运行的容器 docker container commit 从容器的更改创建一个新的映像 docker container cp 在容器和本地文件系统之间复制文件/文件夹 docker container create 创建一个新的容器 docker container diff 检查容器文件系统上文件或目录的更改 docker container exec 在运行容器中运行命令 docker container export 将容器的文件系统导出为tar存档 docker container inspect 显示一个或多个容器的详细信息 docker container kill 杀死一个或多个运行容器 docker container logs 获取容器的日志 docker container ls 列出容器 docker container pause 暂停一个或多个容器内的所有进程 docker container port 列出端口映射或容器的特定映射 docker container prune 取出所有停止的容器 docker container rename 重命名容器 docker container restart 重新启动一个或多个容器 docker container rm 删除(移除)一个或多个容器 docker container run 在新容器中运行命令 docker container start 启动一个或多个停止的容器 docker container stats 显示容器的实时流资源使用统计信息 docker container stop 停止一个或多个运行容器 docker container top 显示容器的正在运行的进程 docker container unpause 取消暂停一个或多个容器内的所有流程 docker container update 更新一个或多个容器的配置 docker container wait 阻止一个或多个容器停止，然后打印退出代码]]></content>
+    <title><![CDATA[安装 docker 环境 for CentOS]]></title>
+    <url>%2Fposts%2F2fff8f5e.html</url>
+    <content type="text"><![CDATA[安装 docker 删除老版本 12345678910$ sudo yum remove docker \ docker-client \ docker-client-latest \ docker-common \ docker-latest \ docker-latest-logrotate \ docker-logrotate \ docker-selinux \ docker-engine-selinux \ docker-engine 配置 repo 123456789101112$ sudo yum install -y yum-utils \ device-mapper-persistent-data \ lvm2 $ sudo yum-config-manager \ --add-repo \ https://download.docker.com/linux/centos/docker-ce.repo# Optional$ sudo yum-config-manager --enable docker-ce-edge$ sudo yum-config-manager --enable docker-ce-test$ sudo yum-config-manager --disable docker-ce-edge 安装 docker 1$ sudo yum install docker-ce 安装指定版本 docker 12345# List and sort the versions available in your repo# 可以查看所有仓库中所有docker版本，并选择特定版本安装$ yum list docker-ce --showduplicates | sort -rdocker-ce.x86_64 18.03.0.ce-1.el7.centos docker-ce-stable$ sudo yum install docker-ce-&lt;VERSION STRING&gt; 启动并加入开机启动 12345678# 启动 docker$ sudo systemctl start docker# 停止运行 docker$ sudo systemctl stop docker# 开机启动$ sudo systemctl enable docker# 禁止开机启动$ sudo systemctl disable docker 验证安装 12345678910111213141516171819$ docker versionClient: Version: 18.06.1-ce API version: 1.38 Go version: go1.10.3 Git commit: e68fc7a Built: Tue Aug 21 17:23:03 2018 OS/Arch: linux/amd64 Experimental: falseServer: Engine: Version: 18.06.1-ce API version: 1.38 (minimum version 1.12) Go version: go1.10.3 Git commit: e68fc7a Built: Tue Aug 21 17:25:29 2018 OS/Arch: linux/amd64 Experimental: false]]></content>
       <categories>
         <category>docker</category>
       </categories>
       <tags>
-        <tag>container</tag>
+        <tag>docker-compose</tag>
       </tags>
   </entry>
   <entry>
@@ -519,14 +519,14 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[安装 docker 环境 for CentOS]]></title>
-    <url>%2Fposts%2F2fff8f5e.html</url>
-    <content type="text"><![CDATA[安装 docker 删除老版本 12345678910$ sudo yum remove docker \ docker-client \ docker-client-latest \ docker-common \ docker-latest \ docker-latest-logrotate \ docker-logrotate \ docker-selinux \ docker-engine-selinux \ docker-engine 配置 repo 123456789101112$ sudo yum install -y yum-utils \ device-mapper-persistent-data \ lvm2 $ sudo yum-config-manager \ --add-repo \ https://download.docker.com/linux/centos/docker-ce.repo# Optional$ sudo yum-config-manager --enable docker-ce-edge$ sudo yum-config-manager --enable docker-ce-test$ sudo yum-config-manager --disable docker-ce-edge 安装 docker 1$ sudo yum install docker-ce 安装指定版本 docker 12345# List and sort the versions available in your repo# 可以查看所有仓库中所有docker版本，并选择特定版本安装$ yum list docker-ce --showduplicates | sort -rdocker-ce.x86_64 18.03.0.ce-1.el7.centos docker-ce-stable$ sudo yum install docker-ce-&lt;VERSION STRING&gt; 启动并加入开机启动 12345678# 启动 docker$ sudo systemctl start docker# 停止运行 docker$ sudo systemctl stop docker# 开机启动$ sudo systemctl enable docker# 禁止开机启动$ sudo systemctl disable docker 验证安装 12345678910111213141516171819$ docker versionClient: Version: 18.06.1-ce API version: 1.38 Go version: go1.10.3 Git commit: e68fc7a Built: Tue Aug 21 17:23:03 2018 OS/Arch: linux/amd64 Experimental: falseServer: Engine: Version: 18.06.1-ce API version: 1.38 (minimum version 1.12) Go version: go1.10.3 Git commit: e68fc7a Built: Tue Aug 21 17:25:29 2018 OS/Arch: linux/amd64 Experimental: false]]></content>
+    <title><![CDATA[docker 命令]]></title>
+    <url>%2Fposts%2F71631b3f.html</url>
+    <content type="text"><![CDATA[docker container ls 列出所有容器 用法 1docker container ls [options] 选项 | 参数 | 默认值 | 描述 || ————– | —— | ——————————– || -all, -a | false | 显示所有容器(默认只显示运行的) || --filter, -f | | 根据提供的条件过滤输出 || --format | | 使用Go模板打印容器 || -last, -n | -1 | 显示最后创建的容器(包括所有状态) || --latest, -l | false | 显示最新创建的容器(包括所有状态) || -no-trunc | false | 不要截断输出 || --quiet, -q | false | 只显示数字ID || -size, -s | false | 显示文件大小 | docker container rm 删除一个或多个容器 用法 1docker container rm [options] CONTAINER [CONTAINER...] 选项 | 参数 | 默认值 | 描述 || ————— | —— | ———————————– || --force, -f | false | 强制移走正在运行的容器(使用SIGKILL) || --link, -l | false | 删除指定的链接 || --volumes, -v | false | 删除与容器关联的卷 | 相关命令 命令 描述 docker container attach 附加到正在运行的容器 docker container commit 从容器的更改创建一个新的映像 docker container cp 在容器和本地文件系统之间复制文件/文件夹 docker container create 创建一个新的容器 docker container diff 检查容器文件系统上文件或目录的更改 docker container exec 在运行容器中运行命令 docker container export 将容器的文件系统导出为tar存档 docker container inspect 显示一个或多个容器的详细信息 docker container kill 杀死一个或多个运行容器 docker container logs 获取容器的日志 docker container ls 列出容器 docker container pause 暂停一个或多个容器内的所有进程 docker container port 列出端口映射或容器的特定映射 docker container prune 取出所有停止的容器 docker container rename 重命名容器 docker container restart 重新启动一个或多个容器 docker container rm 删除(移除)一个或多个容器 docker container run 在新容器中运行命令 docker container start 启动一个或多个停止的容器 docker container stats 显示容器的实时流资源使用统计信息 docker container stop 停止一个或多个运行容器 docker container top 显示容器的正在运行的进程 docker container unpause 取消暂停一个或多个容器内的所有流程 docker container update 更新一个或多个容器的配置 docker container wait 阻止一个或多个容器停止，然后打印退出代码]]></content>
       <categories>
         <category>docker</category>
       </categories>
       <tags>
-        <tag>docker-compose</tag>
+        <tag>container</tag>
       </tags>
   </entry>
   <entry>
@@ -658,18 +658,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[spring cache 常用缓存注解介绍]]></title>
-    <url>%2Fposts%2F3bef8a86.html</url>
-    <content type="text"><![CDATA[spring-cache 常用缓存注解介绍 包地址 注解名 作用域 作用 org.springframework.cache.annotation CacheConfig 类级别 s设置缓存的公共配置 Cacheable 方法级别 缓存读取操作 CacheEvict 方法级别 缓存失效操作 CachePut 方法级别 缓存更新操作 Caching 方法级别 h混合读取、失效、更新操作 CacheConfig主要作用是全局配置，比如配置缓存名称（cacheNames），只需要在类上面使用这个注解配置一次，类下面的方法就默认使用全局配置了。 Cacheable这个注解是最重要的，主要实现的是功能在进行读操作的时候，先从缓存中查询，如果查询不到，再走业务流程获取数据，获取成功后，保存到缓存中。 属性 默认值 描述 value 缓存的名称，在 spring 配置文件中定义，必须指定至少一个 cacheNames 缓存的名称，在 spring 配置文件中定义，必须指定至少一个 key 缓存的 key，可以为空，如果指定要按照 SpEL 表达式编写，如果不指定，则缺省按照方法的所有参数进行组合 keyGenerator cacheManager cacheResolver condition 缓存的条件，可以为空，使用 SpEL 编写，返回 true 或者 false，只有为 true 才进行缓存。不能使用返回结果 unless 不缓存的条件，可以为空，使用 SpEL 编写，返回 true 或者 false，只有为 false才进行缓存。可以使用返回结果 sync CacheEvict这个注解主要是配合@Cacheable一起使用，它的主要作用是清除缓存。当进行一些更新、删除操作时，就需要删除缓存。如果不删除缓存就会出现读取不到最新数据的情况。它有一个重要的数据allEntries默认是false。当true是，会清除所有缓存，而不以指定的key为主。 CachePut 这个注解总是会把数据缓存，而不会每次检测缓存是否存在 Caching这个注解是Cacheable、CachePut、CacheEvict的综合体，可以使用这个注解包含以上3个注解。 #]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>spring</tag>
-        <tag>cache</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[spring retry 使用]]></title>
     <url>%2Fposts%2F9cd0a544.html</url>
     <content type="text"><![CDATA[@Retryable 被注解的方法发生异常时会重试 参数 默认值 说明 value 空 指定发生的异常，进行重试 include 空 指定异常重试。和value一样，默认空，当exclude也为空时，所有异常都重试 exclude 空 指定异常不重试。默认空，当include也为空时，所有异常都重试 maxAttemps 3 重试次数 backoff 空 重试补偿机制 @Backoff 参数 默认值 说明 delay 1000L 指定延迟时间 multiplier 0.0D 指定延迟的倍数。比如delay=5000l,multiplier=2时，第一次重试为5秒后，第二次为10秒，第三次为20秒 @Recover 当重试到达指定次数时，被注解的方法将被回调，可以在该方法中进行日志处理。需要注意的是发生的异常和入参类型一致时才会回调。 示例 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263import org.springframework.retry.annotation.Backoff;import org.springframework.retry.annotation.Recover;import org.springframework.retry.annotation.Retryable;import org.springframework.stereotype.Service;/** * @author Created by YL on 2018/7/18 */@Service@Slf4jpublic class RetryService &#123; @Retryable( value = &#123;Exception.class&#125;, maxAttempts = 10, backoff = @Backoff(delay = 10000L) ) public String retry() throws Exception &#123; throw new Exception("测试 spring retry"); &#125; @Recover public void exception(Exception e) &#123; log.error("errmsg: &#123;&#125;", e.getMessage(), e); &#125;&#125;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.boot.builder.SpringApplicationBuilder;import org.springframework.retry.annotation.EnableRetry;@SpringBootApplication@EnableRetrypublic class App &#123; /** * Common */ private static SpringApplicationBuilder configureSpringBuilder(SpringApplicationBuilder builder) &#123; //builder.application().addListeners(new EnvironmentPreparedEventListener()); builder.application().addPrimarySources(Collections.singletonList(App.class)); return builder.sources(App.class); &#125; // /** // * for WAR deploy // */ // @Override // protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) &#123; // // // 外部容器部署 web 环境要在这里配置 EnvironmentPreparedEvent 监听器才生效 // // builder.application().addListeners(new EnvironmentPreparedEventListener()); // // return builder.sources(Application.class); // return super.configure(configureSpringBuilder(builder)); // &#125; /** * for JAR deploy */ public static void main(String[] args) &#123; // SpringApplication.run(Application.class, args); SpringApplicationBuilder builder = configureSpringBuilder(new SpringApplicationBuilder()); builder.application().run(args); &#125;&#125;]]></content>
@@ -679,6 +667,18 @@
       <tags>
         <tag>spring</tag>
         <tag>retry</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[spring cache 常用缓存注解介绍]]></title>
+    <url>%2Fposts%2F3bef8a86.html</url>
+    <content type="text"><![CDATA[spring-cache 常用缓存注解介绍 包地址 注解名 作用域 作用 org.springframework.cache.annotation CacheConfig 类级别 s设置缓存的公共配置 Cacheable 方法级别 缓存读取操作 CacheEvict 方法级别 缓存失效操作 CachePut 方法级别 缓存更新操作 Caching 方法级别 h混合读取、失效、更新操作 CacheConfig主要作用是全局配置，比如配置缓存名称（cacheNames），只需要在类上面使用这个注解配置一次，类下面的方法就默认使用全局配置了。 Cacheable这个注解是最重要的，主要实现的是功能在进行读操作的时候，先从缓存中查询，如果查询不到，再走业务流程获取数据，获取成功后，保存到缓存中。 属性 默认值 描述 value 缓存的名称，在 spring 配置文件中定义，必须指定至少一个 cacheNames 缓存的名称，在 spring 配置文件中定义，必须指定至少一个 key 缓存的 key，可以为空，如果指定要按照 SpEL 表达式编写，如果不指定，则缺省按照方法的所有参数进行组合 keyGenerator cacheManager cacheResolver condition 缓存的条件，可以为空，使用 SpEL 编写，返回 true 或者 false，只有为 true 才进行缓存。不能使用返回结果 unless 不缓存的条件，可以为空，使用 SpEL 编写，返回 true 或者 false，只有为 false才进行缓存。可以使用返回结果 sync CacheEvict这个注解主要是配合@Cacheable一起使用，它的主要作用是清除缓存。当进行一些更新、删除操作时，就需要删除缓存。如果不删除缓存就会出现读取不到最新数据的情况。它有一个重要的数据allEntries默认是false。当true是，会清除所有缓存，而不以指定的key为主。 CachePut 这个注解总是会把数据缓存，而不会每次检测缓存是否存在 Caching这个注解是Cacheable、CachePut、CacheEvict的综合体，可以使用这个注解包含以上3个注解。 #]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>spring</tag>
+        <tag>cache</tag>
       </tags>
   </entry>
   <entry>
@@ -782,7 +782,7 @@
   <entry>
     <title><![CDATA[Tomcat 使用注意事项]]></title>
     <url>%2Fposts%2Fd13f7d34.html</url>
-    <content type="text"><![CDATA[使用Tomcat部署部署目录结构1234567[txrd@host-148 /opt/szim]$ tree -af.├── ./project│ └── ./szim.war└── ./tomcat├── ./logs.sh├── ./restart.sh 省略了部分Tomcat目录 Tomcat 配置优化删除默认项目删除 webapps目录下的 docs、examples、host-manager、manager、ROOT文件夹 server.xml port 改成 -1 1&lt;Server port="-1" shutdown="SHUTDOWN"&gt; 配置端口、NIO模式、线程池大小、开启gzip压缩等 1&lt;Connector port="8021" protocol="org.apache.coyote.http11.Http11Nio2Protocol" useSendfile="false" connectionTimeout="20000" keepAliveTimeout="15000" maxKeepAliveRequests="1" redirectPort="8443" URIEncoding="utf-8" maxThreads="1500" minSpareThreads="5" enableLookups="false" acceptCount="500" disableUploadTimeout="true" compression="on" compressionMinSize="2048" noCompressionUserAgents="gozilla, traviata" compressableMimeType="text/html, text/xml, text/plain, text/css, application/javascript" /&gt; 这里要注意：低版本是compressableMimeType —&gt; 高版本是compressibleMimeType 注释掉 AJP Connector 1&lt;!-- &lt;Connector port="8009" protocol="AJP/1.3" redirectPort="8443" /&gt; --&gt; autoDeploy 改成 false 1&lt;Host name="localhost" appBase="webapps" unpackWARs="true" autoDeploy="false"&gt; 禁用日志输出 123&lt;!-- &lt;Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" prefix="localhost_access_log" suffix=".txt" pattern="%h %l %u %t &amp;quot;%r&amp;quot; %s %b" /&gt; --&gt; Context 配置 123&lt;Host name="localhost" appBase="webapps" unpackWARs="true" autoDeploy="false"&gt; &lt;Context path="/szim" docBase="/opt/szim/project/szim.war" privileged="true" reloadable="false" /&gt;&lt;/Host&gt; 这样配置，szim.war会解压到tomcat/webapps下，也就是在webapps下生成szim文件夹。 docBase应该指定对应的war包完整路径，不应该指定相对路径（比如：../../project/szim）。 如果指定路径，有可以出现war包不会解压，导致项目没有更新的问题，要主动删除webapps下的szim文件夹 启停脚本 restart.sh 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293#!/usr/bin/env bashcd `dirname $0`# 脚本所在目录HOME_DIR=`pwd`# Tomcat服务器路径TS_HOME="$HOME_DIR/tomcat"# 控制台日志输出文件STDOUT_FILE="$TS_HOME/logs/console.out"# 检测Tomcat是否启动（进程ID）PIDS=`ps -ef | grep java | grep -v grep | grep $TS_HOME/bin | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址TS_IP=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# 检测输出的日记格式TS_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME"#==================================================================================# JVM Configuration#==================================================================================export LANG=en_US.UTF-8export JAVA_HOME=/usr/java/jdk1.8.0_144export JAVA_OPTS="$JAVA_OPTS -server -Xms1g -Xmx1g -Xss256k"export JAVA_OPTS="$JAVA_OPTS -XX:+DisableExplicitGC -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled"export JAVA_OPTS="$JAVA_OPTS -Xloggc:$TS_HOME/logs/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M"export JAVA_OPTS="$JAVA_OPTS -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$TS_HOME/logs/dump-`date +"%Y-%m-%d"`.hprof"export JAVA_OPTS="$JAVA_OPTS -Dspring.profiles.active=pro"#=================================================================================# 删除 7 天前的日志文件#=================================================================================function cleanLog()&#123; ls -d -t $TS_HOME/logs/catalina.*.log | tail -n +7 | xargs rm -rf ls -d -t $TS_HOME/logs/host-manager.*.log | tail -n +7 | xargs rm -rf ls -d -t $TS_HOME/logs/localhost.*.log | tail -n +7 | xargs rm -rf ls -d -t $TS_HOME/logs/manager.*.log | tail -n +7 | xargs rm -rf ls -d -t $TS_HOME/logs/dump.*.hprof | tail -n +7 | xargs rm -rf&#125;cleanLog# Graceful shutdownfunction gracefulShutdown()&#123; if [ -z "$PIDS" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME does not started!" | tee -a $STDOUT_FILE else echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME kill $PIDS begining" | tee -a $STDOUT_FILE for PID in $PIDS ; do kill $PID &gt; /dev/null 2&gt;&amp;1 done # check for graceful shutdown COUNT=0 while [ $COUNT -lt 1 ]; do sleep 1 COUNT=1 for PID in $PIDS ; do PID_EXIST=`ps -f -p $PID | grep java` if [ -n "$PID_EXIST" ]; then COUNT=0 break fi done done echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME kill $PID success" | tee -a $STDOUT_FILE fi&#125;function operate()&#123; if [[ "$1" = "kill" ]] ; then gracefulShutdown elif [[ "$1" = "start" ]]; then cd $TS_HOME/bin sh startup.sh else echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME is not support $1" | tee -a $STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME starting" | tee -a $STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$PIDS" = "" ]] ; then echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME starting" &gt;&gt; $STDOUT_FILE operate start else echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME pid $PIDS" &gt;&gt; $STDOUT_FILE fielse echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME is not support $1" | tee -a $STDOUT_FILEfi 不同的Tomcat部署项目使用该脚本，只需要调整JVM相关参数即可 脚本使用说明 1234567&gt; # 启动、或者重启 Tomcat&gt; [txrd@host-148 /opt/szim]$ sh restart.sh&gt; # 优雅停机（优雅停掉 Tomcat）&gt; [txrd@host-148 /opt/szim]$ sh restart.sh kill&gt; # 检测 Tomcat 是否启动，如果没有启动则启动，否则不做任何处理&gt; [txrd@host-148 /opt/szim]$ sh restart.sh check&gt; 查看日志脚本 logs.sh 123456789#!/usr/bin/env bashcd `dirname $0`# 脚本所在目录HOME_DIR=`pwd`# Tomcat日志目录LOGS_DIR=$HOME_DIR/tomcat/logstail -f $LOGS_DIR/catalina.out $LOGS_DIR/info.log $LOGS_DIR/error.log $LOGS_DIR/console.log JAR 包部署部署目录结构12345678[txrd@host-148 /opt/项目名]$ tree -af.├── ./project│ └── ./freemarker│ └── ./lib│ └── ./项目名.jar├── ./logs.sh├── ./restart.sh 启动脚本 restart.sh 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889#!/usr/bin/env bashcd `dirname $0`# 脚本所在目录CURRENT_DIR=`pwd`# 项目日志输出目录LOGS_DIR="$&#123;CURRENT_DIR&#125;/logs"STDOUT_FILE="$&#123;CURRENT_DIR&#125;/logs/stdout.log"# 项目 JAR 包等存放目录PROJECT_HOME="$&#123;CURRENT_DIR&#125;/project"# JAR 启动文件JAR_FILE="$&#123;PROJECT_HOME&#125;/项目名.jar"# pidPIDS=`ps -ef | grep "$&#123;JAR_FILE&#125;" | grep -v grep | awk '&#123;print $2&#125;'`#==================================================================================# JVM Configuration#==================================================================================export LANG=en_US.UTF-8export JAVA_HOME=/usr/java/jdk1.8.0_144export PATH=$PATH:$JAVA_HOME/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHJAVA_OPT="-server -Xms1024m -Xmx1024m -Xss256k"JAVA_OPT="$&#123;JAVA_OPT&#125; -Dloader.path=$&#123;PROJECT_HOME&#125;/lib/ -Djava.io.tmpdir=$&#123;LOGS_DIR&#125;"JAVA_OPT="$&#123;JAVA_OPT&#125; -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70"JAVA_OPT="$&#123;JAVA_OPT&#125; -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$&#123;LOGS_DIR&#125;/$&#123;PIDS&#125;.hprof"JAVA_OPT="$&#123;JAVA_OPT&#125; -Xloggc:$&#123;LOGS_DIR&#125;/gc.log -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M"JAVA_OPT="$&#123;JAVA_OPT&#125; -Ddubbo.protocol.port=20882"JAVA_OPT="$&#123;JAVA_OPT&#125; -Dspring.profiles.active=dev"JAVA_OPT="$&#123;JAVA_OPT&#125; -jar $&#123;JAR_FILE&#125;"# Graceful shutdownfunction gracefulShutdown()&#123; if [ -z "$PIDS" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE does not started!" | tee -a $STDOUT_FILE else echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE kill $PIDS begining" | tee -a $STDOUT_FILE for PID in $PIDS ; do kill $PID &gt; /dev/null 2&gt;&amp;1 echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE kill $PID success" | tee -a $STDOUT_FILE done # check for graceful shutdown COUNT=0 while [ $COUNT -lt 1 ]; do sleep 1 COUNT=1 for PID in $PIDS ; do PID_EXIST=`ps -f -p $PID | grep java` if [ -n "$PID_EXIST" ]; then COUNT=0 break fi done done fi&#125;function operate()&#123; if [[ "$1" = "kill" ]]; then gracefulShutdown elif [[ "$1" = "start" ]] ; then cd $PROJECT_HOME # starting nohup $JAVA_HOME/bin/java $&#123;JAVA_OPT&#125; &gt;&gt; $&#123;STDOUT_FILE&#125; 2&gt;&amp;1 &amp; PIDS=`ps -ef | grep "$JAR_FILE" | grep -v grep | awk '&#123;print $2&#125;'` echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE started OK! pid: $&#123;PIDS&#125;" | tee -a $&#123;STDOUT_FILE&#125; else echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE is not support $1" | tee -a $&#123;STDOUT_FILE&#125; fi&#125;if [[ "$1" = "start" || "$1" = "check" ]]; then if [ -n "$&#123;PIDS&#125;" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE already started! pid: $&#123;PIDS&#125;" &gt;&gt; $&#123;STDOUT_FILE&#125; exit 1 fi operate startelif [[ "$1" = "" || "$1" = "restart" ]]; then operate kill echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE starting" | tee -a $&#123;STDOUT_FILE&#125; operate startelif [[ "$1" = "kill" ]]; then operate killelse echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE is not support $1" | tee -a $&#123;STDOUT_FILE&#125;fi 不同的JAR部署项目使用该脚本，只需要调整JVM相关参数和项目名即可 脚本使用说明 1234567&gt; # 启动、或者重启应用&gt; [txrd@host-148 /opt/项目名]$ sh restart.sh&gt; # 优雅停机&gt; [txrd@host-148 /opt/项目名]$ sh restart.sh kill&gt; # 检测应用是否启动，如果没有启动则启动，否则不做任何处理&gt; [txrd@host-148 /opt/项目名]$ sh restart.sh check&gt; 查看日志脚本 logs.sh 123456789#!/usr/bin/env bashcd `dirname $0`# 脚本所在目录HOME_DIR=`pwd`# 应用日志目录LOGS_DIR=$HOME_DIR/logstail -f $LOGS_DIR/info.log $LOGS_DIR/error.log $LOGS_DIR/console.log]]></content>
+    <content type="text"><![CDATA[setenv.sh在Tomcat的bin目录下添加setenv.sh文件，在启动Tomcat的时候，该脚本会被自动执行。一般在该脚本配置一些环境变量、JVM参数等 123456789101112# @Author: YL# @Date: 2017-12-18 12:15:52# @Last Modified by: YL# @Last Modified time: 2017-12-18 12:16:03# 本文件放到 Tomcat 的 bin 目录下export LANG=en_US.UTF-8export JAVA_HOME=/usr/java/jdk1.8.0_144export PATH=$PATH:$JAVA_HOME/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHJAVA_OPT="$JAVA_OPT -Xss256k" Tomcat 安全配置相关删除默认项目删除 webapps目录下的 docs、examples、host-manager、manager、ROOT文件夹 tomcat-users.xml保持默认，不要添加帐号等信息 server.xml port 改成 -1 1&lt;Server port="-1" shutdown="SHUTDOWN"&gt; 配置线程池最小、最大值 1maxThreads=&quot;1024&quot; minSpareThreads=&quot;5&quot; 注释掉 AJP Connector 1&lt;!-- &lt;Connector port="8009" protocol="AJP/1.3" redirectPort="8443" /&gt; --&gt; autoDeploy 改成 false 1&lt;Host name="localhost" appBase="webapps" unpackWARs="true" autoDeploy="false"&gt; 禁用日志输出 123&lt;!-- &lt;Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" prefix="localhost_access_log" suffix=".txt" pattern="%h %l %u %t &amp;quot;%r&amp;quot; %s %b" /&gt; --&gt; context 配置 123&lt;Host name="localhost" appBase="webapps" unpackWARs="true" autoDeploy="false"&gt; &lt;Context path="/outserver" docBase="../../project/outserver.war" privileged="true" reloadable="false" /&gt;&lt;/Host&gt; 这样配置，outserver.war会解压到tomcat/webapps下，也就是在webapps下生成outserver文件夹。 docBase应该指定对应的war包全路径，不应该指定路径，比如：../../project/outserver。 如果指定路径，有可以出现war包不会解压，到时项目没有更新的问题 server.xml修改了一个配置名 低版本是compressableMimeType —&gt; 高版本是compressibleMimeType]]></content>
       <categories>
         <category>Tomcat</category>
       </categories>
@@ -790,7 +790,7 @@
   <entry>
     <title><![CDATA[Tomcat 使用注意事项]]></title>
     <url>%2Fposts%2Fd13f7d34.html</url>
-    <content type="text"><![CDATA[setenv.sh在Tomcat的bin目录下添加setenv.sh文件，在启动Tomcat的时候，该脚本会被自动执行。一般在该脚本配置一些环境变量、JVM参数等 123456789101112# @Author: YL# @Date: 2017-12-18 12:15:52# @Last Modified by: YL# @Last Modified time: 2017-12-18 12:16:03# 本文件放到 Tomcat 的 bin 目录下export LANG=en_US.UTF-8export JAVA_HOME=/usr/java/jdk1.8.0_144export PATH=$PATH:$JAVA_HOME/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHJAVA_OPT="$JAVA_OPT -Xss256k" Tomcat 安全配置相关删除默认项目删除 webapps目录下的 docs、examples、host-manager、manager、ROOT文件夹 tomcat-users.xml保持默认，不要添加帐号等信息 server.xml port 改成 -1 1&lt;Server port="-1" shutdown="SHUTDOWN"&gt; 配置线程池最小、最大值 1maxThreads=&quot;1024&quot; minSpareThreads=&quot;5&quot; 注释掉 AJP Connector 1&lt;!-- &lt;Connector port="8009" protocol="AJP/1.3" redirectPort="8443" /&gt; --&gt; autoDeploy 改成 false 1&lt;Host name="localhost" appBase="webapps" unpackWARs="true" autoDeploy="false"&gt; 禁用日志输出 123&lt;!-- &lt;Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" prefix="localhost_access_log" suffix=".txt" pattern="%h %l %u %t &amp;quot;%r&amp;quot; %s %b" /&gt; --&gt; context 配置 123&lt;Host name="localhost" appBase="webapps" unpackWARs="true" autoDeploy="false"&gt; &lt;Context path="/outserver" docBase="../../project/outserver.war" privileged="true" reloadable="false" /&gt;&lt;/Host&gt; 这样配置，outserver.war会解压到tomcat/webapps下，也就是在webapps下生成outserver文件夹。 docBase应该指定对应的war包全路径，不应该指定路径，比如：../../project/outserver。 如果指定路径，有可以出现war包不会解压，到时项目没有更新的问题 server.xml修改了一个配置名 低版本是compressableMimeType —&gt; 高版本是compressibleMimeType]]></content>
+    <content type="text"><![CDATA[使用Tomcat部署部署目录结构1234567[txrd@host-148 /opt/szim]$ tree -af.├── ./project│ └── ./szim.war└── ./tomcat├── ./logs.sh├── ./restart.sh 省略了部分Tomcat目录 Tomcat 配置优化删除默认项目删除 webapps目录下的 docs、examples、host-manager、manager、ROOT文件夹 server.xml port 改成 -1 1&lt;Server port="-1" shutdown="SHUTDOWN"&gt; 配置端口、NIO模式、线程池大小、开启gzip压缩等 1&lt;Connector port="8021" protocol="org.apache.coyote.http11.Http11Nio2Protocol" useSendfile="false" connectionTimeout="20000" keepAliveTimeout="15000" maxKeepAliveRequests="1" redirectPort="8443" URIEncoding="utf-8" maxThreads="1500" minSpareThreads="5" enableLookups="false" acceptCount="500" disableUploadTimeout="true" compression="on" compressionMinSize="2048" noCompressionUserAgents="gozilla, traviata" compressableMimeType="text/html, text/xml, text/plain, text/css, application/javascript" /&gt; 这里要注意：低版本是compressableMimeType —&gt; 高版本是compressibleMimeType 注释掉 AJP Connector 1&lt;!-- &lt;Connector port="8009" protocol="AJP/1.3" redirectPort="8443" /&gt; --&gt; autoDeploy 改成 false 1&lt;Host name="localhost" appBase="webapps" unpackWARs="true" autoDeploy="false"&gt; 禁用日志输出 123&lt;!-- &lt;Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" prefix="localhost_access_log" suffix=".txt" pattern="%h %l %u %t &amp;quot;%r&amp;quot; %s %b" /&gt; --&gt; Context 配置 123&lt;Host name="localhost" appBase="webapps" unpackWARs="true" autoDeploy="false"&gt; &lt;Context path="/szim" docBase="/opt/szim/project/szim.war" privileged="true" reloadable="false" /&gt;&lt;/Host&gt; 这样配置，szim.war会解压到tomcat/webapps下，也就是在webapps下生成szim文件夹。 docBase应该指定对应的war包完整路径，不应该指定相对路径（比如：../../project/szim）。 如果指定路径，有可以出现war包不会解压，导致项目没有更新的问题，要主动删除webapps下的szim文件夹 启停脚本 restart.sh 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293#!/usr/bin/env bashcd `dirname $0`# 脚本所在目录HOME_DIR=`pwd`# Tomcat服务器路径TS_HOME="$HOME_DIR/tomcat"# 控制台日志输出文件STDOUT_FILE="$TS_HOME/logs/console.out"# 检测Tomcat是否启动（进程ID）PIDS=`ps -ef | grep java | grep -v grep | grep $TS_HOME/bin | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址TS_IP=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# 检测输出的日记格式TS_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME"#==================================================================================# JVM Configuration#==================================================================================export LANG=en_US.UTF-8export JAVA_HOME=/usr/java/jdk1.8.0_144export JAVA_OPTS="$JAVA_OPTS -server -Xms1g -Xmx1g -Xss256k"export JAVA_OPTS="$JAVA_OPTS -XX:+DisableExplicitGC -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled"export JAVA_OPTS="$JAVA_OPTS -Xloggc:$TS_HOME/logs/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M"export JAVA_OPTS="$JAVA_OPTS -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$TS_HOME/logs/dump-`date +"%Y-%m-%d"`.hprof"export JAVA_OPTS="$JAVA_OPTS -Dspring.profiles.active=pro"#=================================================================================# 删除 7 天前的日志文件#=================================================================================function cleanLog()&#123; ls -d -t $TS_HOME/logs/catalina.*.log | tail -n +7 | xargs rm -rf ls -d -t $TS_HOME/logs/host-manager.*.log | tail -n +7 | xargs rm -rf ls -d -t $TS_HOME/logs/localhost.*.log | tail -n +7 | xargs rm -rf ls -d -t $TS_HOME/logs/manager.*.log | tail -n +7 | xargs rm -rf ls -d -t $TS_HOME/logs/dump.*.hprof | tail -n +7 | xargs rm -rf&#125;cleanLog# Graceful shutdownfunction gracefulShutdown()&#123; if [ -z "$PIDS" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME does not started!" | tee -a $STDOUT_FILE else echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME kill $PIDS begining" | tee -a $STDOUT_FILE for PID in $PIDS ; do kill $PID &gt; /dev/null 2&gt;&amp;1 done # check for graceful shutdown COUNT=0 while [ $COUNT -lt 1 ]; do sleep 1 COUNT=1 for PID in $PIDS ; do PID_EXIST=`ps -f -p $PID | grep java` if [ -n "$PID_EXIST" ]; then COUNT=0 break fi done done echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME kill $PID success" | tee -a $STDOUT_FILE fi&#125;function operate()&#123; if [[ "$1" = "kill" ]] ; then gracefulShutdown elif [[ "$1" = "start" ]]; then cd $TS_HOME/bin sh startup.sh else echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME is not support $1" | tee -a $STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME starting" | tee -a $STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$PIDS" = "" ]] ; then echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME starting" &gt;&gt; $STDOUT_FILE operate start else echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME pid $PIDS" &gt;&gt; $STDOUT_FILE fielse echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME is not support $1" | tee -a $STDOUT_FILEfi 不同的Tomcat部署项目使用该脚本，只需要调整JVM相关参数即可 脚本使用说明 1234567&gt; # 启动、或者重启 Tomcat&gt; [txrd@host-148 /opt/szim]$ sh restart.sh&gt; # 优雅停机（优雅停掉 Tomcat）&gt; [txrd@host-148 /opt/szim]$ sh restart.sh kill&gt; # 检测 Tomcat 是否启动，如果没有启动则启动，否则不做任何处理&gt; [txrd@host-148 /opt/szim]$ sh restart.sh check&gt; 查看日志脚本 logs.sh 123456789#!/usr/bin/env bashcd `dirname $0`# 脚本所在目录HOME_DIR=`pwd`# Tomcat日志目录LOGS_DIR=$HOME_DIR/tomcat/logstail -f $LOGS_DIR/catalina.out $LOGS_DIR/info.log $LOGS_DIR/error.log $LOGS_DIR/console.log JAR 包部署部署目录结构12345678[txrd@host-148 /opt/项目名]$ tree -af.├── ./project│ └── ./freemarker│ └── ./lib│ └── ./项目名.jar├── ./logs.sh├── ./restart.sh 启动脚本 restart.sh 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889#!/usr/bin/env bashcd `dirname $0`# 脚本所在目录CURRENT_DIR=`pwd`# 项目日志输出目录LOGS_DIR="$&#123;CURRENT_DIR&#125;/logs"STDOUT_FILE="$&#123;CURRENT_DIR&#125;/logs/stdout.log"# 项目 JAR 包等存放目录PROJECT_HOME="$&#123;CURRENT_DIR&#125;/project"# JAR 启动文件JAR_FILE="$&#123;PROJECT_HOME&#125;/项目名.jar"# pidPIDS=`ps -ef | grep "$&#123;JAR_FILE&#125;" | grep -v grep | awk '&#123;print $2&#125;'`#==================================================================================# JVM Configuration#==================================================================================export LANG=en_US.UTF-8export JAVA_HOME=/usr/java/jdk1.8.0_144export PATH=$PATH:$JAVA_HOME/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHJAVA_OPT="-server -Xms1024m -Xmx1024m -Xss256k"JAVA_OPT="$&#123;JAVA_OPT&#125; -Dloader.path=$&#123;PROJECT_HOME&#125;/lib/ -Djava.io.tmpdir=$&#123;LOGS_DIR&#125;"JAVA_OPT="$&#123;JAVA_OPT&#125; -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70"JAVA_OPT="$&#123;JAVA_OPT&#125; -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$&#123;LOGS_DIR&#125;/$&#123;PIDS&#125;.hprof"JAVA_OPT="$&#123;JAVA_OPT&#125; -Xloggc:$&#123;LOGS_DIR&#125;/gc.log -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M"JAVA_OPT="$&#123;JAVA_OPT&#125; -Ddubbo.protocol.port=20882"JAVA_OPT="$&#123;JAVA_OPT&#125; -Dspring.profiles.active=dev"JAVA_OPT="$&#123;JAVA_OPT&#125; -jar $&#123;JAR_FILE&#125;"# Graceful shutdownfunction gracefulShutdown()&#123; if [ -z "$PIDS" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE does not started!" | tee -a $STDOUT_FILE else echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE kill $PIDS begining" | tee -a $STDOUT_FILE for PID in $PIDS ; do kill $PID &gt; /dev/null 2&gt;&amp;1 echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE kill $PID success" | tee -a $STDOUT_FILE done # check for graceful shutdown COUNT=0 while [ $COUNT -lt 1 ]; do sleep 1 COUNT=1 for PID in $PIDS ; do PID_EXIST=`ps -f -p $PID | grep java` if [ -n "$PID_EXIST" ]; then COUNT=0 break fi done done fi&#125;function operate()&#123; if [[ "$1" = "kill" ]]; then gracefulShutdown elif [[ "$1" = "start" ]] ; then cd $PROJECT_HOME # starting nohup $JAVA_HOME/bin/java $&#123;JAVA_OPT&#125; &gt;&gt; $&#123;STDOUT_FILE&#125; 2&gt;&amp;1 &amp; PIDS=`ps -ef | grep "$JAR_FILE" | grep -v grep | awk '&#123;print $2&#125;'` echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE started OK! pid: $&#123;PIDS&#125;" | tee -a $&#123;STDOUT_FILE&#125; else echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE is not support $1" | tee -a $&#123;STDOUT_FILE&#125; fi&#125;if [[ "$1" = "start" || "$1" = "check" ]]; then if [ -n "$&#123;PIDS&#125;" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE already started! pid: $&#123;PIDS&#125;" &gt;&gt; $&#123;STDOUT_FILE&#125; exit 1 fi operate startelif [[ "$1" = "" || "$1" = "restart" ]]; then operate kill echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE starting" | tee -a $&#123;STDOUT_FILE&#125; operate startelif [[ "$1" = "kill" ]]; then operate killelse echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE is not support $1" | tee -a $&#123;STDOUT_FILE&#125;fi 不同的JAR部署项目使用该脚本，只需要调整JVM相关参数和项目名即可 脚本使用说明 1234567&gt; # 启动、或者重启应用&gt; [txrd@host-148 /opt/项目名]$ sh restart.sh&gt; # 优雅停机&gt; [txrd@host-148 /opt/项目名]$ sh restart.sh kill&gt; # 检测应用是否启动，如果没有启动则启动，否则不做任何处理&gt; [txrd@host-148 /opt/项目名]$ sh restart.sh check&gt; 查看日志脚本 logs.sh 123456789#!/usr/bin/env bashcd `dirname $0`# 脚本所在目录HOME_DIR=`pwd`# 应用日志目录LOGS_DIR=$HOME_DIR/logstail -f $LOGS_DIR/info.log $LOGS_DIR/error.log $LOGS_DIR/console.log]]></content>
       <categories>
         <category>Tomcat</category>
       </categories>
@@ -890,15 +890,27 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[Linux du 命令]]></title>
-    <url>%2Fposts%2F2e023d93.html</url>
-    <content type="text"><![CDATA[du计算当前文件夹下占用空间，排序1du -sh * | sort -nr]]></content>
+    <title><![CDATA[Linux crontab 命令]]></title>
+    <url>%2Fposts%2Fb0b79272.html</url>
+    <content type="text"><![CDATA[crontab 使用注意事项如果通过 crontab 执行1、crontab 无法获取 jdk 变量，要在 java 命令之前写入jdk绝对路径2、要把路径切换到要执行的 sh 路径下注意：二者缺一不可 查找 jdk 路径的方法 1 12$ echo $JAVA_HOME/usr/java/jdk1.6.0_45/bin/java 2 123456$ which java/usr/bin/java$ ls -lrt /usr/bin/java #/usr/bin/java是which java查出来的路径lrwxrwxrwx. 1 root root 22 Sep 16 2015 /usr/bin/java -&gt; /etc/alternatives/java$ ls -lrt /etc/alternatives/java #/etc/alternatives/java是ls -lrt /usr/bin/java查出来的路径 lrwxrwxrwx. 1 root root 46 Sep 16 2015 /etc/alternatives/java -&gt; /usr/lib/jvm/jre-1.6.0-openjdk.x86_64/bin/java 查询 crontab 定时器配置情况1crontab -l 编辑 crontab 定时器1234567crontab -e# 当 crontab 调用时，错误和标准输出会写成 mail 通知你* * * * * /opt/restart.sh# 标准输出重定向到 /dev/null，输出到这里就找不回来了* * * * * /opt/restart.sh &gt; /dev/null# 标准输出和错误输出都重定向到 /dev/null* * * * * /opt/restart.sh &gt; /dev/null 2&gt;&amp;1]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>du</tag>
+        <tag>crontab</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[jar启动脚本]]></title>
+    <url>%2Fposts%2F6d838077.html</url>
+    <content type="text"><![CDATA[jar启动脚本123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263#!/usr/bin/env bash# @Author: YL# @Date: 2017-08-31 15:52:30# @Last Modified by: YL# @Last Modified time: 2017-12-18 14:12:45export LANG=en_US.UTF-8export JAVA_HOME=/usr/java/jdk1.8.0_144export PATH=$PATH:$JAVA_HOME/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHcd `dirname $0`PROJECT_HOME=`pwd`PROJECT_LIB=$PROJECT_HOME/libPROJECT_LOGS=$PROJECT_HOME/logsSTDOUT_FILE=$PROJECT_HOME/logs/stdout.logPROJECT_JAR=$PROJECT_HOME/tisson-ftp.jar# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $PROJECT_JAR"# pidPROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'`function operate()&#123; if [[ "$1" = "kill" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN kill $PROJECT_PID begining" | tee -a $STDOUT_FILE kill -9 $PROJECT_PID echo "$DATE_PATTERN kill $PROJECT_PID success" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not alive" | tee -a $STDOUT_FILE fi elif [[ "$1" = "start" ]] ; then # cd $PROJECT_HOME # starting nohup java -server -Xms512m -Xmx512m -Xss256k -Dloader.path=$PROJECT_LIB -Djava.io.tmpdir=$PROJECT_LOGS -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$PROJECT_LOGS/$PROJECT_PID.hprof -jar $PROJECT_JAR &gt;&gt; $STDOUT_FILE 2&gt;&amp;1 &amp; PROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'` echo "$DATE_PATTERN The $PROJECT_JAR started OK! pid: $PROJECT_PID" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILE fi&#125;if [[ "$1" = "start" || "$1" = "check" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN already started! pid: $PROJECT_PID" &gt;&gt; $STDOUT_FILE exit 1 fi operate startelif [[ "$1" = "" || "$1" = "restart" ]]; then operate kill echo "$DATE_PATTERN starting" | tee -a $STDOUT_FILE operate startelif [[ "$1" = "kill" ]]; then operate killelse echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILEfi -Djava.ext.dirs和-Dloader.path区别 -Djava.ext.dirs 使用-Djava.ext.dirs配置外部jar包引用时，会覆盖jdk默认的lib/ext下的扩展包 -Dloader.path]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>jar</tag>
       </tags>
   </entry>
   <entry>
@@ -926,14 +938,6 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[Tomcat 启动脚本]]></title>
-    <url>%2Fposts%2Fe22f47ab.html</url>
-    <content type="text"><![CDATA[Tomcat 启动脚本start.sh12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273#!/usr/bin/env bash# @Author: YL# @Date: 2017-01-25 14:50:43# @Last Modified by: YL# @Last Modified time: 2017-12-18 14:12:23cd `dirname $0`PROJECT_HOME=`pwd`# Tomcat 服务器路径TC_HOME="$PROJECT_HOME/tomcat"# crontab 检测日记文件TC_STDOUT_FILE="$TC_HOME/logs/stdout.out"# 检测 Tomcat 是否启动（进程ID）TC_PID=`ps -ef | grep $TC_HOME/bin | grep -v grep | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# 优雅停机function gracefulShutdown()&#123; if [ -z "$PIDS" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME does not started!" | tee -a $STDOUT_FILE else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PIDS begining" | tee -a $STDOUT_FILE for PID in $PIDS ; do kill $PID &gt; /dev/null 2&gt;&amp;1 echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PID success" | tee -a $STDOUT_FILE done # 检测是否停机成功 COUNT=0 while [ $COUNT -lt 1 ]; do sleep 1 COUNT=1 for PID in $PIDS ; do PID_EXIST=`ps -f -p $PID | grep java` if [ -n "$PID_EXIST" ]; then COUNT=0 break fi done done fi&#125;function operate()&#123; if [[ "$1" = "kill" ]] ; then gracefulShutdown elif [[ "$1" = "start" ]]; then cd $TC_HOME/bin sh startup.sh else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" | tee -a $TC_STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$TC_PID" = "" ]] ; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" &gt;&gt; $TC_STDOUT_FILE operate start else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME pid $TC_PID" &gt;&gt; $TC_STDOUT_FILE fielse echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILEfi 使用说明12345sh start.sh start # 重启sh start.sh # 重启sh start.sh restart # 重启sh start.sh check # 检测服务是否启动，没有启动，则启动之，否则不做其他操作sh start.sh kill # kill掉已启动的服务进程]]></content>
-      <categories>
-        <category>Tomcat</category>
-      </categories>
-  </entry>
-  <entry>
     <title><![CDATA[Linux cat 命令]]></title>
     <url>%2Fposts%2Fbe15a742.html</url>
     <content type="text"><![CDATA[cat统计出现次数12# linux统计某一文件中字符串“sent ip”出现的次数：cat nohup.log |grep "sent ip" |wc -l 清空默认文件中的内容1cat /dev/null &gt; filename]]></content>
@@ -958,18 +962,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux crontab 命令]]></title>
-    <url>%2Fposts%2Fb0b79272.html</url>
-    <content type="text"><![CDATA[crontab 使用注意事项如果通过 crontab 执行1、crontab 无法获取 jdk 变量，要在 java 命令之前写入jdk绝对路径2、要把路径切换到要执行的 sh 路径下注意：二者缺一不可 查找 jdk 路径的方法 1 12$ echo $JAVA_HOME/usr/java/jdk1.6.0_45/bin/java 2 123456$ which java/usr/bin/java$ ls -lrt /usr/bin/java #/usr/bin/java是which java查出来的路径lrwxrwxrwx. 1 root root 22 Sep 16 2015 /usr/bin/java -&gt; /etc/alternatives/java$ ls -lrt /etc/alternatives/java #/etc/alternatives/java是ls -lrt /usr/bin/java查出来的路径 lrwxrwxrwx. 1 root root 46 Sep 16 2015 /etc/alternatives/java -&gt; /usr/lib/jvm/jre-1.6.0-openjdk.x86_64/bin/java 查询 crontab 定时器配置情况1crontab -l 编辑 crontab 定时器1234567crontab -e# 当 crontab 调用时，错误和标准输出会写成 mail 通知你* * * * * /opt/restart.sh# 标准输出重定向到 /dev/null，输出到这里就找不回来了* * * * * /opt/restart.sh &gt; /dev/null# 标准输出和错误输出都重定向到 /dev/null* * * * * /opt/restart.sh &gt; /dev/null 2&gt;&amp;1]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>crontab</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Linux curl 命令]]></title>
     <url>%2Fposts%2Faea02818.html</url>
     <content type="text"><![CDATA[curlGET 请求1curl http://www.baidu.com?q=xxxx POST 请求1curl http://ip:port/weixin_v3/w -XPOST -d "send message..." 发送 POST JSON 请求1curl -H "Content-Type: application/json" -X POST --data '&#123;"data":"1"&#125;' http://127.0.0.1/ 使用代理1curl -x 192.168.2.5:3128 http://www.baidu.com?q=xxxx 输出请求信息12345678# http_code# time_connect# time_starttransfer# time_total# size_download# speed_download# 参考地址：curl http://www.baidu.com?q=xxxx -so /dev/null -w "%&#123;http_code&#125;\t%&#123;time_connect&#125;\t%&#123;time_starttransfer&#125;\t%&#123;time_total&#125;\t%&#123;size_download&#125;\t%&#123;speed_download&#125;\t"]]></content>
@@ -982,24 +974,24 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Linux du 命令]]></title>
+    <url>%2Fposts%2F2e023d93.html</url>
+    <content type="text"><![CDATA[du计算当前文件夹下占用空间，排序1du -sh * | sort -nr]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>du</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[zookeeper重启脚本]]></title>
     <url>%2Fposts%2F6c1ad93d.html</url>
     <content type="text"><![CDATA[restart12345678910111213#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:10# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:30# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stopsleep 3./zkServer.sh start]]></content>
       <categories>
         <category>zookeeper</category>
       </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux grep 命令]]></title>
-    <url>%2Fposts%2F1f104b3f.html</url>
-    <content type="text"><![CDATA[grep统计出现次数1grep 'sign.*time.*openid' access_p80_weixinv3.log | awk '&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;' | sort -n 4 183.3.234.4510 183.3.234.5720 183.3.234.58 查询前后日志grep -5 ‘parttern’ inputfile //打印匹配行的前后5行grep -C 5 ‘parttern’ inputfile //打印匹配行的前后5行grep -A 5 ‘parttern’ inputfile //打印匹配行的后5行grep -B 5 ‘parttern’ inputfile //打印匹配行的前5行]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>grep</tag>
-      </tags>
   </entry>
   <entry>
     <title><![CDATA[Linux find 命令]]></title>
@@ -1011,6 +1003,18 @@
       <tags>
         <tag>shell</tag>
         <tag>find</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux grep 命令]]></title>
+    <url>%2Fposts%2F1f104b3f.html</url>
+    <content type="text"><![CDATA[grep统计出现次数1grep 'sign.*time.*openid' access_p80_weixinv3.log | awk '&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;' | sort -n 4 183.3.234.4510 183.3.234.5720 183.3.234.58 查询前后日志grep -5 ‘parttern’ inputfile //打印匹配行的前后5行grep -C 5 ‘parttern’ inputfile //打印匹配行的前后5行grep -A 5 ‘parttern’ inputfile //打印匹配行的后5行grep -B 5 ‘parttern’ inputfile //打印匹配行的前5行]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>grep</tag>
       </tags>
   </entry>
   <entry>
@@ -1038,18 +1042,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux sed 命令]]></title>
-    <url>%2Fposts%2Fb8ec468d.html</url>
-    <content type="text"><![CDATA[sed打印指定行数1sed -n '12457431, 12457440p' tomcat/logs/catalina.out]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>sed</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Linux netstat 命令]]></title>
     <url>%2Fposts%2F6c05ba39.html</url>
     <content type="text"><![CDATA[netstat netstat 通过进程查看占用端口12# netstat -nap | grep 9836netstat -anp | grep &lt;pid&gt;]]></content>
@@ -1062,15 +1054,15 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux tar 命令]]></title>
-    <url>%2Fposts%2Fbd083454.html</url>
-    <content type="text"><![CDATA[tar 解压 1tar -zxvf xxx.tar.gz 打包 1tar -zcvf xxx.tar.gz 待压缩的文件名 解压 tar zxvf 文件名.tar.gz 压缩 tar zcvf 文件名.tar.gz 待压缩的文件名]]></content>
+    <title><![CDATA[Linux sed 命令]]></title>
+    <url>%2Fposts%2Fb8ec468d.html</url>
+    <content type="text"><![CDATA[sed打印指定行数1sed -n '12457431, 12457440p' tomcat/logs/catalina.out]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>tar</tag>
+        <tag>sed</tag>
       </tags>
   </entry>
   <entry>
@@ -1086,11 +1078,23 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[zookeeper 清理日志文件]]></title>
-    <url>%2Fposts%2Fc0bbcacd.html</url>
-    <content type="text"><![CDATA[clear123456789101112131415161718192021222324252627282930#!/usr/bin/env bash# @Author: YL# @Date: 2017-11-01 08:59:34# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:09# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`cd ..NODE_HOME=`pwd`# snapshotNODE_DATA_DIR=$NODE_HOME/data/version-2# snapshot logNODE_LOG_DIR=$NODE_HOME/logs/version-2# zk logNODE_LOGS=$NODE_HOME/logs# 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中count=3count=$[$count+1]ls -t $NODE_LOG_DIR/log.* | tail -n +$count | xargs rm -fls -t $NODE_DATA_DIR/snapshot.* | tail -n +$count | xargs rm -fls -t $NODE_LOGS/zookeeper.log.* | tail -n +$count | xargs rm -f# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"STDOUT_FILE=$NODE_LOGS/stdout.logecho "$DATE_PATTERN clear logs success" | tee -a $STDOUT_FILE]]></content>
+    <title><![CDATA[Linux tar 命令]]></title>
+    <url>%2Fposts%2Fbd083454.html</url>
+    <content type="text"><![CDATA[tar 解压 1tar -zxvf xxx.tar.gz 打包 1tar -zcvf xxx.tar.gz 待压缩的文件名 解压 tar zxvf 文件名.tar.gz 压缩 tar zcvf 文件名.tar.gz 待压缩的文件名]]></content>
       <categories>
-        <category>zookeeper</category>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>tar</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Tomcat 启动脚本]]></title>
+    <url>%2Fposts%2Fe22f47ab.html</url>
+    <content type="text"><![CDATA[Tomcat 启动脚本start.sh12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273#!/usr/bin/env bash# @Author: YL# @Date: 2017-01-25 14:50:43# @Last Modified by: YL# @Last Modified time: 2017-12-18 14:12:23cd `dirname $0`PROJECT_HOME=`pwd`# Tomcat 服务器路径TC_HOME="$PROJECT_HOME/tomcat"# crontab 检测日记文件TC_STDOUT_FILE="$TC_HOME/logs/stdout.out"# 检测 Tomcat 是否启动（进程ID）TC_PID=`ps -ef | grep $TC_HOME/bin | grep -v grep | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# 优雅停机function gracefulShutdown()&#123; if [ -z "$PIDS" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME does not started!" | tee -a $STDOUT_FILE else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PIDS begining" | tee -a $STDOUT_FILE for PID in $PIDS ; do kill $PID &gt; /dev/null 2&gt;&amp;1 echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PID success" | tee -a $STDOUT_FILE done # 检测是否停机成功 COUNT=0 while [ $COUNT -lt 1 ]; do sleep 1 COUNT=1 for PID in $PIDS ; do PID_EXIST=`ps -f -p $PID | grep java` if [ -n "$PID_EXIST" ]; then COUNT=0 break fi done done fi&#125;function operate()&#123; if [[ "$1" = "kill" ]] ; then gracefulShutdown elif [[ "$1" = "start" ]]; then cd $TC_HOME/bin sh startup.sh else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" | tee -a $TC_STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$TC_PID" = "" ]] ; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" &gt;&gt; $TC_STDOUT_FILE operate start else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME pid $TC_PID" &gt;&gt; $TC_STDOUT_FILE fielse echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILEfi 使用说明12345sh start.sh start # 重启sh start.sh # 重启sh start.sh restart # 重启sh start.sh check # 检测服务是否启动，没有启动，则启动之，否则不做其他操作sh start.sh kill # kill掉已启动的服务进程]]></content>
+      <categories>
+        <category>Tomcat</category>
       </categories>
   </entry>
   <entry>
@@ -1118,16 +1122,12 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[jar启动脚本]]></title>
-    <url>%2Fposts%2F6d838077.html</url>
-    <content type="text"><![CDATA[jar启动脚本123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263#!/usr/bin/env bash# @Author: YL# @Date: 2017-08-31 15:52:30# @Last Modified by: YL# @Last Modified time: 2017-12-18 14:12:45export LANG=en_US.UTF-8export JAVA_HOME=/usr/java/jdk1.8.0_144export PATH=$PATH:$JAVA_HOME/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHcd `dirname $0`PROJECT_HOME=`pwd`PROJECT_LIB=$PROJECT_HOME/libPROJECT_LOGS=$PROJECT_HOME/logsSTDOUT_FILE=$PROJECT_HOME/logs/stdout.logPROJECT_JAR=$PROJECT_HOME/tisson-ftp.jar# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $PROJECT_JAR"# pidPROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'`function operate()&#123; if [[ "$1" = "kill" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN kill $PROJECT_PID begining" | tee -a $STDOUT_FILE kill -9 $PROJECT_PID echo "$DATE_PATTERN kill $PROJECT_PID success" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not alive" | tee -a $STDOUT_FILE fi elif [[ "$1" = "start" ]] ; then # cd $PROJECT_HOME # starting nohup java -server -Xms512m -Xmx512m -Xss256k -Dloader.path=$PROJECT_LIB -Djava.io.tmpdir=$PROJECT_LOGS -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$PROJECT_LOGS/$PROJECT_PID.hprof -jar $PROJECT_JAR &gt;&gt; $STDOUT_FILE 2&gt;&amp;1 &amp; PROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'` echo "$DATE_PATTERN The $PROJECT_JAR started OK! pid: $PROJECT_PID" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILE fi&#125;if [[ "$1" = "start" || "$1" = "check" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN already started! pid: $PROJECT_PID" &gt;&gt; $STDOUT_FILE exit 1 fi operate startelif [[ "$1" = "" || "$1" = "restart" ]]; then operate kill echo "$DATE_PATTERN starting" | tee -a $STDOUT_FILE operate startelif [[ "$1" = "kill" ]]; then operate killelse echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILEfi -Djava.ext.dirs和-Dloader.path区别 -Djava.ext.dirs 使用-Djava.ext.dirs配置外部jar包引用时，会覆盖jdk默认的lib/ext下的扩展包 -Dloader.path]]></content>
+    <title><![CDATA[zookeeper 清理日志文件]]></title>
+    <url>%2Fposts%2Fc0bbcacd.html</url>
+    <content type="text"><![CDATA[clear123456789101112131415161718192021222324252627282930#!/usr/bin/env bash# @Author: YL# @Date: 2017-11-01 08:59:34# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:09# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`cd ..NODE_HOME=`pwd`# snapshotNODE_DATA_DIR=$NODE_HOME/data/version-2# snapshot logNODE_LOG_DIR=$NODE_HOME/logs/version-2# zk logNODE_LOGS=$NODE_HOME/logs# 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中count=3count=$[$count+1]ls -t $NODE_LOG_DIR/log.* | tail -n +$count | xargs rm -fls -t $NODE_DATA_DIR/snapshot.* | tail -n +$count | xargs rm -fls -t $NODE_LOGS/zookeeper.log.* | tail -n +$count | xargs rm -f# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"STDOUT_FILE=$NODE_LOGS/stdout.logecho "$DATE_PATTERN clear logs success" | tee -a $STDOUT_FILE]]></content>
       <categories>
-        <category>Linux</category>
+        <category>zookeeper</category>
       </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>jar</tag>
-      </tags>
   </entry>
   <entry>
     <title><![CDATA[spring-boot shiro 引入外部lib启动方式报错]]></title>
@@ -1212,6 +1212,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[pagehelper 使用笔记]]></title>
+    <url>%2Fposts%2F4f0d5500.html</url>
+    <content type="text"><![CDATA[主要是记录一些在使用mybatis + pagehelper过程中遇到的一些问题，和要注意的知识点 PageHelper 分页12345// 获取第1页，10条内容，默认查询总数countPageHelper.startPage(1, 10);// 获取第1页，10条内容，不查询总数countPageHelper.startPage(1, 10, false);]]></content>
+      <categories>
+        <category>mybatis</category>
+      </categories>
+      <tags>
+        <tag>pagehelper</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[spring-data-jpa 使用笔记]]></title>
     <url>%2Fposts%2F43f916ea.html</url>
     <content type="text"><![CDATA[主要是记录一些在使用spring-data-jpa + Hibernate过程中遇到的一些问题，和要注意的知识点 Pageable 和 PageRequest 分页在Mysql、Oracle中分页从0开始1Pageable pageable = new PageRequest(0, 10); 查看org.springframework.data.domain.PageRequest源码可知，分页从0开始 123public Pageable first() &#123; return new PageRequest(0, this.getPageSize(), this.getSort());&#125;]]></content>
@@ -1221,17 +1232,6 @@
       <tags>
         <tag>Hibernate</tag>
         <tag>spring-data-jpa</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[pagehelper 使用笔记]]></title>
-    <url>%2Fposts%2F4f0d5500.html</url>
-    <content type="text"><![CDATA[主要是记录一些在使用mybatis + pagehelper过程中遇到的一些问题，和要注意的知识点 PageHelper 分页12345// 获取第1页，10条内容，默认查询总数countPageHelper.startPage(1, 10);// 获取第1页，10条内容，不查询总数countPageHelper.startPage(1, 10, false);]]></content>
-      <categories>
-        <category>mybatis</category>
-      </categories>
-      <tags>
-        <tag>pagehelper</tag>
       </tags>
   </entry>
   <entry>
@@ -1246,14 +1246,15 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Hibernate的DynamicInsert、DynamicUpdate介绍]]></title>
-    <url>%2Fposts%2F2ed26d9a.html</url>
-    <content type="text"><![CDATA[作用 使用 Dynamic Update 如果使用了 Dynamic Update，需要注意的是，当select后，显式的把某些字段set为NULL，hibernate 会认为你修改了该字段，会生成到 update 语句中。一般先 select 实体出来，再 save 的话，只会 update 该实体被修改的字段。否则会 update 所有表字段。添加Dynamic Update配置可以减少被 update 的字段。 使用 Dynamic Insert 如果使用了 Dynamic Insert，并且数据库配置了默认值，当 insert，并且new 实体时，该属性没有 set 值的话，会使用数据库默认值，否则会使用实体的值。 配置方式 第一种：使用注解配置12345678910111213@Entiry(name = "t_user")@DynamicInsert@DynamicUpdatepublic class User &#123; @Id @GeneratedValue private Long id; private Strin name; private Integer age; private Integer status; // getter setter&#125; 第二种：使用.hbm.xml配置12345&lt;hibernate-mapping&gt; &lt;class name="xxx.User" table="t_user" dynamic-insert="true" dynamic-update="true"&gt; &lt;!-- 省略配置 --&gt; &lt;/class&gt;&lt;/hibernate-mapping&gt; 效果主要比较一下insert、update语句的区别，其中update一个已有的实体对象时，hibernate会再执行一次select操作再去update123456789101112131415161718192021222324252627282930@RunWith(SpringJUnit4ClassRunner.class)@SpringBootTestpublic class ApplicationTests &#123; @Autowired private UserRepository repository; @Test public void test() throws Exception &#123; // 1、插入新记录 // 配置 dynamic insert // insert into user (name) values (?) // 未配置 dynamic insert // insert into user (age, name, status) values (?, ?, ?) User user = new User("AAA"); User save = repository.save(user); // 2、更新记录 // 配置 dynamic update // select user0_.id as id1_1_0_, user0_.age as age2_1_0_, user0_.name as name3_1_0_, user0_.status as status4_1_0_ from user user0_ where user0_.id=? // update user set name=? where id=? // 未配置 dynamic update // select user0_.id as id1_1_0_, user0_.age as age2_1_0_, user0_.name as name3_1_0_, user0_.status as status4_1_0_ from user user0_ where user0_.id=? // update user set age=?, name=?, status=? where id=? save.setName("BBB"); repository.save(save); &#125;&#125;]]></content>
+    <title><![CDATA[hibernate格式化输出sql语句（spring-data-jpa）]]></title>
+    <url>%2Fposts%2F723691b5.html</url>
+    <content type="text"><![CDATA[以下配置是基于 spring-boot 的 application.yml 配置123456789spring: jpa:# hibernate:# ddl-auto: create show-sql: true# database: mysql properties: hibernate: format_sql: true]]></content>
       <categories>
         <category>Java</category>
       </categories>
       <tags>
         <tag>Hibernate</tag>
+        <tag>spring-data-jpa</tag>
       </tags>
   </entry>
   <entry>
@@ -1269,15 +1270,14 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[hibernate格式化输出sql语句（spring-data-jpa）]]></title>
-    <url>%2Fposts%2F723691b5.html</url>
-    <content type="text"><![CDATA[以下配置是基于 spring-boot 的 application.yml 配置123456789spring: jpa:# hibernate:# ddl-auto: create show-sql: true# database: mysql properties: hibernate: format_sql: true]]></content>
+    <title><![CDATA[Hibernate的DynamicInsert、DynamicUpdate介绍]]></title>
+    <url>%2Fposts%2F2ed26d9a.html</url>
+    <content type="text"><![CDATA[作用 使用 Dynamic Update 如果使用了 Dynamic Update，需要注意的是，当select后，显式的把某些字段set为NULL，hibernate 会认为你修改了该字段，会生成到 update 语句中。一般先 select 实体出来，再 save 的话，只会 update 该实体被修改的字段。否则会 update 所有表字段。添加Dynamic Update配置可以减少被 update 的字段。 使用 Dynamic Insert 如果使用了 Dynamic Insert，并且数据库配置了默认值，当 insert，并且new 实体时，该属性没有 set 值的话，会使用数据库默认值，否则会使用实体的值。 配置方式 第一种：使用注解配置12345678910111213@Entiry(name = "t_user")@DynamicInsert@DynamicUpdatepublic class User &#123; @Id @GeneratedValue private Long id; private Strin name; private Integer age; private Integer status; // getter setter&#125; 第二种：使用.hbm.xml配置12345&lt;hibernate-mapping&gt; &lt;class name="xxx.User" table="t_user" dynamic-insert="true" dynamic-update="true"&gt; &lt;!-- 省略配置 --&gt; &lt;/class&gt;&lt;/hibernate-mapping&gt; 效果主要比较一下insert、update语句的区别，其中update一个已有的实体对象时，hibernate会再执行一次select操作再去update123456789101112131415161718192021222324252627282930@RunWith(SpringJUnit4ClassRunner.class)@SpringBootTestpublic class ApplicationTests &#123; @Autowired private UserRepository repository; @Test public void test() throws Exception &#123; // 1、插入新记录 // 配置 dynamic insert // insert into user (name) values (?) // 未配置 dynamic insert // insert into user (age, name, status) values (?, ?, ?) User user = new User("AAA"); User save = repository.save(user); // 2、更新记录 // 配置 dynamic update // select user0_.id as id1_1_0_, user0_.age as age2_1_0_, user0_.name as name3_1_0_, user0_.status as status4_1_0_ from user user0_ where user0_.id=? // update user set name=? where id=? // 未配置 dynamic update // select user0_.id as id1_1_0_, user0_.age as age2_1_0_, user0_.name as name3_1_0_, user0_.status as status4_1_0_ from user user0_ where user0_.id=? // update user set age=?, name=?, status=? where id=? save.setName("BBB"); repository.save(save); &#125;&#125;]]></content>
       <categories>
         <category>Java</category>
       </categories>
       <tags>
         <tag>Hibernate</tag>
-        <tag>spring-data-jpa</tag>
       </tags>
   </entry>
   <entry>
@@ -1353,6 +1353,18 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[nodejs 使用]]></title>
+    <url>%2Fposts%2F8d0f4649.html</url>
+    <content type="text"><![CDATA[配置淘宝npm国内访问外网是很慢的，安装NodeJS是自带的npm地址默认是：http://registry.npmjs.org，访问很慢，所以一般换成国内镜像地址。 通过config命令 123npm config set registry https://registry.npm.taobao.org/ npm info underscore#（如果配置成功，这个命令会有字符串response）npm --registry=https://registry.npm.taobao.org 命令行指定 1npm --registry https://registry.npm.taobao.org/ info underscore 编辑node_modules/npm/.npmrc加入下面内容 1registry = https://registry.npm.taobao.org/ 如果上面的npm地址不行的话，可以试试淘宝的npmhttps://registry.npm.taobao.org 123npm set registry https://registry.npm.taobao.org/# 或者npm --registry https://registry.npm.taobao.org/ info underscore 下载路径在安装完nodejs后，npm install -g jshint是被安装在默认路径（C:\Users\用户名\AppData\Roaming\npm）下的 可以通过修改nodejs安装路径下的node_modules/npm/.npmrc文件prefix=D:\MyTools\nodejs\node_global （修改全局路径）cache=D:\MyTools\nodejs\node_cache （修改全局路径） 请注意prefix、cache不能设置成一样的路径，否则通过npm安装模块时，会报错 npm 使用123456789# -S 是--save 的缩写，它可以让你安装的模块记录到package.json文件当中npm install -S xxx# 这是删除模块，也可以删除全局模块npm uninstall xxxnpm uninstall -g xxx# -D就是--save-dev 这样安装的包的名称及版本号就会存在package.json的devDependencies这个里面，而--save会将包的名称及版本号放在dependencies里面npm install -D xxx npm registry 设置1234567891011121314$ npm install -g nrm$ nrm lsD:\Workspace\vuejs-project&gt;nrm ls* npm ---- https://registry.npmjs.org/ cnpm --- http://r.cnpmjs.org/ taobao - https://registry.npm.taobao.org/ nj ----- https://registry.nodejitsu.com/ rednpm - http://registry.mirror.cqupt.edu.cn/ npmMirror https://skimdb.npmjs.com/registry/ edunpm - http://registry.enpmjs.org/# 切换源$ nrm use taobaoRegistry has been set to: https://registry.npm.taobao.org/ npm-check检查依赖包版本123456# 安装 npm-checknpm install -g npm-check# 检查 npm 包版本npm-check -u -gnpm-check -u -Snpm-check -u -D]]></content>
+      <categories>
+        <category>nodejs</category>
+      </categories>
+      <tags>
+        <tag>npm</tag>
+        <tag>cnpm</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[xampp 安装 memcache 监控]]></title>
     <url>%2Fposts%2Fd01399d3.html</url>
     <content type="text"><![CDATA[xampp安装memcache监控现在 memadmin下载memadmin，解压到xampp/htdocs下 查看 php 版本信息123&lt;?php echo phpinfo();?&gt; 下载 php-memcache.dll根据查看到的php的信息，在php-memcache下载对应本版的Thread Safe，里面包含了php-memcache.dll。 解压下载包，然后把php-memcache.dll拷贝到xampp/php/ext下 在xampp/php/php.ini最后添加以下内容12345678;php-memcachedextension=php_memcache.dll[Memcache]memcache.allow_failover = 1memcache.max_failover_attempts=20memcache.chunk_size =8192memcache.default_port = 11211 访问 memadminhttp://host:port/memadmin]]></content>
@@ -1363,18 +1375,6 @@
         <tag>xampp</tag>
         <tag>memcache</tag>
         <tag>php</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[nodejs 使用]]></title>
-    <url>%2Fposts%2F8d0f4649.html</url>
-    <content type="text"><![CDATA[配置淘宝npm国内访问外网是很慢的，安装NodeJS是自带的npm地址默认是：http://registry.npmjs.org，访问很慢，所以一般换成国内镜像地址。 通过config命令 123npm config set registry https://registry.npm.taobao.org/ npm info underscore#（如果配置成功，这个命令会有字符串response）npm --registry=https://registry.npm.taobao.org 命令行指定 1npm --registry https://registry.npm.taobao.org/ info underscore 编辑node_modules/npm/.npmrc加入下面内容 1registry = https://registry.npm.taobao.org/ 如果上面的npm地址不行的话，可以试试淘宝的npmhttps://registry.npm.taobao.org 123npm set registry https://registry.npm.taobao.org/# 或者npm --registry https://registry.npm.taobao.org/ info underscore 下载路径在安装完nodejs后，npm install -g jshint是被安装在默认路径（C:\Users\用户名\AppData\Roaming\npm）下的 可以通过修改nodejs安装路径下的node_modules/npm/.npmrc文件prefix=D:\MyTools\nodejs\node_global （修改全局路径）cache=D:\MyTools\nodejs\node_cache （修改全局路径） 请注意prefix、cache不能设置成一样的路径，否则通过npm安装模块时，会报错 npm 使用123456789# -S 是--save 的缩写，它可以让你安装的模块记录到package.json文件当中npm install -S xxx# 这是删除模块，也可以删除全局模块npm uninstall xxxnpm uninstall -g xxx# -D就是--save-dev 这样安装的包的名称及版本号就会存在package.json的devDependencies这个里面，而--save会将包的名称及版本号放在dependencies里面npm install -D xxx npm registry 设置1234567891011121314$ npm install -g nrm$ nrm lsD:\Workspace\vuejs-project&gt;nrm ls* npm ---- https://registry.npmjs.org/ cnpm --- http://r.cnpmjs.org/ taobao - https://registry.npm.taobao.org/ nj ----- https://registry.nodejitsu.com/ rednpm - http://registry.mirror.cqupt.edu.cn/ npmMirror https://skimdb.npmjs.com/registry/ edunpm - http://registry.enpmjs.org/# 切换源$ nrm use taobaoRegistry has been set to: https://registry.npm.taobao.org/ npm-check检查依赖包版本123456# 安装 npm-checknpm install -g npm-check# 检查 npm 包版本npm-check -u -gnpm-check -u -Snpm-check -u -D]]></content>
-      <categories>
-        <category>nodejs</category>
-      </categories>
-      <tags>
-        <tag>npm</tag>
-        <tag>cnpm</tag>
       </tags>
   </entry>
   <entry>
@@ -1456,6 +1456,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[使用RSA注意事项]]></title>
+    <url>%2Fposts%2Fef742936.html</url>
+    <content type="text"><![CDATA[比较以下两种写法12// 第一种：这种写法会造成内存溢出Cipher cipher = Cipher.getInstance("RSA", new BouncyCastleProvider()); 123456// 第二种：推荐这种写法// BC可用BouncyCastleProvider.PROVIDER_NAME代替if (StringUtils.isNullOrEmpty(Security.getProperty("BC"))) &#123; Security.addProvider(new BouncyCastleProvider());&#125;Cipher cipher = Cipher.getInstance("RSA", "BC"); 还有一种写法是要替换jdk的jar包，不推荐 要依赖bcprov-jdk16包12345&lt;dependency&gt; &lt;groupId&gt;org.bouncycastle&lt;/groupId&gt; &lt;artifactId&gt;bcprov-jdk16&lt;/artifactId&gt; &lt;version&gt;1.46&lt;/version&gt;&lt;/dependency&gt;]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>RSA</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[store.js的使用]]></title>
     <url>%2Fposts%2F78a81828.html</url>
     <content type="text"><![CDATA[基于store.js实现localStorage缓存过期策略 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150151152153154155156157158159160161162163164165166167168169170171172173174175176177178179180181182183184185186187188189190191192193194195196197198199200201202203204205206207208209210211212213214215216217218219220221222223224225226227228229230231232233234235236237238239240241242243244245246"use strict";(function(s) &#123; /** * 判断是否支持localStorage本地存储 */ if (!s.enabled) &#123; console.error('localStorage is not supported by your browser.') return; &#125; /** * 规定日期格式 * 比如：yyyy年MM月dd日 HH:mm:ss S、yyyy-MM-dd HH:mm:ss S...... */ function _checkFormat(fmt) &#123; if (!/^y+[\u5e74-]?M+[\u6708-]?(d+)[\u65e5]? H+[\u65f6:]?m+[\u5206:]?s+[\u79d2]?(( S)?)$/.test(fmt)) &#123; throw new Error('"' + fmt + '" is not supported by the format.'); return false; &#125; return true; &#125; /** * 时间格式化：时间毫秒数、Date对象 ---&gt; 时间字符串 默认格式化格式：yyyy-MM-dd HH:mm:ss */ function _date2str(str, fmt) &#123; if (fmt === undefined) &#123; fmt = 'yyyy-MM-dd HH:mm:ss'; &#125; _checkFormat(fmt); var date; if (typeof str === 'number') &#123; date = new Date(str); &#125; else if (_isValidDate(str)) &#123; date = str; &#125; var o = &#123; 'M+' : date.getMonth() + 1, // 月 'd+' : date.getDate(), // 日 'H+' : date.getHours(), // 小时（24小时制） 'm+' : date.getMinutes(), // 分 's+' : date.getSeconds(), // 秒 'S' : date.getMilliseconds() // 毫秒 &#125;; if (/(y+)/.test(fmt)) &#123; fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '') .substr(4 - RegExp.$1.length)); &#125; for ( var k in o) &#123; if (new RegExp('(' + k + ')').test(fmt)) &#123; fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length))); &#125; &#125; return fmt; &#125; /** * 时间格式化：将时间字符串 ---&gt; Date对象 默认格式化格式：yyyy-MM-dd HH:mm:ss，使用中文不能格式化 */ function _str2date(str, fmt) &#123; if (fmt === undefined) &#123; fmt = 'yyyy-MM-dd HH:mm:ss'; &#125; _checkFormat(fmt); var o = [ 'y+', // 年 'M+', // 月 'd+', // 日 'H+', // 小时（24小时制） 'm+', // 分 's+', // 秒 'S' // 毫秒 ]; var date = new Date(); for (var k = 0; k &lt; o.length; k++) &#123; var s = o[k]; if (new RegExp('(' + s + ')').test(fmt)) &#123; var r = RegExp.$1; var rl = RegExp.$1.length; var si = fmt.indexOf(RegExp.$1); var ei = si + rl; var n = 0; if (r.indexOf('S') &gt; -1) &#123; n = parseInt(str.substr(si)); date.setMilliseconds(n); // 设置 Date 对象中的毫秒 (0 ~ 999)。 &#125; else &#123; n = parseInt(str.substring(si, ei)); if (r.indexOf('y') &gt; -1) &#123; date.setFullYear(n); // 设置 Date 对象中的年份（四位数字）。 &#125; else if (r.indexOf('M') &gt; -1) &#123; date.setMonth(n - 1); // 设置 Date 对象中月份 (0 ~ 11)。 &#125; else if (r.indexOf('d') &gt; -1) &#123; date.setDate(n); // 设置 Date 对象中月的某一天 (1 ~ 31)。 &#125; else if (r.indexOf('H') &gt; -1) &#123; date.setHours(n); // 设置 Date 对象中的小时 (0 ~ 23)。 &#125; else if (r.indexOf('m') &gt; -1) &#123; date.setMinutes(n); // 设置 Date 对象中的分钟 (0 ~ 59)。 &#125; else if (r.indexOf('s') &gt; -1) &#123; date.setSeconds(n); // 设置 Date 对象中的秒钟 (0 ~ 59)。 &#125; &#125; &#125; &#125; return date; &#125; /** * 转换：毫秒 ---&gt; 天时分秒毫秒 */ function _ms2s(ms) &#123; var s = parseInt(ms / 1000);// 秒 var m = 0;// 分 var h = 0;// 小时 var d = 0;// 天 if (s &gt;= 60) &#123; m = parseInt(s / 60); s = parseInt(s % 60); if (m &gt;= 60) &#123; h = parseInt(m / 60); m = parseInt(m % 60); if (h &gt;= 24) &#123; d = parseInt(h / 24); h = parseInt(h % 24); &#125; &#125; &#125; var str = ''; if (s &gt; 0) str = '' + parseInt(s) + '\u79d2' + str; if (m &gt; 0) str = '' + parseInt(m) + '\u5206' + str; if (h &gt; 0) str = '' + parseInt(h) + '\u5c0f\u65f6' + str; if (d &gt; 0) str = '' + parseInt(d) + '\u5929' + str; return str; &#125; /** * 设置有效时间，返回对象 */ function VConstructor(val, exp) &#123; var item = &#123;&#125;; // 创建时间、有效时间 var createTime = (new Date()).getTime(), effectiveTime; if (typeof exp === 'number') &#123; effectiveTime = new Date(createTime + exp * 60000); &#125; else if (typeof exp === 'string') &#123; effectiveTime = _str2date(exp); &#125; if (effectiveTime &amp;&amp; !_isValidDate(effectiveTime)) &#123; throw new Error('effectiveTime cannot be converted to a valid Date instance'); &#125; effectiveTime = effectiveTime.getTime(); item['c'] = _date2str(createTime); item['e'] = _date2str(effectiveTime); item['t'] = _ms2s(effectiveTime - createTime); item['v'] = val; return item; &#125; /** * 判断是否是Date对象 */ function _isValidDate(date) &#123; return Object.prototype.toString.call(date) === '[object Date]' &amp;&amp; !isNaN(date.getTime()); &#125; /** * 判断是否设置了有效时间 */ function _hasEffective(item) &#123; if (item) &#123; if (typeof item === 'object' &amp;&amp; 'c' in item &amp;&amp; 'e' in item &amp;&amp; 'v' in item) &#123; return true; &#125; &#125; return false; &#125; /** * 判断是否是有效 */ function _isEffective(item) &#123; var ntime = (new Date()).getTime(); return ntime &lt; _str2date(item.e); &#125; /** * 判断key是否是字符串，如果不是，则转换成字符串 */ function _keyAsString(key) &#123; if (typeof key !== 'string') &#123; console.warn(key + ' used as a key, but it is not a string.'); key = String(key); &#125; return key; &#125; /** * exp 失效时间：默认为0（单位：分钟） */ s.setExp = function(key, val, exp) &#123; key = _keyAsString(key); if (exp === undefined) &#123; exp = 0; &#125; s.set(key, new VConstructor(val, exp)); &#125;; s.getExp = function(key) &#123; key = _keyAsString(key); var item = null; try &#123; item = s.get(key); &#125; catch (e) &#123; return null; &#125; if (_hasEffective(item)) &#123; if (_isEffective(item)) &#123; return item.v; &#125; else &#123; s.remove(key); return null; &#125; &#125; else &#123; return item; &#125; &#125;; s.getAllExp = function() &#123; var ret = &#123;&#125;; s.forEachExp(function(key, val) &#123; ret[key] = val; &#125;) return ret; &#125;; s.forEachExp = function(callback) &#123; var storage = s.getAll(); for ( var key in storage) &#123; callback(key, s.getExp(key)); &#125; &#125;;&#125;)(store);]]></content>
@@ -1465,17 +1476,6 @@
       <tags>
         <tag>localStorage</tag>
         <tag>store.js</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[使用RSA注意事项]]></title>
-    <url>%2Fposts%2Fef742936.html</url>
-    <content type="text"><![CDATA[比较以下两种写法12// 第一种：这种写法会造成内存溢出Cipher cipher = Cipher.getInstance("RSA", new BouncyCastleProvider()); 123456// 第二种：推荐这种写法// BC可用BouncyCastleProvider.PROVIDER_NAME代替if (StringUtils.isNullOrEmpty(Security.getProperty("BC"))) &#123; Security.addProvider(new BouncyCastleProvider());&#125;Cipher cipher = Cipher.getInstance("RSA", "BC"); 还有一种写法是要替换jdk的jar包，不推荐 要依赖bcprov-jdk16包12345&lt;dependency&gt; &lt;groupId&gt;org.bouncycastle&lt;/groupId&gt; &lt;artifactId&gt;bcprov-jdk16&lt;/artifactId&gt; &lt;version&gt;1.46&lt;/version&gt;&lt;/dependency&gt;]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>RSA</tag>
       </tags>
   </entry>
   <entry>
@@ -1572,6 +1572,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Linux安装FTP]]></title>
+    <url>%2Fposts%2F9c4dd72b.html</url>
+    <content type="text"><![CDATA[Linux安装FTPubuntu开启ftp服务安装vsftpd1、打开”终端窗口”，输入”sudo apt-get install vsftpd”–&gt;回车–&gt;安装完成。 2、判断vsftpd是否安装成功打开”终端窗口”，输入”sudo service vsftpd restart”重启vsftpd服务–&gt;回车–&gt;vsftpd处于运行状态，说明安装成功。 3、使用gedit修改配置文件/etc/vsftpd.conf打开”终端窗口”，输入”sudo gedit /etc/vsftpd.conf”–&gt;回车–&gt;打开了vsftpd.conf文设置：write_enable=YES ubuntu开启SSH服务SSH分客户端openssh-client和openssh-server如果你只是想登陆别的机器的SSH只需要安装openssh-client（ubuntu有默认安装，如果没有则sudo apt-get install openssh-client），如果要使本机开放SSH服务就需要安装openssh-serversudo apt-get install openssh-server然后确认sshserver是否启动了：ps -e |grep ssh如果看到sshd那说明ssh-server已经启动了。如果没有则可以这样启动：sudo /etc/init.d/ssh startssh-server配置文件位于/ etc/ssh/sshd_config，在这里可以定义SSH的服务端口，默认端口是22，你可以自己定义成其他端口号，如222。然后重启SSH服务：sudo /etc/init.d/ssh stopsudo /etc/init.d/ssh start然后使用以下方式登陆SSH：ssh username@192.168.1.112 username为192.168.1.112 机器上的用户，需要输入密码。断开连接：exit 最近一直在Ubuntu下用终端操作，看着他长长的路径名实在不爽， 动手来改改咯～$: sudo gedit ~/.bashrc这个文件记录了用户终端配置找到if [ “$color_prompt “ = yes ]; then PS1 =’${debian_chroot:+($debian_chroot)}[\033[01;32m]\u@\h[\033[00m]:[\033[01;34m]\W [\033[00m]\$ ‘else PS1 =’${debian_chroot:+($debian_chroot)}\u@\h:\W \$ ‘将蓝色的w由小写改成大写，可以表示只显示当前目录名称.]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>FTP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[CentOS安装JDK]]></title>
     <url>%2Fposts%2Fd08f134.html</url>
     <content type="text"><![CDATA[1、准备创建目录12$ mkdir /usr/java$ cd /usr/java 下载 jdk-8u73-linux-x64.tar.gz，解压1$ tar -zxvf jdk-8u73-linux-x64.tar.gz 会解压到 /usr/java/jdk1.8.0_73 下 2、配置环境变量(两种方式二选一配置即可)2.1 编辑 /etc/profile 文件修改 /etc/profile 文件当本机仅仅作为开发使用时推荐使用这种方法，因为此种配置时所有用户的 shell 都有权使用这些环境变量，可能会给系统带来安全性问题。1$ vi /etc/profile 增加如下内容123export JAVA_HOME=/usr/java/jdkexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH 保存退出 :wq12$ . /etc/profile$ echo $JAVA_HOME 2.2 编辑用户目录下的 .bash_profile修改 .bash_profile 文件这种方法更为安全，它可以把使用这些环境变量的权限控制到用户级别，如果需要给某个用户权限使用这些环境变量，只需要修改其个人用户主目录下的 .bash_profile 文件就可以了123export JAVA_HOME=/usr/java/jdkexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH 然后执行使之生效1source .bash_profile 可以看到 JAVA_HOME 不是指向真实的 jdk 目录 /usr/java/jdk1.8.0_73，而是指向 /usr/java/jdk 3、创建软链接为jdk真实目录创建一个命名更加间洁快捷方式123$ ln -s /usr/java/jdk1.8.0_73 /usr/java/jdk$ source /etc/profile#$ source .bash_profile 至此，配置完成]]></content>
@@ -1581,17 +1592,6 @@
       <tags>
         <tag>Java</tag>
         <tag>JDK</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux安装FTP]]></title>
-    <url>%2Fposts%2F9c4dd72b.html</url>
-    <content type="text"><![CDATA[Linux安装FTPubuntu开启ftp服务安装vsftpd1、打开”终端窗口”，输入”sudo apt-get install vsftpd”–&gt;回车–&gt;安装完成。 2、判断vsftpd是否安装成功打开”终端窗口”，输入”sudo service vsftpd restart”重启vsftpd服务–&gt;回车–&gt;vsftpd处于运行状态，说明安装成功。 3、使用gedit修改配置文件/etc/vsftpd.conf打开”终端窗口”，输入”sudo gedit /etc/vsftpd.conf”–&gt;回车–&gt;打开了vsftpd.conf文设置：write_enable=YES ubuntu开启SSH服务SSH分客户端openssh-client和openssh-server如果你只是想登陆别的机器的SSH只需要安装openssh-client（ubuntu有默认安装，如果没有则sudo apt-get install openssh-client），如果要使本机开放SSH服务就需要安装openssh-serversudo apt-get install openssh-server然后确认sshserver是否启动了：ps -e |grep ssh如果看到sshd那说明ssh-server已经启动了。如果没有则可以这样启动：sudo /etc/init.d/ssh startssh-server配置文件位于/ etc/ssh/sshd_config，在这里可以定义SSH的服务端口，默认端口是22，你可以自己定义成其他端口号，如222。然后重启SSH服务：sudo /etc/init.d/ssh stopsudo /etc/init.d/ssh start然后使用以下方式登陆SSH：ssh username@192.168.1.112 username为192.168.1.112 机器上的用户，需要输入密码。断开连接：exit 最近一直在Ubuntu下用终端操作，看着他长长的路径名实在不爽， 动手来改改咯～$: sudo gedit ~/.bashrc这个文件记录了用户终端配置找到if [ “$color_prompt “ = yes ]; then PS1 =’${debian_chroot:+($debian_chroot)}[\033[01;32m]\u@\h[\033[00m]:[\033[01;34m]\W [\033[00m]\$ ‘else PS1 =’${debian_chroot:+($debian_chroot)}\u@\h:\W \$ ‘将蓝色的w由小写改成大写，可以表示只显示当前目录名称.]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>FTP</tag>
       </tags>
   </entry>
 </search>
