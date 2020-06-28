@@ -453,7 +453,7 @@
                 
               
 
-              <time title="创建时间：2020-06-28 14:23:05 / 修改时间：14:14:18" itemprop="dateCreated datePublished" datetime="2020-06-28T14:23:05+08:00">2020-06-28</time>
+              <time title="创建时间：2020-06-28 14:23:05 / 修改时间：14:16:30" itemprop="dateCreated datePublished" datetime="2020-06-28T14:23:05+08:00">2020-06-28</time>
             
 
             
@@ -505,7 +505,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">996</span>
+                <span title="字数">1k</span>
               
 
               
@@ -554,8 +554,7 @@
 
       
         
-          
-            <ol>
+          <ol>
 <li><p>安装</p>
 <blockquote>
 <p><a href="https://hub.docker.com/r/loliconneko/oracle-ee-11g" target="_blank" rel="noopener">https://hub.docker.com/r/loliconneko/oracle-ee-11g</a></p>
@@ -563,52 +562,15 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull loliconneko/oracle-ee-11g</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<ol start="2">
-<li><p>启动</p>
-<ol>
-<li>docker run 命令</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -h "oracle" --name "oracle" -d -p 1521:1521 loliconneko/oracle-ee-11g</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li><p>docker-compost 启动</p>
-<blockquote>
-<p>oracle.yml</p>
-</blockquote>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3.1'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  oracle-ee-11g:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">loliconneko/oracle-ee-11g</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="number">1522</span><span class="string">:8080</span></span><br><span class="line"><span class="bullet">      -</span> <span class="number">1521</span><span class="string">:1521</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">/var/docker/oracle:/u01/app/oracle</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-</ol>
-<pre><code>&gt; 启动
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compost -f oracle.yml up</span><br></pre></td></tr></table></figure>
-</code></pre><ol start="3">
-<li><p>进入容器</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it &lt;container_id&gt; /bin/bash</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>登录oracle</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">命令登录</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>查看用户</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select username,password from dba_users;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>创建用户</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create user &lt;user_name&gt; identified by &lt;password&gt;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>给用户授权</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grant connect,resource to &lt;user_name&gt;;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>connect 是保证该用户能连接数据库<br>resource 是该用户可以使用数据库资源</p>
-</blockquote>
-</li>
-<li><p>删除用户</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop user deque</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>链接</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">jdbc:oracle:thin:@&lt;ip&gt;:&lt;port&gt;:EE.oracle.docker</span><br><span class="line">或者</span><br><span class="line">jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=&lt;ip&gt;)(PORT=&lt;port&gt;))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=EE.oracle.docker)))</span><br></pre></td></tr></table></figure></li>
-</ol>
-
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/ee8ba7d4.html" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
