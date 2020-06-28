@@ -112,7 +112,7 @@
 <meta property="og:site_name" content="forever杨的个人博客">
 <meta property="og:description" content="安装 https://hub.docker.com/r/loliconneko/oracle-ee-11g  1docker pull loliconneko/oracle-ee-11g">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-06-28T06:20:37.395Z">
+<meta property="og:updated_time" content="2020-06-28T06:24:02.765Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="docker 安装 Oracle">
 <meta name="twitter:description" content="安装 https://hub.docker.com/r/loliconneko/oracle-ee-11g  1docker pull loliconneko/oracle-ee-11g">
@@ -454,7 +454,7 @@
                 
               
 
-              <time title="创建时间：2020-06-28 14:23:05 / 修改时间：14:20:37" itemprop="dateCreated datePublished" datetime="2020-06-28T14:23:05+08:00">2020-06-28</time>
+              <time title="创建时间：2020-06-28 14:23:05 / 修改时间：14:24:02" itemprop="dateCreated datePublished" datetime="2020-06-28T14:23:05+08:00">2020-06-28</time>
             
 
             
@@ -513,7 +513,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">970</span>
+                <span title="字数">981</span>
               
 
               
@@ -566,23 +566,17 @@
 </blockquote>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull loliconneko/oracle-ee-11g</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<h1 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h1><ul>
-<li>docker run 命令</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -h "oracle" --name "oracle" -d -p 1521:1521 loliconneko/oracle-ee-11g</span><br></pre></td></tr></table></figure>
-<ul>
-<li>docker-compost 启动</li>
-</ul>
-<blockquote>
+<h1 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h1><h2 id="docker-run-命令"><a href="#docker-run-命令" class="headerlink" title="docker run 命令"></a>docker run 命令</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -h "oracle" --name "oracle" -d -p 1521:1521 loliconneko/oracle-ee-11g</span><br></pre></td></tr></table></figure>
+<h2 id="docker-compose-启动"><a href="#docker-compose-启动" class="headerlink" title="docker-compose 启动"></a>docker-compose 启动</h2><blockquote>
 <p>oracle.yml</p>
 </blockquote>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3.1'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  oracle-ee-11g:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">loliconneko/oracle-ee-11g</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line">      <span class="comment"># - 1522:8080</span></span><br><span class="line"><span class="bullet">      -</span> <span class="number">1521</span><span class="string">:1521</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">/var/docker/oracle:/u01/app/oracle</span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>启动</p>
 </blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compost -f oracle.yml up</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose -f oracle.yml up</span><br></pre></td></tr></table></figure>
 <h1 id="进入容器"><a href="#进入容器" class="headerlink" title="进入容器"></a>进入容器</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it &lt;container_id&gt; /bin/bash</span><br></pre></td></tr></table></figure>
-<h1 id="登录oracle"><a href="#登录oracle" class="headerlink" title="登录oracle"></a>登录oracle</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">命令登录</span><br></pre></td></tr></table></figure>
+<h1 id="登录oracle"><a href="#登录oracle" class="headerlink" title="登录oracle"></a>登录oracle</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlplus sysdba/oracle</span><br></pre></td></tr></table></figure>
 <h1 id="查看用户"><a href="#查看用户" class="headerlink" title="查看用户"></a>查看用户</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select username,password from dba_users;</span><br></pre></td></tr></table></figure>
 <h1 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create user &lt;user_name&gt; identified by &lt;password&gt;;</span><br></pre></td></tr></table></figure>
 <h1 id="给用户授权"><a href="#给用户授权" class="headerlink" title="给用户授权"></a>给用户授权</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grant connect,resource to &lt;user_name&gt;;</span><br></pre></td></tr></table></figure>
@@ -1108,7 +1102,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启动"><span class="nav-number">2.</span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进入容器"><span class="nav-number">3.</span> <span class="nav-text">进入容器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#登录oracle"><span class="nav-number">4.</span> <span class="nav-text">登录oracle</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查看用户"><span class="nav-number">5.</span> <span class="nav-text">查看用户</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建用户"><span class="nav-number">6.</span> <span class="nav-text">创建用户</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#给用户授权"><span class="nav-number">7.</span> <span class="nav-text">给用户授权</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#删除用户"><span class="nav-number">8.</span> <span class="nav-text">删除用户</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#链接"><span class="nav-number">9.</span> <span class="nav-text">链接</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启动"><span class="nav-number">2.</span> <span class="nav-text">启动</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-run-命令"><span class="nav-number">2.1.</span> <span class="nav-text">docker run 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-compose-启动"><span class="nav-number">2.2.</span> <span class="nav-text">docker-compose 启动</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进入容器"><span class="nav-number">3.</span> <span class="nav-text">进入容器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#登录oracle"><span class="nav-number">4.</span> <span class="nav-text">登录oracle</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查看用户"><span class="nav-number">5.</span> <span class="nav-text">查看用户</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建用户"><span class="nav-number">6.</span> <span class="nav-text">创建用户</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#给用户授权"><span class="nav-number">7.</span> <span class="nav-text">给用户授权</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#删除用户"><span class="nav-number">8.</span> <span class="nav-text">删除用户</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#链接"><span class="nav-number">9.</span> <span class="nav-text">链接</span></a></li></ol></div>
             
 
           </div>
