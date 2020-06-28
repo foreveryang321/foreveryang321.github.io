@@ -251,7 +251,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">141</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">143</span></a>
 
   </li>
         
@@ -392,6 +392,440 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/53575a2a.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/53575a2a.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/8/index.html">shiro密码加密</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-08-16 14:07:09" itemprop="dateCreated datePublished" datetime="2017-08-16T14:07:09+08:00">2017-08-16</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-06-03 10:15:59" itemprop="dateModified" datetime="2018-06-03T10:15:59+08:00">2018-06-03</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数：</span>
+                
+                <span title="字数">756</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/shiro/" rel="tag" class="color1">shiro</a>
+        
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>shiro密码加密<br>@Bean<br>public MyShiroRealm myShiroRealm(){<br>    MyShiroRealm myShiroRealm = new MyShiroRealm();<br>    myShiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());<br>    return myShiroRealm;<br>}</p>
+<p>@Bean<br>public HashedCredentialsMatcher hashedCredentialsMatcher(){<br>    HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();<br>    hashedCredentialsMatcher.setHashAlgorithmName(“md5”);//散列算法:这里使用MD5算法;<br>    hashedCredentialsMatcher.setHashIterations(2);//散列的次数，比如散列两次，相当于 md5(md5(“”));<br>    return hashedCredentialsMatcher;<br>}</p>
+<p>public void encryptPassword(User user) {<br>    String newPassword = new SimpleHash(algorithmName, user.getPassword(),  ByteSource.Util.bytesuser.getUsername()), hashIterations).toHex();<br>    user.setPassword(newPassword);<br>}</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/b7ca9e0f.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/b7ca9e0f.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/8/index.html">IntelliJ IDEA 插件</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-08-02 11:07:09" itemprop="dateCreated datePublished" datetime="2017-08-02T11:07:09+08:00">2017-08-02</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-06-03 10:09:49" itemprop="dateModified" datetime="2018-06-03T10:09:49+08:00">2018-06-03</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Intellij/" itemprop="url" rel="index"><span itemprop="name">Intellij</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数：</span>
+                
+                <span title="字数">223</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/Maven/" rel="tag" class="color1">Maven</a>
+        
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>windows环境下，Intellij idea12中maven操作时，控制台中文乱码问题（编译报错或者clean install时出现的其他错误描述乱码）</p>
+<p>在cmd中mvn中文正常显示,log4j打印日志也是ok的。</p>
+<p>解决方法：</p>
+<p>Setting -&gt; maven -&gt; runner<br>VMoptions: -Dfile.encoding=UTF-8</p>
+<p>在idea的vm.propertis加入<br>-Dfile.encoding=UTF-8</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -3258,463 +3692,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/9b6062f9.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/9b6062f9.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/8/index.html">Sublime Text 3 的一些常用插件</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-07-07 08:45:42" itemprop="dateCreated datePublished" datetime="2017-07-07T08:45:42+08:00">2017-07-07</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-05-17 10:52:41" itemprop="dateModified" datetime="2018-05-17T10:52:41+08:00">2018-05-17</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Sublime-Text/" itemprop="url" rel="index"><span itemprop="name">Sublime Text</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数：</span>
-                
-                <span title="字数">2.9k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">3 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
-        <span class="post-meta-item-icon">
-          <i class="fa fa-tags"></i>
-        </span>
-        <span class="post-meta-item-text">标签</span>
-        
-           <a href="/tags/plugins/" rel="tag" class="color1">plugins</a>
-        
-      </div>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="Sublime-Text-3-的一些常用插件"><a href="#Sublime-Text-3-的一些常用插件" class="headerlink" title="Sublime Text 3 的一些常用插件"></a>Sublime Text 3 的一些常用插件</h1><p>[TOC]</p>
-<h2 id="Administrative"><a href="#Administrative" class="headerlink" title="Administrative"></a>Administrative</h2><p>These plugins are kind of ‘meta’ because they are not concerned with writing code.</p>
-<ul>
-<li>Package Control<br>This package enables you to install other packages. Since build 3124, you can install it within Sublime via Tools ➡ Install Package Control.</li>
-<li>AdvancedNewFile<br>A better way to create new files. For instance, it automatically creates a folder when needed.</li>
-<li>SideBarEnhacements<br>Adds features such as renaming to the sidebar.</li>
-<li>A File Icon<br>Add icons to the files in the sidebar.</li>
-<li>ProjectManager<br>Organizing project files by putting them in a central location.</li>
-<li>TodoReview<br>Scans files for TODOs and more.</li>
-<li>FindKeyConflicts<br>Key conflicts are inevitably when you use a lot of plugins.</li>
-<li>Editor Config<br>Maintain consistent coding styles between different editors.</li>
-<li>Sync Settings<br>Keep settings in sync via Github-Gist.</li>
-</ul>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/9b6062f9.html" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-         
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/d01399d3.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/d01399d3.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/8/index.html">xampp 安装 memcache 监控</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-07-07 08:43:05" itemprop="dateCreated datePublished" datetime="2017-07-07T08:43:05+08:00">2017-07-07</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-05-17 10:51:11" itemprop="dateModified" datetime="2018-05-17T10:51:11+08:00">2018-05-17</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/memcache/" itemprop="url" rel="index"><span itemprop="name">memcache</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数：</span>
-                
-                <span title="字数">470</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
-        <span class="post-meta-item-icon">
-          <i class="fa fa-tags"></i>
-        </span>
-        <span class="post-meta-item-text">标签</span>
-        
-           <a href="/tags/xampp/" rel="tag" class="color1">xampp</a>
-        
-           <a href="/tags/memcache/" rel="tag" class="color2">memcache</a>
-        
-           <a href="/tags/php/" rel="tag" class="color3">php</a>
-        
-      </div>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="xampp安装memcache监控"><a href="#xampp安装memcache监控" class="headerlink" title="xampp安装memcache监控"></a>xampp安装memcache监控</h1><h2 id="现在-memadmin"><a href="#现在-memadmin" class="headerlink" title="现在 memadmin"></a>现在 memadmin</h2><p>下载<a href="https://github.com/foreveryang321/memadmin" target="_blank" rel="noopener">memadmin</a>，解压到<code>xampp/htdocs</code>下</p>
-<h2 id="查看-php-版本信息"><a href="#查看-php-版本信息" class="headerlink" title="查看 php 版本信息"></a>查看 php 版本信息</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="keyword">echo</span> phpinfo();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/d01399d3.html" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-         
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3764,7 +3741,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">141</span>
+                    <span class="site-state-item-count">143</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -4155,7 +4132,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">488k</span>
+    <span title="站点总字数">495k</span>
   
 
   
