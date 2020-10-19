@@ -104,18 +104,18 @@
 
 
 
-  <meta name="description" content="Linux安装FTPubuntu开启ftp服务安装vsftpd1、打开”终端窗口”，输入”sudo apt-get install vsftpd”–&amp;gt;回车–&amp;gt;安装完成。 2、判断vsftpd是否安装成功打开”终端窗口”，输入”sudo service vsftpd restart”重启vsftpd服务–&amp;gt;回车–&amp;gt;vsftpd处于运行状态，说明安装成功。 3、使用gedit修">
-<meta name="keywords" content="FTP">
+  <meta name="description" content="安装vsftpd 检测是否已经安装vsftpd 123$ rpm -qa|grep vsftpd# 有打印信息说明已经安装，信息格式如下：vsftpd-3.0.2-27.el7.x86_64  如果已经安装，则可以更新，或者删除重新安装   安装 123456# 使用 yum 安装 vsftpd$ yum install vsftpd# 设置开机启动vsftpd服务$ chkconfig vsft">
+<meta name="keywords" content="vsftpd,FTP,CentOS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux安装FTP">
+<meta property="og:title" content="CentOS 部署 FTP 服务">
 <meta property="og:url" content="https://blog.yl-online.top/posts/9c4dd72b.html">
 <meta property="og:site_name" content="forever杨的个人博客">
-<meta property="og:description" content="Linux安装FTPubuntu开启ftp服务安装vsftpd1、打开”终端窗口”，输入”sudo apt-get install vsftpd”–&amp;gt;回车–&amp;gt;安装完成。 2、判断vsftpd是否安装成功打开”终端窗口”，输入”sudo service vsftpd restart”重启vsftpd服务–&amp;gt;回车–&amp;gt;vsftpd处于运行状态，说明安装成功。 3、使用gedit修">
+<meta property="og:description" content="安装vsftpd 检测是否已经安装vsftpd 123$ rpm -qa|grep vsftpd# 有打印信息说明已经安装，信息格式如下：vsftpd-3.0.2-27.el7.x86_64  如果已经安装，则可以更新，或者删除重新安装   安装 123456# 使用 yum 安装 vsftpd$ yum install vsftpd# 设置开机启动vsftpd服务$ chkconfig vsft">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-05-17T02:49:28.599Z">
+<meta property="og:updated_time" content="2020-10-19T06:55:03.430Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux安装FTP">
-<meta name="twitter:description" content="Linux安装FTPubuntu开启ftp服务安装vsftpd1、打开”终端窗口”，输入”sudo apt-get install vsftpd”–&amp;gt;回车–&amp;gt;安装完成。 2、判断vsftpd是否安装成功打开”终端窗口”，输入”sudo service vsftpd restart”重启vsftpd服务–&amp;gt;回车–&amp;gt;vsftpd处于运行状态，说明安装成功。 3、使用gedit修">
+<meta name="twitter:title" content="CentOS 部署 FTP 服务">
+<meta name="twitter:description" content="安装vsftpd 检测是否已经安装vsftpd 123$ rpm -qa|grep vsftpd# 有打印信息说明已经安装，信息格式如下：vsftpd-3.0.2-27.el7.x86_64  如果已经安装，则可以更新，或者删除重新安装   安装 123456# 使用 yum 安装 vsftpd$ yum install vsftpd# 设置开机启动vsftpd服务$ chkconfig vsft">
 
 
 
@@ -132,7 +132,7 @@
   };
 </script>
 
-  <title>Linux安装FTP | forever杨的个人博客</title>
+  <title>CentOS 部署 FTP 服务 | forever杨的个人博客</title>
   
 
 
@@ -252,7 +252,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">143</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">164</span></a>
 
   </li>
         
@@ -271,7 +271,7 @@
       
     
 
-    <a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">23</span></a>
+    <a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">26</span></a>
 
   </li>
         
@@ -290,7 +290,7 @@
       
     
 
-    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">113</span></a>
+    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">132</span></a>
 
   </li>
         
@@ -428,7 +428,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Linux安装FTP
+          <h2 class="post-title" itemprop="name headline">CentOS 部署 FTP 服务
 
               
             
@@ -471,7 +471,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-05-17 10:49:28" itemprop="dateModified" datetime="2018-05-17T10:49:28+08:00">2018-05-17</time>
+                <time title="修改时间：2020-10-19 14:55:03" itemprop="dateModified" datetime="2020-10-19T14:55:03+08:00">2020-10-19</time>
               
             
           </span>
@@ -525,7 +525,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">1.1k</span>
+                <span title="字数">1.2k</span>
               
 
               
@@ -557,7 +557,11 @@
         </span>
         <span class="post-meta-item-text">标签</span>
         
-           <a href="/tags/FTP/" rel="tag" class="color1">FTP</a>
+           <a href="/tags/vsftpd/" rel="tag" class="color1">vsftpd</a>
+        
+           <a href="/tags/FTP/" rel="tag" class="color2">FTP</a>
+        
+           <a href="/tags/CentOS/" rel="tag" class="color3">CentOS</a>
         
       </div>
     
@@ -571,12 +575,29 @@
       
 
       
-        <h1 id="Linux安装FTP"><a href="#Linux安装FTP" class="headerlink" title="Linux安装FTP"></a>Linux安装FTP</h1><p>ubuntu开启ftp服务<br>安装vsftpd<br>1、打开”终端窗口”，输入”sudo apt-get install vsftpd”–&gt;回车–&gt;安装完成。</p>
-<p>2、判断vsftpd是否安装成功<br>打开”终端窗口”，输入”sudo service vsftpd restart”重启vsftpd服务–&gt;回车–&gt;vsftpd处于运行状态，说明安装成功。</p>
-<p>3、使用gedit修改配置文件/etc/vsftpd.conf<br>打开”终端窗口”，输入”sudo gedit /etc/vsftpd.conf”–&gt;回车–&gt;打开了vsftpd.conf文<br>设置：write_enable=YES</p>
-<p>ubuntu开启SSH服务<br>SSH分客户端openssh-client和openssh-server<br>如果你只是想登陆别的机器的SSH只需要安装openssh-client（ubuntu有默认安装，如果没有则sudo apt-get install openssh-client），如果要使本机开放SSH服务就需要安装openssh-server<br>sudo apt-get install openssh-server<br>然后确认sshserver是否启动了：<br>ps -e |grep ssh<br>如果看到sshd那说明ssh-server已经启动了。<br>如果没有则可以这样启动：sudo /etc/init.d/ssh start<br>ssh-server配置文件位于/ etc/ssh/sshd_config，在这里可以定义SSH的服务端口，默认端口是22，你可以自己定义成其他端口号，如222。<br>然后重启SSH服务：<br>sudo /etc/init.d/ssh stop<br>sudo /etc/init.d/ssh start<br>然后使用以下方式登陆SSH：<br>ssh <a href="mailto:username@192.168.1.112" target="_blank" rel="noopener">username@192.168.1.112</a> username为192.168.1.112 机器上的用户，需要输入密码。<br>断开连接：exit</p>
-<p>最近一直在Ubuntu下用终端操作，看着他长长的路径名实在不爽， 动手来改改咯～<br>$: sudo gedit ~/.bashrc<br>这个文件记录了用户终端配置<br>找到<br>if [ “$color_prompt “ = yes ]; then<br>    PS1 =’${debian_chroot:+($debian_chroot)}[\033[01;32m]\u@\h[\033[00m]:[\033[01;34m]\W [\033[00m]\$ ‘<br>else<br>    PS1 =’${debian_chroot:+($debian_chroot)}\u@\h:\W \$ ‘<br>将蓝色的w由小写改成大写，可以表示只显示当前目录名称.</p>
-
+        <h1 id="安装vsftpd"><a href="#安装vsftpd" class="headerlink" title="安装vsftpd"></a>安装vsftpd</h1><ul>
+<li><p>检测是否已经安装<code>vsftpd</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> rpm -qa|grep vsftpd</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 有打印信息说明已经安装，信息格式如下：</span></span><br><span class="line">vsftpd-3.0.2-27.el7.x86_64</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果已经安装，则可以更新，或者删除重新安装</p>
+</blockquote>
+</li>
+<li><p>安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 使用 yum 安装 vsftpd</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> yum install vsftpd</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 设置开机启动vsftpd服务</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> chkconfig vsftpd on</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 启动vsftpd服务</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> service vsftpd start</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置防火墙</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 打开/etc/sysconfig/iptables文件</span></span><br><span class="line">vi /etc/sysconfig/iptables </span><br><span class="line"><span class="meta">#</span><span class="bash"> 在REJECT行之前添加如下代码</span></span><br><span class="line">-A RH-Firewall-1-INPUT -m state --state NEW -m tcp -p tcp --dport 21 -j ACCEPT</span><br><span class="line"><span class="meta">#</span><span class="bash"> 保存和关闭文件，重启防火墙</span></span><br><span class="line">service iptables restart</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>vsftpd配置</p>
+<blockquote>
+<p>在/etc/vsftpd/vsftpd.conf文件修改以下配置</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 禁止匿名用户anonymous登录</span></span><br><span class="line">anonymous_enable=NO</span><br><span class="line"><span class="meta">#</span><span class="bash"> 设置的文件里，是被chroot的用户(无法向上改变目录)</span></span><br><span class="line">chroot_local_user=YES</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 创建用户</span></span><br><span class="line">sudo useradd test_user -s /sbin/nologin</span><br><span class="line"><span class="meta">#</span><span class="bash"> 为用户配置密码，按提示输入两遍密码即可</span></span><br><span class="line">sudo passwd test_user</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 在用户目录下创建目录文件，并赋权给用户</span></span><br><span class="line">sudo mkdir -p /home/test_user/test_dir</span><br><span class="line">sudo chown test_user:test_user /home/test_user/test_dir</span><br></pre></td></tr></table></figure>
+<h1 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 删除用户，会连带/home/test_user目录一起删除</span></span><br><span class="line">userdel -rf test_user</span><br></pre></td></tr></table></figure>
+<h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 启动 ftp 服务</span></span><br><span class="line">service vsftpd start</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看 ftp 服务状态</span></span><br><span class="line">service vsftpd status </span><br><span class="line"><span class="meta">#</span><span class="bash"> 重启 ftp 服务</span></span><br><span class="line">service vsftpd restart</span><br><span class="line"><span class="meta">#</span><span class="bash"> 关闭 ftp 服务</span></span><br><span class="line">service vsftpd stop</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 在 CentOS 7.x版本使用以下命令</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 启动 ftp 服务</span></span><br><span class="line">service start vsftpd.service</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看 ftp 服务状态</span></span><br><span class="line">systemctl status vsftpd.service</span><br><span class="line"><span class="meta">#</span><span class="bash"> 重启 ftp 服务</span></span><br><span class="line">systemctl restart vsftpd.service</span><br><span class="line"><span class="meta">#</span><span class="bash"> 关闭 ftp 服务</span></span><br><span class="line">systemctl stop vsftpd.service</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -609,7 +630,7 @@
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
     
-    <a href="https://blog.yl-online.top/posts/9c4dd72b.html" title="Linux安装FTP">https://blog.yl-online.top/posts/9c4dd72b.html</a>
+    <a href="https://blog.yl-online.top/posts/9c4dd72b.html" title="CentOS 部署 FTP 服务">https://blog.yl-online.top/posts/9c4dd72b.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。如果文章内容对你有用，请记录到你的笔记中。本博客站点随时会停止服务，请不要收藏、转载！</li>
@@ -622,7 +643,11 @@
       
         <div class="post-tags">
           
+            <a href="/tags/vsftpd/" rel="tag"># vsftpd</a>
+          
             <a href="/tags/FTP/" rel="tag"># FTP</a>
+          
+            <a href="/tags/CentOS/" rel="tag"># CentOS</a>
           
         </div>
       
@@ -635,14 +660,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/posts/d08f134.html" rel="next" title="CentOS安装JDK">
+                <i class="fa fa-chevron-left"></i> CentOS安装JDK
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/posts/d08f134.html" rel="prev" title="CentOS安装JDK">
-                CentOS安装JDK <i class="fa fa-chevron-right"></i>
+              <a href="/posts/9af5b5dc.html" rel="prev" title="CentOS 7 Firewall防火墙配置">
+                CentOS 7 Firewall防火墙配置 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -719,7 +748,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">143</span>
+                    <span class="site-state-item-count">164</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -778,7 +807,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">23</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">26</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1017,7 +1052,45 @@
                     
                       
                     
-                    <span class="site-state-item-count">113</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">132</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1092,7 +1165,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux安装FTP"><span class="nav-number">1.</span> <span class="nav-text">Linux安装FTP</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装vsftpd"><span class="nav-number">1.</span> <span class="nav-text">安装vsftpd</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建用户"><span class="nav-number">2.</span> <span class="nav-text">创建用户</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#删除用户"><span class="nav-number">3.</span> <span class="nav-text">删除用户</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用命令"><span class="nav-number">4.</span> <span class="nav-text">常用命令</span></a></li></ol></div>
             
 
           </div>
@@ -1126,7 +1199,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">495k</span>
+    <span title="站点总字数">526k</span>
   
 
   

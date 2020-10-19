@@ -251,7 +251,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">143</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">164</span></a>
 
   </li>
         
@@ -270,7 +270,7 @@
       
     
 
-    <a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">23</span></a>
+    <a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">26</span></a>
 
   </li>
         
@@ -289,7 +289,7 @@
       
     
 
-    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">113</span></a>
+    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">132</span></a>
 
   </li>
         
@@ -408,7 +408,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/ba3065f8.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/90506ac1.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
@@ -428,7 +428,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/posts/ba3065f8.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">spring-boot 事件监听 ApplicationListener</a>
+                <a href="/posts/90506ac1.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">Dubbo 多协议配置</a>
               
             
           </h2>
@@ -453,7 +453,7 @@
                 
               
 
-              <time title="创建时间：2018-07-06 16:11:20" itemprop="dateCreated datePublished" datetime="2018-07-06T16:11:20+08:00">2018-07-06</time>
+              <time title="创建时间：2018-09-18 10:35:05" itemprop="dateCreated datePublished" datetime="2018-09-18T10:35:05+08:00">2018-09-18</time>
             
 
             
@@ -470,7 +470,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-28 18:01:17" itemprop="dateModified" datetime="2019-08-28T18:01:17+08:00">2019-08-28</time>
+                <time title="修改时间：2019-02-21 14:31:46" itemprop="dateModified" datetime="2019-02-21T14:31:46+08:00">2019-02-21</time>
               
             
           </span>
@@ -517,7 +517,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">5.4k</span>
+                <span title="字数">2.5k</span>
               
 
               
@@ -531,7 +531,7 @@
                 
                   <span class="post-meta-item-text">时长 &asymp;</span>
                 
-                <span title="时长">5 分钟</span>
+                <span title="时长">2 分钟</span>
               
             </div>
           
@@ -551,6 +551,12 @@
         
            <a href="/tags/spring-boot/" rel="tag" class="color1">spring-boot</a>
         
+           <a href="/tags/Apache/" rel="tag" class="color2">Apache</a>
+        
+           <a href="/tags/alibaba/" rel="tag" class="color3">alibaba</a>
+        
+           <a href="/tags/Dubbo/" rel="tag" class="color4">Dubbo</a>
+        
       </div>
     
 
@@ -564,17 +570,15 @@
 
       
         
-          <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>SpringBoot 为 ApplicationContextEvent 提供了四种事件：</p>
-<ul>
-<li>ApplicationStartedEvent ：spring boot 启动开始时执行的事件</li>
-<li>ApplicationEnvironmentPreparedEvent：spring boot 对应 Enviroment 已经准备完毕，但此时上下文 context 还没有创建</li>
-<li>ApplicationPreparedEvent：spring boot 上下文 context 创建完成，但此时 spring 中的 bean 是没有完全加载完成的</li>
-<li>ApplicationFailedEvent：spring boot启动异常时执行事件</li>
-</ul>
+          <p>本文主要阐述，<a href="http://dubbo.apache.org/zh-cn/" target="_blank" rel="noopener">Dubbo</a> 多协议、单协议多端口实现</p>
+<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><p>dubbo 2.6.5、2.7.0</p>
+<p>dubbo-spring-boot-starter 0.2.0</p>
+<h1 id="多协议实现"><a href="#多协议实现" class="headerlink" title="多协议实现"></a>多协议实现</h1><h2 id="在-application-yml-中添加如下配置"><a href="#在-application-yml-中添加如下配置" class="headerlink" title="在 application.yml 中添加如下配置"></a>在 application.yml 中添加如下配置</h2><p>首先要开启多协议的配置开关，再通过 protocols 指定多协议</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">dubbo:</span></span><br><span class="line"><span class="attr">  config:</span></span><br><span class="line">  	<span class="comment"># 开启多个配置绑定</span></span><br><span class="line"><span class="attr">    multiple:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># 多协议配置</span></span><br><span class="line"><span class="attr">  protocols:</span></span><br><span class="line"><span class="attr">    dubbo:</span></span><br><span class="line"><span class="attr">      name:</span> <span class="string">dubbo</span></span><br><span class="line"><span class="attr">      port:</span> <span class="number">20885</span></span><br><span class="line"><span class="attr">      server:</span> <span class="string">netty4</span></span><br><span class="line"><span class="attr">    rest:</span></span><br><span class="line"><span class="attr">      name:</span> <span class="string">rest</span></span><br><span class="line"><span class="attr">      port:</span> <span class="number">8080</span></span><br><span class="line"><span class="attr">      server:</span> <span class="string">netty</span></span><br></pre></td></tr></table></figure>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/posts/ba3065f8.html" rel="contents">
+              <a class="btn" href="/posts/90506ac1.html" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -634,7 +638,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/a56434f6.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/6fffbcc4.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
@@ -654,7 +658,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/posts/a56434f6.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">返回 JSON 格式数据，Long 前端精准度丢失问题</a>
+                <a href="/posts/6fffbcc4.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">docker 安装 redis</a>
               
             
           </h2>
@@ -679,24 +683,12 @@
                 
               
 
-              <time title="创建时间：2018-06-14 13:11:20" itemprop="dateCreated datePublished" datetime="2018-06-14T13:11:20+08:00">2018-06-14</time>
+              <time title="创建时间：2018-09-05 14:32:48 / 修改时间：17:00:37" itemprop="dateCreated datePublished" datetime="2018-09-05T14:32:48+08:00">2018-09-05</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-07-06 17:17:36" itemprop="dateModified" datetime="2018-07-06T17:17:36+08:00">2018-07-06</time>
               
             
           </span>
@@ -713,7 +705,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/redis/" itemprop="url" rel="index"><span itemprop="name">redis</span></a></span>
 
                 
                 
@@ -743,217 +735,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">3.4k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">3 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="配置-HttpMessageConverter"><a href="#配置-HttpMessageConverter" class="headerlink" title="配置 HttpMessageConverter"></a>配置 HttpMessageConverter</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebMvcConfig</span> <span class="keyword">extends</span> <span class="title">WebMvcConfigurerAdapter</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configureMessageConverters</span><span class="params">(List&lt;HttpMessageConverter&lt;?&gt;&gt; converters)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 返回 JSON，Long 前端精准度丢失问题</span></span><br><span class="line">        MappingJackson2HttpMessageConverter converter = <span class="keyword">new</span> MappingJackson2HttpMessageConverter();</span><br><span class="line">        ObjectMapper mapper = <span class="keyword">new</span> ObjectMapper();</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">         * 序列换成json时,将所有的long变成string</span></span><br><span class="line"><span class="comment">         * 因为js中得数字类型不能包含所有的java long值</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        SimpleModule <span class="keyword">module</span> = <span class="keyword">new</span> SimpleModule();</span><br><span class="line">        <span class="keyword">module</span>.addSerializer(Long.class, ToStringSerializer.instance);</span><br><span class="line">        <span class="keyword">module</span>.addSerializer(Long.TYPE, ToStringSerializer.instance);</span><br><span class="line">        mapper.registerModule(<span class="keyword">module</span>);</span><br><span class="line">        converter.setObjectMapper(mapper);</span><br><span class="line">        converters.add(converter);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/a56434f6.html" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-         
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/58b4b1b8.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/58b4b1b8.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">vue-cli 2.x 使用</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-06-05 18:43:05" itemprop="dateCreated datePublished" datetime="2018-06-05T18:43:05+08:00">2018-06-05</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-12-06 17:14:02" itemprop="dateModified" datetime="2018-12-06T17:14:02+08:00">2018-12-06</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/vuejs/" itemprop="url" rel="index"><span itemprop="name">vuejs</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数：</span>
-                
-                <span title="字数">538</span>
+                <span title="字数">450</span>
               
 
               
@@ -985,11 +767,9 @@
         </span>
         <span class="post-meta-item-text">标签</span>
         
-           <a href="/tags/vue/" rel="tag" class="color1">vue</a>
+           <a href="/tags/docker/" rel="tag" class="color1">docker</a>
         
-           <a href="/tags/nodejs/" rel="tag" class="color2">nodejs</a>
-        
-           <a href="/tags/vue-cli/" rel="tag" class="color3">vue-cli</a>
+           <a href="/tags/docker-compose/" rel="tag" class="color2">docker-compose</a>
         
       </div>
     
@@ -1004,27 +784,20 @@
 
       
         
+          <ul>
+<li><p>拉取镜像</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 默认拉取 redis:latest 版本</span></span><br><span class="line">$ docker pull redis</span><br><span class="line"></span><br><span class="line"><span class="comment"># 拉取指定版本镜像</span></span><br><span class="line">$ docker pull redis:4.0.11</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+          <!--noindex-->
           
-            <blockquote>
-<p>安装 vue-cli</p>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 全局安装</span></span><br><span class="line">npm install -g vue-cli</span><br></pre></td></tr></table></figure>
-<p>如果安装失败，可以使用<code>npm cache clean</code>清理缓存，然后再重新安装</p>
-<blockquote>
-<p> 生成项目</p>
-</blockquote>
-<p>首先需要在命令行中进入到工作区间，然后输入</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue init webpack vue-project</span><br></pre></td></tr></table></figure>
-<p>全局安装<code>webpack</code>命令<code>npm install -g webpack</code></p>
-<p>vue-project 是自定义的项目名称，命令执行之后，会在当前目录生成一个以该名称命名的项目文件夹</p>
-<blockquote>
-<p>proxyTable 代理设置</p>
-</blockquote>
-<p>前后端分离项目本地测试，可以使用 proxyTable 代理到后台服务器，方便调试</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">proxyTable: &#123;</span><br><span class="line">    '/api': &#123;</span><br><span class="line">        targer: 'https:localhost:8080/service/api',</span><br><span class="line">        secure: false,</span><br><span class="line">        changeOrigin: true,</span><br><span class="line">        pathRewrite: &#123;</span><br><span class="line">            '^/api': '/'</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用时直接<strong>/api/接口名</strong>就行了 </p>
-
-          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/6fffbcc4.html" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -1079,7 +852,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/7150914.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/6a0c4822.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
@@ -1099,7 +872,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/posts/7150914.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">Oracle 分区</a>
+                <a href="/posts/6a0c4822.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">docker 安装 elk 环境</a>
               
             
           </h2>
@@ -1124,7 +897,7 @@
                 
               
 
-              <time title="创建时间：2018-06-05 17:01:05" itemprop="dateCreated datePublished" datetime="2018-06-05T17:01:05+08:00">2018-06-05</time>
+              <time title="创建时间：2018-09-05 11:32:48" itemprop="dateCreated datePublished" datetime="2018-09-05T11:32:48+08:00">2018-09-05</time>
             
 
             
@@ -1141,7 +914,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-12-25 18:42:11" itemprop="dateModified" datetime="2019-12-25T18:42:11+08:00">2019-12-25</time>
+                <time title="修改时间：2020-08-21 14:05:53" itemprop="dateModified" datetime="2020-08-21T14:05:53+08:00">2020-08-21</time>
               
             
           </span>
@@ -1158,7 +931,236 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Oracle/" itemprop="url" rel="index"><span itemprop="name">Oracle</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/elk/" itemprop="url" rel="index"><span itemprop="name">elk</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数：</span>
+                
+                <span title="字数">3.2k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">3 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/docker/" rel="tag" class="color1">docker</a>
+        
+           <a href="/tags/docker-compose/" rel="tag" class="color2">docker-compose</a>
+        
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><blockquote>
+<p>从 Docker 仓库中拉取镜像</p>
+</blockquote>
+  <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull sebp/elk</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>拉取指定版本镜像</p>
+</blockquote>
+  <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull sebp/elk:671</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/6a0c4822.html" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/6a0c4822.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/6a0c4822.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">docker 安装 elasticsearch</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-05 11:32:48" itemprop="dateCreated datePublished" datetime="2018-09-05T11:32:48+08:00">2018-09-05</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-08-21 17:59:01" itemprop="dateModified" datetime="2020-08-21T17:59:01+08:00">2020-08-21</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/elk/" itemprop="url" rel="index"><span itemprop="name">elk</span></a></span>
 
                 
                 
@@ -1220,7 +1222,9 @@
         </span>
         <span class="post-meta-item-text">标签</span>
         
-           <a href="/tags/Oracle/" rel="tag" class="color1">Oracle</a>
+           <a href="/tags/docker/" rel="tag" class="color1">docker</a>
+        
+           <a href="/tags/docker-compose/" rel="tag" class="color2">docker-compose</a>
         
       </div>
     
@@ -1235,22 +1239,242 @@
 
       
         
-          <h1 id="自增分区"><a href="#自增分区" class="headerlink" title="自增分区"></a>自增分区</h1><blockquote>
-<p>numtoyminterval 按年、月分区</p>
-</blockquote>
-<p>numtoyminterval(1, ‘year’)、numtoyminterval(1, ‘month’)</p>
+          
+            <h1 id="elasticsearch"><a href="#elasticsearch" class="headerlink" title="elasticsearch"></a>elasticsearch</h1><p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/6.6/docker.html#docker-prod-cluster-composefile" target="_blank" rel="noopener">https://www.elastic.co/guide/en/elasticsearch/reference/6.6/docker.html#docker-prod-cluster-composefile</a></p>
 <blockquote>
-<p>numtodsinterval 按天、时、分、秒分区</p>
+<p>docker-compose.yml<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3.8'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  elasticsearch:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="attr">elasticsearch:6.6.2</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">ts_elasticsearch</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"9200:9200"</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"/data/docker/elasticsearch/data:/usr/share/elasticsearch/data"</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"bootstrap.memory_lock=true"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"ES_JAVA_OPTS=-Xms1g -Xmx1g"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"discovery.type=single-node"</span></span><br><span class="line"><span class="attr">    ulimits:</span></span><br><span class="line"><span class="attr">      memlock:</span></span><br><span class="line"><span class="attr">        soft:</span> <span class="bullet">-1</span></span><br><span class="line"><span class="attr">        hard:</span> <span class="bullet">-1</span></span><br><span class="line"><span class="attr">    networks:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">elknet</span></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line"><span class="attr">  elknet:</span></span><br><span class="line"><span class="attr">    driver:</span> <span class="string">bridge</span></span><br></pre></td></tr></table></figure></p>
 </blockquote>
-<p>numtodsinterval(1, ‘day’)、numtodsinterval(1, ‘hour’)、numtodsinterval(1, ‘minute’)、numtodsinterval(1, ‘second’)</p>
+<h1 id="logstash"><a href="#logstash" class="headerlink" title="logstash"></a>logstash</h1><p><a href="https://www.elastic.co/guide/en/logstash/6.6/docker-config.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/logstash/6.6/docker-config.html</a></p>
 <blockquote>
-<p>例子</p>
+<p>docker-compose.yml</p>
 </blockquote>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">user</span> (<span class="keyword">id</span> <span class="built_in">number</span>, create_dt <span class="built_in">date</span>)</span><br><span class="line">	<span class="keyword">tablespace</span> <span class="keyword">users</span></span><br><span class="line">	<span class="keyword">partition</span> <span class="keyword">by</span> <span class="keyword">range</span> (create_dt)</span><br><span class="line">	<span class="built_in">interval</span>(numtoyminterval(<span class="number">1</span>, <span class="string">'month'</span>))</span><br><span class="line">	(</span><br><span class="line">        <span class="keyword">partition</span> p1 <span class="keyword">values</span> <span class="keyword">less</span> <span class="keyword">than</span> (<span class="keyword">to_date</span>(<span class="string">'2018-06-01 00:00:00'</span>, <span class="string">'yyyy-mm-dd hh24:mi:ss'</span>))</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3.8'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  logstash:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="attr">logstash:6.6.2</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">ts_logstash</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"5044:5044"</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"/data/docker/logstash/pipeline:/usr/share/logstash/pipeline"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"/data/docker/logstash/config:/usr/share/logstash/config"</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="attr">      LS_JAVA_OPTS:</span> <span class="string">"-Xmx512m -Xms512m"</span></span><br><span class="line"><span class="attr">    networks:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">elknet</span></span><br><span class="line"><span class="attr">    depends_on:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">elasticsearch</span></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line"><span class="attr">  elknet:</span></span><br><span class="line"><span class="attr">    driver:</span> <span class="string">bridge</span></span><br></pre></td></tr></table></figure>
+<h1 id="kibana"><a href="#kibana" class="headerlink" title="kibana"></a>kibana</h1><p><a href="https://www.elastic.co/guide/en/kibana/6.6/docker.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/kibana/6.6/docker.html</a></p>
+<blockquote>
+<p>docker-compose.yml</p>
+</blockquote>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3.8'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  kibana:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="attr">kibana:6.6.2</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">ts_kibana</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="number">5601</span><span class="string">:5601</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"/data/docker/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml"</span></span><br><span class="line"><span class="attr">    networks:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">elknet</span></span><br><span class="line"><span class="attr">    depends_on:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">elasticsearch</span></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line"><span class="attr">  elknet:</span></span><br><span class="line"><span class="attr">    driver:</span> <span class="string">bridge</span></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/2fff8f5e.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/2fff8f5e.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">安装 docker 环境 for CentOS</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-05 10:48:48" itemprop="dateCreated datePublished" datetime="2018-09-05T10:48:48+08:00">2018-09-05</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-08-28 15:02:05" itemprop="dateModified" datetime="2020-08-28T15:02:05+08:00">2020-08-28</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/docker/" itemprop="url" rel="index"><span itemprop="name">docker</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数：</span>
+                
+                <span title="字数">2.6k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">2 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/docker-compose/" rel="tag" class="color1">docker-compose</a>
+        
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="安装-docker"><a href="#安装-docker" class="headerlink" title="安装 docker"></a>安装 docker</h1><ul>
+<li><p>删除老版本</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum remove docker \</span><br><span class="line">                  docker-client \</span><br><span class="line">                  docker-client-latest \</span><br><span class="line">                  docker-common \</span><br><span class="line">                  docker-latest \</span><br><span class="line">                  docker-latest-logrotate \</span><br><span class="line">                  docker-logrotate \</span><br><span class="line">                  docker-selinux \</span><br><span class="line">                  docker-engine-selinux \</span><br><span class="line">                  docker-engine</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/posts/7150914.html" rel="contents">
+              <a class="btn" href="/posts/2fff8f5e.html" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1310,7 +1534,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/bee514fe.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/9bc29391.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
@@ -1330,7 +1554,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/posts/bee514fe.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">druid 打印 sql 日志</a>
+                <a href="/posts/9bc29391.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">docker-compose 安装和使用</a>
               
             
           </h2>
@@ -1355,12 +1579,24 @@
                 
               
 
-              <time title="创建时间：2018-06-05 11:35:05 / 修改时间：12:18:31" itemprop="dateCreated datePublished" datetime="2018-06-05T11:35:05+08:00">2018-06-05</time>
+              <time title="创建时间：2018-09-05 10:48:48" itemprop="dateCreated datePublished" datetime="2018-09-05T10:48:48+08:00">2018-09-05</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-08-18 10:08:15" itemprop="dateModified" datetime="2020-08-18T10:08:15+08:00">2020-08-18</time>
               
             
           </span>
@@ -1377,7 +1613,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/docker/" itemprop="url" rel="index"><span itemprop="name">docker</span></a></span>
 
                 
                 
@@ -1407,7 +1643,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">3.4k</span>
+                <span title="字数">533</span>
               
 
               
@@ -1421,7 +1657,7 @@
                 
                   <span class="post-meta-item-text">时长 &asymp;</span>
                 
-                <span title="时长">3 分钟</span>
+                <span title="时长">1 分钟</span>
               
             </div>
           
@@ -1439,11 +1675,672 @@
         </span>
         <span class="post-meta-item-text">标签</span>
         
-           <a href="/tags/spring-boot/" rel="tag" class="color1">spring-boot</a>
+           <a href="/tags/docker-compose/" rel="tag" class="color1">docker-compose</a>
         
-           <a href="/tags/alibaba/" rel="tag" class="color2">alibaba</a>
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
         
-           <a href="/tags/druid/" rel="tag" class="color3">druid</a>
+          
+            <h1 id="docker-compose"><a href="#docker-compose" class="headerlink" title="docker-compose"></a>docker-compose</h1><ul>
+<li><p>安装</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/<span class="built_in">local</span>/bin/docker-compose</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$ sudo curl --proxy 10.18.248.134:19080 -L <span class="string">"https://github.com/docker/compose/releases/download/1.26.2/docker-compose-<span class="variable">$(uname -s)</span>-<span class="variable">$(uname -m)</span>"</span> -o /usr/<span class="built_in">local</span>/bin/docker-compose</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可执行权限</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo chmod +x /usr/<span class="built_in">local</span>/bin/docker-compose</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>验证安装</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker-compose --version</span><br><span class="line">docker-compose version 1.22.0, build 1719ceb</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker-compose -f grafana/docker-compose.yml up</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/71631b3f.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/71631b3f.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">docker 命令</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-05 10:48:48 / 修改时间：12:10:33" itemprop="dateCreated datePublished" datetime="2018-09-05T10:48:48+08:00">2018-09-05</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/docker/" itemprop="url" rel="index"><span itemprop="name">docker</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数：</span>
+                
+                <span title="字数">1.9k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">2 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/container/" rel="tag" class="color1">container</a>
+        
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="docker-container-ls"><a href="#docker-container-ls" class="headerlink" title="docker container ls"></a>docker container ls</h1><blockquote>
+<p>列出所有容器</p>
+</blockquote>
+<ul>
+<li><p>用法</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container ls [options]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/71631b3f.html" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/ef78ba07.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/ef78ba07.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">Indices APIs</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-04 17:46:22" itemprop="dateCreated datePublished" datetime="2018-09-04T17:46:22+08:00">2018-09-04</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-06 17:17:36" itemprop="dateModified" datetime="2019-03-06T17:17:36+08:00">2019-03-06</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/elk/" itemprop="url" rel="index"><span itemprop="name">elk</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数：</span>
+                
+                <span title="字数">2.2k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">2 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/index/" rel="tag" class="color1">index</a>
+        
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="Defines-a-Template"><a href="#Defines-a-Template" class="headerlink" title="Defines a Template"></a>Defines a Template</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">PUT _template/api-monitor</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"order"</span> : 0,</span><br><span class="line">  <span class="string">"index_patterns"</span>: [</span><br><span class="line">      <span class="string">"api-monitor-*"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"settings"</span>: &#123;</span><br><span class="line">      <span class="string">"index"</span>: &#123;</span><br><span class="line">        <span class="string">"number_of_shards"</span>: 2,</span><br><span class="line">        <span class="string">"number_of_replicas"</span>: 1,</span><br><span class="line">        <span class="string">"refresh_interval"</span>: <span class="string">"5s"</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"mappings"</span>: &#123;</span><br><span class="line">      <span class="string">"_default_"</span>: &#123;</span><br><span class="line">        <span class="string">"dynamic_templates"</span>: [</span><br><span class="line">          &#123;</span><br><span class="line">            <span class="string">"message_field"</span>: &#123;</span><br><span class="line">              <span class="string">"path_match"</span>: <span class="string">"message"</span>,</span><br><span class="line">              <span class="string">"match_mapping_type"</span>: <span class="string">"string"</span>,</span><br><span class="line">              <span class="string">"mapping"</span>: &#123;</span><br><span class="line">                <span class="string">"type"</span>: <span class="string">"text"</span>,</span><br><span class="line">                <span class="string">"norms"</span>: <span class="literal">false</span></span><br><span class="line">              &#125;</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;,</span><br><span class="line">          &#123;</span><br><span class="line">            <span class="string">"string_fields"</span>: &#123;</span><br><span class="line">              <span class="string">"match"</span>: <span class="string">"*"</span>,</span><br><span class="line">              <span class="string">"match_mapping_type"</span>: <span class="string">"string"</span>,</span><br><span class="line">              <span class="string">"mapping"</span>: &#123;</span><br><span class="line">                <span class="string">"type"</span>: <span class="string">"text"</span>,</span><br><span class="line">                <span class="string">"norms"</span>: <span class="literal">false</span>,</span><br><span class="line">                <span class="string">"fields"</span>: &#123;</span><br><span class="line">                  <span class="string">"keyword"</span>: &#123;</span><br><span class="line">                    <span class="string">"type"</span>: <span class="string">"keyword"</span>,</span><br><span class="line">                    <span class="string">"ignore_above"</span>: 256</span><br><span class="line">                  &#125;</span><br><span class="line">                &#125;</span><br><span class="line">              &#125;</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        ],</span><br><span class="line">        <span class="string">"properties"</span>: &#123;</span><br><span class="line">          <span class="string">"@timestamp"</span>: &#123;</span><br><span class="line">            <span class="string">"type"</span>: <span class="string">"date"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"@version"</span>: &#123;</span><br><span class="line">            <span class="string">"type"</span>: <span class="string">"keyword"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"geoip"</span>: &#123;</span><br><span class="line">            <span class="string">"dynamic"</span>: <span class="literal">true</span>,</span><br><span class="line">            <span class="string">"properties"</span>: &#123;</span><br><span class="line">              <span class="string">"ip"</span>: &#123;</span><br><span class="line">                <span class="string">"type"</span>: <span class="string">"ip"</span></span><br><span class="line">              &#125;,</span><br><span class="line">              <span class="string">"location"</span>: &#123;</span><br><span class="line">                <span class="string">"type"</span>: <span class="string">"geo_point"</span></span><br><span class="line">              &#125;,</span><br><span class="line">              <span class="string">"latitude"</span>: &#123;</span><br><span class="line">                <span class="string">"type"</span>: <span class="string">"half_float"</span></span><br><span class="line">              &#125;,</span><br><span class="line">              <span class="string">"longitude"</span>: &#123;</span><br><span class="line">                <span class="string">"type"</span>: <span class="string">"half_float"</span></span><br><span class="line">              &#125;</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"aliases"</span>: &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>order 默认 0</p>
+</blockquote>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/ef78ba07.html" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/9cf2c75c.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/9cf2c75c.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">filebeat-6.4.0 使用</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-08-30 09:35:05" itemprop="dateCreated datePublished" datetime="2018-08-30T09:35:05+08:00">2018-08-30</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-11-14 16:56:49" itemprop="dateModified" datetime="2019-11-14T16:56:49+08:00">2019-11-14</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/elk/" itemprop="url" rel="index"><span itemprop="name">elk</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数：</span>
+                
+                <span title="字数">729</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/filebeat/" rel="tag" class="color1">filebeat</a>
         
       </div>
     
@@ -1459,13 +2356,13 @@
       
         
           <blockquote>
-<p>依赖包</p>
+<p>filebeat 版本 6.6.x</p>
 </blockquote>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>druid-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.1.10<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="配置输入"><a href="#配置输入" class="headerlink" title="配置输入"></a>配置输入</h1><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">filebeat.inputs:</span></span><br><span class="line"><span class="comment"># 输入类型：[log, stdin, redis, udp, docker, tcp, syslog, netflow]</span></span><br><span class="line"><span class="attr">- type:</span> <span class="string">log</span></span><br><span class="line">  <span class="comment"># Change to true to enable this input configuration.</span></span><br><span class="line"><span class="attr">  enabled:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Paths that should be crawled and fetched. Glob based paths.</span></span><br><span class="line"><span class="attr">  paths:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">/var/logs/*.log</span></span><br></pre></td></tr></table></figure>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/posts/bee514fe.html" rel="contents">
+              <a class="btn" href="/posts/9cf2c75c.html" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1525,7 +2422,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/b0385cf0.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/37125f03.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
@@ -1545,7 +2442,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/posts/b0385cf0.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">spring-boot cxf 集成</a>
+                <a href="/posts/37125f03.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">Spring EnvironmentPostProcessor 使用</a>
               
             
           </h2>
@@ -1570,7 +2467,7 @@
                 
               
 
-              <time title="创建时间：2018-06-02 18:35:05" itemprop="dateCreated datePublished" datetime="2018-06-02T18:35:05+08:00">2018-06-02</time>
+              <time title="创建时间：2018-08-29 14:43:05" itemprop="dateCreated datePublished" datetime="2018-08-29T14:43:05+08:00">2018-08-29</time>
             
 
             
@@ -1587,7 +2484,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-10-22 16:47:50" itemprop="dateModified" datetime="2018-10-22T16:47:50+08:00">2018-10-22</time>
+                <time title="修改时间：2018-09-04 10:45:48" itemprop="dateModified" datetime="2018-09-04T10:45:48+08:00">2018-09-04</time>
               
             
           </span>
@@ -1634,7 +2531,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">779</span>
+                <span title="字数">38</span>
               
 
               
@@ -1666,9 +2563,7 @@
         </span>
         <span class="post-meta-item-text">标签</span>
         
-           <a href="/tags/spring-boot/" rel="tag" class="color1">spring-boot</a>
-        
-           <a href="/tags/cxf/" rel="tag" class="color2">cxf</a>
+           <a href="/tags/spring/" rel="tag" class="color1">spring</a>
         
       </div>
     
@@ -1684,8 +2579,7 @@
       
         
           
-            <h1 id="坑一"><a href="#坑一" class="headerlink" title="坑一"></a>坑一</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> AegisDatabinding <span class="title">aegisDatabinding</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> AegisDatabinding();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 这个要配置成多例模式</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="meta">@Scope</span>(ConfigurableBeanFactory.SCOPE_PROTOTYPE)</span><br><span class="line"><span class="keyword">public</span> org.apache.cxf.jaxws.support.<span class="function">JaxWsServiceFactoryBean <span class="title">jaxWsServiceFactoryBean</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    JaxWsServiceFactoryBean sf = <span class="keyword">new</span> JaxWsServiceFactoryBean();</span><br><span class="line">    sf.setWrapped(<span class="keyword">true</span>);</span><br><span class="line">    sf.setDataBinding(aegisDatabinding());</span><br><span class="line">    <span class="keyword">return</span> sf;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Endpoint <span class="title">userEndpoint</span><span class="params">(UserService userService)</span> </span>&#123;</span><br><span class="line">    EndpointImpl endpoint = <span class="keyword">new</span> EndpointImpl(userService);</span><br><span class="line">    endpoint.setServiceFactory(jaxWsServiceFactoryBean());</span><br><span class="line">    endpoint.publish(<span class="string">"/imCheckRelatedWeixinService.ws"</span>);</span><br><span class="line">    <span class="keyword">return</span> endpoint;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里 endpoint.publish 要在最后，否则获取到的 serviceFactory、dataBinding 等参数是空的</p>
+            <p>动态管理配置文件扩展接口 EnvironmentPostProcessor</p>
 
           
         
@@ -1742,7 +2636,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/35958b11.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/8246f0e2.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
@@ -1762,7 +2656,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/posts/35958b11.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">Hibernate 函数</a>
+                <a href="/posts/8246f0e2.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">Spring ImportBeanDefinitionRegistrar 使用</a>
               
             
           </h2>
@@ -1787,7 +2681,7 @@
                 
               
 
-              <time title="创建时间：2018-05-30 09:21:36" itemprop="dateCreated datePublished" datetime="2018-05-30T09:21:36+08:00">2018-05-30</time>
+              <time title="创建时间：2018-08-28 18:43:05" itemprop="dateCreated datePublished" datetime="2018-08-28T18:43:05+08:00">2018-08-28</time>
             
 
             
@@ -1804,7 +2698,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-06-03 10:07:07" itemprop="dateModified" datetime="2018-06-03T10:07:07+08:00">2018-06-03</time>
+                <time title="修改时间：2019-12-10 17:09:44" itemprop="dateModified" datetime="2019-12-10T17:09:44+08:00">2019-12-10</time>
               
             
           </span>
@@ -1851,7 +2745,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">1.3k</span>
+                <span title="字数">2.5k</span>
               
 
               
@@ -1865,7 +2759,7 @@
                 
                   <span class="post-meta-item-text">时长 &asymp;</span>
                 
-                <span title="时长">1 分钟</span>
+                <span title="时长">2 分钟</span>
               
             </div>
           
@@ -1883,7 +2777,7 @@
         </span>
         <span class="post-meta-item-text">标签</span>
         
-           <a href="/tags/Hibernate/" rel="tag" class="color1">Hibernate</a>
+           <a href="/tags/spring/" rel="tag" class="color1">spring</a>
         
       </div>
     
@@ -1898,11 +2792,14 @@
 
       
         
-          <p>HQL(Hibernate Query Language) 提供了丰富的、灵活的查询特性，提供了类似标准SQL语句的查询方式，同时也提供了面向对象的封装。以下是HQL的一些常用函数，比如时间函数、字符串函数等。</p>
+          <h2 id="EnableJPipeConfiguration"><a href="#EnableJPipeConfiguration" class="headerlink" title="EnableJPipeConfiguration"></a>EnableJPipeConfiguration</h2><blockquote>
+<p>自定义注解</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Import;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Documented;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.ElementType;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Inherited;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * enable bigPipe</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Created by YL on 2018/8/15</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Import</span>(&#123;JPipeConfigurationRegistrar.class&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> EnableJPipeConfiguration &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * the maximum number of threads to allow in the pool</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxPoolSize</span><span class="params">()</span> <span class="keyword">default</span> 1024</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * when the number of threads is greater than the core, this is the maximum time that excess idle threads will</span></span><br><span class="line"><span class="comment">     * wait for new tasks before terminating.</span></span><br><span class="line"><span class="comment">     * 单位：s</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">keepAliveTime</span><span class="params">()</span> <span class="keyword">default</span> 60</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * the queue to use for holding tasks before they are executed.  This queue will hold only the &#123;<span class="doctag">@code</span> Runnable&#125;</span></span><br><span class="line"><span class="comment">     * tasks submitted by the &#123;<span class="doctag">@code</span> execute&#125;</span></span><br><span class="line"><span class="comment">     * method.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">workQueueSize</span><span class="params">()</span> <span class="keyword">default</span> 512</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/posts/35958b11.html" rel="contents">
+              <a class="btn" href="/posts/8246f0e2.html" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1962,7 +2859,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/4ae0cbaa.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/b575301a.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
@@ -1982,7 +2879,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/posts/4ae0cbaa.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">Mysql for Mac 使用</a>
+                <a href="/posts/b575301a.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">spring redirect 导致内存溢出问题核查</a>
               
             
           </h2>
@@ -2007,7 +2904,7 @@
                 
               
 
-              <time title="创建时间：2018-05-25 09:35:05" itemprop="dateCreated datePublished" datetime="2018-05-25T09:35:05+08:00">2018-05-25</time>
+              <time title="创建时间：2018-08-20 11:43:05" itemprop="dateCreated datePublished" datetime="2018-08-20T11:43:05+08:00">2018-08-20</time>
             
 
             
@@ -2024,7 +2921,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-04-28 21:32:03" itemprop="dateModified" datetime="2020-04-28T21:32:03+08:00">2020-04-28</time>
+                <time title="修改时间：2018-08-22 13:51:29" itemprop="dateModified" datetime="2018-08-22T13:51:29+08:00">2018-08-22</time>
               
             
           </span>
@@ -2041,7 +2938,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Mysql/" itemprop="url" rel="index"><span itemprop="name">Mysql</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
 
                 
                 
@@ -2071,7 +2968,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">306</span>
+                <span title="字数">2.4k</span>
               
 
               
@@ -2085,7 +2982,7 @@
                 
                   <span class="post-meta-item-text">时长 &asymp;</span>
                 
-                <span title="时长">1 分钟</span>
+                <span title="时长">2 分钟</span>
               
             </div>
           
@@ -2096,6 +2993,18 @@
       </header>
     
 
+    
+      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/spring/" rel="tag" class="color1">spring</a>
+        
+           <a href="/tags/redirect/" rel="tag" class="color2">redirect</a>
+        
+      </div>
     
 
     
@@ -2108,15 +3017,12 @@
 
       
         
-          <h1 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~</span><br><span class="line"><span class="comment"># 如果没有 .bash_profile 文件，可以通过 touch 来创建一个</span></span><br><span class="line">$ touch .bash_profile</span><br><span class="line"><span class="comment"># 编辑已经存在的文件，先打开文件</span></span><br><span class="line">$ open -e .bash_profile</span><br><span class="line"><span class="comment"># 使配置生效</span></span><br><span class="line">$ <span class="built_in">source</span> .bash_profile</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>在 .base_profile 中加入如下内容</p>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/usr/<span class="built_in">local</span>/mysql/bin</span><br></pre></td></tr></table></figure>
+          <h1 id="3-x-版本"><a href="#3-x-版本" class="headerlink" title="3.x 版本"></a>3.x 版本</h1><p>这个类AbstractCachingViewResolver里面的viewCache HashMap没有限制大小 </p>
+<p>3.x：如果在 controller 返回的 view 是不固定的，如：”redirect:form.html?entityId=” + entityId，由于 entityId 的值会存在 N 个，那么会导致产生 N 个 ViewName 被缓存起来</p>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/posts/4ae0cbaa.html" rel="contents">
+              <a class="btn" href="/posts/b575301a.html" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -2176,7 +3082,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/d13f7d34.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/d7b08969.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
@@ -2196,7 +3102,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/posts/d13f7d34.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">Tomcat 使用注意事项</a>
+                <a href="/posts/d7b08969.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">Java 实现 BigPipe</a>
               
             
           </h2>
@@ -2221,7 +3127,7 @@
                 
               
 
-              <time title="创建时间：2018-05-08 09:35:05" itemprop="dateCreated datePublished" datetime="2018-05-08T09:35:05+08:00">2018-05-08</time>
+              <time title="创建时间：2018-08-18 14:47:17" itemprop="dateCreated datePublished" datetime="2018-08-18T14:47:17+08:00">2018-08-18</time>
             
 
             
@@ -2238,7 +3144,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-05-11 16:21:27" itemprop="dateModified" datetime="2020-05-11T16:21:27+08:00">2020-05-11</time>
+                <time title="修改时间：2018-12-06 16:24:16" itemprop="dateModified" datetime="2018-12-06T16:24:16+08:00">2018-12-06</time>
               
             
           </span>
@@ -2255,7 +3161,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Tomcat/" itemprop="url" rel="index"><span itemprop="name">Tomcat</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
 
                 
                 
@@ -2285,7 +3191,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">10k</span>
+                <span title="字数">1.7k</span>
               
 
               
@@ -2299,7 +3205,7 @@
                 
                   <span class="post-meta-item-text">时长 &asymp;</span>
                 
-                <span title="时长">9 分钟</span>
+                <span title="时长">2 分钟</span>
               
             </div>
           
@@ -2310,6 +3216,22 @@
       </header>
     
 
+    
+      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/BigPipe/" rel="tag" class="color1">BigPipe</a>
+        
+           <a href="/tags/jsp/" rel="tag" class="color2">jsp</a>
+        
+           <a href="/tags/freemarker/" rel="tag" class="color3">freemarker</a>
+        
+           <a href="/tags/spring-boot/" rel="tag" class="color4">spring-boot</a>
+        
+      </div>
     
 
     
@@ -2322,283 +3244,12 @@
 
       
         
-          
-            <h1 id="使用Tomcat部署"><a href="#使用Tomcat部署" class="headerlink" title="使用Tomcat部署"></a>使用Tomcat部署</h1><h2 id="部署目录结构"><a href="#部署目录结构" class="headerlink" title="部署目录结构"></a>部署目录结构</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[txrd@host-148 /opt/szim]$ tree -af</span><br><span class="line">.</span><br><span class="line">├── ./project</span><br><span class="line">│   └── ./szim.war</span><br><span class="line">└── ./tomcat</span><br><span class="line">├── ./logs.sh</span><br><span class="line">├── ./restart.sh</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>省略了部分<code>Tomcat</code>目录</p>
-</blockquote>
-<h2 id="Tomcat-配置优化"><a href="#Tomcat-配置优化" class="headerlink" title="Tomcat 配置优化"></a>Tomcat 配置优化</h2><h3 id="删除默认项目"><a href="#删除默认项目" class="headerlink" title="删除默认项目"></a>删除默认项目</h3><p>删除 <code>webapps</code>目录下的 <code>docs</code>、<code>examples</code>、<code>host-manager</code>、<code>manager</code>、<code>ROOT</code>文件夹</p>
-<h3 id="server-xml"><a href="#server-xml" class="headerlink" title="server.xml"></a>server.xml</h3><ol>
-<li>port 改成 -1</li>
-</ol>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Server</span> <span class="attr">port</span>=<span class="string">"-1"</span> <span class="attr">shutdown</span>=<span class="string">"SHUTDOWN"</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>配置端口、NIO模式、线程池大小、开启gzip压缩等</li>
-</ol>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Connector</span> <span class="attr">port</span>=<span class="string">"8021"</span> <span class="attr">protocol</span>=<span class="string">"org.apache.coyote.http11.Http11Nio2Protocol"</span> <span class="attr">useSendfile</span>=<span class="string">"false"</span> <span class="attr">connectionTimeout</span>=<span class="string">"20000"</span> <span class="attr">keepAliveTimeout</span>=<span class="string">"15000"</span> <span class="attr">maxKeepAliveRequests</span>=<span class="string">"1"</span> <span class="attr">redirectPort</span>=<span class="string">"8443"</span> <span class="attr">URIEncoding</span>=<span class="string">"utf-8"</span> <span class="attr">maxThreads</span>=<span class="string">"1500"</span> <span class="attr">minSpareThreads</span>=<span class="string">"5"</span> <span class="attr">enableLookups</span>=<span class="string">"false"</span> <span class="attr">acceptCount</span>=<span class="string">"500"</span> <span class="attr">disableUploadTimeout</span>=<span class="string">"true"</span> <span class="attr">compression</span>=<span class="string">"on"</span> <span class="attr">compressionMinSize</span>=<span class="string">"2048"</span> <span class="attr">noCompressionUserAgents</span>=<span class="string">"gozilla, traviata"</span> <span class="attr">compressableMimeType</span>=<span class="string">"text/html, text/xml, text/plain, text/css, application/javascript"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>这里要注意：低版本是compressableMimeType —&gt; 高版本是compressibleMimeType</p>
-</blockquote>
-<ol start="3">
-<li>注释掉 <code>AJP Connector</code></li>
-</ol>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- &lt;Connector port="8009" protocol="AJP/1.3" redirectPort="8443" /&gt; --&gt;</span></span><br></pre></td></tr></table></figure>
-<ol start="4">
-<li><code>autoDeploy</code> 改成 <code>false</code></li>
-</ol>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Host</span> <span class="attr">name</span>=<span class="string">"localhost"</span>  <span class="attr">appBase</span>=<span class="string">"webapps"</span> <span class="attr">unpackWARs</span>=<span class="string">"true"</span> <span class="attr">autoDeploy</span>=<span class="string">"false"</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<ol start="5">
-<li>禁用日志输出</li>
-</ol>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- &lt;Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"</span></span><br><span class="line"><span class="comment">               prefix="localhost_access_log" suffix=".txt"</span></span><br><span class="line"><span class="comment">               pattern="%h %l %u %t &amp;quot;%r&amp;quot; %s %b" /&gt; --&gt;</span></span><br></pre></td></tr></table></figure>
-<ol start="6">
-<li><code>Context</code> 配置</li>
-</ol>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Host</span> <span class="attr">name</span>=<span class="string">"localhost"</span>  <span class="attr">appBase</span>=<span class="string">"webapps"</span> <span class="attr">unpackWARs</span>=<span class="string">"true"</span> <span class="attr">autoDeploy</span>=<span class="string">"false"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Context</span> <span class="attr">path</span>=<span class="string">"/szim"</span> <span class="attr">docBase</span>=<span class="string">"/opt/szim/project/szim.war"</span> <span class="attr">privileged</span>=<span class="string">"true"</span> <span class="attr">reloadable</span>=<span class="string">"false"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Host</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>这样配置，szim.war会解压到tomcat/webapps下，也就是在webapps下生成szim文件夹。</p>
-</blockquote>
-<blockquote>
-<p> docBase应该指定对应的war包完整路径，不应该指定相对路径（比如：../../project/szim）。</p>
-</blockquote>
-<blockquote>
-<p> 如果指定路径，有可以出现war包不会解压，导致项目没有更新的问题，要主动删除webapps下的szim文件夹</p>
-</blockquote>
-<h3 id="启停脚本"><a href="#启停脚本" class="headerlink" title="启停脚本"></a>启停脚本</h3><blockquote>
-<p>restart.sh</p>
-</blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line">cd `dirname $0`</span><br><span class="line"><span class="meta">#</span><span class="bash"> 脚本所在目录</span></span><br><span class="line">HOME_DIR=`pwd`</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Tomcat服务器路径</span></span><br><span class="line">TS_HOME="$HOME_DIR/tomcat"</span><br><span class="line"><span class="meta">#</span><span class="bash"> 控制台日志输出文件</span></span><br><span class="line">STDOUT_FILE="$TS_HOME/logs/console.out"</span><br><span class="line"><span class="meta">#</span><span class="bash"> 检测Tomcat是否启动（进程ID）</span></span><br><span class="line">PIDS=`ps -ef | grep java | grep -v grep | grep $TS_HOME/bin | awk '&#123;print $2&#125;'`</span><br><span class="line"><span class="meta">#</span><span class="bash"> 执行检测的用户IP地址</span></span><br><span class="line">TS_IP=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`</span><br><span class="line"><span class="meta">#</span><span class="bash"> 检测输出的日记格式</span></span><br><span class="line">TS_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">==================================================================================</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> JVM Configuration</span></span><br><span class="line"><span class="meta">#</span><span class="bash">==================================================================================</span></span><br><span class="line">export LANG=en_US.UTF-8</span><br><span class="line">export JAVA_HOME=/usr/java/jdk1.8.0_144</span><br><span class="line">export JAVA_OPTS="$JAVA_OPTS -server -Xms1g -Xmx1g -Xss256k"</span><br><span class="line">export JAVA_OPTS="$JAVA_OPTS -XX:+DisableExplicitGC -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled"</span><br><span class="line">export JAVA_OPTS="$JAVA_OPTS -Xloggc:$TS_HOME/logs/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M"</span><br><span class="line">export JAVA_OPTS="$JAVA_OPTS -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$TS_HOME/logs/dump-`date +"%Y-%m-%d"`.hprof"</span><br><span class="line">export JAVA_OPTS="$JAVA_OPTS -Dspring.profiles.active=pro"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">=================================================================================</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除 7 天前的日志文件</span></span><br><span class="line"><span class="meta">#</span><span class="bash">=================================================================================</span></span><br><span class="line">function cleanLog()&#123;</span><br><span class="line">    ls -d -t $TS_HOME/logs/catalina.*.log | tail -n +7 | xargs rm -rf</span><br><span class="line">    ls -d -t $TS_HOME/logs/host-manager.*.log | tail -n +7 | xargs rm -rf</span><br><span class="line">    ls -d -t $TS_HOME/logs/localhost.*.log | tail -n +7 | xargs rm -rf</span><br><span class="line">    ls -d -t $TS_HOME/logs/manager.*.log | tail -n +7 | xargs rm -rf</span><br><span class="line">    ls -d -t $TS_HOME/logs/dump.*.hprof | tail -n +7 | xargs rm -rf</span><br><span class="line">&#125;</span><br><span class="line">cleanLog</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Graceful shutdown</span></span><br><span class="line">function gracefulShutdown()&#123;</span><br><span class="line">    if [ -z "$PIDS" ]; then</span><br><span class="line">        echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME does not started!" | tee -a $STDOUT_FILE</span><br><span class="line">    else</span><br><span class="line">        echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME kill $PIDS begining" | tee -a $STDOUT_FILE</span><br><span class="line">        for PID in $PIDS ; do</span><br><span class="line">            kill $PID &gt; /dev/null 2&gt;&amp;1</span><br><span class="line">        done</span><br><span class="line"></span><br><span class="line">        # check for graceful shutdown</span><br><span class="line">        COUNT=0</span><br><span class="line">        while [ $COUNT -lt 1 ]; do</span><br><span class="line">            sleep 1</span><br><span class="line">            COUNT=1</span><br><span class="line">            for PID in $PIDS ; do</span><br><span class="line">                PID_EXIST=`ps -f -p $PID | grep java`</span><br><span class="line">                if [ -n "$PID_EXIST" ]; then</span><br><span class="line">                    COUNT=0</span><br><span class="line">                    break</span><br><span class="line">                fi</span><br><span class="line">            done</span><br><span class="line">        done</span><br><span class="line">    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME kill $PID success" | tee -a $STDOUT_FILE</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function operate()&#123;</span><br><span class="line">    if [[ "$1" = "kill" ]] ; then</span><br><span class="line">        gracefulShutdown</span><br><span class="line">    elif [[ "$1" = "start" ]]; then</span><br><span class="line">        cd $TS_HOME/bin</span><br><span class="line">        sh startup.sh</span><br><span class="line">    else</span><br><span class="line">        echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME is not support $1" | tee -a $STDOUT_FILE</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line">if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then</span><br><span class="line">    operate kill</span><br><span class="line">    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME starting" | tee -a $STDOUT_FILE</span><br><span class="line">    operate start</span><br><span class="line">elif [[ "$1" = "kill" ]] ; then</span><br><span class="line">    operate kill</span><br><span class="line">elif [[ "$1" = "check" ]] ; then</span><br><span class="line">    if [[ "$PIDS" = "" ]] ; then</span><br><span class="line">        echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME starting" &gt;&gt; $STDOUT_FILE</span><br><span class="line">        operate start</span><br><span class="line">    else</span><br><span class="line">        echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME pid $PIDS" &gt;&gt; $STDOUT_FILE</span><br><span class="line">    fi</span><br><span class="line">else</span><br><span class="line">    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME is not support $1" | tee -a $STDOUT_FILE</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>不同的<code>Tomcat</code>部署项目使用该脚本，只需要调整<code>JVM</code>相关参数即可</p>
-<p>脚本使用说明</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="comment"># 启动、或者重启 Tomcat</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> [txrd@host-148 /opt/szim]$ sh restart.sh</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="comment"># 优雅停机（优雅停掉 Tomcat）</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> [txrd@host-148 /opt/szim]$ sh restart.sh <span class="built_in">kill</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="comment"># 检测 Tomcat 是否启动，如果没有启动则启动，否则不做任何处理</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> [txrd@host-148 /opt/szim]$ sh restart.sh check</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
-</blockquote>
-<h3 id="查看日志脚本"><a href="#查看日志脚本" class="headerlink" title="查看日志脚本"></a>查看日志脚本</h3><blockquote>
-<p>logs.sh</p>
-</blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line">cd `dirname $0`</span><br><span class="line"><span class="meta">#</span><span class="bash"> 脚本所在目录</span></span><br><span class="line">HOME_DIR=`pwd`</span><br><span class="line"><span class="meta">#</span><span class="bash"> Tomcat日志目录</span></span><br><span class="line">LOGS_DIR=$HOME_DIR/tomcat/logs</span><br><span class="line"></span><br><span class="line">tail -f $LOGS_DIR/catalina.out $LOGS_DIR/info.log $LOGS_DIR/error.log $LOGS_DIR/console.log</span><br></pre></td></tr></table></figure>
-<h1 id="JAR-包部署"><a href="#JAR-包部署" class="headerlink" title="JAR 包部署"></a>JAR 包部署</h1><h2 id="部署目录结构-1"><a href="#部署目录结构-1" class="headerlink" title="部署目录结构"></a>部署目录结构</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[txrd@host-148 /opt/项目名]$ tree -af</span><br><span class="line">.</span><br><span class="line">├── ./project</span><br><span class="line">│   └── ./freemarker</span><br><span class="line">│   └── ./lib</span><br><span class="line">│   └── ./项目名.jar</span><br><span class="line">├── ./logs.sh</span><br><span class="line">├── ./restart.sh</span><br></pre></td></tr></table></figure>
-<h2 id="启动脚本"><a href="#启动脚本" class="headerlink" title="启动脚本"></a>启动脚本</h2><blockquote>
-<p>restart.sh</p>
-</blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line">cd `dirname $0`</span><br><span class="line"><span class="meta">#</span><span class="bash"> 脚本所在目录</span></span><br><span class="line">CURRENT_DIR=`pwd`</span><br><span class="line"><span class="meta">#</span><span class="bash"> 项目日志输出目录</span></span><br><span class="line">LOGS_DIR="$&#123;CURRENT_DIR&#125;/logs"</span><br><span class="line">STDOUT_FILE="$&#123;CURRENT_DIR&#125;/logs/stdout.log"</span><br><span class="line"><span class="meta">#</span><span class="bash"> 项目 JAR 包等存放目录</span></span><br><span class="line">PROJECT_HOME="$&#123;CURRENT_DIR&#125;/project"</span><br><span class="line"><span class="meta">#</span><span class="bash"> JAR 启动文件</span></span><br><span class="line">JAR_FILE="$&#123;PROJECT_HOME&#125;/项目名.jar"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> pid</span></span><br><span class="line">PIDS=`ps -ef | grep "$&#123;JAR_FILE&#125;" | grep -v grep | awk '&#123;print $2&#125;'`</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">==================================================================================</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> JVM Configuration</span></span><br><span class="line"><span class="meta">#</span><span class="bash">==================================================================================</span></span><br><span class="line">export LANG=en_US.UTF-8</span><br><span class="line">export JAVA_HOME=/usr/java/jdk1.8.0_144</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin</span><br><span class="line">export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH</span><br><span class="line"></span><br><span class="line">JAVA_OPT="-server -Xms1024m -Xmx1024m -Xss256k"</span><br><span class="line">JAVA_OPT="$&#123;JAVA_OPT&#125; -Dloader.path=$&#123;PROJECT_HOME&#125;/lib/ -Djava.io.tmpdir=$&#123;LOGS_DIR&#125;"</span><br><span class="line">JAVA_OPT="$&#123;JAVA_OPT&#125; -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70"</span><br><span class="line">JAVA_OPT="$&#123;JAVA_OPT&#125; -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$&#123;LOGS_DIR&#125;/$&#123;PIDS&#125;.hprof"</span><br><span class="line">JAVA_OPT="$&#123;JAVA_OPT&#125; -Xloggc:$&#123;LOGS_DIR&#125;/gc.log -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M"</span><br><span class="line">JAVA_OPT="$&#123;JAVA_OPT&#125; -Ddubbo.protocol.port=20882"</span><br><span class="line">JAVA_OPT="$&#123;JAVA_OPT&#125; -Dspring.profiles.active=dev"</span><br><span class="line">JAVA_OPT="$&#123;JAVA_OPT&#125; -jar $&#123;JAR_FILE&#125;"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Graceful shutdown</span></span><br><span class="line">function gracefulShutdown()&#123;</span><br><span class="line">    if [ -z "$PIDS" ]; then</span><br><span class="line">        echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE does not started!" | tee -a $STDOUT_FILE</span><br><span class="line">    else</span><br><span class="line">        echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE kill $PIDS begining" | tee -a $STDOUT_FILE</span><br><span class="line">        for PID in $PIDS ; do</span><br><span class="line">            kill $PID &gt; /dev/null 2&gt;&amp;1</span><br><span class="line">            echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE kill $PID success" | tee -a $STDOUT_FILE</span><br><span class="line">        done</span><br><span class="line"></span><br><span class="line">        # check for graceful shutdown</span><br><span class="line">        COUNT=0</span><br><span class="line">        while [ $COUNT -lt 1 ]; do</span><br><span class="line">            sleep 1</span><br><span class="line">            COUNT=1</span><br><span class="line">            for PID in $PIDS ; do</span><br><span class="line">                PID_EXIST=`ps -f -p $PID | grep java`</span><br><span class="line">                if [ -n "$PID_EXIST" ]; then</span><br><span class="line">                    COUNT=0</span><br><span class="line">                    break</span><br><span class="line">                fi</span><br><span class="line">            done</span><br><span class="line">        done</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function operate()&#123;</span><br><span class="line">    if [[ "$1" = "kill" ]]; then</span><br><span class="line">        gracefulShutdown</span><br><span class="line">    elif [[ "$1" = "start" ]] ; then</span><br><span class="line">        cd $PROJECT_HOME</span><br><span class="line">        # starting</span><br><span class="line">        nohup $JAVA_HOME/bin/java $&#123;JAVA_OPT&#125; &gt;&gt; $&#123;STDOUT_FILE&#125; 2&gt;&amp;1 &amp;</span><br><span class="line">        PIDS=`ps -ef | grep "$JAR_FILE" | grep -v grep | awk '&#123;print $2&#125;'`</span><br><span class="line">        echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE started OK! pid: $&#123;PIDS&#125;" | tee -a $&#123;STDOUT_FILE&#125;</span><br><span class="line">    else</span><br><span class="line">        echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE is not support $1" | tee -a $&#123;STDOUT_FILE&#125;</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if [[ "$1" = "start" || "$1" = "check" ]]; then</span><br><span class="line">    if [ -n "$&#123;PIDS&#125;" ]; then</span><br><span class="line">        echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE already started! pid: $&#123;PIDS&#125;" &gt;&gt; $&#123;STDOUT_FILE&#125;</span><br><span class="line">        exit 1</span><br><span class="line">    fi</span><br><span class="line">    operate start</span><br><span class="line">elif [[ "$1" = "" || "$1" = "restart" ]]; then</span><br><span class="line">    operate kill</span><br><span class="line">    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE starting" | tee -a $&#123;STDOUT_FILE&#125;</span><br><span class="line">    operate start</span><br><span class="line">elif [[ "$1" = "kill" ]]; then</span><br><span class="line">    operate kill</span><br><span class="line">else</span><br><span class="line">    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE is not support $1" | tee -a $&#123;STDOUT_FILE&#125;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>不同的<code>JAR</code>部署项目使用该脚本，只需要调整<code>JVM</code>相关参数和<code>项目名</code>即可</p>
-<p>脚本使用说明</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="comment"># 启动、或者重启应用</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> [txrd@host-148 /opt/项目名]$ sh restart.sh</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="comment"># 优雅停机</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> [txrd@host-148 /opt/项目名]$ sh restart.sh <span class="built_in">kill</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="comment"># 检测应用是否启动，如果没有启动则启动，否则不做任何处理</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> [txrd@host-148 /opt/项目名]$ sh restart.sh check</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
-</blockquote>
-<h2 id="查看日志脚本-1"><a href="#查看日志脚本-1" class="headerlink" title="查看日志脚本"></a>查看日志脚本</h2><blockquote>
-<p>logs.sh</p>
-</blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line">cd `dirname $0`</span><br><span class="line"><span class="meta">#</span><span class="bash"> 脚本所在目录</span></span><br><span class="line">HOME_DIR=`pwd`</span><br><span class="line"><span class="meta">#</span><span class="bash"> 应用日志目录</span></span><br><span class="line">LOGS_DIR=$HOME_DIR/logs</span><br><span class="line"></span><br><span class="line">tail -f $LOGS_DIR/info.log $LOGS_DIR/error.log $LOGS_DIR/console.log</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/d13f7d34.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/d13f7d34.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">Tomcat 使用注意事项</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-05-08 09:35:05" itemprop="dateCreated datePublished" datetime="2018-05-08T09:35:05+08:00">2018-05-08</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2020-02-24 17:44:26" itemprop="dateModified" datetime="2020-02-24T17:44:26+08:00">2020-02-24</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Tomcat/" itemprop="url" rel="index"><span itemprop="name">Tomcat</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数：</span>
-                
-                <span title="字数">1.6k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="setenv-sh"><a href="#setenv-sh" class="headerlink" title="setenv.sh"></a>setenv.sh</h1><p>在<code>Tomcat</code>的<code>bin</code>目录下添加<code>setenv.sh</code>文件，在启动<code>Tomcat</code>的时候，该脚本会被自动执行。一般在该脚本配置一些环境变量、<code>JVM</code>参数等</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># @Author: YL</span></span><br><span class="line"><span class="comment"># @Date:   2017-12-18 12:15:52</span></span><br><span class="line"><span class="comment"># @Last Modified by:   YL</span></span><br><span class="line"><span class="comment"># @Last Modified time: 2017-12-18 12:16:03</span></span><br><span class="line"><span class="comment"># 本文件放到 Tomcat 的 bin 目录下</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> LANG=en_US.UTF-8</span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/java/jdk1.8.0_144</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin</span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar:<span class="variable">$CLASSPATH</span></span><br><span class="line"></span><br><span class="line">JAVA_OPT=<span class="string">"<span class="variable">$JAVA_OPT</span> -Xss256k"</span></span><br></pre></td></tr></table></figure>
+          <h1 id="JPipe-Project"><a href="#JPipe-Project" class="headerlink" title="JPipe Project"></a>JPipe Project</h1><p>Spring Boot Project for JPipe(<a href="https://github.com/foreveryang321/jpipe" target="_blank" rel="noopener">https://github.com/foreveryang321/jpipe</a>)</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="线程池配置"><a href="#线程池配置" class="headerlink" title="线程池配置"></a>线程池配置</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">jpipe:</span></span><br><span class="line"><span class="attr">  enabled:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">  pool:</span></span><br><span class="line"><span class="attr">    core-size:</span> <span class="bullet">-1</span></span><br><span class="line"><span class="attr">    pre-start-all-core-threads:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">    max-size:</span> <span class="number">1024</span></span><br><span class="line"><span class="attr">    keep-alive:</span> <span class="number">6000</span></span><br><span class="line"><span class="attr">    queue-size:</span> <span class="number">1024</span></span><br></pre></td></tr></table></figure>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/posts/d13f7d34.html" rel="contents">
+              <a class="btn" href="/posts/d7b08969.html" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -2658,7 +3309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/56017bc5.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/bc557e1a.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
@@ -2678,7 +3329,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/posts/56017bc5.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">zookeeper 命令使用</a>
+                <a href="/posts/bc557e1a.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">Java 线程池</a>
               
             
           </h2>
@@ -2703,7 +3354,7 @@
                 
               
 
-              <time title="创建时间：2018-04-28 09:35:05" itemprop="dateCreated datePublished" datetime="2018-04-28T09:35:05+08:00">2018-04-28</time>
+              <time title="创建时间：2018-08-17 16:47:17" itemprop="dateCreated datePublished" datetime="2018-08-17T16:47:17+08:00">2018-08-17</time>
             
 
             
@@ -2720,222 +3371,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-05-30 16:27:47" itemprop="dateModified" datetime="2018-05-30T16:27:47+08:00">2018-05-30</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/zookeeper/" itemprop="url" rel="index"><span itemprop="name">zookeeper</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数：</span>
-                
-                <span title="字数">171</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
-        <span class="post-meta-item-icon">
-          <i class="fa fa-tags"></i>
-        </span>
-        <span class="post-meta-item-text">标签</span>
-        
-           <a href="/tags/zookeeper/" rel="tag" class="color1">zookeeper</a>
-        
-      </div>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="zkCli-sh"><a href="#zkCli-sh" class="headerlink" title="zkCli.sh"></a>zkCli.sh</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 指定ip和端口，zkCli.sh默认进入的是2181端口</span></span><br><span class="line"><span class="comment"># sh zkCli.sh -server localhsot:2170</span></span><br><span class="line">sh zkCli.sh -server ip:port</span><br></pre></td></tr></table></figure>
-<h2 id="zkServer-sh"><a href="#zkServer-sh" class="headerlink" title="zkServer.sh"></a>zkServer.sh</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动</span></span><br><span class="line">sh zkServer.sh start</span><br><span class="line"><span class="comment"># 查看状态</span></span><br><span class="line">sh zkServersh status</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/27e8862d.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/27e8862d.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">IP 操作工具类</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-04-14 21:47:17" itemprop="dateCreated datePublished" datetime="2018-04-14T21:47:17+08:00">2018-04-14</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-06-03 10:13:02" itemprop="dateModified" datetime="2018-06-03T10:13:02+08:00">2018-06-03</time>
+                <time title="修改时间：2018-08-20 12:14:37" itemprop="dateModified" datetime="2018-08-20T12:14:37+08:00">2018-08-20</time>
               
             
           </span>
@@ -2982,211 +3418,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">3.7k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">3 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="IpUtils-java"><a href="#IpUtils-java" class="headerlink" title="IpUtils.java"></a>IpUtils.java</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStreamReader;</span><br><span class="line"><span class="keyword">import</span> java.io.LineNumberReader;</span><br><span class="line"><span class="keyword">import</span> java.net.InetAddress;</span><br><span class="line"><span class="keyword">import</span> java.net.UnknownHostException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * IP 操作工具类</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Created by YL on 2018/4/4</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IpUtils</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取 IP</span></span><br><span class="line"><span class="comment">     * &lt;pre&gt;</span></span><br><span class="line"><span class="comment">     *     1、如果使用ngnix反向代理，导致不能使用HttpServletRequest.getRemoteAddr()获取来访者真实ip的问题，</span></span><br><span class="line"><span class="comment">     *     2、对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割</span></span><br><span class="line"><span class="comment">     * &lt;/pre&gt;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getIpAddr</span><span class="params">(HttpServletRequest request)</span> </span>&#123;</span><br><span class="line">        String ipAddr = request.getHeader(<span class="string">"x-forwarded-for"</span>);</span><br><span class="line">        <span class="keyword">if</span> (ipAddr == <span class="keyword">null</span> || ipAddr.length() == <span class="number">0</span> || <span class="string">"unknown"</span>.equalsIgnoreCase(ipAddr)) &#123;</span><br><span class="line">            ipAddr = request.getHeader(<span class="string">"Proxy-Client-IP"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (ipAddr == <span class="keyword">null</span> || ipAddr.length() == <span class="number">0</span> || <span class="string">"unknown"</span>.equalsIgnoreCase(ipAddr)) &#123;</span><br><span class="line">            ipAddr = request.getHeader(<span class="string">"WL-Proxy-Client-IP"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (ipAddr == <span class="keyword">null</span> || ipAddr.length() == <span class="number">0</span> || <span class="string">"unknown"</span>.equalsIgnoreCase(ipAddr)) &#123;</span><br><span class="line">            ipAddr = request.getRemoteAddr();</span><br><span class="line">            <span class="keyword">if</span> (<span class="string">"127.0.0.1"</span>.equals(ipAddr) || <span class="string">"0:0:0:0:0:0:0:1"</span>.equals(ipAddr)) &#123;</span><br><span class="line">                <span class="comment">//根据网卡取本机配置的IP</span></span><br><span class="line">                InetAddress inet = <span class="keyword">null</span>;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    inet = InetAddress.getLocalHost();</span><br><span class="line">                    ipAddr = inet.getHostAddress();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (UnknownHostException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割</span></span><br><span class="line">        <span class="comment">// 没有考虑ipv6</span></span><br><span class="line">        <span class="comment">// if (ipAddr != null &amp;&amp; ipAddr.length() &gt; 15) &#123; //"***.***.***.***".length() = 15</span></span><br><span class="line">        <span class="comment">//     if (ipAddr.indexOf(",") &gt; 0) &#123;</span></span><br><span class="line">        <span class="comment">//         ipAddr = ipAddr.substring(0, ipAddr.indexOf(","));</span></span><br><span class="line">        <span class="comment">//     &#125;</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line">        <span class="keyword">if</span> (ipAddr != <span class="keyword">null</span> &amp;&amp; ipAddr.contains(<span class="string">","</span>)) &#123;</span><br><span class="line">            ipAddr = ipAddr.substring(<span class="number">0</span>, ipAddr.indexOf(<span class="string">","</span>));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ipAddr;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据 IP 获得 MAC 地址</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> ip IP 地址</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getMacAddr</span><span class="params">(String ip)</span> </span>&#123;</span><br><span class="line">        String macAddr = <span class="string">""</span>;</span><br><span class="line">        InputStreamReader isr = <span class="keyword">null</span>;</span><br><span class="line">        LineNumberReader reader = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Process p = Runtime.getRuntime().exec(<span class="string">"nbtstat -A "</span> + ip);</span><br><span class="line">            isr = <span class="keyword">new</span> InputStreamReader(p.getInputStream());</span><br><span class="line">            reader = <span class="keyword">new</span> LineNumberReader(isr);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="number">100</span>; i++) &#123;</span><br><span class="line">                String str = reader.readLine();</span><br><span class="line">                <span class="keyword">if</span> (str != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (str.indexOf(<span class="string">"MAC Address"</span>) &gt; <span class="number">1</span>) &#123;</span><br><span class="line">                        macAddr = str.substring(str.indexOf(<span class="string">"MAC Address"</span>) + <span class="number">14</span>, str.length());</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (isr != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    isr.close();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (reader != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    reader.close();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> macAddr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/db736859.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/db736859.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">Oracle 使用</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-04-08 17:01:05" itemprop="dateCreated datePublished" datetime="2018-04-08T17:01:05+08:00">2018-04-08</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-06-05 17:24:16" itemprop="dateModified" datetime="2018-06-05T17:24:16+08:00">2018-06-05</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Oracle/" itemprop="url" rel="index"><span itemprop="name">Oracle</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数：</span>
-                
-                <span title="字数">774</span>
+                <span title="字数">1.5k</span>
               
 
               
@@ -3212,217 +3444,15 @@
     
 
     
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="修改表空间"><a href="#修改表空间" class="headerlink" title="修改表空间"></a>修改表空间</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 修改表空间</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="string">'ALTER TABLE WWTEST.'</span> || T.TABLE_NAME || <span class="string">' MOVE TABLESPACE USERS;'</span></span><br><span class="line">  <span class="keyword">FROM</span> ALL_TABLES T</span><br><span class="line"> <span class="keyword">WHERE</span> T.OWNER = <span class="string">'WX_KBT_TEST'</span>;</span><br><span class="line"><span class="comment">---- 如果有分区，使用这条语句</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="string">'alter table '</span> || TABLE_NAME || <span class="string">' move partition '</span> || PARTITION_NAME ||</span><br><span class="line">       <span class="string">' tablespace USERS;'</span></span><br><span class="line">  <span class="keyword">FROM</span> USER_TAB_PARTITIONS</span><br><span class="line"> <span class="keyword">WHERE</span> TABLE_NAME <span class="keyword">IN</span> (<span class="string">'IM_WX_QX_TEMPLATE_RESULT'</span>, <span class="string">'IM_WX_QX_TEMPLATE'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 修改索引的表空间</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="string">'alter index '</span> || INDEX_NAME || <span class="string">' rebuild tablespace USERS;'</span></span><br><span class="line">  <span class="keyword">FROM</span> ALL_INDEXES I</span><br><span class="line"> <span class="keyword">WHERE</span> I.OWNER = <span class="string">'WX_KBT_TEST'</span></span><br><span class="line">   <span class="keyword">AND</span> I.PARTITIONED = <span class="string">'YES'</span>;</span><br><span class="line"><span class="comment">---- 如果有分区，使用这条语句</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="string">'alter index '</span> || P.INDEX_NAME || <span class="string">' rebuild PARTITION '</span> ||</span><br><span class="line">       P.PARTITION_NAME || <span class="string">' tablespace USERS;'</span></span><br><span class="line">  <span class="keyword">FROM</span> USER_IND_PARTITIONS P</span><br><span class="line"> <span class="keyword">WHERE</span> P.INDEX_NAME <span class="keyword">IN</span> (<span class="string">'I_IM_WX_LOG_PROCESSTYPE'</span>, <span class="string">'I_IM_WX_LOG_USERNO'</span>);</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/ab825d27.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/ab825d27.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">spring boot 打包相关</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-04-08 09:11:20" itemprop="dateCreated datePublished" datetime="2018-04-08T09:11:20+08:00">2018-04-08</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-08-24 15:17:31" itemprop="dateModified" datetime="2018-08-24T15:17:31+08:00">2018-08-24</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数：</span>
-                
-                <span title="字数">3.6k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">3 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
       <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
         <span class="post-meta-item-icon">
           <i class="fa fa-tags"></i>
         </span>
         <span class="post-meta-item-text">标签</span>
         
-           <a href="/tags/spring-boot/" rel="tag" class="color1">spring-boot</a>
+           <a href="/tags/ExecutorService/" rel="tag" class="color1">ExecutorService</a>
+        
+           <a href="/tags/Executors/" rel="tag" class="color2">Executors</a>
         
       </div>
     
@@ -3437,11 +3467,23 @@
 
       
         
-          <h1 id="webjars打包"><a href="#webjars打包" class="headerlink" title="webjars打包"></a>webjars打包</h1><p>包路径：src\main\resources\webjars<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">finalName</span>&gt;</span>$&#123;project.artifactId&#125;<span class="tag">&lt;/<span class="name">finalName</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">directory</span>&gt;</span>$&#123;project.basedir&#125;/src/main/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">targetPath</span>&gt;</span>$&#123;project.build.outputDirectory&#125;/META-INF/resources/<span class="tag">&lt;/<span class="name">targetPath</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+          <h2 id="线程池作用"><a href="#线程池作用" class="headerlink" title="线程池作用"></a>线程池作用</h2><ul>
+<li>CPU资源隔离</li>
+<li>减少上下文切换</li>
+<li>减少线程创建/关闭的资源开销</li>
+<li>更好并发控制</li>
+<li>更好生命周期控制</li>
+</ul>
+<h2 id="设计时注意事项"><a href="#设计时注意事项" class="headerlink" title="设计时注意事项"></a>设计时注意事项</h2><ul>
+<li>任务混杂</li>
+<li>任务依赖</li>
+<li>饥饿死锁</li>
+<li>慢操作</li>
+</ul>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/posts/ab825d27.html" rel="contents">
+              <a class="btn" href="/posts/bc557e1a.html" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -3501,7 +3543,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/c85b105d.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/6ae6b8a1.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
@@ -3521,7 +3563,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/posts/c85b105d.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">spring boot 2.0 + redis自定义注解</a>
+                <a href="/posts/6ae6b8a1.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/5/index.html">camel-ftp 使用笔记</a>
               
             
           </h2>
@@ -3546,7 +3588,7 @@
                 
               
 
-              <time title="创建时间：2018-03-23 15:44:18" itemprop="dateCreated datePublished" datetime="2018-03-23T15:44:18+08:00">2018-03-23</time>
+              <time title="创建时间：2018-08-09 19:11:20" itemprop="dateCreated datePublished" datetime="2018-08-09T19:11:20+08:00">2018-08-09</time>
             
 
             
@@ -3563,7 +3605,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-01-20 13:59:11" itemprop="dateModified" datetime="2020-01-20T13:59:11+08:00">2020-01-20</time>
+                <time title="修改时间：2020-03-09 09:59:57" itemprop="dateModified" datetime="2020-03-09T09:59:57+08:00">2020-03-09</time>
               
             
           </span>
@@ -3610,7 +3652,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">20k</span>
+                <span title="字数">2k</span>
               
 
               
@@ -3624,7 +3666,7 @@
                 
                   <span class="post-meta-item-text">时长 &asymp;</span>
                 
-                <span title="时长">18 分钟</span>
+                <span title="时长">2 分钟</span>
               
             </div>
           
@@ -3642,9 +3684,9 @@
         </span>
         <span class="post-meta-item-text">标签</span>
         
-           <a href="/tags/spring-boot/" rel="tag" class="color1">spring-boot</a>
+           <a href="/tags/Apache/" rel="tag" class="color1">Apache</a>
         
-           <a href="/tags/redis/" rel="tag" class="color2">redis</a>
+           <a href="/tags/camel-ftp/" rel="tag" class="color2">camel-ftp</a>
         
       </div>
     
@@ -3659,12 +3701,15 @@
 
       
         
-          <h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h1><p><a href="https://github.com/foreveryang321/java-best-practice" target="_blank" rel="noopener">https://github.com/foreveryang321/java-best-practice</a></p>
-<h1 id="自定义CacheExpire注解"><a href="#自定义CacheExpire注解" class="headerlink" title="自定义CacheExpire注解"></a>自定义CacheExpire注解</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.core.annotation.AliasFor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Documented;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.ElementType;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Inherited;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Target</span>(&#123;ElementType.METHOD, ElementType.TYPE&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CacheExpire &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * expire time, default 60s</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@AliasFor</span>(<span class="string">"expire"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">long</span> <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> 60L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * expire time, default 60s</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@AliasFor</span>(<span class="string">"value"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">long</span> <span class="title">expire</span><span class="params">()</span> <span class="keyword">default</span> 60L</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h1 id="解决中文目录乱码问题"><a href="#解决中文目录乱码问题" class="headerlink" title="解决中文目录乱码问题"></a>解决中文目录乱码问题</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ftpClient.controlEncoding=gb2312</span><br></pre></td></tr></table></figure>
+<h1 id="idempotentConsumer"><a href="#idempotentConsumer" class="headerlink" title="idempotentConsumer"></a>idempotentConsumer</h1><blockquote>
+<p>file</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// tmp 是一个路径：./../tmp</span></span><br><span class="line"><span class="comment">// 通过文件名缓存，如果缓存中已经有这个文件名，怎不再处理这个文件</span></span><br><span class="line">ValueBuilder messageIdExpression = header(Exchange.FILE_PATH)</span><br><span class="line">                .append(<span class="string">"#"</span>).append(header(Exchange.FILE_LAST_MODIFIED))</span><br><span class="line">                .append(<span class="string">"#"</span>).append(header(Exchange.FILE_LENGTH));</span><br><span class="line">FileIdempotentRepository idempotentRepository =</span><br><span class="line">    FileIdempotentRepository.fileIdempotentRepository(<span class="keyword">new</span> File(tmp, <span class="keyword">this</span>.getClass().getSimpleName() + <span class="string">".txt"</span>), <span class="number">100</span> * <span class="number">1024</span>, <span class="number">5</span> * <span class="number">1024</span> * <span class="number">1024</span>);</span><br><span class="line"></span><br><span class="line">from(url.toString())</span><br><span class="line">    .idempotentConsumer(messageIdExpression, idempotentRepository)</span><br><span class="line">    .process(arrearsProcessor)</span><br><span class="line">    .log(LoggingLevel.INFO, log, <span class="string">"finished processor the file $&#123;file:path&#125;."</span>);</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/posts/c85b105d.html" rel="contents">
+              <a class="btn" href="/posts/6ae6b8a1.html" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -3713,7 +3758,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -3758,7 +3803,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">143</span>
+                    <span class="site-state-item-count">164</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3817,7 +3862,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">23</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">26</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -4056,7 +4107,45 @@
                     
                       
                     
-                    <span class="site-state-item-count">113</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">132</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -4149,7 +4238,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">495k</span>
+    <span title="站点总字数">526k</span>
   
 
   

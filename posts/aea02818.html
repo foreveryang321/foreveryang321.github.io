@@ -112,7 +112,7 @@
 <meta property="og:site_name" content="forever杨的个人博客">
 <meta property="og:description" content="curlGET 请求1curl http://www.baidu.com?q=xxxx POST 请求1curl http://ip:port/weixin_v3/w -XPOST -d &quot;send message...&quot; 发送 POST JSON 请求1curl -H &quot;Content-Type: application/json&quot; -X POST  --data &apos;&amp;#123;&quot;data&quot;:&quot;">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-05-28T07:34:51.790Z">
+<meta property="og:updated_time" content="2020-09-18T03:27:01.411Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux curl 命令">
 <meta name="twitter:description" content="curlGET 请求1curl http://www.baidu.com?q=xxxx POST 请求1curl http://ip:port/weixin_v3/w -XPOST -d &quot;send message...&quot; 发送 POST JSON 请求1curl -H &quot;Content-Type: application/json&quot; -X POST  --data &apos;&amp;#123;&quot;data&quot;:&quot;">
@@ -252,7 +252,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">143</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">164</span></a>
 
   </li>
         
@@ -271,7 +271,7 @@
       
     
 
-    <a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">23</span></a>
+    <a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">26</span></a>
 
   </li>
         
@@ -290,7 +290,7 @@
       
     
 
-    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">113</span></a>
+    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">132</span></a>
 
   </li>
         
@@ -471,7 +471,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-05-28 15:34:51" itemprop="dateModified" datetime="2018-05-28T15:34:51+08:00">2018-05-28</time>
+                <time title="修改时间：2020-09-18 11:27:01" itemprop="dateModified" datetime="2020-09-18T11:27:01+08:00">2020-09-18</time>
               
             
           </span>
@@ -525,7 +525,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">614</span>
+                <span title="字数">757</span>
               
 
               
@@ -578,6 +578,7 @@
 <h2 id="发送-POST-JSON-请求"><a href="#发送-POST-JSON-请求" class="headerlink" title="发送 POST JSON 请求"></a>发送 POST JSON 请求</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -H <span class="string">"Content-Type: application/json"</span> -X POST  --data <span class="string">'&#123;"data":"1"&#125;'</span> http://127.0.0.1/</span><br></pre></td></tr></table></figure>
 <h2 id="使用代理"><a href="#使用代理" class="headerlink" title="使用代理"></a>使用代理</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -x 192.168.2.5:3128 http://www.baidu.com?q=xxxx</span><br></pre></td></tr></table></figure>
 <h2 id="输出请求信息"><a href="#输出请求信息" class="headerlink" title="输出请求信息"></a>输出请求信息</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># http_code</span></span><br><span class="line"><span class="comment"># time_connect</span></span><br><span class="line"><span class="comment"># time_starttransfer</span></span><br><span class="line"><span class="comment"># time_total</span></span><br><span class="line"><span class="comment"># size_download</span></span><br><span class="line"><span class="comment"># speed_download</span></span><br><span class="line"><span class="comment"># 参考地址：</span></span><br><span class="line">curl http://www.baidu.com?q=xxxx -so /dev/null -w <span class="string">"%&#123;http_code&#125;\t%&#123;time_connect&#125;\t%&#123;time_starttransfer&#125;\t%&#123;time_total&#125;\t%&#123;size_download&#125;\t%&#123;speed_download&#125;\t"</span></span><br></pre></td></tr></table></figure>
+<h1 id="下载文件并重命名"><a href="#下载文件并重命名" class="headerlink" title="下载文件并重命名"></a>下载文件并重命名</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> culr -L &lt;url&gt; -o &lt;filename&gt;</span></span><br><span class="line">curl -L http://mirrors.aliyun.com/repo/Centos-7.repo -o /etc/yum.repos.d/CentOS-Base.repo \</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -639,8 +640,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/2e023d93.html" rel="next" title="Linux du 命令">
-                <i class="fa fa-chevron-left"></i> Linux du 命令
+              <a href="/posts/b0b79272.html" rel="next" title="Linux crontab 命令">
+                <i class="fa fa-chevron-left"></i> Linux crontab 命令
               </a>
             
           </div>
@@ -649,8 +650,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/posts/b0b79272.html" rel="prev" title="Linux crontab 命令">
-                Linux crontab 命令 <i class="fa fa-chevron-right"></i>
+              <a href="/posts/53b5960c.html" rel="prev" title="Linux ls 命令">
+                Linux ls 命令 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -727,7 +728,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">143</span>
+                    <span class="site-state-item-count">164</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -786,7 +787,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">23</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">26</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1025,7 +1032,45 @@
                     
                       
                     
-                    <span class="site-state-item-count">113</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">132</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1100,7 +1145,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#curl"><span class="nav-number">1.</span> <span class="nav-text">curl</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GET-请求"><span class="nav-number">2.</span> <span class="nav-text">GET 请求</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#POST-请求"><span class="nav-number">2.1.</span> <span class="nav-text">POST 请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发送-POST-JSON-请求"><span class="nav-number">2.2.</span> <span class="nav-text">发送 POST JSON 请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用代理"><span class="nav-number">2.3.</span> <span class="nav-text">使用代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输出请求信息"><span class="nav-number">2.4.</span> <span class="nav-text">输出请求信息</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#curl"><span class="nav-number">1.</span> <span class="nav-text">curl</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GET-请求"><span class="nav-number">2.</span> <span class="nav-text">GET 请求</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#POST-请求"><span class="nav-number">2.1.</span> <span class="nav-text">POST 请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发送-POST-JSON-请求"><span class="nav-number">2.2.</span> <span class="nav-text">发送 POST JSON 请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用代理"><span class="nav-number">2.3.</span> <span class="nav-text">使用代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输出请求信息"><span class="nav-number">2.4.</span> <span class="nav-text">输出请求信息</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#下载文件并重命名"><span class="nav-number">3.</span> <span class="nav-text">下载文件并重命名</span></a></li></ol></div>
             
 
           </div>
@@ -1134,7 +1179,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">495k</span>
+    <span title="站点总字数">526k</span>
   
 
   

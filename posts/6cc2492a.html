@@ -112,7 +112,7 @@
 <meta property="og:site_name" content="forever杨的个人博客">
 <meta property="og:description" content="Page   函数 描述 备注     getTotalElements 总记录数    getTotalPages 总页数    getContent 查询记录列表    getNumber 当前页数，从0开始    getNumberOfElements 当前页码中的记录数    getSize 每页记录数">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-14T08:40:47.531Z">
+<meta property="og:updated_time" content="2020-08-05T10:30:17.474Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Data JPA 使用">
 <meta name="twitter:description" content="Page   函数 描述 备注     getTotalElements 总记录数    getTotalPages 总页数    getContent 查询记录列表    getNumber 当前页数，从0开始    getNumberOfElements 当前页码中的记录数    getSize 每页记录数">
@@ -252,7 +252,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">143</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">164</span></a>
 
   </li>
         
@@ -271,7 +271,7 @@
       
     
 
-    <a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">23</span></a>
+    <a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">26</span></a>
 
   </li>
         
@@ -290,7 +290,7 @@
       
     
 
-    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">113</span></a>
+    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">132</span></a>
 
   </li>
         
@@ -471,7 +471,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-11-14 16:40:47" itemprop="dateModified" datetime="2019-11-14T16:40:47+08:00">2019-11-14</time>
+                <time title="修改时间：2020-08-05 18:30:17" itemprop="dateModified" datetime="2020-08-05T18:30:17+08:00">2020-08-05</time>
               
             
           </span>
@@ -525,7 +525,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">955</span>
+                <span title="字数">1.4k</span>
               
 
               
@@ -616,6 +616,12 @@
 </tbody>
 </table>
 <a id="more"></a>
+<h1 id="EntityListeners注解"><a href="#EntityListeners注解" class="headerlink" title="EntityListeners注解"></a>EntityListeners注解</h1><blockquote>
+<p>使用在实体类，或者mapped superclass上</p>
+</blockquote>
+<p>主要是配置<code>PrePersist</code>、<code>PreRemove</code>、<code>PostPersist</code>、<code>PostRemove</code>、<code>PreUpdate</code>、<code>PostUpdate</code>、<code>PostLoad</code>等监听回调</p>
+<p>配置JPA审计使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">注意：如果需要自动填充createdBy、createdAt、modifiedBy、modifiedAt</span><br><span class="line">1、需要开启JPA审计（启用@EnableJpaAuditing）</span><br><span class="line">2、新建一个类实现AuditorAware接口，返回createdBy、modifiedBy的值，然后通过@Configuration注册成bean</span><br><span class="line">3、在实体类，或者mapped superclass上@EntityListeners(org.springframework.data.jpa.domain.support.AuditingEntityListener.class)</span><br></pre></td></tr></table></figure>
 <h1 id="Modifying注解"><a href="#Modifying注解" class="headerlink" title="Modifying注解"></a>Modifying注解</h1><p>（1）可以通过自定义的 JPQL 完成 UPDATE 和 DELETE 操作。 注意： JPQL 不支持使用 INSERT</p>
 <p>（2）在 @Query 注解中编写 JPQL 语句， 但必须使用 @Modifying 进行修饰. 以通知 Spring Data， 这是一个 UPDATE 或 DELETE 操作</p>
 <p>（3）UPDATE 或 DELETE 操作需要使用事务，此时需要定义 Service 层，在 Service 层的方法上添加事务操作</p>
@@ -689,8 +695,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/b2990e54.html" rel="next" title="bootstrap-table 的使用问题">
-                <i class="fa fa-chevron-left"></i> bootstrap-table 的使用问题
+              <a href="/posts/47aa1712.html" rel="next" title="spring boot 使用注意事项">
+                <i class="fa fa-chevron-left"></i> spring boot 使用注意事项
               </a>
             
           </div>
@@ -699,8 +705,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/posts/47aa1712.html" rel="prev" title="spring boot 使用注意事项">
-                spring boot 使用注意事项 <i class="fa fa-chevron-right"></i>
+              <a href="/posts/e20f93cc.html" rel="prev" title="spring-boot shiro 引入外部lib启动方式报错">
+                spring-boot shiro 引入外部lib启动方式报错 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -777,7 +783,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">143</span>
+                    <span class="site-state-item-count">164</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -836,7 +842,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">23</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">26</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1075,7 +1087,45 @@
                     
                       
                     
-                    <span class="site-state-item-count">113</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">132</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1150,7 +1200,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Page"><span class="nav-number">1.</span> <span class="nav-text">Page</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Modifying注解"><span class="nav-number">2.</span> <span class="nav-text">Modifying注解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#批量插入、更新配置"><span class="nav-number">3.</span> <span class="nav-text">批量插入、更新配置</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Page"><span class="nav-number">1.</span> <span class="nav-text">Page</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#EntityListeners注解"><span class="nav-number">2.</span> <span class="nav-text">EntityListeners注解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Modifying注解"><span class="nav-number">3.</span> <span class="nav-text">Modifying注解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#批量插入、更新配置"><span class="nav-number">4.</span> <span class="nav-text">批量插入、更新配置</span></a></li></ol></div>
             
 
           </div>
@@ -1184,7 +1234,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">495k</span>
+    <span title="站点总字数">526k</span>
   
 
   

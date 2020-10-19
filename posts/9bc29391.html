@@ -104,18 +104,18 @@
 
 
 
-  <meta name="description" content="docker-compose 安装 1$ sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose  可执行权限 1$ sudo chmod +x /usr/local/">
+  <meta name="description" content="docker-compose 安装 1234$ sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose$ sudo curl --proxy 10.18.248.134">
 <meta name="keywords" content="docker-compose">
 <meta property="og:type" content="article">
 <meta property="og:title" content="docker-compose 安装和使用">
 <meta property="og:url" content="https://blog.yl-online.top/posts/9bc29391.html">
 <meta property="og:site_name" content="forever杨的个人博客">
-<meta property="og:description" content="docker-compose 安装 1$ sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose  可执行权限 1$ sudo chmod +x /usr/local/">
+<meta property="og:description" content="docker-compose 安装 1234$ sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose$ sudo curl --proxy 10.18.248.134">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-07T02:24:06.266Z">
+<meta property="og:updated_time" content="2020-08-18T02:08:15.009Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="docker-compose 安装和使用">
-<meta name="twitter:description" content="docker-compose 安装 1$ sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose  可执行权限 1$ sudo chmod +x /usr/local/">
+<meta name="twitter:description" content="docker-compose 安装 1234$ sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose$ sudo curl --proxy 10.18.248.134">
 
 
 
@@ -252,7 +252,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">143</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">164</span></a>
 
   </li>
         
@@ -271,7 +271,7 @@
       
     
 
-    <a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">23</span></a>
+    <a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">26</span></a>
 
   </li>
         
@@ -290,7 +290,7 @@
       
     
 
-    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">113</span></a>
+    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">132</span></a>
 
   </li>
         
@@ -471,7 +471,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-07 10:24:06" itemprop="dateModified" datetime="2019-08-07T10:24:06+08:00">2019-08-07</time>
+                <time title="修改时间：2020-08-18 10:08:15" itemprop="dateModified" datetime="2020-08-18T10:08:15+08:00">2020-08-18</time>
               
             
           </span>
@@ -525,7 +525,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">355</span>
+                <span title="字数">533</span>
               
 
               
@@ -573,7 +573,7 @@
       
         <h1 id="docker-compose"><a href="#docker-compose" class="headerlink" title="docker-compose"></a>docker-compose</h1><ul>
 <li><p>安装</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/<span class="built_in">local</span>/bin/docker-compose</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/<span class="built_in">local</span>/bin/docker-compose</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$ sudo curl --proxy 10.18.248.134:19080 -L <span class="string">"https://github.com/docker/compose/releases/download/1.26.2/docker-compose-<span class="variable">$(uname -s)</span>-<span class="variable">$(uname -m)</span>"</span> -o /usr/<span class="built_in">local</span>/bin/docker-compose</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>可执行权限</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo chmod +x /usr/<span class="built_in">local</span>/bin/docker-compose</span><br></pre></td></tr></table></figure>
@@ -644,8 +644,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/2fff8f5e.html" rel="next" title="安装 docker 环境 for CentOS">
-                <i class="fa fa-chevron-left"></i> 安装 docker 环境 for CentOS
+              <a href="/posts/71631b3f.html" rel="next" title="docker 命令">
+                <i class="fa fa-chevron-left"></i> docker 命令
               </a>
             
           </div>
@@ -654,8 +654,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/posts/6a0c4822.html" rel="prev" title="docker 安装 elk 环境">
-                docker 安装 elk 环境 <i class="fa fa-chevron-right"></i>
+              <a href="/posts/2fff8f5e.html" rel="prev" title="安装 docker 环境 for CentOS">
+                安装 docker 环境 for CentOS <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -732,7 +732,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">143</span>
+                    <span class="site-state-item-count">164</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -791,7 +791,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">23</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">26</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1030,7 +1036,45 @@
                     
                       
                     
-                    <span class="site-state-item-count">113</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">132</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1139,7 +1183,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">495k</span>
+    <span title="站点总字数">526k</span>
   
 
   

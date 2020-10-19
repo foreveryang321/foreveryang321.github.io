@@ -112,7 +112,7 @@
 <meta property="og:site_name" content="forever杨的个人博客">
 <meta property="og:description" content="自增分区 numtoyminterval 按年、月分区  numtoyminterval(1, ‘year’)、numtoyminterval(1, ‘month’)  numtodsinterval 按天、时、分、秒分区  numtodsinterval(1, ‘day’)、numtodsinterval(1, ‘hour’)、numtodsinterval(1, ‘minute’)、numto">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-25T10:42:11.590Z">
+<meta property="og:updated_time" content="2020-09-24T05:42:55.619Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Oracle 分区">
 <meta name="twitter:description" content="自增分区 numtoyminterval 按年、月分区  numtoyminterval(1, ‘year’)、numtoyminterval(1, ‘month’)  numtodsinterval 按天、时、分、秒分区  numtodsinterval(1, ‘day’)、numtodsinterval(1, ‘hour’)、numtodsinterval(1, ‘minute’)、numto">
@@ -252,7 +252,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">143</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">164</span></a>
 
   </li>
         
@@ -271,7 +271,7 @@
       
     
 
-    <a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">23</span></a>
+    <a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">26</span></a>
 
   </li>
         
@@ -290,7 +290,7 @@
       
     
 
-    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">113</span></a>
+    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">132</span></a>
 
   </li>
         
@@ -471,7 +471,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-12-25 18:42:11" itemprop="dateModified" datetime="2019-12-25T18:42:11+08:00">2019-12-25</time>
+                <time title="修改时间：2020-09-24 13:42:55" itemprop="dateModified" datetime="2020-09-24T13:42:55+08:00">2020-09-24</time>
               
             
           </span>
@@ -525,7 +525,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">1.7k</span>
+                <span title="字数">2.5k</span>
               
 
               
@@ -590,6 +590,7 @@
 </blockquote>
 <p>如果 truncate 清空分区数据、drop 删除分区，索引都会失效</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; alter table test_partas drop partition SYS_P1611;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> IM_WX_PAGEOPEN_LOG_02 NOLOGGING <span class="keyword">AS</span></span><br><span class="line">    <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> IM_WX_PAGEOPEN_LOG;</span><br><span class="line"></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> IM_WX_PAGEOPEN_LOG <span class="keyword">DROP</span> <span class="keyword">PARTITION</span> P2020Y010;</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> IM_WX_PAGEOPEN_LOG <span class="keyword">DROP</span> <span class="keyword">PARTITION</span> P2020Y11;</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> IM_WX_PAGEOPEN_LOG <span class="keyword">DROP</span> <span class="keyword">PARTITION</span> P2020Y12;</span><br><span class="line"></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> IM_WX_PAGEOPEN_LOG <span class="keyword">ADD</span> <span class="keyword">PARTITION</span> P2020Y09 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span>(<span class="keyword">TO_DATE</span>(<span class="string">'2020-10-01 00:00:00'</span>, <span class="string">'yyyy-mm-dd hh24:mi:ss'</span>));</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> IM_WX_PAGEOPEN_LOG <span class="keyword">ADD</span> <span class="keyword">PARTITION</span> P2020Y10 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span>(<span class="keyword">TO_DATE</span>(<span class="string">'2020-11-01 00:00:00'</span>, <span class="string">'yyyy-mm-dd hh24:mi:ss'</span>));</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> IM_WX_PAGEOPEN_LOG <span class="keyword">ADD</span> <span class="keyword">PARTITION</span> P2020Y11 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span>(<span class="keyword">TO_DATE</span>(<span class="string">'2020-12-01 00:00:00'</span>, <span class="string">'yyyy-mm-dd hh24:mi:ss'</span>));</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> IM_WX_PAGEOPEN_LOG <span class="keyword">ADD</span> <span class="keyword">PARTITION</span> P2020Y12 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span>(<span class="keyword">TO_DATE</span>(<span class="string">'2021-01-01 00:00:00'</span>, <span class="string">'yyyy-mm-dd hh24:mi:ss'</span>));</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -737,7 +738,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">143</span>
+                    <span class="site-state-item-count">164</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -796,7 +797,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">23</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">26</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1035,7 +1042,45 @@
                     
                       
                     
-                    <span class="site-state-item-count">113</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">132</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1144,7 +1189,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">495k</span>
+    <span title="站点总字数">526k</span>
   
 
   

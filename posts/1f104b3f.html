@@ -112,7 +112,7 @@
 <meta property="og:site_name" content="forever杨的个人博客">
 <meta property="og:description" content="grep统计出现次数1grep &apos;sign.*time.*openid&apos; access_p80_weixinv3.log | awk &apos;&amp;#123;a[$1]++&amp;#125;END&amp;#123;for(i in a)print a[i]&quot;\t&quot;i&amp;#125;&apos; | sort -n 4       183.3.234.4510      183.3.234.5720      183.3.234.58">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-05-17T02:50:18.606Z">
+<meta property="og:updated_time" content="2020-09-30T04:41:01.934Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux grep 命令">
 <meta name="twitter:description" content="grep统计出现次数1grep &apos;sign.*time.*openid&apos; access_p80_weixinv3.log | awk &apos;&amp;#123;a[$1]++&amp;#125;END&amp;#123;for(i in a)print a[i]&quot;\t&quot;i&amp;#125;&apos; | sort -n 4       183.3.234.4510      183.3.234.5720      183.3.234.58">
@@ -252,7 +252,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">143</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">164</span></a>
 
   </li>
         
@@ -271,7 +271,7 @@
       
     
 
-    <a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">23</span></a>
+    <a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">26</span></a>
 
   </li>
         
@@ -290,7 +290,7 @@
       
     
 
-    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">113</span></a>
+    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">132</span></a>
 
   </li>
         
@@ -471,7 +471,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-05-17 10:50:18" itemprop="dateModified" datetime="2018-05-17T10:50:18+08:00">2018-05-17</time>
+                <time title="修改时间：2020-09-30 12:41:01" itemprop="dateModified" datetime="2020-09-30T12:41:01+08:00">2020-09-30</time>
               
             
           </span>
@@ -525,7 +525,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">376</span>
+                <span title="字数">449</span>
               
 
               
@@ -576,6 +576,7 @@
         <h1 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h1><h2 id="统计出现次数"><a href="#统计出现次数" class="headerlink" title="统计出现次数"></a>统计出现次数</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep <span class="string">'sign.*time.*openid'</span> access_p80_weixinv3.log | awk <span class="string">'&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;'</span> | sort -n</span><br></pre></td></tr></table></figure>
 <p>4       183.3.234.45<br>10      183.3.234.57<br>20      183.3.234.58</p>
 <h2 id="查询前后日志"><a href="#查询前后日志" class="headerlink" title="查询前后日志"></a>查询前后日志</h2><p>grep -5 ‘parttern’ inputfile //打印匹配行的前后5行<br>grep -C 5 ‘parttern’ inputfile //打印匹配行的前后5行<br>grep -A 5 ‘parttern’ inputfile //打印匹配行的后5行<br>grep -B 5 ‘parttern’ inputfile //打印匹配行的前5行</p>
+<h1 id="正则：数字"><a href="#正则：数字" class="headerlink" title="正则：数字"></a>正则：数字</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 正则匹配1802****269的手机号码</span></span><br><span class="line">grep <span class="string">'1802[0-9]\&#123;4\&#125;269'</span> info.log</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -637,8 +638,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/53b5960c.html" rel="next" title="Linux ls 命令">
-                <i class="fa fa-chevron-left"></i> Linux ls 命令
+              <a href="/posts/b8ec468d.html" rel="next" title="Linux sed 命令">
+                <i class="fa fa-chevron-left"></i> Linux sed 命令
               </a>
             
           </div>
@@ -647,8 +648,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/posts/7bd064dc.html" rel="prev" title="zookeeper stop脚本">
-                zookeeper stop脚本 <i class="fa fa-chevron-right"></i>
+              <a href="/posts/29bd046e.html" rel="prev" title="Linux tail 命令">
+                Linux tail 命令 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -725,7 +726,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">143</span>
+                    <span class="site-state-item-count">164</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -784,7 +785,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">23</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">26</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1023,7 +1030,45 @@
                     
                       
                     
-                    <span class="site-state-item-count">113</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">132</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1098,7 +1143,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#grep"><span class="nav-number">1.</span> <span class="nav-text">grep</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#统计出现次数"><span class="nav-number">1.1.</span> <span class="nav-text">统计出现次数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查询前后日志"><span class="nav-number">1.2.</span> <span class="nav-text">查询前后日志</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#grep"><span class="nav-number">1.</span> <span class="nav-text">grep</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#统计出现次数"><span class="nav-number">1.1.</span> <span class="nav-text">统计出现次数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查询前后日志"><span class="nav-number">1.2.</span> <span class="nav-text">查询前后日志</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#正则：数字"><span class="nav-number">2.</span> <span class="nav-text">正则：数字</span></a></li></ol></div>
             
 
           </div>
@@ -1132,7 +1177,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">495k</span>
+    <span title="站点总字数">526k</span>
   
 
   

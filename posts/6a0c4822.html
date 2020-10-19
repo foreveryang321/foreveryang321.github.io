@@ -104,18 +104,18 @@
 
 
 
-  <meta name="description" content="安装  从 Docker 仓库中拉取镜像  1$ sudo docker pull sebp/elk  拉取指定版本镜像  1sudo docker pull sebp/elk:E1L1K4">
-<meta name="keywords" content="docker-compose,docker">
+  <meta name="description" content="elasticsearchhttps://www.elastic.co/guide/en/elasticsearch/reference/6.6/docker.html#docker-prod-cluster-composefile  docker-compose.yml123456789101112131415161718192021222324version: &apos;3.8&apos;services:">
+<meta name="keywords" content="docker,docker-compose">
 <meta property="og:type" content="article">
-<meta property="og:title" content="docker 安装 elk 环境">
+<meta property="og:title" content="docker 安装 elasticsearch">
 <meta property="og:url" content="https://blog.yl-online.top/posts/6a0c4822.html">
 <meta property="og:site_name" content="forever杨的个人博客">
-<meta property="og:description" content="安装  从 Docker 仓库中拉取镜像  1$ sudo docker pull sebp/elk  拉取指定版本镜像  1sudo docker pull sebp/elk:E1L1K4">
+<meta property="og:description" content="elasticsearchhttps://www.elastic.co/guide/en/elasticsearch/reference/6.6/docker.html#docker-prod-cluster-composefile  docker-compose.yml123456789101112131415161718192021222324version: &apos;3.8&apos;services:">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-28T09:12:18.866Z">
+<meta property="og:updated_time" content="2020-08-21T09:59:01.426Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="docker 安装 elk 环境">
-<meta name="twitter:description" content="安装  从 Docker 仓库中拉取镜像  1$ sudo docker pull sebp/elk  拉取指定版本镜像  1sudo docker pull sebp/elk:E1L1K4">
+<meta name="twitter:title" content="docker 安装 elasticsearch">
+<meta name="twitter:description" content="elasticsearchhttps://www.elastic.co/guide/en/elasticsearch/reference/6.6/docker.html#docker-prod-cluster-composefile  docker-compose.yml123456789101112131415161718192021222324version: &apos;3.8&apos;services:">
 
 
 
@@ -132,7 +132,7 @@
   };
 </script>
 
-  <title>docker 安装 elk 环境 | forever杨的个人博客</title>
+  <title>docker 安装 elasticsearch | forever杨的个人博客</title>
   
 
 
@@ -252,7 +252,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">143</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">164</span></a>
 
   </li>
         
@@ -271,7 +271,7 @@
       
     
 
-    <a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">23</span></a>
+    <a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">26</span></a>
 
   </li>
         
@@ -290,7 +290,7 @@
       
     
 
-    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">113</span></a>
+    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">132</span></a>
 
   </li>
         
@@ -428,7 +428,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">docker 安装 elk 环境
+          <h2 class="post-title" itemprop="name headline">docker 安装 elasticsearch
 
               
             
@@ -471,7 +471,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-01-28 17:12:18" itemprop="dateModified" datetime="2019-01-28T17:12:18+08:00">2019-01-28</time>
+                <time title="修改时间：2020-08-21 17:59:01" itemprop="dateModified" datetime="2020-08-21T17:59:01+08:00">2020-08-21</time>
               
             
           </span>
@@ -525,7 +525,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">434</span>
+                <span title="字数">1.7k</span>
               
 
               
@@ -539,7 +539,7 @@
                 
                   <span class="post-meta-item-text">时长 &asymp;</span>
                 
-                <span title="时长">1 分钟</span>
+                <span title="时长">2 分钟</span>
               
             </div>
           
@@ -557,9 +557,9 @@
         </span>
         <span class="post-meta-item-text">标签</span>
         
-           <a href="/tags/docker-compose/" rel="tag" class="color1">docker-compose</a>
+           <a href="/tags/docker/" rel="tag" class="color1">docker</a>
         
-           <a href="/tags/docker/" rel="tag" class="color2">docker</a>
+           <a href="/tags/docker-compose/" rel="tag" class="color2">docker-compose</a>
         
       </div>
     
@@ -573,40 +573,20 @@
       
 
       
-        <ul>
-<li><p>安装</p>
+        <h1 id="elasticsearch"><a href="#elasticsearch" class="headerlink" title="elasticsearch"></a>elasticsearch</h1><p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/6.6/docker.html#docker-prod-cluster-composefile" target="_blank" rel="noopener">https://www.elastic.co/guide/en/elasticsearch/reference/6.6/docker.html#docker-prod-cluster-composefile</a></p>
 <blockquote>
-<p>从 Docker 仓库中拉取镜像</p>
+<p>docker-compose.yml<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3.8'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  elasticsearch:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="attr">elasticsearch:6.6.2</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">ts_elasticsearch</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"9200:9200"</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"/data/docker/elasticsearch/data:/usr/share/elasticsearch/data"</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"bootstrap.memory_lock=true"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"ES_JAVA_OPTS=-Xms1g -Xmx1g"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"discovery.type=single-node"</span></span><br><span class="line"><span class="attr">    ulimits:</span></span><br><span class="line"><span class="attr">      memlock:</span></span><br><span class="line"><span class="attr">        soft:</span> <span class="bullet">-1</span></span><br><span class="line"><span class="attr">        hard:</span> <span class="bullet">-1</span></span><br><span class="line"><span class="attr">    networks:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">elknet</span></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line"><span class="attr">  elknet:</span></span><br><span class="line"><span class="attr">    driver:</span> <span class="string">bridge</span></span><br></pre></td></tr></table></figure></p>
 </blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker pull sebp/elk</span><br></pre></td></tr></table></figure>
+<h1 id="logstash"><a href="#logstash" class="headerlink" title="logstash"></a>logstash</h1><p><a href="https://www.elastic.co/guide/en/logstash/6.6/docker-config.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/logstash/6.6/docker-config.html</a></p>
 <blockquote>
-<p>拉取指定版本镜像</p>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker pull sebp/elk:E1L1K4</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<a id="more"></a>
-<ul>
-<li><p>使用</p>
-</li>
-<li><ul>
-<li><p>docker 命令运行容器</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -p 5601:5601 -p 9200:9200 -p 5044:5044 -it --name elk -d sebp/elk</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>-d 表示后台运行</p>
-</blockquote>
-</li>
-<li><p>Docker Compose 命令运行容器</p>
 <p>docker-compose.yml</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">elk:</span></span><br><span class="line"><span class="attr">  image:</span> <span class="string">sebp/elk</span></span><br><span class="line"><span class="attr">  ports:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">"5601:5601"</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">"9200:9200"</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">"5044:5044"</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker-compose up -d elk</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>进入容器命令行</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="built_in">exec</span> -it &lt;container-name&gt; /bin/bash</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
+</blockquote>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3.8'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  logstash:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="attr">logstash:6.6.2</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">ts_logstash</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"5044:5044"</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"/data/docker/logstash/pipeline:/usr/share/logstash/pipeline"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"/data/docker/logstash/config:/usr/share/logstash/config"</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="attr">      LS_JAVA_OPTS:</span> <span class="string">"-Xmx512m -Xms512m"</span></span><br><span class="line"><span class="attr">    networks:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">elknet</span></span><br><span class="line"><span class="attr">    depends_on:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">elasticsearch</span></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line"><span class="attr">  elknet:</span></span><br><span class="line"><span class="attr">    driver:</span> <span class="string">bridge</span></span><br></pre></td></tr></table></figure>
+<h1 id="kibana"><a href="#kibana" class="headerlink" title="kibana"></a>kibana</h1><p><a href="https://www.elastic.co/guide/en/kibana/6.6/docker.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/kibana/6.6/docker.html</a></p>
+<blockquote>
+<p>docker-compose.yml</p>
+</blockquote>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3.8'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  kibana:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="attr">kibana:6.6.2</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">ts_kibana</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="number">5601</span><span class="string">:5601</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"/data/docker/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml"</span></span><br><span class="line"><span class="attr">    networks:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">elknet</span></span><br><span class="line"><span class="attr">    depends_on:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">elasticsearch</span></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line"><span class="attr">  elknet:</span></span><br><span class="line"><span class="attr">    driver:</span> <span class="string">bridge</span></span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -640,7 +620,7 @@
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
     
-    <a href="https://blog.yl-online.top/posts/6a0c4822.html" title="docker 安装 elk 环境">https://blog.yl-online.top/posts/6a0c4822.html</a>
+    <a href="https://blog.yl-online.top/posts/6a0c4822.html" title="docker 安装 elasticsearch">https://blog.yl-online.top/posts/6a0c4822.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。如果文章内容对你有用，请记录到你的笔记中。本博客站点随时会停止服务，请不要收藏、转载！</li>
@@ -653,9 +633,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/docker-compose/" rel="tag"># docker-compose</a>
-          
             <a href="/tags/docker/" rel="tag"># docker</a>
+          
+            <a href="/tags/docker-compose/" rel="tag"># docker-compose</a>
           
         </div>
       
@@ -668,8 +648,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/9bc29391.html" rel="next" title="docker-compose 安装和使用">
-                <i class="fa fa-chevron-left"></i> docker-compose 安装和使用
+              <a href="/posts/2fff8f5e.html" rel="next" title="安装 docker 环境 for CentOS">
+                <i class="fa fa-chevron-left"></i> 安装 docker 环境 for CentOS
               </a>
             
           </div>
@@ -678,8 +658,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/posts/6fffbcc4.html" rel="prev" title="docker 安装 redis">
-                docker 安装 redis <i class="fa fa-chevron-right"></i>
+              <a href="/posts/6a0c4822.html" rel="prev" title="docker 安装 elk 环境">
+                docker 安装 elk 环境 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -729,8 +709,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -747,7 +736,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">143</span>
+                    <span class="site-state-item-count">164</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -806,7 +795,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">23</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">26</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1045,7 +1040,45 @@
                     
                       
                     
-                    <span class="site-state-item-count">113</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">132</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1111,6 +1144,22 @@
       </div>
 
       
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#elasticsearch"><span class="nav-number">1.</span> <span class="nav-text">elasticsearch</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#logstash"><span class="nav-number">2.</span> <span class="nav-text">logstash</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#kibana"><span class="nav-number">3.</span> <span class="nav-text">kibana</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
       
 
@@ -1138,7 +1187,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">495k</span>
+    <span title="站点总字数">526k</span>
   
 
   

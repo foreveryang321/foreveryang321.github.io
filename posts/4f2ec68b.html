@@ -112,16 +112,16 @@
 <meta property="og:site_name" content="forever杨的个人博客">
 <meta property="og:description" content="当使用Kettle导入数据到数据表时，由于使用的是Oracle，所以自然而然想到使用增加序列对象去获取一个Id，但是经过测试这种方式非常慢。 以下对比2种不同方式的导入速度：  序列生成Id 分布式Id生成器">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://blog.yl-online.top/posts/4f2ec68b/seq_0.jpg">
-<meta property="og:image" content="https://blog.yl-online.top/posts/4f2ec68b/seq_1.png">
-<meta property="og:image" content="https://blog.yl-online.top/posts/4f2ec68b/snowflake_id_0.jpg">
-<meta property="og:image" content="https://blog.yl-online.top/posts/4f2ec68b/java_code.jpg">
-<meta property="og:image" content="https://blog.yl-online.top/posts/4f2ec68b/snowflake_id_1.png">
+<meta property="og:image" content="https://blog.yl-online.top/posts/Kettle-Java代码-分布式Id生成器/seq_0.jpg">
+<meta property="og:image" content="https://blog.yl-online.top/posts/Kettle-Java代码-分布式Id生成器/seq_1.png">
+<meta property="og:image" content="https://blog.yl-online.top/posts/Kettle-Java代码-分布式Id生成器/snowflake_id_0.jpg">
+<meta property="og:image" content="https://blog.yl-online.top/posts/Kettle-Java代码-分布式Id生成器/java_code.jpg">
+<meta property="og:image" content="https://blog.yl-online.top/posts/Kettle-Java代码-分布式Id生成器/snowflake_id_1.png">
 <meta property="og:updated_time" content="2020-04-29T00:59:17.765Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kettle-Java代码：分布式Id生成器">
 <meta name="twitter:description" content="当使用Kettle导入数据到数据表时，由于使用的是Oracle，所以自然而然想到使用增加序列对象去获取一个Id，但是经过测试这种方式非常慢。 以下对比2种不同方式的导入速度：  序列生成Id 分布式Id生成器">
-<meta name="twitter:image" content="https://blog.yl-online.top/posts/4f2ec68b/seq_0.jpg">
+<meta name="twitter:image" content="https://blog.yl-online.top/posts/Kettle-Java代码-分布式Id生成器/seq_0.jpg">
 
 
 
@@ -258,7 +258,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">143</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">164</span></a>
 
   </li>
         
@@ -277,7 +277,7 @@
       
     
 
-    <a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">23</span></a>
+    <a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">26</span></a>
 
   </li>
         
@@ -296,7 +296,7 @@
       
     
 
-    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">113</span></a>
+    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">132</span></a>
 
   </li>
         
@@ -591,11 +591,11 @@
 <h1 id="速度比较"><a href="#速度比较" class="headerlink" title="速度比较"></a>速度比较</h1><h2 id="序列"><a href="#序列" class="headerlink" title="序列"></a>序列</h2><blockquote>
 <p>转换</p>
 </blockquote>
-<p><img src="/posts/4f2ec68b/seq_0.jpg" alt="转换"></p>
+<p><img src="/posts/Kettle-Java代码-分布式Id生成器/seq_0.jpg" alt="转换"></p>
 <blockquote>
 <p>执行结果</p>
 </blockquote>
-<p><img src="/posts/4f2ec68b/seq_1.png" alt="执行结果"></p>
+<p><img src="/posts/Kettle-Java代码-分布式Id生成器/seq_1.png" alt="执行结果"></p>
 <p>从图片可以看出来，使用序列生成Id的方式，导入数据是会非常慢。10分钟才导入2w多条记录。</p>
 <h2 id="分布式Id生成器"><a href="#分布式Id生成器" class="headerlink" title="分布式Id生成器"></a>分布式Id生成器</h2><p>请参考：<a href="/posts/f9490f40.html" title="分布式Id生成器">分布式Id生成器</a></p>
 <blockquote>
@@ -605,12 +605,12 @@
 <blockquote>
 <p>转换</p>
 </blockquote>
-<p><img src="/posts/4f2ec68b/snowflake_id_0.jpg" alt="转换"></p>
+<p><img src="/posts/Kettle-Java代码-分布式Id生成器/snowflake_id_0.jpg" alt="转换"></p>
 <blockquote>
 <p>Java代码对象</p>
 </blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.*;</span><br><span class="line"><span class="comment">// 一定要在这里初始化，不能在函数体里面，否则导致每处理一行记录，都会初始化一次生成器，从而导致会出现重复Id</span></span><br><span class="line">cn.tisson.common.keygen.SnowflakeKeyGenerator snowflake = <span class="keyword">new</span> cn.tisson.common.keygen.SnowflakeKeyGenerator();</span><br><span class="line">String snowFlowIdFeild;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">processRow</span><span class="params">(StepMetaInterface smi, StepDataInterface sdi)</span> <span class="keyword">throws</span> KettleException</span>&#123;</span><br><span class="line">    <span class="comment">// First, get a row from the default input hop</span></span><br><span class="line">    Object[] r = getRow();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// If the row object is null, we are done processing.</span></span><br><span class="line">    <span class="keyword">if</span> (r == <span class="keyword">null</span>) &#123;</span><br><span class="line">        setOutputDone();</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Let's look up parameters only once for performance reason.</span></span><br><span class="line">    <span class="keyword">if</span> (first) &#123;</span><br><span class="line">        snowFlowIdFeild = getParameter(<span class="string">"SNOWFLOW_ID_FEILD"</span>);</span><br><span class="line">        first=<span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// It is always safest to call createOutputRow() to ensure that your output row's Object[] is large</span></span><br><span class="line">    <span class="comment">// enough to handle any new fields you are creating in this step.</span></span><br><span class="line">    Object[] outputRow = createOutputRow(r, data.outputRowMeta.size());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取分布式 Id</span></span><br><span class="line">    String id = String.valueOf(snowflake.generateKey());</span><br><span class="line">    <span class="comment">// logBasic("id: " + id);</span></span><br><span class="line"></span><br><span class="line">    get(Fields.Out, snowFlowIdFeild).setValue(outputRow, id);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// putRow will send the row on to the default output hop.</span></span><br><span class="line">    putRow(data.outputRowMeta, outputRow);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="/posts/4f2ec68b/java_code.jpg" alt="Java代码"></p>
+<p><img src="/posts/Kettle-Java代码-分布式Id生成器/java_code.jpg" alt="Java代码"></p>
 <ul>
 <li><p>字段配置</p>
 <p>字段名：snowflake_id</p>
@@ -624,7 +624,7 @@
 <blockquote>
 <p>执行结果</p>
 </blockquote>
-<p><img src="/posts/4f2ec68b/snowflake_id_1.png" alt="执行结果"></p>
+<p><img src="/posts/Kettle-Java代码-分布式Id生成器/snowflake_id_1.png" alt="执行结果"></p>
 
       
     </div>
@@ -776,7 +776,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">143</span>
+                    <span class="site-state-item-count">164</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -835,7 +835,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">23</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">26</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1074,7 +1080,45 @@
                     
                       
                     
-                    <span class="site-state-item-count">113</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">132</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1183,7 +1227,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">495k</span>
+    <span title="站点总字数">526k</span>
   
 
   
