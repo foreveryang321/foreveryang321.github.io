@@ -470,7 +470,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-02-24 17:44:26" itemprop="dateModified" datetime="2020-02-24T17:44:26+08:00">2020-02-24</time>
+                <time title="修改时间：2020-05-11 16:21:27" itemprop="dateModified" datetime="2020-05-11T16:21:27+08:00">2020-05-11</time>
               
             
           </span>
@@ -517,7 +517,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">1.6k</span>
+                <span title="字数">10k</span>
               
 
               
@@ -531,7 +531,7 @@
                 
                   <span class="post-meta-item-text">时长 &asymp;</span>
                 
-                <span title="时长">1 分钟</span>
+                <span title="时长">9 分钟</span>
               
             </div>
           
@@ -554,17 +554,77 @@
 
       
         
-          <h1 id="setenv-sh"><a href="#setenv-sh" class="headerlink" title="setenv.sh"></a>setenv.sh</h1><p>在<code>Tomcat</code>的<code>bin</code>目录下添加<code>setenv.sh</code>文件，在启动<code>Tomcat</code>的时候，该脚本会被自动执行。一般在该脚本配置一些环境变量、<code>JVM</code>参数等</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># @Author: YL</span></span><br><span class="line"><span class="comment"># @Date:   2017-12-18 12:15:52</span></span><br><span class="line"><span class="comment"># @Last Modified by:   YL</span></span><br><span class="line"><span class="comment"># @Last Modified time: 2017-12-18 12:16:03</span></span><br><span class="line"><span class="comment"># 本文件放到 Tomcat 的 bin 目录下</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> LANG=en_US.UTF-8</span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/java/jdk1.8.0_144</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin</span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar:<span class="variable">$CLASSPATH</span></span><br><span class="line"></span><br><span class="line">JAVA_OPT=<span class="string">"<span class="variable">$JAVA_OPT</span> -Xss256k"</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
           
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/d13f7d34.html" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-         
-          <!--/noindex-->
+            <h1 id="使用Tomcat部署"><a href="#使用Tomcat部署" class="headerlink" title="使用Tomcat部署"></a>使用Tomcat部署</h1><h2 id="部署目录结构"><a href="#部署目录结构" class="headerlink" title="部署目录结构"></a>部署目录结构</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[txrd@host-148 /opt/szim]$ tree -af</span><br><span class="line">.</span><br><span class="line">├── ./project</span><br><span class="line">│   └── ./szim.war</span><br><span class="line">└── ./tomcat</span><br><span class="line">├── ./logs.sh</span><br><span class="line">├── ./restart.sh</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>省略了部分<code>Tomcat</code>目录</p>
+</blockquote>
+<h2 id="Tomcat-配置优化"><a href="#Tomcat-配置优化" class="headerlink" title="Tomcat 配置优化"></a>Tomcat 配置优化</h2><h3 id="删除默认项目"><a href="#删除默认项目" class="headerlink" title="删除默认项目"></a>删除默认项目</h3><p>删除 <code>webapps</code>目录下的 <code>docs</code>、<code>examples</code>、<code>host-manager</code>、<code>manager</code>、<code>ROOT</code>文件夹</p>
+<h3 id="server-xml"><a href="#server-xml" class="headerlink" title="server.xml"></a>server.xml</h3><ol>
+<li>port 改成 -1</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Server</span> <span class="attr">port</span>=<span class="string">"-1"</span> <span class="attr">shutdown</span>=<span class="string">"SHUTDOWN"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>配置端口、NIO模式、线程池大小、开启gzip压缩等</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Connector</span> <span class="attr">port</span>=<span class="string">"8021"</span> <span class="attr">protocol</span>=<span class="string">"org.apache.coyote.http11.Http11Nio2Protocol"</span> <span class="attr">useSendfile</span>=<span class="string">"false"</span> <span class="attr">connectionTimeout</span>=<span class="string">"20000"</span> <span class="attr">keepAliveTimeout</span>=<span class="string">"15000"</span> <span class="attr">maxKeepAliveRequests</span>=<span class="string">"1"</span> <span class="attr">redirectPort</span>=<span class="string">"8443"</span> <span class="attr">URIEncoding</span>=<span class="string">"utf-8"</span> <span class="attr">maxThreads</span>=<span class="string">"1500"</span> <span class="attr">minSpareThreads</span>=<span class="string">"5"</span> <span class="attr">enableLookups</span>=<span class="string">"false"</span> <span class="attr">acceptCount</span>=<span class="string">"500"</span> <span class="attr">disableUploadTimeout</span>=<span class="string">"true"</span> <span class="attr">compression</span>=<span class="string">"on"</span> <span class="attr">compressionMinSize</span>=<span class="string">"2048"</span> <span class="attr">noCompressionUserAgents</span>=<span class="string">"gozilla, traviata"</span> <span class="attr">compressableMimeType</span>=<span class="string">"text/html, text/xml, text/plain, text/css, application/javascript"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里要注意：低版本是compressableMimeType —&gt; 高版本是compressibleMimeType</p>
+</blockquote>
+<ol start="3">
+<li>注释掉 <code>AJP Connector</code></li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- &lt;Connector port="8009" protocol="AJP/1.3" redirectPort="8443" /&gt; --&gt;</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li><code>autoDeploy</code> 改成 <code>false</code></li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Host</span> <span class="attr">name</span>=<span class="string">"localhost"</span>  <span class="attr">appBase</span>=<span class="string">"webapps"</span> <span class="attr">unpackWARs</span>=<span class="string">"true"</span> <span class="attr">autoDeploy</span>=<span class="string">"false"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>禁用日志输出</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- &lt;Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"</span></span><br><span class="line"><span class="comment">               prefix="localhost_access_log" suffix=".txt"</span></span><br><span class="line"><span class="comment">               pattern="%h %l %u %t &amp;quot;%r&amp;quot; %s %b" /&gt; --&gt;</span></span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li><code>Context</code> 配置</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Host</span> <span class="attr">name</span>=<span class="string">"localhost"</span>  <span class="attr">appBase</span>=<span class="string">"webapps"</span> <span class="attr">unpackWARs</span>=<span class="string">"true"</span> <span class="attr">autoDeploy</span>=<span class="string">"false"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Context</span> <span class="attr">path</span>=<span class="string">"/szim"</span> <span class="attr">docBase</span>=<span class="string">"/opt/szim/project/szim.war"</span> <span class="attr">privileged</span>=<span class="string">"true"</span> <span class="attr">reloadable</span>=<span class="string">"false"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Host</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这样配置，szim.war会解压到tomcat/webapps下，也就是在webapps下生成szim文件夹。</p>
+</blockquote>
+<blockquote>
+<p> docBase应该指定对应的war包完整路径，不应该指定相对路径（比如：../../project/szim）。</p>
+</blockquote>
+<blockquote>
+<p> 如果指定路径，有可以出现war包不会解压，导致项目没有更新的问题，要主动删除webapps下的szim文件夹</p>
+</blockquote>
+<h3 id="启停脚本"><a href="#启停脚本" class="headerlink" title="启停脚本"></a>启停脚本</h3><blockquote>
+<p>restart.sh</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line">cd `dirname $0`</span><br><span class="line"><span class="meta">#</span><span class="bash"> 脚本所在目录</span></span><br><span class="line">HOME_DIR=`pwd`</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Tomcat服务器路径</span></span><br><span class="line">TS_HOME="$HOME_DIR/tomcat"</span><br><span class="line"><span class="meta">#</span><span class="bash"> 控制台日志输出文件</span></span><br><span class="line">STDOUT_FILE="$TS_HOME/logs/console.out"</span><br><span class="line"><span class="meta">#</span><span class="bash"> 检测Tomcat是否启动（进程ID）</span></span><br><span class="line">PIDS=`ps -ef | grep java | grep -v grep | grep $TS_HOME/bin | awk '&#123;print $2&#125;'`</span><br><span class="line"><span class="meta">#</span><span class="bash"> 执行检测的用户IP地址</span></span><br><span class="line">TS_IP=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`</span><br><span class="line"><span class="meta">#</span><span class="bash"> 检测输出的日记格式</span></span><br><span class="line">TS_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">==================================================================================</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> JVM Configuration</span></span><br><span class="line"><span class="meta">#</span><span class="bash">==================================================================================</span></span><br><span class="line">export LANG=en_US.UTF-8</span><br><span class="line">export JAVA_HOME=/usr/java/jdk1.8.0_144</span><br><span class="line">export JAVA_OPTS="$JAVA_OPTS -server -Xms1g -Xmx1g -Xss256k"</span><br><span class="line">export JAVA_OPTS="$JAVA_OPTS -XX:+DisableExplicitGC -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled"</span><br><span class="line">export JAVA_OPTS="$JAVA_OPTS -Xloggc:$TS_HOME/logs/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M"</span><br><span class="line">export JAVA_OPTS="$JAVA_OPTS -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$TS_HOME/logs/dump-`date +"%Y-%m-%d"`.hprof"</span><br><span class="line">export JAVA_OPTS="$JAVA_OPTS -Dspring.profiles.active=pro"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">=================================================================================</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除 7 天前的日志文件</span></span><br><span class="line"><span class="meta">#</span><span class="bash">=================================================================================</span></span><br><span class="line">function cleanLog()&#123;</span><br><span class="line">    ls -d -t $TS_HOME/logs/catalina.*.log | tail -n +7 | xargs rm -rf</span><br><span class="line">    ls -d -t $TS_HOME/logs/host-manager.*.log | tail -n +7 | xargs rm -rf</span><br><span class="line">    ls -d -t $TS_HOME/logs/localhost.*.log | tail -n +7 | xargs rm -rf</span><br><span class="line">    ls -d -t $TS_HOME/logs/manager.*.log | tail -n +7 | xargs rm -rf</span><br><span class="line">    ls -d -t $TS_HOME/logs/dump.*.hprof | tail -n +7 | xargs rm -rf</span><br><span class="line">&#125;</span><br><span class="line">cleanLog</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Graceful shutdown</span></span><br><span class="line">function gracefulShutdown()&#123;</span><br><span class="line">    if [ -z "$PIDS" ]; then</span><br><span class="line">        echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME does not started!" | tee -a $STDOUT_FILE</span><br><span class="line">    else</span><br><span class="line">        echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME kill $PIDS begining" | tee -a $STDOUT_FILE</span><br><span class="line">        for PID in $PIDS ; do</span><br><span class="line">            kill $PID &gt; /dev/null 2&gt;&amp;1</span><br><span class="line">        done</span><br><span class="line"></span><br><span class="line">        # check for graceful shutdown</span><br><span class="line">        COUNT=0</span><br><span class="line">        while [ $COUNT -lt 1 ]; do</span><br><span class="line">            sleep 1</span><br><span class="line">            COUNT=1</span><br><span class="line">            for PID in $PIDS ; do</span><br><span class="line">                PID_EXIST=`ps -f -p $PID | grep java`</span><br><span class="line">                if [ -n "$PID_EXIST" ]; then</span><br><span class="line">                    COUNT=0</span><br><span class="line">                    break</span><br><span class="line">                fi</span><br><span class="line">            done</span><br><span class="line">        done</span><br><span class="line">    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME kill $PID success" | tee -a $STDOUT_FILE</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function operate()&#123;</span><br><span class="line">    if [[ "$1" = "kill" ]] ; then</span><br><span class="line">        gracefulShutdown</span><br><span class="line">    elif [[ "$1" = "start" ]]; then</span><br><span class="line">        cd $TS_HOME/bin</span><br><span class="line">        sh startup.sh</span><br><span class="line">    else</span><br><span class="line">        echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME is not support $1" | tee -a $STDOUT_FILE</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line">if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then</span><br><span class="line">    operate kill</span><br><span class="line">    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME starting" | tee -a $STDOUT_FILE</span><br><span class="line">    operate start</span><br><span class="line">elif [[ "$1" = "kill" ]] ; then</span><br><span class="line">    operate kill</span><br><span class="line">elif [[ "$1" = "check" ]] ; then</span><br><span class="line">    if [[ "$PIDS" = "" ]] ; then</span><br><span class="line">        echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME starting" &gt;&gt; $STDOUT_FILE</span><br><span class="line">        operate start</span><br><span class="line">    else</span><br><span class="line">        echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME pid $PIDS" &gt;&gt; $STDOUT_FILE</span><br><span class="line">    fi</span><br><span class="line">else</span><br><span class="line">    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $TS_HOME is not support $1" | tee -a $STDOUT_FILE</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>不同的<code>Tomcat</code>部署项目使用该脚本，只需要调整<code>JVM</code>相关参数即可</p>
+<p>脚本使用说明</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="comment"># 启动、或者重启 Tomcat</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> [txrd@host-148 /opt/szim]$ sh restart.sh</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="comment"># 优雅停机（优雅停掉 Tomcat）</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> [txrd@host-148 /opt/szim]$ sh restart.sh <span class="built_in">kill</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="comment"># 检测 Tomcat 是否启动，如果没有启动则启动，否则不做任何处理</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> [txrd@host-148 /opt/szim]$ sh restart.sh check</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="查看日志脚本"><a href="#查看日志脚本" class="headerlink" title="查看日志脚本"></a>查看日志脚本</h3><blockquote>
+<p>logs.sh</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line">cd `dirname $0`</span><br><span class="line"><span class="meta">#</span><span class="bash"> 脚本所在目录</span></span><br><span class="line">HOME_DIR=`pwd`</span><br><span class="line"><span class="meta">#</span><span class="bash"> Tomcat日志目录</span></span><br><span class="line">LOGS_DIR=$HOME_DIR/tomcat/logs</span><br><span class="line"></span><br><span class="line">tail -f $LOGS_DIR/catalina.out $LOGS_DIR/info.log $LOGS_DIR/error.log $LOGS_DIR/console.log</span><br></pre></td></tr></table></figure>
+<h1 id="JAR-包部署"><a href="#JAR-包部署" class="headerlink" title="JAR 包部署"></a>JAR 包部署</h1><h2 id="部署目录结构-1"><a href="#部署目录结构-1" class="headerlink" title="部署目录结构"></a>部署目录结构</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[txrd@host-148 /opt/项目名]$ tree -af</span><br><span class="line">.</span><br><span class="line">├── ./project</span><br><span class="line">│   └── ./freemarker</span><br><span class="line">│   └── ./lib</span><br><span class="line">│   └── ./项目名.jar</span><br><span class="line">├── ./logs.sh</span><br><span class="line">├── ./restart.sh</span><br></pre></td></tr></table></figure>
+<h2 id="启动脚本"><a href="#启动脚本" class="headerlink" title="启动脚本"></a>启动脚本</h2><blockquote>
+<p>restart.sh</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line">cd `dirname $0`</span><br><span class="line"><span class="meta">#</span><span class="bash"> 脚本所在目录</span></span><br><span class="line">CURRENT_DIR=`pwd`</span><br><span class="line"><span class="meta">#</span><span class="bash"> 项目日志输出目录</span></span><br><span class="line">LOGS_DIR="$&#123;CURRENT_DIR&#125;/logs"</span><br><span class="line">STDOUT_FILE="$&#123;CURRENT_DIR&#125;/logs/stdout.log"</span><br><span class="line"><span class="meta">#</span><span class="bash"> 项目 JAR 包等存放目录</span></span><br><span class="line">PROJECT_HOME="$&#123;CURRENT_DIR&#125;/project"</span><br><span class="line"><span class="meta">#</span><span class="bash"> JAR 启动文件</span></span><br><span class="line">JAR_FILE="$&#123;PROJECT_HOME&#125;/项目名.jar"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> pid</span></span><br><span class="line">PIDS=`ps -ef | grep "$&#123;JAR_FILE&#125;" | grep -v grep | awk '&#123;print $2&#125;'`</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">==================================================================================</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> JVM Configuration</span></span><br><span class="line"><span class="meta">#</span><span class="bash">==================================================================================</span></span><br><span class="line">export LANG=en_US.UTF-8</span><br><span class="line">export JAVA_HOME=/usr/java/jdk1.8.0_144</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin</span><br><span class="line">export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH</span><br><span class="line"></span><br><span class="line">JAVA_OPT="-server -Xms1024m -Xmx1024m -Xss256k"</span><br><span class="line">JAVA_OPT="$&#123;JAVA_OPT&#125; -Dloader.path=$&#123;PROJECT_HOME&#125;/lib/ -Djava.io.tmpdir=$&#123;LOGS_DIR&#125;"</span><br><span class="line">JAVA_OPT="$&#123;JAVA_OPT&#125; -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70"</span><br><span class="line">JAVA_OPT="$&#123;JAVA_OPT&#125; -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$&#123;LOGS_DIR&#125;/$&#123;PIDS&#125;.hprof"</span><br><span class="line">JAVA_OPT="$&#123;JAVA_OPT&#125; -Xloggc:$&#123;LOGS_DIR&#125;/gc.log -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M"</span><br><span class="line">JAVA_OPT="$&#123;JAVA_OPT&#125; -Ddubbo.protocol.port=20882"</span><br><span class="line">JAVA_OPT="$&#123;JAVA_OPT&#125; -Dspring.profiles.active=dev"</span><br><span class="line">JAVA_OPT="$&#123;JAVA_OPT&#125; -jar $&#123;JAR_FILE&#125;"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Graceful shutdown</span></span><br><span class="line">function gracefulShutdown()&#123;</span><br><span class="line">    if [ -z "$PIDS" ]; then</span><br><span class="line">        echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE does not started!" | tee -a $STDOUT_FILE</span><br><span class="line">    else</span><br><span class="line">        echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE kill $PIDS begining" | tee -a $STDOUT_FILE</span><br><span class="line">        for PID in $PIDS ; do</span><br><span class="line">            kill $PID &gt; /dev/null 2&gt;&amp;1</span><br><span class="line">            echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE kill $PID success" | tee -a $STDOUT_FILE</span><br><span class="line">        done</span><br><span class="line"></span><br><span class="line">        # check for graceful shutdown</span><br><span class="line">        COUNT=0</span><br><span class="line">        while [ $COUNT -lt 1 ]; do</span><br><span class="line">            sleep 1</span><br><span class="line">            COUNT=1</span><br><span class="line">            for PID in $PIDS ; do</span><br><span class="line">                PID_EXIST=`ps -f -p $PID | grep java`</span><br><span class="line">                if [ -n "$PID_EXIST" ]; then</span><br><span class="line">                    COUNT=0</span><br><span class="line">                    break</span><br><span class="line">                fi</span><br><span class="line">            done</span><br><span class="line">        done</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function operate()&#123;</span><br><span class="line">    if [[ "$1" = "kill" ]]; then</span><br><span class="line">        gracefulShutdown</span><br><span class="line">    elif [[ "$1" = "start" ]] ; then</span><br><span class="line">        cd $PROJECT_HOME</span><br><span class="line">        # starting</span><br><span class="line">        nohup $JAVA_HOME/bin/java $&#123;JAVA_OPT&#125; &gt;&gt; $&#123;STDOUT_FILE&#125; 2&gt;&amp;1 &amp;</span><br><span class="line">        PIDS=`ps -ef | grep "$JAR_FILE" | grep -v grep | awk '&#123;print $2&#125;'`</span><br><span class="line">        echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE started OK! pid: $&#123;PIDS&#125;" | tee -a $&#123;STDOUT_FILE&#125;</span><br><span class="line">    else</span><br><span class="line">        echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE is not support $1" | tee -a $&#123;STDOUT_FILE&#125;</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if [[ "$1" = "start" || "$1" = "check" ]]; then</span><br><span class="line">    if [ -n "$&#123;PIDS&#125;" ]; then</span><br><span class="line">        echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE already started! pid: $&#123;PIDS&#125;" &gt;&gt; $&#123;STDOUT_FILE&#125;</span><br><span class="line">        exit 1</span><br><span class="line">    fi</span><br><span class="line">    operate start</span><br><span class="line">elif [[ "$1" = "" || "$1" = "restart" ]]; then</span><br><span class="line">    operate kill</span><br><span class="line">    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE starting" | tee -a $&#123;STDOUT_FILE&#125;</span><br><span class="line">    operate start</span><br><span class="line">elif [[ "$1" = "kill" ]]; then</span><br><span class="line">    operate kill</span><br><span class="line">else</span><br><span class="line">    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE is not support $1" | tee -a $&#123;STDOUT_FILE&#125;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>不同的<code>JAR</code>部署项目使用该脚本，只需要调整<code>JVM</code>相关参数和<code>项目名</code>即可</p>
+<p>脚本使用说明</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="comment"># 启动、或者重启应用</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> [txrd@host-148 /opt/项目名]$ sh restart.sh</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="comment"># 优雅停机</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> [txrd@host-148 /opt/项目名]$ sh restart.sh <span class="built_in">kill</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="comment"># 检测应用是否启动，如果没有启动则启动，否则不做任何处理</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> [txrd@host-148 /opt/项目名]$ sh restart.sh check</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="查看日志脚本-1"><a href="#查看日志脚本-1" class="headerlink" title="查看日志脚本"></a>查看日志脚本</h2><blockquote>
+<p>logs.sh</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line">cd `dirname $0`</span><br><span class="line"><span class="meta">#</span><span class="bash"> 脚本所在目录</span></span><br><span class="line">HOME_DIR=`pwd`</span><br><span class="line"><span class="meta">#</span><span class="bash"> 应用日志目录</span></span><br><span class="line">LOGS_DIR=$HOME_DIR/logs</span><br><span class="line"></span><br><span class="line">tail -f $LOGS_DIR/info.log $LOGS_DIR/error.log $LOGS_DIR/console.log</span><br></pre></td></tr></table></figure>
+
+          
         
       
     </div>
@@ -2593,643 +2653,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/2e023d93.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/2e023d93.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/7/index.html">Linux du 命令</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-02-06 09:35:05" itemprop="dateCreated datePublished" datetime="2018-02-06T09:35:05+08:00">2018-02-06</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-11-13 16:58:08" itemprop="dateModified" datetime="2019-11-13T16:58:08+08:00">2019-11-13</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数：</span>
-                
-                <span title="字数">38</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
-        <span class="post-meta-item-icon">
-          <i class="fa fa-tags"></i>
-        </span>
-        <span class="post-meta-item-text">标签</span>
-        
-           <a href="/tags/shell/" rel="tag" class="color1">shell</a>
-        
-           <a href="/tags/du/" rel="tag" class="color2">du</a>
-        
-      </div>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="du"><a href="#du" class="headerlink" title="du"></a>du</h1><h2 id="计算当前文件夹下占用空间，排序"><a href="#计算当前文件夹下占用空间，排序" class="headerlink" title="计算当前文件夹下占用空间，排序"></a>计算当前文件夹下占用空间，排序</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">du -sh * | sort -nr</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/7b744fec.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/7b744fec.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/7/index.html">Linux find 命令</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-02-06 09:35:05" itemprop="dateCreated datePublished" datetime="2018-02-06T09:35:05+08:00">2018-02-06</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2020-10-09 12:09:56" itemprop="dateModified" datetime="2020-10-09T12:09:56+08:00">2020-10-09</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数：</span>
-                
-                <span title="字数">334</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
-        <span class="post-meta-item-icon">
-          <i class="fa fa-tags"></i>
-        </span>
-        <span class="post-meta-item-text">标签</span>
-        
-           <a href="/tags/shell/" rel="tag" class="color1">shell</a>
-        
-           <a href="/tags/find/" rel="tag" class="color2">find</a>
-        
-      </div>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="查找文件并删除"><a href="#查找文件并删除" class="headerlink" title="查找文件并删除"></a>查找文件并删除</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除指定时间前的 jpg 文件</span></span><br><span class="line">find /opt/upload/ -mtime +30 -<span class="built_in">type</span> f -name *.jpg -<span class="built_in">exec</span> rm -f &#123;&#125; \;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除隐藏文件（-fr）</span></span><br><span class="line">find /opt/upload/ -<span class="built_in">type</span> d -name .svn -<span class="built_in">exec</span> rm -fr &#123;&#125; \;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除30天前的文件</span></span><br><span class="line">find /opt/upload -mtime +30 -<span class="built_in">type</span> f -name <span class="string">"*.jpg"</span> -<span class="built_in">exec</span> rm -rf &#123;&#125; \;</span><br></pre></td></tr></table></figure>
-<h2 id="打印指定时间前的文件"><a href="#打印指定时间前的文件" class="headerlink" title="打印指定时间前的文件"></a>打印指定时间前的文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find project/upload/ -mtime +30 -<span class="built_in">type</span> f -<span class="built_in">print</span></span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/c0bbcacd.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/c0bbcacd.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/7/index.html">zookeeper 清理日志文件</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-02-06 09:35:05" itemprop="dateCreated datePublished" datetime="2018-02-06T09:35:05+08:00">2018-02-06</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-05-17 10:52:51" itemprop="dateModified" datetime="2018-05-17T10:52:51+08:00">2018-05-17</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/zookeeper/" itemprop="url" rel="index"><span itemprop="name">zookeeper</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数：</span>
-                
-                <span title="字数">791</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="clear"><a href="#clear" class="headerlink" title="clear"></a>clear</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># @Author: YL</span></span><br><span class="line"><span class="comment"># @Date:   2017-11-01 08:59:34</span></span><br><span class="line"><span class="comment"># @Last Modified by:   YL</span></span><br><span class="line"><span class="comment"># @Last Modified time: 2017-11-01 09:36:09</span></span><br><span class="line"><span class="comment"># 此文件放到 zookeeper 的 bin 目录下</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> `dirname <span class="variable">$0</span>`</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line">NODE_HOME=`<span class="built_in">pwd</span>`</span><br><span class="line"></span><br><span class="line"><span class="comment"># snapshot</span></span><br><span class="line">NODE_DATA_DIR=<span class="variable">$NODE_HOME</span>/data/version-2</span><br><span class="line"><span class="comment"># snapshot log</span></span><br><span class="line">NODE_LOG_DIR=<span class="variable">$NODE_HOME</span>/logs/version-2</span><br><span class="line"><span class="comment"># zk log</span></span><br><span class="line">NODE_LOGS=<span class="variable">$NODE_HOME</span>/logs</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中</span></span><br><span class="line">count=3</span><br><span class="line">count=$[<span class="variable">$count</span>+1]</span><br><span class="line">ls -t <span class="variable">$NODE_LOG_DIR</span>/<span class="built_in">log</span>.* | tail -n +<span class="variable">$count</span> | xargs rm -f</span><br><span class="line">ls -t <span class="variable">$NODE_DATA_DIR</span>/snapshot.* | tail -n +<span class="variable">$count</span> | xargs rm -f</span><br><span class="line">ls -t <span class="variable">$NODE_LOGS</span>/zookeeper.log.* | tail -n +<span class="variable">$count</span> | xargs rm -f</span><br><span class="line"></span><br><span class="line"><span class="comment"># date pattern</span></span><br><span class="line">DATE_PATTERN=<span class="string">"[<span class="variable">$(date '+%Y-%m-%d %H:%M:%S')</span>]"</span></span><br><span class="line">STDOUT_FILE=<span class="variable">$NODE_LOGS</span>/stdout.log</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$DATE_PATTERN</span> clear logs success"</span> | tee -a <span class="variable">$STDOUT_FILE</span></span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/aea02818.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -3451,7 +2874,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/fc091577.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/6c1ad93d.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
@@ -3471,7 +2894,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/posts/fc091577.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/7/index.html">Linux lsof 命令</a>
+                <a href="/posts/6c1ad93d.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/7/index.html">zookeeper重启脚本</a>
               
             
           </h2>
@@ -3513,7 +2936,415 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-15 18:07:36" itemprop="dateModified" datetime="2019-04-15T18:07:36+08:00">2019-04-15</time>
+                <time title="修改时间：2018-05-17 10:52:53" itemprop="dateModified" datetime="2018-05-17T10:52:53+08:00">2018-05-17</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/zookeeper/" itemprop="url" rel="index"><span itemprop="name">zookeeper</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数：</span>
+                
+                <span title="字数">240</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="restart"><a href="#restart" class="headerlink" title="restart"></a>restart</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># @Author: YL</span></span><br><span class="line"><span class="comment"># @Date:   2017-06-29 09:00:10</span></span><br><span class="line"><span class="comment"># @Last Modified by:   YL</span></span><br><span class="line"><span class="comment"># @Last Modified time: 2017-11-01 09:37:30</span></span><br><span class="line"><span class="comment"># 此文件放到 zookeeper 的 bin 目录下</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> `dirname <span class="variable">$0</span>`</span><br><span class="line"></span><br><span class="line">./zkServer.sh stop</span><br><span class="line">sleep 3</span><br><span class="line">./zkServer.sh start</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/af01b9a2.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/af01b9a2.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/7/index.html">zookeeper 启动脚本</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-02-06 09:35:05" itemprop="dateCreated datePublished" datetime="2018-02-06T09:35:05+08:00">2018-02-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-08-17 13:36:24" itemprop="dateModified" datetime="2020-08-17T13:36:24+08:00">2020-08-17</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/zookeeper/" itemprop="url" rel="index"><span itemprop="name">zookeeper</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数：</span>
+                
+                <span title="字数">1.5k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="start"><a href="#start" class="headerlink" title="start"></a>start</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># @Author: YL</span></span><br><span class="line"><span class="comment"># @Date:   2017-06-28 10:23:20</span></span><br><span class="line"><span class="comment"># @Last Modified by:   YL</span></span><br><span class="line"><span class="comment"># @Last Modified time: 2017-11-01 09:37:41</span></span><br><span class="line"><span class="comment"># 此文件放到 zookeeper 的 bin 目录下</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> `dirname <span class="variable">$0</span>`</span><br><span class="line">NODE_BIN_DIR=`<span class="built_in">pwd</span>`</span><br><span class="line">NODE_LIB_DIR=<span class="variable">$NODE_BIN_DIR</span>/../lib/</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line">NODE_HOME=`<span class="built_in">pwd</span>`</span><br><span class="line"></span><br><span class="line"><span class="comment"># mkdir logs dir</span></span><br><span class="line">NODE_DATA_LOG_DIR=`sed <span class="string">'/dataLogDir/!d;s/.*=//'</span> conf/zoo.cfg | tr -d <span class="string">'\r'</span>`</span><br><span class="line">NODE_LOGS_DIR=<span class="string">""</span></span><br><span class="line"><span class="keyword">if</span> [ -n <span class="string">"<span class="variable">$NODE_DATA_LOG_DIR</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">  NODE_LOGS_DIR=<span class="variable">$NODE_DATA_LOG_DIR</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  NODE_LOGS_DIR=<span class="variable">$NODE_HOME</span>/logs</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d <span class="variable">$NODE_LOGS_DIR</span> ]; <span class="keyword">then</span></span><br><span class="line">  mkdir <span class="variable">$NODE_LOGS_DIR</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line">STDOUT_FILE=<span class="variable">$NODE_LOGS_DIR</span>/stdout.log</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"[<span class="variable">$(date '+%Y-%m-%d %H:%M:%S')</span>] NODE_BIN_DIR: <span class="variable">$NODE_BIN_DIR</span>"</span> | tee -a <span class="variable">$STDOUT_FILE</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># pid</span></span><br><span class="line">NODE_PID=`ps -ef | grep <span class="string">"<span class="variable">$NODE_LIB_DIR</span>"</span> | grep -v grep | awk <span class="string">'&#123;print $2&#125;'</span>`</span><br><span class="line"><span class="keyword">if</span> [ -n <span class="string">"<span class="variable">$NODE_PID</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"[<span class="variable">$(date '+%Y-%m-%d %H:%M:%S')</span>] ERROR: The <span class="variable">$NODE_LIB_DIR</span> already started! pid: <span class="variable">$NODE_PID</span>"</span> | tee -a <span class="variable">$STDOUT_FILE</span></span><br><span class="line">  <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># port</span></span><br><span class="line">NODE_PORT=`sed <span class="string">'/clientPort/!d;s/.*=//'</span> conf/zoo.cfg | tr -d <span class="string">'\r'</span>`</span><br><span class="line"><span class="keyword">if</span> [ -n <span class="string">"<span class="variable">$NODE_PORT</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">  NODE_PORT_COUNT=`netstat -tln | grep <span class="variable">$NODE_PORT</span> | wc -l`</span><br><span class="line">  <span class="keyword">if</span> [ <span class="variable">$NODE_PORT_COUNT</span> -gt 0 ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"[<span class="variable">$(date '+%Y-%m-%d %H:%M:%S')</span>] ERROR: The <span class="variable">$NODE_LIB_DIR</span> port <span class="variable">$NODE_PORT</span> already used!"</span> | tee -a <span class="variable">$STDOUT_FILE</span></span><br><span class="line">    <span class="built_in">exit</span> 1</span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># starting</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$NODE_BIN_DIR</span></span><br><span class="line">./zkServer.sh start</span><br><span class="line"></span><br><span class="line">NODE_PID=`ps -ef | grep <span class="string">"<span class="variable">$NODE_LIB_DIR</span>"</span> | grep -v grep | awk <span class="string">'&#123;print $2&#125;'</span>`</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"[<span class="variable">$(date '+%Y-%m-%d %H:%M:%S')</span>] The <span class="variable">$NODE_LIB_DIR</span> started OK! pid: <span class="variable">$NODE_PID</span>"</span> | tee -a <span class="variable">$STDOUT_FILE</span></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/29bd046e.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/29bd046e.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/7/index.html">Linux tail 命令</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-02-06 09:35:05" itemprop="dateCreated datePublished" datetime="2018-02-06T09:35:05+08:00">2018-02-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-05-17 10:50:44" itemprop="dateModified" datetime="2018-05-17T10:50:44+08:00">2018-05-17</time>
               
             
           </span>
@@ -3560,7 +3391,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">74</span>
+                <span title="字数">4</span>
               
 
               
@@ -3592,9 +3423,9 @@
         </span>
         <span class="post-meta-item-text">标签</span>
         
-           <a href="/tags/lsof/" rel="tag" class="color1">lsof</a>
+           <a href="/tags/shell/" rel="tag" class="color1">shell</a>
         
-           <a href="/tags/shell/" rel="tag" class="color2">shell</a>
+           <a href="/tags/tail/" rel="tag" class="color2">tail</a>
         
       </div>
     
@@ -3610,9 +3441,225 @@
       
         
           
-            <h1 id="lsof"><a href="#lsof" class="headerlink" title="lsof"></a>lsof</h1><h2 id="检测端口未被占用"><a href="#检测端口未被占用" class="headerlink" title="检测端口未被占用"></a>检测端口未被占用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -i:&lt;port&gt;</span><br></pre></td></tr></table></figure>
-<p>指定进程号，可以查看该进程打开的文件</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -p &lt;pid&gt;</span><br></pre></td></tr></table></figure>
+            <h1 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h1>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/1f104b3f.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/1f104b3f.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/7/index.html">Linux grep 命令</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-02-06 09:35:05" itemprop="dateCreated datePublished" datetime="2018-02-06T09:35:05+08:00">2018-02-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-09-30 12:41:01" itemprop="dateModified" datetime="2020-09-30T12:41:01+08:00">2020-09-30</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数：</span>
+                
+                <span title="字数">449</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/shell/" rel="tag" class="color1">shell</a>
+        
+           <a href="/tags/grep/" rel="tag" class="color2">grep</a>
+        
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h1><h2 id="统计出现次数"><a href="#统计出现次数" class="headerlink" title="统计出现次数"></a>统计出现次数</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep <span class="string">'sign.*time.*openid'</span> access_p80_weixinv3.log | awk <span class="string">'&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;'</span> | sort -n</span><br></pre></td></tr></table></figure>
+<p>4       183.3.234.45<br>10      183.3.234.57<br>20      183.3.234.58</p>
+<h2 id="查询前后日志"><a href="#查询前后日志" class="headerlink" title="查询前后日志"></a>查询前后日志</h2><p>grep -5 ‘parttern’ inputfile //打印匹配行的前后5行<br>grep -C 5 ‘parttern’ inputfile //打印匹配行的前后5行<br>grep -A 5 ‘parttern’ inputfile //打印匹配行的后5行<br>grep -B 5 ‘parttern’ inputfile //打印匹配行的前5行</p>
+<h1 id="正则：数字"><a href="#正则：数字" class="headerlink" title="正则：数字"></a>正则：数字</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 正则匹配1802****269的手机号码</span></span><br><span class="line">grep <span class="string">'1802[0-9]\&#123;4\&#125;269'</span> info.log</span><br></pre></td></tr></table></figure>
 
           
         
