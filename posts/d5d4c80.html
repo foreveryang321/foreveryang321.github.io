@@ -112,7 +112,7 @@
 <meta property="og:site_name" content="forever杨的个人博客">
 <meta property="og:description" content="导出123456789101112expdp 用户名/密码  directory=DMP logfile=e_T_C_CNCM_EXTINFO.log dumpfile=T_C_CNCM_EXTINFO%U.dmp PARALLEL=6  cluster=no  compression=ALL tables=(table1,table2)directory=DMP  -- 这个是虚拟目录（日志文件">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-10-19T07:07:48.635Z">
+<meta property="og:updated_time" content="2020-11-05T10:51:10.556Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Oracle 整库迁移">
 <meta name="twitter:description" content="导出123456789101112expdp 用户名/密码  directory=DMP logfile=e_T_C_CNCM_EXTINFO.log dumpfile=T_C_CNCM_EXTINFO%U.dmp PARALLEL=6  cluster=no  compression=ALL tables=(table1,table2)directory=DMP  -- 这个是虚拟目录（日志文件">
@@ -252,7 +252,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">164</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">167</span></a>
 
   </li>
         
@@ -290,7 +290,7 @@
       
     
 
-    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">132</span></a>
+    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">134</span></a>
 
   </li>
         
@@ -471,7 +471,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-10-19 15:07:48" itemprop="dateModified" datetime="2020-10-19T15:07:48+08:00">2020-10-19</time>
+                <time title="修改时间：2020-11-05 18:51:10" itemprop="dateModified" datetime="2020-11-05T18:51:10+08:00">2020-11-05</time>
               
             
           </span>
@@ -525,7 +525,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">1k</span>
+                <span title="字数">994</span>
               
 
               
@@ -574,9 +574,8 @@
 
       
         <h1 id="导出"><a href="#导出" class="headerlink" title="导出"></a>导出</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">expdp 用户名/密码  directory=DMP logfile=e_T_C_CNCM_EXTINFO.log dumpfile=T_C_CNCM_EXTINFO%U.dmp PARALLEL=6  cluster=no  compression=ALL tables=(table1,table2)</span><br><span class="line"></span><br><span class="line">directory=DMP  <span class="comment">-- 这个是虚拟目录（日志文件和DMP文件存放路径）， 需求提前在数据库里面创建，需要DBA权限。</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">directory</span> DMP <span class="keyword">as</span> <span class="string">'/dmp/backup'</span>;</span><br><span class="line"><span class="keyword">grant</span> <span class="keyword">read</span>,write,<span class="keyword">EXECUTE</span> <span class="keyword">on</span> <span class="keyword">directory</span> DMP <span class="keyword">to</span> 用户名;</span><br><span class="line"></span><br><span class="line">logfile=e_T_C_CNCM_EXTINFO.log  <span class="comment">-- EXPDP日志</span></span><br><span class="line">dumpfile=T_C_CNCM_EXTINFO%U.dmp <span class="comment">-- 输出的DMP文件，其中%U为并行导出产生的序号，如果开6个并行，就可能会有六个文件，自动从01-06编号</span></span><br><span class="line">PARALLEL=6  <span class="comment">-- 并行导出，可以根据主机CPU增加，最好不要超过CODE数</span></span><br><span class="line">cluster=no  <span class="comment">-- 关闭cluster（防止非共享磁盘写文件问题）</span></span><br><span class="line">compression  <span class="comment">-- 压缩</span></span><br><span class="line">tables=()  <span class="comment">-- 可以写多个table</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a> 
 <h1 id="导入"><a href="#导入" class="headerlink" title="导入"></a>导入</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">impdp 用户名/密码  directory=DMP logfile=i_T_C_APT_TEMPLATE_DETAIL.log dumpfile=T_C_APT_TEMPLATE_DETAIL%U.dmp PARALLEL=4 table_exists_action=<span class="keyword">truncate</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">-- table_exists_action 可选参数：</span></span><br><span class="line"><span class="comment">-- trauncate：导入时 trauncate 清空原表数据再导入</span></span><br><span class="line"><span class="comment">-- replace：先 drop 表，然后创建表，最后插入数据  </span></span><br><span class="line"><span class="comment">-- append：在原来数据的基础上增加数据</span></span><br></pre></td></tr></table></figure>
-<p>上面的命令是登录主机操作， 不是登录oracle操作。</p>
-<p>我通常都是用oracle用户来操作。</p>
 <p>SELECT DIRECTORY_NAME ,DIRECTORY_PATH FROM DBA_DIRECTORIES;</p>
 <p>/data/app/oracle/admin/orcl/dpdump/</p>
 <p>create directory DATA_PUMP_DIR as ‘/data/dmp’;</p>
@@ -641,8 +640,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/a4a638d8.html" rel="next" title="Oracle 编码配置">
-                <i class="fa fa-chevron-left"></i> Oracle 编码配置
+              <a href="/posts/33cc482c.html" rel="next" title="elastic-job 使用">
+                <i class="fa fa-chevron-left"></i> elastic-job 使用
               </a>
             
           </div>
@@ -651,8 +650,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/posts/b3b5b23f.html" rel="prev" title="ntp 时间同步">
-                ntp 时间同步 <i class="fa fa-chevron-right"></i>
+              <a href="/posts/a4a638d8.html" rel="prev" title="Oracle 编码配置">
+                Oracle 编码配置 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -729,7 +728,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">164</span>
+                    <span class="site-state-item-count">167</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1071,7 +1070,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">132</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">134</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1180,7 +1183,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">526k</span>
+    <span title="站点总字数">535k</span>
   
 
   

@@ -251,7 +251,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">164</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">167</span></a>
 
   </li>
         
@@ -289,7 +289,7 @@
       
     
 
-    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">132</span></a>
+    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">134</span></a>
 
   </li>
         
@@ -392,6 +392,653 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/812c7f75.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/812c7f75.html" class="post-title-link" itemprop="https://blog.yl-online.top/index.html">httpclient 使用</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-11-03 15:00:05 / 修改时间：15:06:09" itemprop="dateCreated datePublished" datetime="2020-11-03T15:00:05+08:00">2020-11-03</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数：</span>
+                
+                <span title="字数">2.8k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">3 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/apache/" rel="tag" class="color1">apache</a>
+        
+           <a href="/tags/httpclient/" rel="tag" class="color2">httpclient</a>
+        
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="连接池配置"><a href="#连接池配置" class="headerlink" title="连接池配置"></a>连接池配置</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAX_CONN_TOTAL = <span class="number">500</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAX_CONN_PER_ROUTE = <span class="number">50</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TIMEOUT = <span class="number">4000</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> CloseableHttpClient client;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> &#123;</span><br><span class="line">    Builder builder = RequestConfig.custom();</span><br><span class="line">    builder.setSocketTimeout(TIMEOUT).setConnectTimeout(TIMEOUT).setConnectionRequestTimeout(TIMEOUT);</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">         * 4.3以上版本推荐使用HttpClientBuilder来创建client</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * &lt;pre&gt;</span></span><br><span class="line"><span class="comment">         * 1、HttpClientBuilder.setRetryHandler(HttpRequestRetryHandler retryHandler);请求重试处理。</span></span><br><span class="line"><span class="comment">         * 2、HttpClientBuilder.setRedirectStrategy(RedirectStrategy redirectStrategy);设置重定向。</span></span><br><span class="line"><span class="comment">         * 3、httpClientBuilder.setDefaultCookieStore(BasicCookieStore cookieStore);设置cookie store</span></span><br><span class="line"><span class="comment">         * 4、HttpClientBuilder.setProxy(HttpHost proxy);设置代理服务器。</span></span><br><span class="line"><span class="comment">         * 5、HttpClientBuilder.setDefaultRequestConfig(RequestConfig config);在此亦可设置RequestConfig。</span></span><br><span class="line"><span class="comment">         * 6、HttpClientBuilder.setUserAgetn(String userAgent);设置用户代理。</span></span><br><span class="line"><span class="comment">         * &lt;/pre&gt;</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">    HttpClientBuilder clientBuilder = HttpClients.custom();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 配置 SSL、TLS</span></span><br><span class="line">    <span class="comment">// httpClientBuilder.setSSLSocketFactory(sslSocketFactory);</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// builder.setExpectContinueEnabled(true).setStaleConnectionCheckEnabled(true)</span></span><br><span class="line">    <span class="comment">// .setTargetPreferredAuthSchemes(Arrays.asList(AuthSchemes.NTLM,</span></span><br><span class="line">    <span class="comment">// AuthSchemes.DIGEST))</span></span><br><span class="line">    <span class="comment">// .setProxyPreferredAuthSchemes(Arrays.asList(AuthSchemes.BASIC));</span></span><br><span class="line">    builder.setCookieSpec(CookieSpecs.IGNORE_COOKIES);</span><br><span class="line"></span><br><span class="line">    RequestConfig defaultRequestConfig = builder.build();</span><br><span class="line">    clientBuilder.setDefaultRequestConfig(defaultRequestConfig);</span><br><span class="line">    <span class="comment">// 主要连接池配置代码</span></span><br><span class="line">    <span class="comment">// 默认是：20</span></span><br><span class="line">    clientBuilder.setMaxConnTotal(MAX_CONN_TOTAL);</span><br><span class="line">    <span class="comment">// 默认是：2</span></span><br><span class="line">    clientBuilder.setMaxConnPerRoute(MAX_CONN_PER_ROUTE);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// SSL</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// TLS</span></span><br><span class="line">        SSLContext sc = SSLContext.getInstance(<span class="string">"SSL"</span>);</span><br><span class="line">        MyX509TrustManager trustManager = <span class="keyword">new</span> MyX509TrustManager();</span><br><span class="line">        sc.init(<span class="keyword">null</span>, <span class="keyword">new</span> TrustManager[]&#123;trustManager&#125;, <span class="keyword">new</span> java.security.SecureRandom());</span><br><span class="line">        <span class="comment">// 设置协议http和https对应的处理socket链接工厂的对象</span></span><br><span class="line">        Registry&lt;ConnectionSocketFactory&gt; registry = RegistryBuilder.&lt;ConnectionSocketFactory&gt;create()</span><br><span class="line">            .register(<span class="string">"http"</span>, PlainConnectionSocketFactory.INSTANCE)</span><br><span class="line">            .register(<span class="string">"https"</span>, <span class="keyword">new</span> SSLConnectionSocketFactory(sc)).build();</span><br><span class="line">        PoolingHttpClientConnectionManager connManager = <span class="keyword">new</span> PoolingHttpClientConnectionManager(registry);</span><br><span class="line">        <span class="comment">// 主要连接池配置代码</span></span><br><span class="line">        <span class="comment">// 默认是：20</span></span><br><span class="line">        <span class="comment">// connManager.setMaxTotal(MAX_CONN_TOTAL);</span></span><br><span class="line">        <span class="comment">// 默认是：2</span></span><br><span class="line">        <span class="comment">// connManager.setDefaultMaxPerRoute(MAX_CONN_PER_ROUTE);</span></span><br><span class="line">        clientBuilder.setConnectionManager(connManager);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    client = clientBuilder.build();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/b5386f83.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/b5386f83.html" class="post-title-link" itemprop="https://blog.yl-online.top/index.html">CentOS dns 配置</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-11-02 18:25:05" itemprop="dateCreated datePublished" datetime="2020-11-02T18:25:05+08:00">2020-11-02</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-11-05 18:51:50" itemprop="dateModified" datetime="2020-11-05T18:51:50+08:00">2020-11-05</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数：</span>
+                
+                <span title="字数">1.9k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">2 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/dns/" rel="tag" class="color1">dns</a>
+        
+           <a href="/tags/CentOS/" rel="tag" class="color2">CentOS</a>
+        
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="查询网卡名"><a href="#查询网卡名" class="headerlink" title="查询网卡名"></a>查询网卡名</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">nmcli connection show</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出信息</span></span><br><span class="line">名称    UUID                                  类型            设备   </span><br><span class="line">ens192  03da7500-2101-c722-2438-d0d006c28c73  802-3-ethernet  ens192</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/b5386f83.html" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/edff79be.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/edff79be.html" class="post-title-link" itemprop="https://blog.yl-online.top/index.html">Oracle 修改默认监听端口</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-10-24 15:23:05" itemprop="dateCreated datePublished" datetime="2020-10-24T15:23:05+08:00">2020-10-24</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-11-05 18:50:55" itemprop="dateModified" datetime="2020-11-05T18:50:55+08:00">2020-11-05</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Oracle/" itemprop="url" rel="index"><span itemprop="name">Oracle</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数：</span>
+                
+                <span title="字数">488</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/Oracle/" rel="tag" class="color1">Oracle</a>
+        
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="查看监听状态"><a href="#查看监听状态" class="headerlink" title="查看监听状态"></a>查看监听状态</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lsnrctl status</span><br></pre></td></tr></table></figure>
+<h1 id="停止监听"><a href="#停止监听" class="headerlink" title="停止监听"></a>停止监听</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lsnrctl stop</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/edff79be.html" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -636,228 +1283,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/d5d4c80.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/d5d4c80.html" class="post-title-link" itemprop="https://blog.yl-online.top/index.html">Oracle 整库迁移</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2020-10-13 16:23:05" itemprop="dateCreated datePublished" datetime="2020-10-13T16:23:05+08:00">2020-10-13</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2020-10-19 15:07:48" itemprop="dateModified" datetime="2020-10-19T15:07:48+08:00">2020-10-19</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Oracle/" itemprop="url" rel="index"><span itemprop="name">Oracle</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数：</span>
-                
-                <span title="字数">1k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
-        <span class="post-meta-item-icon">
-          <i class="fa fa-tags"></i>
-        </span>
-        <span class="post-meta-item-text">标签</span>
-        
-           <a href="/tags/expdp/" rel="tag" class="color1">expdp</a>
-        
-           <a href="/tags/impdp/" rel="tag" class="color2">impdp</a>
-        
-      </div>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="导出"><a href="#导出" class="headerlink" title="导出"></a>导出</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">expdp 用户名/密码  directory=DMP logfile=e_T_C_CNCM_EXTINFO.log dumpfile=T_C_CNCM_EXTINFO%U.dmp PARALLEL=6  cluster=no  compression=ALL tables=(table1,table2)</span><br><span class="line"></span><br><span class="line">directory=DMP  <span class="comment">-- 这个是虚拟目录（日志文件和DMP文件存放路径）， 需求提前在数据库里面创建，需要DBA权限。</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">directory</span> DMP <span class="keyword">as</span> <span class="string">'/dmp/backup'</span>;</span><br><span class="line"><span class="keyword">grant</span> <span class="keyword">read</span>,write,<span class="keyword">EXECUTE</span> <span class="keyword">on</span> <span class="keyword">directory</span> DMP <span class="keyword">to</span> 用户名;</span><br><span class="line"></span><br><span class="line">logfile=e_T_C_CNCM_EXTINFO.log  <span class="comment">-- EXPDP日志</span></span><br><span class="line">dumpfile=T_C_CNCM_EXTINFO%U.dmp <span class="comment">-- 输出的DMP文件，其中%U为并行导出产生的序号，如果开6个并行，就可能会有六个文件，自动从01-06编号</span></span><br><span class="line">PARALLEL=6  <span class="comment">-- 并行导出，可以根据主机CPU增加，最好不要超过CODE数</span></span><br><span class="line">cluster=no  <span class="comment">-- 关闭cluster（防止非共享磁盘写文件问题）</span></span><br><span class="line">compression  <span class="comment">-- 压缩</span></span><br><span class="line">tables=()  <span class="comment">-- 可以写多个table</span></span><br></pre></td></tr></table></figure>
-<h1 id="导入"><a href="#导入" class="headerlink" title="导入"></a>导入</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">impdp 用户名/密码  directory=DMP logfile=i_T_C_APT_TEMPLATE_DETAIL.log dumpfile=T_C_APT_TEMPLATE_DETAIL%U.dmp PARALLEL=4 table_exists_action=<span class="keyword">truncate</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">-- table_exists_action 可选参数：</span></span><br><span class="line"><span class="comment">-- trauncate：导入时 trauncate 清空原表数据再导入</span></span><br><span class="line"><span class="comment">-- replace：先 drop 表，然后创建表，最后插入数据  </span></span><br><span class="line"><span class="comment">-- append：在原来数据的基础上增加数据</span></span><br></pre></td></tr></table></figure>
-<p>上面的命令是登录主机操作， 不是登录oracle操作。</p>
-<p>我通常都是用oracle用户来操作。</p>
-<p>SELECT DIRECTORY_NAME ,DIRECTORY_PATH FROM DBA_DIRECTORIES;</p>
-<p>/data/app/oracle/admin/orcl/dpdump/</p>
-<p>create directory DATA_PUMP_DIR as ‘/data/dmp’;</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/a4a638d8.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -920,7 +1345,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-10-19 15:07:48" itemprop="dateModified" datetime="2020-10-19T15:07:48+08:00">2020-10-19</time>
+                <time title="修改时间：2020-11-05 18:51:20" itemprop="dateModified" datetime="2020-11-05T18:51:20+08:00">2020-11-05</time>
               
             
           </span>
@@ -967,7 +1392,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">493</span>
+                <span title="字数">494</span>
               
 
               
@@ -1014,11 +1439,238 @@
 
       
         
+          <h1 id="查编码"><a href="#查编码" class="headerlink" title="查编码"></a>查编码</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> userenv(<span class="string">'language'</span>) <span class="keyword">from</span> dual</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
           
-            <h1 id="查编码"><a href="#查编码" class="headerlink" title="查编码"></a>查编码</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> userenv(<span class="string">'language'</span>) <span class="keyword">from</span> dual</span><br></pre></td></tr></table></figure>
-<h1 id="编码配置"><a href="#编码配置" class="headerlink" title="编码配置"></a>编码配置</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">oracle数据库的编码</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> nls_database_parameters <span class="keyword">where</span> parameter =<span class="string">'NLS_CHARACTERSET'</span>;</span><br><span class="line">oracle客户端编码</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> nls_instance_parameters <span class="keyword">where</span> parameter=<span class="string">'NLS_LANGUAGE'</span>;</span><br><span class="line"></span><br><span class="line">conn /as sysdba;</span><br><span class="line">shutdown immediate;</span><br><span class="line">startup mount;</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">system</span> <span class="keyword">enable</span> <span class="keyword">restricted</span> <span class="keyword">session</span>;</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">system</span> <span class="keyword">set</span> job_queue_processes=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">SYSTEM</span> <span class="keyword">SET</span> AQ_TM_PROCESSES=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">database</span> <span class="keyword">open</span>;</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">DATABASE</span> <span class="built_in">character</span> <span class="keyword">set</span> INTERNAL_USE AL32UTF8;</span><br><span class="line">shutdown immediate;</span><br><span class="line">startup;</span><br></pre></td></tr></table></figure>
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/a4a638d8.html" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/d5d4c80.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/d5d4c80.html" class="post-title-link" itemprop="https://blog.yl-online.top/index.html">Oracle 整库迁移</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-10-13 16:23:05" itemprop="dateCreated datePublished" datetime="2020-10-13T16:23:05+08:00">2020-10-13</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-11-05 18:51:10" itemprop="dateModified" datetime="2020-11-05T18:51:10+08:00">2020-11-05</time>
+              
+            
+          </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Oracle/" itemprop="url" rel="index"><span itemprop="name">Oracle</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数：</span>
+                
+                <span title="字数">994</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/expdp/" rel="tag" class="color1">expdp</a>
+        
+           <a href="/tags/impdp/" rel="tag" class="color2">impdp</a>
+        
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="导出"><a href="#导出" class="headerlink" title="导出"></a>导出</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">expdp 用户名/密码  directory=DMP logfile=e_T_C_CNCM_EXTINFO.log dumpfile=T_C_CNCM_EXTINFO%U.dmp PARALLEL=6  cluster=no  compression=ALL tables=(table1,table2)</span><br><span class="line"></span><br><span class="line">directory=DMP  <span class="comment">-- 这个是虚拟目录（日志文件和DMP文件存放路径）， 需求提前在数据库里面创建，需要DBA权限。</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">directory</span> DMP <span class="keyword">as</span> <span class="string">'/dmp/backup'</span>;</span><br><span class="line"><span class="keyword">grant</span> <span class="keyword">read</span>,write,<span class="keyword">EXECUTE</span> <span class="keyword">on</span> <span class="keyword">directory</span> DMP <span class="keyword">to</span> 用户名;</span><br><span class="line"></span><br><span class="line">logfile=e_T_C_CNCM_EXTINFO.log  <span class="comment">-- EXPDP日志</span></span><br><span class="line">dumpfile=T_C_CNCM_EXTINFO%U.dmp <span class="comment">-- 输出的DMP文件，其中%U为并行导出产生的序号，如果开6个并行，就可能会有六个文件，自动从01-06编号</span></span><br><span class="line">PARALLEL=6  <span class="comment">-- 并行导出，可以根据主机CPU增加，最好不要超过CODE数</span></span><br><span class="line">cluster=no  <span class="comment">-- 关闭cluster（防止非共享磁盘写文件问题）</span></span><br><span class="line">compression  <span class="comment">-- 压缩</span></span><br><span class="line">tables=()  <span class="comment">-- 可以写多个table</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/d5d4c80.html" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -1513,228 +2165,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/e34c2a97.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/e34c2a97.html" class="post-title-link" itemprop="https://blog.yl-online.top/index.html">Oracle 归档日志</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2020-09-28 16:23:05" itemprop="dateCreated datePublished" datetime="2020-09-28T16:23:05+08:00">2020-09-28</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2020-10-19 15:10:56" itemprop="dateModified" datetime="2020-10-19T15:10:56+08:00">2020-10-19</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Oracle/" itemprop="url" rel="index"><span itemprop="name">Oracle</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数：</span>
-                
-                <span title="字数">1.5k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
-        <span class="post-meta-item-icon">
-          <i class="fa fa-tags"></i>
-        </span>
-        <span class="post-meta-item-text">标签</span>
-        
-           <a href="/tags/archiver/" rel="tag" class="color1">archiver</a>
-        
-      </div>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>归档日志空间占满</p>
-<p>ORA-00257: archiver error. Connect internal only, until freed</p>
-<h1 id="查看归档"><a href="#查看归档" class="headerlink" title="查看归档"></a>查看归档</h1><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; select * from V$FLASH_RECOVERY_AREA_USAGE;</span><br><span class="line">SQL&gt; quit</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/e34c2a97.html" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-         
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/5bb4128a.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1797,7 +2227,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-10-19 15:07:48" itemprop="dateModified" datetime="2020-10-19T15:07:48+08:00">2020-10-19</time>
+                <time title="修改时间：2020-11-05 18:51:29" itemprop="dateModified" datetime="2020-11-05T18:51:29+08:00">2020-11-05</time>
               
             
           </span>
@@ -1844,7 +2274,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">413</span>
+                <span title="字数">414</span>
               
 
               
@@ -1891,11 +2321,243 @@
 
       
         
+          <h1 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 语法</span></span><br><span class="line"><span class="comment">-- create &lt;public&gt; database link &lt;dblink_name&gt; connect to &lt;user&gt; identified by &lt;user_pwd&gt; using &lt;dblink&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">link</span> db_test <span class="keyword">connect</span> <span class="keyword">to</span> scott <span class="keyword">identified</span> <span class="keyword">by</span> tiger <span class="keyword">using</span> <span class="string">'(DESCRIPTION=(ADDRESS_LIST =(ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.1.1)(PORT = 1521)))(CONNECT_DATA=(SERVER = DEDICATED)(SERVICE_NAME = orcl)))'</span>;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
           
-            <h1 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 语法</span></span><br><span class="line"><span class="comment">-- create &lt;public&gt; database link &lt;dblink_name&gt; connect to &lt;user&gt; identified by &lt;user_pwd&gt; using &lt;dblink&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">link</span> db_test <span class="keyword">connect</span> <span class="keyword">to</span> scott <span class="keyword">identified</span> <span class="keyword">by</span> tiger <span class="keyword">using</span> <span class="string">'(DESCRIPTION=(ADDRESS_LIST =(ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.1.1)(PORT = 1521)))(CONNECT_DATA=(SERVER = DEDICATED)(SERVICE_NAME = orcl)))'</span>;</span><br></pre></td></tr></table></figure>
-<h1 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> &lt;<span class="keyword">public</span>&gt; <span class="keyword">database</span> <span class="keyword">link</span> db_test</span><br></pre></td></tr></table></figure>
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/5bb4128a.html" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/e34c2a97.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/e34c2a97.html" class="post-title-link" itemprop="https://blog.yl-online.top/index.html">Oracle 归档日志</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-09-28 16:23:05" itemprop="dateCreated datePublished" datetime="2020-09-28T16:23:05+08:00">2020-09-28</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-11-05 18:51:03" itemprop="dateModified" datetime="2020-11-05T18:51:03+08:00">2020-11-05</time>
+              
+            
+          </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Oracle/" itemprop="url" rel="index"><span itemprop="name">Oracle</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数：</span>
+                
+                <span title="字数">2k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">2 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/archiver/" rel="tag" class="color1">archiver</a>
+        
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="开启、关闭归档"><a href="#开启、关闭归档" class="headerlink" title="开启、关闭归档"></a>开启、关闭归档</h1><blockquote>
+<p>开启</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>关闭</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 关闭数据库</span></span><br><span class="line">SQL&gt; shutdown immediate；</span><br><span class="line"><span class="comment">-- 开启数据库至mount状态</span></span><br><span class="line">SQL&gt; startup mount;</span><br><span class="line"><span class="comment">-- 修改数据库模式</span></span><br><span class="line">SQL&gt; alter datebase noarchivelog;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/e34c2a97.html" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -2012,7 +2674,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-10-19 15:11:17" itemprop="dateModified" datetime="2020-10-19T15:11:17+08:00">2020-10-19</time>
+                <time title="修改时间：2020-11-05 18:34:42" itemprop="dateModified" datetime="2020-11-05T18:34:42+08:00">2020-11-05</time>
               
             
           </span>
@@ -2059,7 +2721,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">111</span>
+                <span title="字数">554</span>
               
 
               
@@ -2458,7 +3120,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-10-19 15:07:48" itemprop="dateModified" datetime="2020-10-19T15:07:48+08:00">2020-10-19</time>
+                <time title="修改时间：2020-11-05 18:50:21" itemprop="dateModified" datetime="2020-11-05T18:50:21+08:00">2020-11-05</time>
               
             
           </span>
@@ -2505,7 +3167,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">23</span>
+                <span title="字数">187</span>
               
 
               
@@ -2552,10 +3214,16 @@
 
       
         
+          <h1 id="空间回收"><a href="#空间回收" class="headerlink" title="空间回收"></a>空间回收</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">purge recyclebin;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
           
-            <h1 id="空间回收"><a href="#空间回收" class="headerlink" title="空间回收"></a>空间回收</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">purge recyclebin;</span><br></pre></td></tr></table></figure>
-
-          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/2fa1c46f.html" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -3055,682 +3723,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/deb080b.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/deb080b.html" class="post-title-link" itemprop="https://blog.yl-online.top/index.html">docker 使用</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2020-09-02 10:48:48" itemprop="dateCreated datePublished" datetime="2020-09-02T10:48:48+08:00">2020-09-02</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2020-10-19 15:07:48" itemprop="dateModified" datetime="2020-10-19T15:07:48+08:00">2020-10-19</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/docker/" itemprop="url" rel="index"><span itemprop="name">docker</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数：</span>
-                
-                <span title="字数">399</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
-        <span class="post-meta-item-icon">
-          <i class="fa fa-tags"></i>
-        </span>
-        <span class="post-meta-item-text">标签</span>
-        
-           <a href="/tags/docker/" rel="tag" class="color1">docker</a>
-        
-      </div>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="打包镜像"><a href="#打包镜像" class="headerlink" title="打包镜像"></a>打包镜像</h1><ul>
-<li><p>save</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker save -o centos_nginx.tar zlyang/nginx</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>load</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker load --input centos_nginx.tar</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="删除none镜像"><a href="#删除none镜像" class="headerlink" title="删除none镜像"></a>删除none镜像</h1><p>在docker反复build后，会存留很多none镜像，下面命令一键删除所有none镜像</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker rmi `docker images | grep  '&lt;none&gt;' | awk '&#123;print $3&#125;'`</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 更简单方法</span></span><br><span class="line">docker rmi `docker images -q -f dangling=true`</span><br><span class="line"><span class="meta">#</span><span class="bash"> 或</span></span><br><span class="line">docker rmi $(docker images -q -f dangling=true)</span><br></pre></td></tr></table></figure>
-<h1 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h1><p>删除所有停止的容器，运行中的容器不会被删除</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm $(docker ps -a -q)</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/212ff189.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/212ff189.html" class="post-title-link" itemprop="https://blog.yl-online.top/index.html">docker kafka 安装和配置</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2020-08-28 13:48:48" itemprop="dateCreated datePublished" datetime="2020-08-28T13:48:48+08:00">2020-08-28</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2020-10-19 15:07:48" itemprop="dateModified" datetime="2020-10-19T15:07:48+08:00">2020-10-19</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/kafka/" itemprop="url" rel="index"><span itemprop="name">kafka</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数：</span>
-                
-                <span title="字数">1.1k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
-        <span class="post-meta-item-icon">
-          <i class="fa fa-tags"></i>
-        </span>
-        <span class="post-meta-item-text">标签</span>
-        
-           <a href="/tags/docker/" rel="tag" class="color1">docker</a>
-        
-           <a href="/tags/kafka/" rel="tag" class="color2">kafka</a>
-        
-      </div>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>scala版本2.13</p>
-<p>kafka版本2.6.0</p>
-<p>docker pull wurstmeister/kafka:2.13-2.6.0</p>
-<blockquote>
-<p>docker-compose.yml</p>
-</blockquote>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">"3.8"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  kafka:</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">ts_kafka</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">wurstmeister/kafka:2.13-2.6.0</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"9092:9092"</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"KAFKA_ADVERTISED_HOST_NAME=172.54.102.25"</span></span><br><span class="line">      <span class="comment"># 在 kafka 集群中，每个 kafka 都有一个 BROKER_ID 来区分自己</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"KAFKA_BROKER_ID=0"</span></span><br><span class="line">      <span class="comment"># 配置 kafka 的监听端口</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"KAFKA_LISTENERS=PLAINTEXT://9092"</span></span><br><span class="line">      <span class="comment"># 把 kafka 的地址端口注册给 zookeeper</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://9092"</span></span><br><span class="line">      <span class="comment">#  配置 zookeeper</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"KAFKA_ZOOKEEPER_CONNECT=zookeeper01:2181,zookeeper02:2181/kafka"</span></span><br><span class="line">      <span class="comment"># 关闭 Topic 自动创建</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"KAFKA_AUTO_CREATE_TOPICS_ENABLE=false"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"./logs:/tmp/kafka-logs"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"/var/run/docker.sock:/var/run/docker.sock"</span></span><br><span class="line">      <span class="comment"># 容器时间同步虚拟机的时间</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"/etc/localtime:/etc/localtime"</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure>
-<p>/var/run/docker.sock挂载了之后，在容器内就可以执行”docker ps”、”docker port”这些命令了，这是docker官方提供的能力。假设kafka容器的9092映射到宿主机的30001端口，那么kafka注册到ZK的时候，要注册的IP应该是宿主机的IP，端口应该是30001，这样才能保证外部可访问，所以kafka容器启动时会执行一个名为start-kafka.sh的脚本，里面用docker port命令来获取宿主机的端口，因此必须要挂载/var/run/docker.sock才能执行docker port命令</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/1299dfc1.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/1299dfc1.html" class="post-title-link" itemprop="https://blog.yl-online.top/index.html">docker mysql安装和配置</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2020-08-24 10:48:48" itemprop="dateCreated datePublished" datetime="2020-08-24T10:48:48+08:00">2020-08-24</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2020-10-19 15:07:48" itemprop="dateModified" datetime="2020-10-19T15:07:48+08:00">2020-10-19</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数：</span>
-                
-                <span title="字数">1.7k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">2 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
-        <span class="post-meta-item-icon">
-          <i class="fa fa-tags"></i>
-        </span>
-        <span class="post-meta-item-text">标签</span>
-        
-           <a href="/tags/docker/" rel="tag" class="color1">docker</a>
-        
-           <a href="/tags/mysql/" rel="tag" class="color2">mysql</a>
-        
-      </div>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h1><blockquote>
-<p>docker-compose.yml</p>
-</blockquote>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">"3.8"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  mysql:</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">ts_mysql</span></span><br><span class="line"><span class="attr">    image:</span> <span class="attr">mysql:5.7.31</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"3306:3306"</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"./data/:/var/lib/mysql"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"./logs/:/var/log/mysql"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"./conf/conf.d:/etc/mysql/conf.d"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"./conf/mysql.conf.d:/etc/mysql/mysql.conf.d"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"./conf/my.cnf:/etc/mysql/my.cnf"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"/etc/localtime:/etc/localtime"</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="attr">      MYSQL_ROOT_PASSWORD:</span> <span class="string">"Tisson0000!"</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>my.cnf</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># Copyright (c) 2016, Oracle and/or its affiliates. All rights reserved.</span><br><span class="line">#</span><br><span class="line"># This program is free software; you can redistribute it and/or modify</span><br><span class="line"># it under the terms of the GNU General Public License, version 2.0,</span><br><span class="line"># as published by the Free Software Foundation.</span><br><span class="line">#</span><br><span class="line"># This program is also distributed with certain software (including</span><br><span class="line"># but not limited to OpenSSL) that is licensed under separate terms,</span><br><span class="line"># as designated in a particular file or component or in included license</span><br><span class="line"># documentation.  The authors of MySQL hereby grant you an additional</span><br><span class="line"># permission to link the program and your derivative works with the</span><br><span class="line"># separately licensed software that they have included with MySQL.</span><br><span class="line">#</span><br><span class="line"># This program is distributed in the hope that it will be useful,</span><br><span class="line"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span><br><span class="line"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span><br><span class="line"># GNU General Public License, version 2.0, for more details.</span><br><span class="line">#</span><br><span class="line"># You should have received a copy of the GNU General Public License</span><br><span class="line"># along with this program; if not, write to the Free Software</span><br><span class="line"># Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA</span><br><span class="line"></span><br><span class="line">!includedir /etc/mysql/conf.d/</span><br><span class="line">!includedir /etc/mysql/mysql.conf.d/</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -3775,7 +3772,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">164</span>
+                    <span class="site-state-item-count">167</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -4117,7 +4114,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">132</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">134</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -4210,7 +4211,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">526k</span>
+    <span title="站点总字数">535k</span>
   
 
   

@@ -112,7 +112,7 @@
 <meta property="og:site_name" content="forever杨的个人博客">
 <meta property="og:description" content="空间回收1purge recyclebin;">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-10-19T07:07:48.596Z">
+<meta property="og:updated_time" content="2020-11-05T10:50:21.026Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Oracle 空间回收">
 <meta name="twitter:description" content="空间回收1purge recyclebin;">
@@ -252,7 +252,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">164</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">167</span></a>
 
   </li>
         
@@ -290,7 +290,7 @@
       
     
 
-    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">132</span></a>
+    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">134</span></a>
 
   </li>
         
@@ -471,7 +471,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-10-19 15:07:48" itemprop="dateModified" datetime="2020-10-19T15:07:48+08:00">2020-10-19</time>
+                <time title="修改时间：2020-11-05 18:50:21" itemprop="dateModified" datetime="2020-11-05T18:50:21+08:00">2020-11-05</time>
               
             
           </span>
@@ -525,7 +525,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">23</span>
+                <span title="字数">187</span>
               
 
               
@@ -572,6 +572,8 @@
 
       
         <h1 id="空间回收"><a href="#空间回收" class="headerlink" title="空间回收"></a>空间回收</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">purge recyclebin;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h1 id="使用delete删除数据回收空间方法"><a href="#使用delete删除数据回收空间方法" class="headerlink" title="使用delete删除数据回收空间方法"></a>使用delete删除数据回收空间方法</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- —开启行迁移功能</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> T_FTP_ARREARS_RESULT <span class="keyword">ENABLE</span> <span class="keyword">ROW</span> <span class="keyword">MOVEMENT</span>;</span><br><span class="line"><span class="comment">-- 收缩表并降低hwm，并且回收相应的索引</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> T_FTP_ARREARS_RESULT <span class="keyword">SHRINK</span> <span class="keyword">SPACE</span> <span class="keyword">CASCADE</span>;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -719,7 +721,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">164</span>
+                    <span class="site-state-item-count">167</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1061,7 +1063,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">132</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">134</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1136,7 +1142,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#空间回收"><span class="nav-number">1.</span> <span class="nav-text">空间回收</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#空间回收"><span class="nav-number">1.</span> <span class="nav-text">空间回收</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用delete删除数据回收空间方法"><span class="nav-number">2.</span> <span class="nav-text">使用delete删除数据回收空间方法</span></a></li></ol></div>
             
 
           </div>
@@ -1170,7 +1176,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">526k</span>
+    <span title="站点总字数">535k</span>
   
 
   

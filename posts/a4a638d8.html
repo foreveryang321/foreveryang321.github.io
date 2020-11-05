@@ -104,18 +104,18 @@
 
 
 
-  <meta name="description" content="查编码1select userenv(&apos;language&apos;) from dual 编码配置123456789101112131415oracle数据库的编码select * from nls_database_parameters where parameter =&apos;NLS_CHARACTERSET&apos;;oracle客户端编码select * from nls_instance_parameters">
+  <meta name="description" content="查编码1select userenv(&apos;language&apos;) from dual">
 <meta name="keywords" content="编码">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Oracle 编码配置">
 <meta property="og:url" content="https://blog.yl-online.top/posts/a4a638d8.html">
 <meta property="og:site_name" content="forever杨的个人博客">
-<meta property="og:description" content="查编码1select userenv(&apos;language&apos;) from dual 编码配置123456789101112131415oracle数据库的编码select * from nls_database_parameters where parameter =&apos;NLS_CHARACTERSET&apos;;oracle客户端编码select * from nls_instance_parameters">
+<meta property="og:description" content="查编码1select userenv(&apos;language&apos;) from dual">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-10-19T07:07:48.608Z">
+<meta property="og:updated_time" content="2020-11-05T10:51:20.814Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Oracle 编码配置">
-<meta name="twitter:description" content="查编码1select userenv(&apos;language&apos;) from dual 编码配置123456789101112131415oracle数据库的编码select * from nls_database_parameters where parameter =&apos;NLS_CHARACTERSET&apos;;oracle客户端编码select * from nls_instance_parameters">
+<meta name="twitter:description" content="查编码1select userenv(&apos;language&apos;) from dual">
 
 
 
@@ -252,7 +252,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">164</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">167</span></a>
 
   </li>
         
@@ -290,7 +290,7 @@
       
     
 
-    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">132</span></a>
+    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">134</span></a>
 
   </li>
         
@@ -471,7 +471,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-10-19 15:07:48" itemprop="dateModified" datetime="2020-10-19T15:07:48+08:00">2020-10-19</time>
+                <time title="修改时间：2020-11-05 18:51:20" itemprop="dateModified" datetime="2020-11-05T18:51:20+08:00">2020-11-05</time>
               
             
           </span>
@@ -525,7 +525,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">493</span>
+                <span title="字数">494</span>
               
 
               
@@ -572,6 +572,7 @@
 
       
         <h1 id="查编码"><a href="#查编码" class="headerlink" title="查编码"></a>查编码</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> userenv(<span class="string">'language'</span>) <span class="keyword">from</span> dual</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <h1 id="编码配置"><a href="#编码配置" class="headerlink" title="编码配置"></a>编码配置</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">oracle数据库的编码</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> nls_database_parameters <span class="keyword">where</span> parameter =<span class="string">'NLS_CHARACTERSET'</span>;</span><br><span class="line">oracle客户端编码</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> nls_instance_parameters <span class="keyword">where</span> parameter=<span class="string">'NLS_LANGUAGE'</span>;</span><br><span class="line"></span><br><span class="line">conn /as sysdba;</span><br><span class="line">shutdown immediate;</span><br><span class="line">startup mount;</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">system</span> <span class="keyword">enable</span> <span class="keyword">restricted</span> <span class="keyword">session</span>;</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">system</span> <span class="keyword">set</span> job_queue_processes=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">SYSTEM</span> <span class="keyword">SET</span> AQ_TM_PROCESSES=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">database</span> <span class="keyword">open</span>;</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">DATABASE</span> <span class="built_in">character</span> <span class="keyword">set</span> INTERNAL_USE AL32UTF8;</span><br><span class="line">shutdown immediate;</span><br><span class="line">startup;</span><br></pre></td></tr></table></figure>
 
       
@@ -632,8 +633,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/33cc482c.html" rel="next" title="elastic-job 使用">
-                <i class="fa fa-chevron-left"></i> elastic-job 使用
+              <a href="/posts/d5d4c80.html" rel="next" title="Oracle 整库迁移">
+                <i class="fa fa-chevron-left"></i> Oracle 整库迁移
               </a>
             
           </div>
@@ -642,8 +643,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/posts/d5d4c80.html" rel="prev" title="Oracle 整库迁移">
-                Oracle 整库迁移 <i class="fa fa-chevron-right"></i>
+              <a href="/posts/b3b5b23f.html" rel="prev" title="ntp 时间同步">
+                ntp 时间同步 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -720,7 +721,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">164</span>
+                    <span class="site-state-item-count">167</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1062,7 +1063,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">132</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">134</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1171,7 +1176,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">526k</span>
+    <span title="站点总字数">535k</span>
   
 
   

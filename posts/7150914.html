@@ -112,7 +112,7 @@
 <meta property="og:site_name" content="forever杨的个人博客">
 <meta property="og:description" content="自增分区 numtoyminterval 按年、月分区  numtoyminterval(1, ‘year’)、numtoyminterval(1, ‘month’)  numtodsinterval 按天、时、分、秒分区  numtodsinterval(1, ‘day’)、numtodsinterval(1, ‘hour’)、numtodsinterval(1, ‘minute’)、numto">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-09-24T05:42:55.619Z">
+<meta property="og:updated_time" content="2020-10-24T07:04:06.592Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Oracle 分区">
 <meta name="twitter:description" content="自增分区 numtoyminterval 按年、月分区  numtoyminterval(1, ‘year’)、numtoyminterval(1, ‘month’)  numtodsinterval 按天、时、分、秒分区  numtodsinterval(1, ‘day’)、numtodsinterval(1, ‘hour’)、numtodsinterval(1, ‘minute’)、numto">
@@ -252,7 +252,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">164</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">167</span></a>
 
   </li>
         
@@ -290,7 +290,7 @@
       
     
 
-    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">132</span></a>
+    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">134</span></a>
 
   </li>
         
@@ -471,7 +471,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-09-24 13:42:55" itemprop="dateModified" datetime="2020-09-24T13:42:55+08:00">2020-09-24</time>
+                <time title="修改时间：2020-10-24 15:04:06" itemprop="dateModified" datetime="2020-10-24T15:04:06+08:00">2020-10-24</time>
               
             
           </span>
@@ -525,7 +525,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">2.5k</span>
+                <span title="字数">2.6k</span>
               
 
               
@@ -582,7 +582,7 @@
 <blockquote>
 <p>例子</p>
 </blockquote>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">user</span> (<span class="keyword">id</span> <span class="built_in">number</span>, create_dt <span class="built_in">date</span>)</span><br><span class="line">	<span class="keyword">tablespace</span> <span class="keyword">users</span></span><br><span class="line">	<span class="keyword">partition</span> <span class="keyword">by</span> <span class="keyword">range</span> (create_dt)</span><br><span class="line">	<span class="built_in">interval</span>(numtoyminterval(<span class="number">1</span>, <span class="string">'month'</span>))</span><br><span class="line">	(</span><br><span class="line">        <span class="keyword">partition</span> p1 <span class="keyword">values</span> <span class="keyword">less</span> <span class="keyword">than</span> (<span class="keyword">to_date</span>(<span class="string">'2018-06-01 00:00:00'</span>, <span class="string">'yyyy-mm-dd hh24:mi:ss'</span>))</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">user</span> (<span class="keyword">id</span> <span class="built_in">number</span>, create_dt <span class="built_in">date</span>)</span><br><span class="line">	<span class="keyword">tablespace</span> <span class="keyword">users</span></span><br><span class="line">	<span class="keyword">partition</span> <span class="keyword">by</span> <span class="keyword">range</span> (create_dt)</span><br><span class="line">	<span class="built_in">interval</span>(numtoyminterval(<span class="number">1</span>, <span class="string">'month'</span>))</span><br><span class="line">	(</span><br><span class="line">        <span class="keyword">partition</span> p1 <span class="keyword">values</span> <span class="keyword">less</span> <span class="keyword">than</span> (<span class="keyword">to_date</span>(<span class="string">'2018-01-01 00:00:00'</span>, <span class="string">'yyyy-mm-dd hh24:mi:ss'</span>))</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <h1 id="清空、删除分区操作"><a href="#清空、删除分区操作" class="headerlink" title="清空、删除分区操作"></a>清空、删除分区操作</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建分区表</span></span><br><span class="line">略</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查分区表及数据</span></span><br><span class="line">sql&gt; select t.table_name,t.partition_name,t.num_rows,t.blocks,t.interval,t.high_value from USER_TAB_PARTITIONS t;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建主键和索引</span></span><br><span class="line">sql&gt; alter table TEST_PARTAS add constraint pk_id primary key(ID);</span><br><span class="line">sql&gt; CREATE INDEX IND_ACCOUNT_ID ON TEST_PARTAS (ACCOUNT_ID);</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查索引状态，当前状态可用</span></span><br><span class="line">sql&gt; select T.INDEX_NAME,T.TABLE_NAME,T.STATUS from user_indexes t where t.table_name='TEST_PARTAS';</span><br><span class="line"></span><br><span class="line">INDEX_NAME TABLE_NAME STATUS</span><br><span class="line"><span class="comment">------------------------------ ------------------------------ --------</span></span><br><span class="line">PK_ID TEST_PARTAS VALID</span><br><span class="line">IND_ACCOUNT_ID TEST_PARTAS VALID</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用truncate 删除p0分区数据，不加update index参数</span></span><br><span class="line">sql&gt; alter table test_partas truncate partition p0;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查索引状态，状态不可用</span></span><br><span class="line">INDEX_NAME TABLE_NAME STATUS</span><br><span class="line"><span class="comment">------------------------------ ------------------------------ --------</span></span><br><span class="line">PK_ID TEST_PARTAS UNUSABLE</span><br><span class="line">IND_ACCOUNT_ID TEST_PARTAS UNUSABLE</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重建立索引，要加online ，尽量减小对业务的冲击</span></span><br><span class="line">sql&gt; alter index PK_ID rebuild online;</span><br><span class="line">sql&gt; alter index IND_ACCOUNT_ID rebuild online;</span><br><span class="line">此时索引恢复正常可用状态</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用truncate 删除p1分区数据，增加update index参数</span></span><br><span class="line">sql&gt; alter table test_partas truncate partition p1 update indexes;</span><br><span class="line">此时索引是正常可用状态</span><br></pre></td></tr></table></figure>
 <blockquote>
@@ -591,6 +591,7 @@
 <p>如果 truncate 清空分区数据、drop 删除分区，索引都会失效</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; alter table test_partas drop partition SYS_P1611;</span><br></pre></td></tr></table></figure>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> IM_WX_PAGEOPEN_LOG_02 NOLOGGING <span class="keyword">AS</span></span><br><span class="line">    <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> IM_WX_PAGEOPEN_LOG;</span><br><span class="line"></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> IM_WX_PAGEOPEN_LOG <span class="keyword">DROP</span> <span class="keyword">PARTITION</span> P2020Y010;</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> IM_WX_PAGEOPEN_LOG <span class="keyword">DROP</span> <span class="keyword">PARTITION</span> P2020Y11;</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> IM_WX_PAGEOPEN_LOG <span class="keyword">DROP</span> <span class="keyword">PARTITION</span> P2020Y12;</span><br><span class="line"></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> IM_WX_PAGEOPEN_LOG <span class="keyword">ADD</span> <span class="keyword">PARTITION</span> P2020Y09 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span>(<span class="keyword">TO_DATE</span>(<span class="string">'2020-10-01 00:00:00'</span>, <span class="string">'yyyy-mm-dd hh24:mi:ss'</span>));</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> IM_WX_PAGEOPEN_LOG <span class="keyword">ADD</span> <span class="keyword">PARTITION</span> P2020Y10 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span>(<span class="keyword">TO_DATE</span>(<span class="string">'2020-11-01 00:00:00'</span>, <span class="string">'yyyy-mm-dd hh24:mi:ss'</span>));</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> IM_WX_PAGEOPEN_LOG <span class="keyword">ADD</span> <span class="keyword">PARTITION</span> P2020Y11 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span>(<span class="keyword">TO_DATE</span>(<span class="string">'2020-12-01 00:00:00'</span>, <span class="string">'yyyy-mm-dd hh24:mi:ss'</span>));</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> IM_WX_PAGEOPEN_LOG <span class="keyword">ADD</span> <span class="keyword">PARTITION</span> P2020Y12 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span>(<span class="keyword">TO_DATE</span>(<span class="string">'2021-01-01 00:00:00'</span>, <span class="string">'yyyy-mm-dd hh24:mi:ss'</span>));</span><br></pre></td></tr></table></figure>
+<h1 id="查询索引状态不可用"><a href="#查询索引状态不可用" class="headerlink" title="查询索引状态不可用"></a>查询索引状态不可用</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> T.INDEX_NAME, T.TABLE_NAME, T.STATUS</span><br><span class="line">  <span class="keyword">FROM</span> USER_INDEXES T</span><br><span class="line"> <span class="keyword">WHERE</span> T.TABLE_NAME <span class="keyword">IN</span> (<span class="keyword">SELECT</span> T.TABLE_NAME <span class="keyword">FROM</span> USER_TABLES T);</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -738,7 +739,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">164</span>
+                    <span class="site-state-item-count">167</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1080,7 +1081,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">132</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">134</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1155,7 +1160,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#自增分区"><span class="nav-number">1.</span> <span class="nav-text">自增分区</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#清空、删除分区操作"><span class="nav-number">2.</span> <span class="nav-text">清空、删除分区操作</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#自增分区"><span class="nav-number">1.</span> <span class="nav-text">自增分区</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#清空、删除分区操作"><span class="nav-number">2.</span> <span class="nav-text">清空、删除分区操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查询索引状态不可用"><span class="nav-number">3.</span> <span class="nav-text">查询索引状态不可用</span></a></li></ol></div>
             
 
           </div>
@@ -1189,7 +1194,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">526k</span>
+    <span title="站点总字数">535k</span>
   
 
   
