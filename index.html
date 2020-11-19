@@ -251,7 +251,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">167</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">168</span></a>
 
   </li>
         
@@ -408,6 +408,234 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/246b5f2e.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/246b5f2e.html" class="post-title-link" itemprop="https://blog.yl-online.top/index.html">Oracle 批量修改字段长度</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-11-05 23:23:05" itemprop="dateCreated datePublished" datetime="2020-11-05T23:23:05+08:00">2020-11-05</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-11-19 19:16:17" itemprop="dateModified" datetime="2020-11-19T19:16:17+08:00">2020-11-19</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Oracle/" itemprop="url" rel="index"><span itemprop="name">Oracle</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数：</span>
+                
+                <span title="字数">1.3k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/expdp/" rel="tag" class="color1">expdp</a>
+        
+           <a href="/tags/impdp/" rel="tag" class="color2">impdp</a>
+        
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="Oracle不同字符集导入导出"><a href="#Oracle不同字符集导入导出" class="headerlink" title="Oracle不同字符集导入导出"></a>Oracle不同字符集导入导出</h1><p>GBK导入UTF8：GBK字符集（一个汉字占用两位），UTF8字符集（一个汉子占用三位）</p>
+<blockquote>
+<p>修改 varchar2 类型长度</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">OR</span> <span class="keyword">REPLACE</span> <span class="keyword">PROCEDURE</span> m_varchar2 <span class="keyword">AS</span></span><br><span class="line">    <span class="keyword">CURSOR</span> TEMP <span class="keyword">IS</span></span><br><span class="line">        <span class="keyword">SELECT</span> TABLE_NAME,</span><br><span class="line">               COLUMN_NAME,</span><br><span class="line">               <span class="keyword">CEIL</span>(DATA_LENGTH * <span class="number">3</span> / <span class="number">2</span>) DATA_LENGTH</span><br><span class="line">          <span class="keyword">FROM</span> USER_TAB_COLUMNS</span><br><span class="line">         <span class="keyword">WHERE</span> DATA_TYPE = <span class="string">'VARCHAR2'</span></span><br><span class="line">           <span class="keyword">AND</span> DATA_LENGTH &lt; <span class="number">2000</span>;</span><br><span class="line">    STR VARCHAR2(500) := '';</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">    DBMS_OUTPUT.ENABLE(<span class="number">1000000</span>);</span><br><span class="line">    FOR S IN TEMP LOOP</span><br><span class="line">        STR := '<span class="keyword">ALTER</span> <span class="keyword">TABLE</span> <span class="string">' || S.TABLE_NAME || '</span> <span class="keyword">MODIFY</span>(<span class="string">' ||</span></span><br><span class="line"><span class="string">               S.COLUMN_NAME || '</span> VARCHAR2(<span class="string">' || S.DATA_LENGTH || '</span>))<span class="string">';</span></span><br><span class="line"><span class="string">        DBMS_OUTPUT.PUT_LINE(STR);</span></span><br><span class="line"><span class="string">        EXECUTE IMMEDIATE STR;</span></span><br><span class="line"><span class="string">    END LOOP;</span></span><br><span class="line"><span class="string">END;</span></span><br></pre></td></tr></table></figure>
+<p>执行</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">call</span> m_varchar2();</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/246b5f2e.html" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/812c7f75.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -453,12 +681,24 @@
                 
               
 
-              <time title="创建时间：2020-11-03 15:00:05 / 修改时间：15:06:09" itemprop="dateCreated datePublished" datetime="2020-11-03T15:00:05+08:00">2020-11-03</time>
+              <time title="创建时间：2020-11-03 15:00:05" itemprop="dateCreated datePublished" datetime="2020-11-03T15:00:05+08:00">2020-11-03</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-11-05 18:53:36" itemprop="dateModified" datetime="2020-11-05T18:53:36+08:00">2020-11-05</time>
               
             
           </span>
@@ -674,7 +914,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-11-05 18:51:50" itemprop="dateModified" datetime="2020-11-05T18:51:50+08:00">2020-11-05</time>
+                <time title="修改时间：2020-11-05 18:53:36" itemprop="dateModified" datetime="2020-11-05T18:53:36+08:00">2020-11-05</time>
               
             
           </span>
@@ -896,7 +1136,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-11-05 18:50:55" itemprop="dateModified" datetime="2020-11-05T18:50:55+08:00">2020-11-05</time>
+                <time title="修改时间：2020-11-05 18:53:36" itemprop="dateModified" datetime="2020-11-05T18:53:36+08:00">2020-11-05</time>
               
             
           </span>
@@ -1951,7 +2191,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/5bb4128a.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/eaf10d0a.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
@@ -1971,7 +2211,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/posts/5bb4128a.html" class="post-title-link" itemprop="https://blog.yl-online.top/index.html">Oracle dblink操作</a>
+                <a href="/posts/eaf10d0a.html" class="post-title-link" itemprop="https://blog.yl-online.top/index.html">Oracle spool操作</a>
               
             
           </h2>
@@ -2013,7 +2253,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-10-19 15:13:02" itemprop="dateModified" datetime="2020-10-19T15:13:02+08:00">2020-10-19</time>
+                <time title="修改时间：2020-11-19 19:16:17" itemprop="dateModified" datetime="2020-11-19T19:16:17+08:00">2020-11-19</time>
               
             
           </span>
@@ -2674,7 +2914,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-11-05 18:34:42" itemprop="dateModified" datetime="2020-11-05T18:34:42+08:00">2020-11-05</time>
+                <time title="修改时间：2020-11-06 10:39:03" itemprop="dateModified" datetime="2020-11-06T10:39:03+08:00">2020-11-06</time>
               
             
           </span>
@@ -2721,7 +2961,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">554</span>
+                <span title="字数">615</span>
               
 
               
@@ -3078,7 +3318,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/posts/2fa1c46f.html" class="post-title-link" itemprop="https://blog.yl-online.top/index.html">Oracle 空间回收</a>
+                <a href="/posts/2fa1c46f.html" class="post-title-link" itemprop="https://blog.yl-online.top/index.html">Oracle 表空间操作</a>
               
             
           </h2>
@@ -3120,7 +3360,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-11-05 18:50:21" itemprop="dateModified" datetime="2020-11-05T18:50:21+08:00">2020-11-05</time>
+                <time title="修改时间：2020-11-07 18:16:49" itemprop="dateModified" datetime="2020-11-07T18:16:49+08:00">2020-11-07</time>
               
             
           </span>
@@ -3167,7 +3407,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">187</span>
+                <span title="字数">3.4k</span>
               
 
               
@@ -3181,7 +3421,7 @@
                 
                   <span class="post-meta-item-text">时长 &asymp;</span>
                 
-                <span title="时长">1 分钟</span>
+                <span title="时长">3 分钟</span>
               
             </div>
           
@@ -3485,244 +3725,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/6402dc33.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/6402dc33.html" class="post-title-link" itemprop="https://blog.yl-online.top/index.html">ssh无密码登录</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2020-09-04 18:54:46" itemprop="dateCreated datePublished" datetime="2020-09-04T18:54:46+08:00">2020-09-04</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2020-10-19 15:07:48" itemprop="dateModified" datetime="2020-10-19T15:07:48+08:00">2020-10-19</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数：</span>
-                
-                <span title="字数">806</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
-        <span class="post-meta-item-icon">
-          <i class="fa fa-tags"></i>
-        </span>
-        <span class="post-meta-item-text">标签</span>
-        
-           <a href="/tags/ssh/" rel="tag" class="color1">ssh</a>
-        
-      </div>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>主控节点设置<code>ssh</code>无密码跳转到受控节点的信任关系</p>
-<p>假设有3台服务器</p>
-<ul>
-<li><p>主控服务器</p>
-<ul>
-<li>192.168.123.1</li>
-</ul>
-</li>
-<li><p>受控服务器</p>
-<ul>
-<li>192.168.123.2</li>
-<li>192.168.123.3</li>
-</ul>
-</li>
-</ul>
-<p>其中<code>192.168.123.1</code>需要无密码登录到<code>192.168.123.2</code>和<code>192.168.123.3</code></p>
-<p>即在<code>192.168.123.1</code>上执行</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -p22 user@192.168.123.2</span><br></pre></td></tr></table></figure>
-<p>可以无密码登录到192.168.123.2</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/6402dc33.html" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-         
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3772,7 +3774,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">167</span>
+                    <span class="site-state-item-count">168</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -4211,7 +4213,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">535k</span>
+    <span title="站点总字数">538k</span>
   
 
   

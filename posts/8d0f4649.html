@@ -104,18 +104,18 @@
 
 
 
-  <meta name="description" content="nvm：node 和 npm 多版本管理  windows 安装包下载：https://github.com/coreybutler/nvm-windows/releases   更换下载源 123456789# 1、进入 nvm 安装目录，编辑 setting.txt，追加两行代码node_mirror: https://npm.taobao.org/mirrors/node/# 配置npm_m">
+  <meta name="description" content="nvm：node 和 npm 多版本管理  windows 安装包下载：https://github.com/coreybutler/nvm-windows/releases   配置环境变量  12345678# window 下配置## 假设 nvm 安装目录是D:\nvm，则配置：NVM_HOME=D:\nvmNVM_SYMLINK=D:\nvm\nodejs## PATH 配置，新增%NV">
 <meta name="keywords" content="npm,cnpm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nodejs 使用">
 <meta property="og:url" content="https://blog.yl-online.top/posts/8d0f4649.html">
 <meta property="og:site_name" content="forever杨的个人博客">
-<meta property="og:description" content="nvm：node 和 npm 多版本管理  windows 安装包下载：https://github.com/coreybutler/nvm-windows/releases   更换下载源 123456789# 1、进入 nvm 安装目录，编辑 setting.txt，追加两行代码node_mirror: https://npm.taobao.org/mirrors/node/# 配置npm_m">
+<meta property="og:description" content="nvm：node 和 npm 多版本管理  windows 安装包下载：https://github.com/coreybutler/nvm-windows/releases   配置环境变量  12345678# window 下配置## 假设 nvm 安装目录是D:\nvm，则配置：NVM_HOME=D:\nvmNVM_SYMLINK=D:\nvm\nodejs## PATH 配置，新增%NV">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-07-30T05:54:54.976Z">
+<meta property="og:updated_time" content="2020-11-19T02:52:43.465Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nodejs 使用">
-<meta name="twitter:description" content="nvm：node 和 npm 多版本管理  windows 安装包下载：https://github.com/coreybutler/nvm-windows/releases   更换下载源 123456789# 1、进入 nvm 安装目录，编辑 setting.txt，追加两行代码node_mirror: https://npm.taobao.org/mirrors/node/# 配置npm_m">
+<meta name="twitter:description" content="nvm：node 和 npm 多版本管理  windows 安装包下载：https://github.com/coreybutler/nvm-windows/releases   配置环境变量  12345678# window 下配置## 假设 nvm 安装目录是D:\nvm，则配置：NVM_HOME=D:\nvmNVM_SYMLINK=D:\nvm\nodejs## PATH 配置，新增%NV">
 
 
 
@@ -252,7 +252,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">167</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">168</span></a>
 
   </li>
         
@@ -471,7 +471,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-07-30 13:54:54" itemprop="dateModified" datetime="2020-07-30T13:54:54+08:00">2020-07-30</time>
+                <time title="修改时间：2020-11-19 10:52:43" itemprop="dateModified" datetime="2020-11-19T10:52:43+08:00">2020-11-19</time>
               
             
           </span>
@@ -525,7 +525,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">2.4k</span>
+                <span title="字数">2.6k</span>
               
 
               
@@ -577,11 +577,16 @@
 <p> windows 安装包下载：<a href="https://github.com/coreybutler/nvm-windows/releases" target="_blank" rel="noopener">https://github.com/coreybutler/nvm-windows/releases</a></p>
 </blockquote>
 <ul>
+<li>配置环境变量</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># window 下配置</span><br><span class="line">## 假设 nvm 安装目录是D:\nvm，则配置：</span><br><span class="line">NVM_HOME=D:\nvm</span><br><span class="line">NVM_SYMLINK=D:\nvm\nodejs</span><br><span class="line"></span><br><span class="line">## PATH 配置，新增</span><br><span class="line">%NVM_HOME%</span><br><span class="line">%NVM_SYMLINK%</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<ul>
 <li><p>更换下载源</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 1、进入 nvm 安装目录，编辑 setting.txt，追加两行代码</span><br><span class="line">node_mirror: https://npm.taobao.org/mirrors/node/</span><br><span class="line"># 配置npm_mirror可能会导致npm、cnpm等安装依赖时各种错误</span><br><span class="line"># npm_mirror: https://npm.taobao.org/mirrors/npm/</span><br><span class="line"></span><br><span class="line"># 2、通过命令行配置</span><br><span class="line">nvm node_mirror https://npm.taobao.org/mirrors/node/</span><br><span class="line"># 配置npm_mirror可能会导致npm、cnpm等安装依赖时各种错误</span><br><span class="line"># nvm npm_mirror https://npm.taobao.org/mirrors/npm/</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>使用 nvm 管理版本</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 安装最新版本node.js</span></span><br><span class="line">nvm install latest</span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用某一具体版本</span></span><br><span class="line">nvm use 14.3.0</span><br><span class="line"><span class="meta">#</span><span class="bash"> 列出当前已安装的所有版本</span></span><br><span class="line">nvm list</span><br><span class="line"><span class="meta">#</span><span class="bash"> 卸载某一具体版本</span></span><br><span class="line">nvm uninstall 14.2.0</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 安装最新版本node</span></span><br><span class="line">nvm install latest</span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装某一个版本 node</span></span><br><span class="line">nvm install 10.22.0</span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用某一具体版本</span></span><br><span class="line">nvm use 14.3.0</span><br><span class="line"><span class="meta">#</span><span class="bash"> 列出当前已安装的所有版本</span></span><br><span class="line">nvm list</span><br><span class="line"><span class="meta">#</span><span class="bash"> 卸载某一具体版本</span></span><br><span class="line">nvm uninstall 14.2.0</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <p>使用nvm管理node、npm，不需要配置npm下载包路径</p>
@@ -594,7 +599,7 @@
 <p>通过config命令</p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org/ npm info underscore</span><br><span class="line"><span class="comment">#（如果配置成功，这个命令会有字符串response）</span></span><br><span class="line">npm --registry=https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
+<!-- more -->
 <blockquote>
 <p>命令行指定</p>
 </blockquote>
@@ -675,8 +680,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/2dba5ee9.html" rel="next" title="hexo初体验">
-                <i class="fa fa-chevron-left"></i> hexo初体验
+              <a href="/posts/d01399d3.html" rel="next" title="xampp 安装 memcache 监控">
+                <i class="fa fa-chevron-left"></i> xampp 安装 memcache 监控
               </a>
             
           </div>
@@ -685,8 +690,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/posts/d01399d3.html" rel="prev" title="xampp 安装 memcache 监控">
-                xampp 安装 memcache 监控 <i class="fa fa-chevron-right"></i>
+              <a href="/posts/9b6062f9.html" rel="prev" title="Sublime Text 3 的一些常用插件">
+                Sublime Text 3 的一些常用插件 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -763,7 +768,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">167</span>
+                    <span class="site-state-item-count">168</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1218,7 +1223,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">535k</span>
+    <span title="站点总字数">538k</span>
   
 
   

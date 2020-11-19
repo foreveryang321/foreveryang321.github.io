@@ -107,14 +107,14 @@
   <meta name="description" content="空间回收1purge recyclebin;">
 <meta name="keywords" content="Oracle">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Oracle 空间回收">
+<meta property="og:title" content="Oracle 表空间操作">
 <meta property="og:url" content="https://blog.yl-online.top/posts/2fa1c46f.html">
 <meta property="og:site_name" content="forever杨的个人博客">
 <meta property="og:description" content="空间回收1purge recyclebin;">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-11-05T10:50:21.026Z">
+<meta property="og:updated_time" content="2020-11-07T10:16:49.936Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Oracle 空间回收">
+<meta name="twitter:title" content="Oracle 表空间操作">
 <meta name="twitter:description" content="空间回收1purge recyclebin;">
 
 
@@ -132,7 +132,7 @@
   };
 </script>
 
-  <title>Oracle 空间回收 | forever杨的个人博客</title>
+  <title>Oracle 表空间操作 | forever杨的个人博客</title>
   
 
 
@@ -252,7 +252,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">167</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">168</span></a>
 
   </li>
         
@@ -428,7 +428,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Oracle 空间回收
+          <h2 class="post-title" itemprop="name headline">Oracle 表空间操作
 
               
             
@@ -471,7 +471,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-11-05 18:50:21" itemprop="dateModified" datetime="2020-11-05T18:50:21+08:00">2020-11-05</time>
+                <time title="修改时间：2020-11-07 18:16:49" itemprop="dateModified" datetime="2020-11-07T18:16:49+08:00">2020-11-07</time>
               
             
           </span>
@@ -525,7 +525,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">187</span>
+                <span title="字数">3.4k</span>
               
 
               
@@ -539,7 +539,7 @@
                 
                   <span class="post-meta-item-text">时长 &asymp;</span>
                 
-                <span title="时长">1 分钟</span>
+                <span title="时长">3 分钟</span>
               
             </div>
           
@@ -574,6 +574,17 @@
         <h1 id="空间回收"><a href="#空间回收" class="headerlink" title="空间回收"></a>空间回收</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">purge recyclebin;</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <h1 id="使用delete删除数据回收空间方法"><a href="#使用delete删除数据回收空间方法" class="headerlink" title="使用delete删除数据回收空间方法"></a>使用delete删除数据回收空间方法</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- —开启行迁移功能</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> T_FTP_ARREARS_RESULT <span class="keyword">ENABLE</span> <span class="keyword">ROW</span> <span class="keyword">MOVEMENT</span>;</span><br><span class="line"><span class="comment">-- 收缩表并降低hwm，并且回收相应的索引</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> T_FTP_ARREARS_RESULT <span class="keyword">SHRINK</span> <span class="keyword">SPACE</span> <span class="keyword">CASCADE</span>;</span><br></pre></td></tr></table></figure>
+<h1 id="修改表空间"><a href="#修改表空间" class="headerlink" title="修改表空间"></a>修改表空间</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 修改表空间</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="string">'ALTER TABLE WWTEST.'</span> || T.TABLE_NAME || <span class="string">' MOVE TABLESPACE USERS;'</span></span><br><span class="line">  <span class="keyword">FROM</span> ALL_TABLES T</span><br><span class="line"> <span class="keyword">WHERE</span> T.OWNER = <span class="string">'WX_KBT_TEST'</span>;</span><br><span class="line"><span class="comment">---- 如果有分区，使用这条语句</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="string">'alter table '</span> || TABLE_NAME || <span class="string">' move partition '</span> || PARTITION_NAME ||</span><br><span class="line">       <span class="string">' tablespace USERS;'</span></span><br><span class="line">  <span class="keyword">FROM</span> USER_TAB_PARTITIONS</span><br><span class="line"> <span class="keyword">WHERE</span> TABLE_NAME <span class="keyword">IN</span> (<span class="string">'IM_WX_QX_TEMPLATE_RESULT'</span>, <span class="string">'IM_WX_QX_TEMPLATE'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 修改索引的表空间</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="string">'alter index '</span> || INDEX_NAME || <span class="string">' rebuild tablespace USERS;'</span></span><br><span class="line">  <span class="keyword">FROM</span> ALL_INDEXES I</span><br><span class="line"> <span class="keyword">WHERE</span> I.OWNER = <span class="string">'WX_KBT_TEST'</span></span><br><span class="line">   <span class="keyword">AND</span> I.PARTITIONED = <span class="string">'YES'</span>;</span><br><span class="line"><span class="comment">---- 如果有分区，使用这条语句</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="string">'alter index '</span> || P.INDEX_NAME || <span class="string">' rebuild PARTITION '</span> ||</span><br><span class="line">       P.PARTITION_NAME || <span class="string">' tablespace USERS;'</span></span><br><span class="line">  <span class="keyword">FROM</span> USER_IND_PARTITIONS P</span><br><span class="line"> <span class="keyword">WHERE</span> P.INDEX_NAME <span class="keyword">IN</span> (<span class="string">'I_IM_WX_LOG_PROCESSTYPE'</span>, <span class="string">'I_IM_WX_LOG_USERNO'</span>);</span><br></pre></td></tr></table></figure>
+<h1 id="重设大小"><a href="#重设大小" class="headerlink" title="重设大小"></a>重设大小</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="string">'alter database datafile '</span> || FILE_NAME || <span class="string">' resize 500M;'</span></span><br><span class="line">  <span class="keyword">FROM</span> DBA_DATA_FILES F</span><br><span class="line"> <span class="keyword">WHERE</span> F.TABLESPACE_NAME = <span class="string">'USERS'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> <span class="string">'ALTER database datafile '</span> || FILE_NAME || <span class="string">' autoextend on next 10M maxsize 30G;'</span></span><br><span class="line">  <span class="keyword">FROM</span> DBA_DATA_FILES F</span><br><span class="line"> <span class="keyword">WHERE</span> F.TABLESPACE_NAME = <span class="string">'USERS'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">database</span> <span class="keyword">datafile</span> <span class="string">'/data/app/oracle/oradata/orcl/users55.dbf'</span> <span class="keyword">resize</span> <span class="number">500</span>M;</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">database</span> <span class="keyword">datafile</span> <span class="string">'/data/app/oracle/oradata/orcl/users55.dbf'</span> <span class="keyword">autoextend</span> <span class="keyword">on</span> <span class="keyword">next</span> <span class="number">10</span>M <span class="keyword">maxsize</span> <span class="number">30</span>G;</span><br></pre></td></tr></table></figure>
+<h1 id="大小扩展"><a href="#大小扩展" class="headerlink" title="大小扩展"></a>大小扩展</h1><p>SELECT A.TABLESPACE_NAME,<br>       ROUND(A.BYTES / 1024 / 1024 / 1024, 2) “sum GB”,<br>       ROUND(A.BYTES / 1024 / 1024, 2) “sum MB”,<br>       ROUND((A.BYTES - B.BYTES) / 1024 / 1024 / 1024, 2) “used GB”,<br>       ROUND((A.BYTES - B.BYTES) / 1024 / 1024, 2) “used MB”,<br>       ROUND(B.BYTES / 1024 / 1024, 2) “free MB”,<br>       ROUND(((A.BYTES - B.BYTES) / A.BYTES) * 100, 2) “used%”<br>  FROM (SELECT TABLESPACE_NAME, SUM(BYTES) BYTES<br>          FROM DBA_DATA_FILES<br>         GROUP BY TABLESPACE_NAME) A,<br>       (SELECT TABLESPACE_NAME, SUM(BYTES) BYTES, MAX(BYTES) LARGEST<br>          FROM DBA_FREE_SPACE<br>         GROUP BY TABLESPACE_NAME) B<br> WHERE A.TABLESPACE_NAME = B.TABLESPACE_NAME<br> ORDER BY ((A.BYTES - B.BYTES) / A.BYTES) DESC;</p>
+<p>SELECT T.TABLESPACE_NAME,<br>       T.FILE_NAME,<br>       T.BYTES / 1024 / 1024 || ‘M’ AS TOTAL,<br>       T.AUTOEXTENSIBLE,<br>       T.MAXBYTES / 1024 / 1024 || ‘M’ AS MAXSIZE<br>  FROM DBA_DATA_FILES T<br> WHERE T.TABLESPACE_NAME = ‘USERS’;</p>
+<p> SELECT T.bytes/1024/1024,T.* FROM Dba_Segments t  WHERE t.tablespace_name=’USERS’ ORDER BY T.bytes DESC;</p>
+<p>表空间追加文件（大小）</p>
+<p>alter tablespace users add datafile ‘/data/app/oracle/oradata/orcl/users12.dbf’ size 30G;</p>
+<p>create tablespace IM_DATA  datafile ‘/data/app/oracle/oradata/orcl/im_data01.dbf’ size 500M autoextend on next 5M maxsize 30G;</p>
+<p>alter tablespace IM_DATA  add datafile ‘/data/app/oracle/oradata/orcl/im_data07.dbf’ size 500M autoextend on next 5M maxsize 30G;</p>
+<p>SELECT T.bytes/1024/1024,T.* FROM Dba_Segments t  WHERE t.tablespace_name=’IM_DATA’ ORDER BY T.bytes DESC;</p>
+<h1 id="删除表空间"><a href="#删除表空间" class="headerlink" title="删除表空间"></a>删除表空间</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">-删除空的表空间，但是不包含物理文件</span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">tablespace</span> tablespace_name;</span><br><span class="line"><span class="comment">--删除非空表空间，但是不包含物理文件</span></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">tablespace</span> tablespace_name <span class="keyword">including</span> <span class="keyword">contents</span>;</span><br><span class="line"><span class="comment">--删除空表空间，包含物理文件</span></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">tablespace</span> tablespace_name <span class="keyword">including</span> <span class="keyword">datafiles</span>;</span><br><span class="line"><span class="comment">--删除非空表空间，包含物理文件</span></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">tablespace</span> tablespace_name <span class="keyword">including</span> <span class="keyword">contents</span> <span class="keyword">and</span> <span class="keyword">datafiles</span>;</span><br><span class="line"><span class="comment">--如果其他表空间中的表有外键等约束关联到了本表空间中的表的字段，就要加上CASCADE CONSTRAINTS</span></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">tablespace</span> tablespace_name <span class="keyword">including</span> <span class="keyword">contents</span> <span class="keyword">and</span> <span class="keyword">datafiles</span> <span class="keyword">CASCADE</span> <span class="keyword">CONSTRAINTS</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">tablespace</span> &lt;tablespace_name&gt; <span class="keyword">including</span> <span class="keyword">contents</span> <span class="keyword">and</span> <span class="keyword">datafiles</span>;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -607,7 +618,7 @@
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
     
-    <a href="https://blog.yl-online.top/posts/2fa1c46f.html" title="Oracle 空间回收">https://blog.yl-online.top/posts/2fa1c46f.html</a>
+    <a href="https://blog.yl-online.top/posts/2fa1c46f.html" title="Oracle 表空间操作">https://blog.yl-online.top/posts/2fa1c46f.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。如果文章内容对你有用，请记录到你的笔记中。本博客站点随时会停止服务，请不要收藏、转载！</li>
@@ -721,7 +732,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">167</span>
+                    <span class="site-state-item-count">168</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1142,7 +1153,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#空间回收"><span class="nav-number">1.</span> <span class="nav-text">空间回收</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用delete删除数据回收空间方法"><span class="nav-number">2.</span> <span class="nav-text">使用delete删除数据回收空间方法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#空间回收"><span class="nav-number">1.</span> <span class="nav-text">空间回收</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用delete删除数据回收空间方法"><span class="nav-number">2.</span> <span class="nav-text">使用delete删除数据回收空间方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改表空间"><span class="nav-number">3.</span> <span class="nav-text">修改表空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#重设大小"><span class="nav-number">4.</span> <span class="nav-text">重设大小</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#大小扩展"><span class="nav-number">5.</span> <span class="nav-text">大小扩展</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#删除表空间"><span class="nav-number">6.</span> <span class="nav-text">删除表空间</span></a></li></ol></div>
             
 
           </div>
@@ -1176,7 +1187,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">535k</span>
+    <span title="站点总字数">538k</span>
   
 
   

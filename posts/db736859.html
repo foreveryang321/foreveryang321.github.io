@@ -112,7 +112,7 @@
 <meta property="og:site_name" content="forever杨的个人博客">
 <meta property="og:description" content="修改表名1rename &amp;lt;old table_name&amp;gt; to &amp;lt;new table_name&amp;gt;">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-11-05T10:51:40.897Z">
+<meta property="og:updated_time" content="2020-11-19T06:03:08.349Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Oracle 使用">
 <meta name="twitter:description" content="修改表名1rename &amp;lt;old table_name&amp;gt; to &amp;lt;new table_name&amp;gt;">
@@ -252,7 +252,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">167</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">168</span></a>
 
   </li>
         
@@ -471,7 +471,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-11-05 18:51:40" itemprop="dateModified" datetime="2020-11-05T18:51:40+08:00">2020-11-05</time>
+                <time title="修改时间：2020-11-19 14:03:08" itemprop="dateModified" datetime="2020-11-19T14:03:08+08:00">2020-11-19</time>
               
             
           </span>
@@ -525,7 +525,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">3.3k</span>
+                <span title="字数">1.8k</span>
               
 
               
@@ -539,7 +539,7 @@
                 
                   <span class="post-meta-item-text">时长 &asymp;</span>
                 
-                <span title="时长">3 分钟</span>
+                <span title="时长">2 分钟</span>
               
             </div>
           
@@ -573,7 +573,8 @@
       
         <h1 id="修改表名"><a href="#修改表名" class="headerlink" title="修改表名"></a>修改表名</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">rename</span> &lt;<span class="keyword">old</span> table_name&gt; <span class="keyword">to</span> &lt;<span class="keyword">new</span> table_name&gt;</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<h1 id="修改表空间"><a href="#修改表空间" class="headerlink" title="修改表空间"></a>修改表空间</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 修改表空间</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="string">'ALTER TABLE WWTEST.'</span> || T.TABLE_NAME || <span class="string">' MOVE TABLESPACE USERS;'</span></span><br><span class="line">  <span class="keyword">FROM</span> ALL_TABLES T</span><br><span class="line"> <span class="keyword">WHERE</span> T.OWNER = <span class="string">'WX_KBT_TEST'</span>;</span><br><span class="line"><span class="comment">---- 如果有分区，使用这条语句</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="string">'alter table '</span> || TABLE_NAME || <span class="string">' move partition '</span> || PARTITION_NAME ||</span><br><span class="line">       <span class="string">' tablespace USERS;'</span></span><br><span class="line">  <span class="keyword">FROM</span> USER_TAB_PARTITIONS</span><br><span class="line"> <span class="keyword">WHERE</span> TABLE_NAME <span class="keyword">IN</span> (<span class="string">'IM_WX_QX_TEMPLATE_RESULT'</span>, <span class="string">'IM_WX_QX_TEMPLATE'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 修改索引的表空间</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="string">'alter index '</span> || INDEX_NAME || <span class="string">' rebuild tablespace USERS;'</span></span><br><span class="line">  <span class="keyword">FROM</span> ALL_INDEXES I</span><br><span class="line"> <span class="keyword">WHERE</span> I.OWNER = <span class="string">'WX_KBT_TEST'</span></span><br><span class="line">   <span class="keyword">AND</span> I.PARTITIONED = <span class="string">'YES'</span>;</span><br><span class="line"><span class="comment">---- 如果有分区，使用这条语句</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="string">'alter index '</span> || P.INDEX_NAME || <span class="string">' rebuild PARTITION '</span> ||</span><br><span class="line">       P.PARTITION_NAME || <span class="string">' tablespace USERS;'</span></span><br><span class="line">  <span class="keyword">FROM</span> USER_IND_PARTITIONS P</span><br><span class="line"> <span class="keyword">WHERE</span> P.INDEX_NAME <span class="keyword">IN</span> (<span class="string">'I_IM_WX_LOG_PROCESSTYPE'</span>, <span class="string">'I_IM_WX_LOG_USERNO'</span>);</span><br></pre></td></tr></table></figure>
+<h1 id="修改用户名、密码"><a href="#修改用户名、密码" class="headerlink" title="修改用户名、密码"></a>修改用户名、密码</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 用sysdba帐号登陆，查询用户信息</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">USER</span><span class="comment">#, NAME FROM USER$;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 更改用户名并提交</span></span><br><span class="line"><span class="keyword">UPDATE</span> <span class="keyword">USER</span>$ <span class="keyword">SET</span> <span class="keyword">NAME</span> = <span class="string">'HISTORY'</span> <span class="keyword">WHERE</span> <span class="keyword">USER</span><span class="comment"># = 85;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 强制刷新，执行数据统一性</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">SYSTEM</span> checkpoint;</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">SYSTEM</span> <span class="keyword">flush</span> <span class="keyword">SHARED_POOL</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 更改用户密码</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">USER</span> HISTORY <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> SUNFLOWER_WXINNEAR_0627;</span><br></pre></td></tr></table></figure>
+<h1 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- CASCADE 的意思是将用户的数据库数据一并删除，并没有删除相应的表空间</span></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">user</span> user_name <span class="keyword">CASCADE</span>;</span><br></pre></td></tr></table></figure>
 <h1 id="修改-process"><a href="#修改-process" class="headerlink" title="修改 process"></a>修改 process</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查询连接数信息</span></span><br><span class="line">SQL&gt; show parameter processes;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 当前已使用的连接数</span></span><br><span class="line">SQL&gt; select count(*) from v<span class="variable">$process</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改最大连接数</span></span><br><span class="line">SQL&gt; alter system <span class="built_in">set</span> processes = 500 scope = spfile; </span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启数据库</span></span><br><span class="line">sqlplus /nolog</span><br><span class="line">SQL&gt; conn as sysdba;</span><br><span class="line">SQL&gt; shutdown immediate;</span><br><span class="line">SQL&gt; startup;</span><br></pre></td></tr></table></figure>
 <h1 id="adrci"><a href="#adrci" class="headerlink" title="adrci"></a>adrci</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adrci</span><br></pre></td></tr></table></figure>
 <h1 id="Oracle-的-trace、alert日志很大"><a href="#Oracle-的-trace、alert日志很大" class="headerlink" title="Oracle 的 trace、alert日志很大"></a>Oracle 的 trace、alert日志很大</h1><p>MAX_DUMP_FILE_SIZE参数 限定了trace files 以及alert file大小，其值</p>
@@ -590,11 +591,6 @@
 <p>删除 trace 日志</p>
 </blockquote>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 删除1天前的trc、trm</span></span><br><span class="line">find /data/app/oracle/diag/rdbms/orcl/orcl/trace -name "*.trc" -mtime +1 -exec rm &#123;&#125; \;</span><br><span class="line">find /data/app/oracle/diag/rdbms/orcl/orcl/trace -name "*.trm" -mtime +1 -exec rm &#123;&#125; \;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> alert_orcl.log 日志过大</span></span><br><span class="line">cd /data/app/oracle/diag/rdbms/orcl/orcl/trace</span><br><span class="line">mv alert_orcl.log alert_orcl.log_20201026</span><br><span class="line">touch alert_orcl.log alert_orcl.log</span><br><span class="line">sqlplus / as sysdba</span><br><span class="line"><span class="meta">SQL&gt;</span><span class="bash"> alter system switch logfile;</span></span><br><span class="line">tail -20 alert_orcl.log</span><br><span class="line">Fri Nov 13 16:54:03 2015</span><br><span class="line">Thread 1 advanced to log sequence 2912 (LGWR switch)</span><br><span class="line">  Current log# 2 seq# 2912 mem# 0: /data/app/oracle/oradata/orcl/redo02.log</span><br></pre></td></tr></table></figure>
-<h1 id="表空间"><a href="#表空间" class="headerlink" title="表空间"></a>表空间</h1><p>SELECT A.TABLESPACE_NAME,<br>       ROUND(A.BYTES / 1024 / 1024 / 1024, 2) “sum GB”,<br>       ROUND(A.BYTES / 1024 / 1024, 2) “sum MB”,<br>       ROUND((A.BYTES - B.BYTES) / 1024 / 1024 / 1024, 2) “used GB”,<br>       ROUND((A.BYTES - B.BYTES) / 1024 / 1024, 2) “used MB”,<br>       ROUND(B.BYTES / 1024 / 1024, 2) “free MB”,<br>       ROUND(((A.BYTES - B.BYTES) / A.BYTES) * 100, 2) “used%”<br>  FROM (SELECT TABLESPACE_NAME, SUM(BYTES) BYTES<br>          FROM DBA_DATA_FILES<br>         GROUP BY TABLESPACE_NAME) A,<br>       (SELECT TABLESPACE_NAME, SUM(BYTES) BYTES, MAX(BYTES) LARGEST<br>          FROM DBA_FREE_SPACE<br>         GROUP BY TABLESPACE_NAME) B<br> WHERE A.TABLESPACE_NAME = B.TABLESPACE_NAME<br> ORDER BY ((A.BYTES - B.BYTES) / A.BYTES) DESC;</p>
-<p>SELECT T.TABLESPACE_NAME,<br>       T.FILE_NAME,<br>       T.BYTES / 1024 / 1024 || ‘M’ AS TOTAL,<br>       T.AUTOEXTENSIBLE,<br>       T.MAXBYTES / 1024 / 1024 || ‘M’ AS MAXSIZE<br>  FROM DBA_DATA_FILES T<br> WHERE T.TABLESPACE_NAME = ‘USERS’;</p>
-<p> SELECT T.bytes/1024/1024,T.* FROM Dba_Segments t  WHERE t.tablespace_name=’USERS’ ORDER BY T.bytes DESC;</p>
-<p>表空间追加文件（大小）</p>
-<p>alter tablespace users add datafile ‘/data/app/oracle/oradata/orcl/users12.dbf’ size 30G;</p>
 
       
     </div>
@@ -742,7 +738,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">167</span>
+                    <span class="site-state-item-count">168</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1163,7 +1159,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#修改表名"><span class="nav-number">1.</span> <span class="nav-text">修改表名</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改表空间"><span class="nav-number">2.</span> <span class="nav-text">修改表空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改-process"><span class="nav-number">3.</span> <span class="nav-text">修改 process</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#adrci"><span class="nav-number">4.</span> <span class="nav-text">adrci</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Oracle-的-trace、alert日志很大"><span class="nav-number">5.</span> <span class="nav-text">Oracle 的 trace、alert日志很大</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#表空间"><span class="nav-number">6.</span> <span class="nav-text">表空间</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#修改表名"><span class="nav-number">1.</span> <span class="nav-text">修改表名</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改用户名、密码"><span class="nav-number">2.</span> <span class="nav-text">修改用户名、密码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#删除用户"><span class="nav-number">3.</span> <span class="nav-text">删除用户</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改-process"><span class="nav-number">4.</span> <span class="nav-text">修改 process</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#adrci"><span class="nav-number">5.</span> <span class="nav-text">adrci</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Oracle-的-trace、alert日志很大"><span class="nav-number">6.</span> <span class="nav-text">Oracle 的 trace、alert日志很大</span></a></li></ol></div>
             
 
           </div>
@@ -1197,7 +1193,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">535k</span>
+    <span title="站点总字数">538k</span>
   
 
   

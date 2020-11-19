@@ -112,7 +112,7 @@
 <meta property="og:site_name" content="forever杨的个人博客">
 <meta property="og:description" content="登录1ftp &amp;lt;ip&amp;gt; &amp;lt;port&amp;gt; 下载1get &amp;lt;file_name&amp;gt;">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-11-05T10:34:42.829Z">
+<meta property="og:updated_time" content="2020-11-06T02:39:03.173Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux ftp 命令">
 <meta name="twitter:description" content="登录1ftp &amp;lt;ip&amp;gt; &amp;lt;port&amp;gt; 下载1get &amp;lt;file_name&amp;gt;">
@@ -252,7 +252,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">167</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">168</span></a>
 
   </li>
         
@@ -471,7 +471,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-11-05 18:34:42" itemprop="dateModified" datetime="2020-11-05T18:34:42+08:00">2020-11-05</time>
+                <time title="修改时间：2020-11-06 10:39:03" itemprop="dateModified" datetime="2020-11-06T10:39:03+08:00">2020-11-06</time>
               
             
           </span>
@@ -525,7 +525,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">554</span>
+                <span title="字数">615</span>
               
 
               
@@ -586,7 +586,15 @@
 <h1 id="批量删除脚本"><a href="#批量删除脚本" class="headerlink" title="批量删除脚本"></a>批量删除脚本</h1><blockquote>
 <p>ftp_clear.sh</p>
 </blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">FTPHOST=<span class="string">"192.168.1.10"</span></span><br><span class="line">USERNAME=<span class="string">"test"</span></span><br><span class="line">PASSWORD=<span class="string">"test_password"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#登入FTP 服务器并传送备份</span></span><br><span class="line">ftp -nv <span class="variable">$FTPHOST</span> &lt;&lt;!FTPRUN</span><br><span class="line"><span class="comment"># 用户名、密码</span></span><br><span class="line">user <span class="variable">$USERNAME</span> <span class="variable">$PASSWORD</span></span><br><span class="line"><span class="comment"># 进入指定目录</span></span><br><span class="line"><span class="built_in">cd</span> test_dir</span><br><span class="line"><span class="comment"># 开启prompt模式</span></span><br><span class="line">prompt</span><br><span class="line"><span class="comment"># 批量删除</span></span><br><span class="line">mdelete *.txt</span><br><span class="line"><span class="comment"># 退出</span></span><br><span class="line"><span class="built_in">bye</span></span><br><span class="line">!FTPRUN</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">FTPHOST=<span class="string">"192.168.1.10"</span></span><br><span class="line">USERNAME=<span class="string">"test"</span></span><br><span class="line">PASSWORD=<span class="string">"test_password"</span></span><br><span class="line"></span><br><span class="line">ftp -nv <span class="variable">$FTPHOST</span> &lt;&lt;!FTPRUN</span><br><span class="line">user <span class="variable">$USERNAME</span> <span class="variable">$PASSWORD</span></span><br><span class="line"><span class="built_in">cd</span> test_dir</span><br><span class="line">prompt</span><br><span class="line">mdelete *.txt</span><br><span class="line"><span class="built_in">bye</span></span><br><span class="line">!FTPRUN</span><br></pre></td></tr></table></figure>
+<ul>
+<li>登入FTP 服务器并传送备份<br>ftp -nv \$FTPHOST</li>
+<li>用户名、密码<br>user \$USERNAME \$PASSWORD</li>
+<li>进入指定目录<br>cd test_dir</li>
+<li>开启prompt模式<br>prompt</li>
+<li>批量删除<br>mdelete *.txt</li>
+<li>退出<br>bye</li>
+</ul>
 <blockquote>
 <p>crontab 定时器</p>
 </blockquote>
@@ -738,7 +746,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">167</span>
+                    <span class="site-state-item-count">168</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1193,7 +1201,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">535k</span>
+    <span title="站点总字数">538k</span>
   
 
   

@@ -251,7 +251,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">167</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">168</span></a>
 
   </li>
         
@@ -392,6 +392,223 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/b0385cf0.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/b0385cf0.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/7/index.html">spring-boot cxf 集成</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-06-02 18:35:05" itemprop="dateCreated datePublished" datetime="2018-06-02T18:35:05+08:00">2018-06-02</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-10-22 16:47:50" itemprop="dateModified" datetime="2018-10-22T16:47:50+08:00">2018-10-22</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数：</span>
+                
+                <span title="字数">779</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/spring-boot/" rel="tag" class="color1">spring-boot</a>
+        
+           <a href="/tags/cxf/" rel="tag" class="color2">cxf</a>
+        
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="坑一"><a href="#坑一" class="headerlink" title="坑一"></a>坑一</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> AegisDatabinding <span class="title">aegisDatabinding</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> AegisDatabinding();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 这个要配置成多例模式</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="meta">@Scope</span>(ConfigurableBeanFactory.SCOPE_PROTOTYPE)</span><br><span class="line"><span class="keyword">public</span> org.apache.cxf.jaxws.support.<span class="function">JaxWsServiceFactoryBean <span class="title">jaxWsServiceFactoryBean</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    JaxWsServiceFactoryBean sf = <span class="keyword">new</span> JaxWsServiceFactoryBean();</span><br><span class="line">    sf.setWrapped(<span class="keyword">true</span>);</span><br><span class="line">    sf.setDataBinding(aegisDatabinding());</span><br><span class="line">    <span class="keyword">return</span> sf;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Endpoint <span class="title">userEndpoint</span><span class="params">(UserService userService)</span> </span>&#123;</span><br><span class="line">    EndpointImpl endpoint = <span class="keyword">new</span> EndpointImpl(userService);</span><br><span class="line">    endpoint.setServiceFactory(jaxWsServiceFactoryBean());</span><br><span class="line">    endpoint.publish(<span class="string">"/imCheckRelatedWeixinService.ws"</span>);</span><br><span class="line">    <span class="keyword">return</span> endpoint;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里 endpoint.publish 要在最后，否则获取到的 serviceFactory、dataBinding 等参数是空的</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -904,6 +1121,217 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
+                <time title="修改时间：2020-02-24 17:44:26" itemprop="dateModified" datetime="2020-02-24T17:44:26+08:00">2020-02-24</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Tomcat/" itemprop="url" rel="index"><span itemprop="name">Tomcat</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数：</span>
+                
+                <span title="字数">1.6k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="setenv-sh"><a href="#setenv-sh" class="headerlink" title="setenv.sh"></a>setenv.sh</h1><p>在<code>Tomcat</code>的<code>bin</code>目录下添加<code>setenv.sh</code>文件，在启动<code>Tomcat</code>的时候，该脚本会被自动执行。一般在该脚本配置一些环境变量、<code>JVM</code>参数等</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># @Author: YL</span></span><br><span class="line"><span class="comment"># @Date:   2017-12-18 12:15:52</span></span><br><span class="line"><span class="comment"># @Last Modified by:   YL</span></span><br><span class="line"><span class="comment"># @Last Modified time: 2017-12-18 12:16:03</span></span><br><span class="line"><span class="comment"># 本文件放到 Tomcat 的 bin 目录下</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> LANG=en_US.UTF-8</span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/java/jdk1.8.0_144</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin</span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar:<span class="variable">$CLASSPATH</span></span><br><span class="line"></span><br><span class="line">JAVA_OPT=<span class="string">"<span class="variable">$JAVA_OPT</span> -Xss256k"</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/d13f7d34.html" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/d13f7d34.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/d13f7d34.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/7/index.html">Tomcat 使用注意事项</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-05-08 09:35:05" itemprop="dateCreated datePublished" datetime="2018-05-08T09:35:05+08:00">2018-05-08</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
                 <time title="修改时间：2020-05-11 16:21:27" itemprop="dateModified" datetime="2020-05-11T16:21:27+08:00">2020-05-11</time>
               
             
@@ -1059,217 +1487,6 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line">cd `dirname $0`</span><br><span class="line"><span class="meta">#</span><span class="bash"> 脚本所在目录</span></span><br><span class="line">HOME_DIR=`pwd`</span><br><span class="line"><span class="meta">#</span><span class="bash"> 应用日志目录</span></span><br><span class="line">LOGS_DIR=$HOME_DIR/logs</span><br><span class="line"></span><br><span class="line">tail -f $LOGS_DIR/info.log $LOGS_DIR/error.log $LOGS_DIR/console.log</span><br></pre></td></tr></table></figure>
 
           
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/d13f7d34.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/d13f7d34.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/7/index.html">Tomcat 使用注意事项</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-05-08 09:35:05" itemprop="dateCreated datePublished" datetime="2018-05-08T09:35:05+08:00">2018-05-08</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2020-02-24 17:44:26" itemprop="dateModified" datetime="2020-02-24T17:44:26+08:00">2020-02-24</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Tomcat/" itemprop="url" rel="index"><span itemprop="name">Tomcat</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数：</span>
-                
-                <span title="字数">1.6k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="setenv-sh"><a href="#setenv-sh" class="headerlink" title="setenv.sh"></a>setenv.sh</h1><p>在<code>Tomcat</code>的<code>bin</code>目录下添加<code>setenv.sh</code>文件，在启动<code>Tomcat</code>的时候，该脚本会被自动执行。一般在该脚本配置一些环境变量、<code>JVM</code>参数等</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># @Author: YL</span></span><br><span class="line"><span class="comment"># @Date:   2017-12-18 12:15:52</span></span><br><span class="line"><span class="comment"># @Last Modified by:   YL</span></span><br><span class="line"><span class="comment"># @Last Modified time: 2017-12-18 12:16:03</span></span><br><span class="line"><span class="comment"># 本文件放到 Tomcat 的 bin 目录下</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> LANG=en_US.UTF-8</span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/java/jdk1.8.0_144</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin</span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar:<span class="variable">$CLASSPATH</span></span><br><span class="line"></span><br><span class="line">JAVA_OPT=<span class="string">"<span class="variable">$JAVA_OPT</span> -Xss256k"</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/d13f7d34.html" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-         
-          <!--/noindex-->
         
       
     </div>
@@ -1805,7 +2022,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-11-05 18:51:40" itemprop="dateModified" datetime="2020-11-05T18:51:40+08:00">2020-11-05</time>
+                <time title="修改时间：2020-11-19 14:03:08" itemprop="dateModified" datetime="2020-11-19T14:03:08+08:00">2020-11-19</time>
               
             
           </span>
@@ -1852,7 +2069,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">3.3k</span>
+                <span title="字数">1.8k</span>
               
 
               
@@ -1866,7 +2083,7 @@
                 
                   <span class="post-meta-item-text">时长 &asymp;</span>
                 
-                <span title="时长">3 分钟</span>
+                <span title="时长">2 分钟</span>
               
             </div>
           
@@ -3287,7 +3504,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/53b5960c.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/1f104b3f.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
@@ -3307,7 +3524,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/posts/53b5960c.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/7/index.html">Linux ls 命令</a>
+                <a href="/posts/1f104b3f.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/7/index.html">Linux grep 命令</a>
               
             
           </h2>
@@ -3349,7 +3566,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-13 10:38:18" itemprop="dateModified" datetime="2020-03-13T10:38:18+08:00">2020-03-13</time>
+                <time title="修改时间：2020-09-30 12:41:01" itemprop="dateModified" datetime="2020-09-30T12:41:01+08:00">2020-09-30</time>
               
             
           </span>
@@ -3396,7 +3613,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">143</span>
+                <span title="字数">449</span>
               
 
               
@@ -3430,7 +3647,7 @@
         
            <a href="/tags/shell/" rel="tag" class="color1">shell</a>
         
-           <a href="/tags/ls/" rel="tag" class="color2">ls</a>
+           <a href="/tags/grep/" rel="tag" class="color2">grep</a>
         
       </div>
     
@@ -3446,224 +3663,10 @@
       
         
           
-            <h1 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 统计文件夹中文件数</span></span><br><span class="line">ls -l |grep <span class="string">"^-"</span>|wc -l</span><br></pre></td></tr></table></figure>
-<h2 id="保留最新的1个文件夹，删除其他文件夹（使用-d）"><a href="#保留最新的1个文件夹，删除其他文件夹（使用-d）" class="headerlink" title="保留最新的1个文件夹，删除其他文件夹（使用-d）"></a>保留最新的1个文件夹，删除其他文件夹（使用-d）</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -t -d /home/txrd/tisson-web-open/logs/undertow-* | tail -n +2 | xargs rm -rf</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/b8ec468d.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/b8ec468d.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/7/index.html">Linux sed 命令</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-02-06 09:35:05" itemprop="dateCreated datePublished" datetime="2018-02-06T09:35:05+08:00">2018-02-06</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-05-17 10:50:41" itemprop="dateModified" datetime="2018-05-17T10:50:41+08:00">2018-05-17</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数：</span>
-                
-                <span title="字数">64</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
-        <span class="post-meta-item-icon">
-          <i class="fa fa-tags"></i>
-        </span>
-        <span class="post-meta-item-text">标签</span>
-        
-           <a href="/tags/shell/" rel="tag" class="color1">shell</a>
-        
-           <a href="/tags/sed/" rel="tag" class="color2">sed</a>
-        
-      </div>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="sed"><a href="#sed" class="headerlink" title="sed"></a>sed</h1><h2 id="打印指定行数"><a href="#打印指定行数" class="headerlink" title="打印指定行数"></a>打印指定行数</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -n <span class="string">'12457431, 12457440p'</span> tomcat/logs/catalina.out</span><br></pre></td></tr></table></figure>
+            <h1 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h1><h2 id="统计出现次数"><a href="#统计出现次数" class="headerlink" title="统计出现次数"></a>统计出现次数</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep <span class="string">'sign.*time.*openid'</span> access_p80_weixinv3.log | awk <span class="string">'&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;'</span> | sort -n</span><br></pre></td></tr></table></figure>
+<p>4       183.3.234.45<br>10      183.3.234.57<br>20      183.3.234.58</p>
+<h2 id="查询前后日志"><a href="#查询前后日志" class="headerlink" title="查询前后日志"></a>查询前后日志</h2><p>grep -5 ‘parttern’ inputfile //打印匹配行的前后5行<br>grep -C 5 ‘parttern’ inputfile //打印匹配行的前后5行<br>grep -A 5 ‘parttern’ inputfile //打印匹配行的后5行<br>grep -B 5 ‘parttern’ inputfile //打印匹配行的前5行</p>
+<h1 id="正则：数字"><a href="#正则：数字" class="headerlink" title="正则：数字"></a>正则：数字</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 正则匹配1802****269的手机号码</span></span><br><span class="line">grep <span class="string">'1802[0-9]\&#123;4\&#125;269'</span> info.log</span><br></pre></td></tr></table></figure>
 
           
         
@@ -3754,7 +3757,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">167</span>
+                    <span class="site-state-item-count">168</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -4193,7 +4196,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">535k</span>
+    <span title="站点总字数">538k</span>
   
 
   
