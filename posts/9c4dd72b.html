@@ -112,7 +112,7 @@
 <meta property="og:site_name" content="forever杨的个人博客">
 <meta property="og:description" content="安装vsftpd 检测是否已经安装vsftpd 123$ rpm -qa|grep vsftpd# 有打印信息说明已经安装，信息格式如下：vsftpd-3.0.2-27.el7.x86_64  如果已经安装，则可以更新，或者删除重新安装">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-11-07T10:04:59.814Z">
+<meta property="og:updated_time" content="2021-01-18T10:59:51.935Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CentOS 部署 FTP 服务">
 <meta name="twitter:description" content="安装vsftpd 检测是否已经安装vsftpd 123$ rpm -qa|grep vsftpd# 有打印信息说明已经安装，信息格式如下：vsftpd-3.0.2-27.el7.x86_64  如果已经安装，则可以更新，或者删除重新安装">
@@ -252,7 +252,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">170</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">171</span></a>
 
   </li>
         
@@ -271,7 +271,7 @@
       
     
 
-    <a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">26</span></a>
+    <a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">27</span></a>
 
   </li>
         
@@ -290,7 +290,7 @@
       
     
 
-    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">137</span></a>
+    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">139</span></a>
 
   </li>
         
@@ -471,7 +471,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-11-07 18:04:59" itemprop="dateModified" datetime="2020-11-07T18:04:59+08:00">2020-11-07</time>
+                <time title="修改时间：2021-01-18 18:59:51" itemprop="dateModified" datetime="2021-01-18T18:59:51+08:00">2021-01-18</time>
               
             
           </span>
@@ -525,7 +525,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">1.4k</span>
+                <span title="字数">1.5k</span>
               
 
               
@@ -598,7 +598,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 禁止匿名用户anonymous登录</span></span><br><span class="line">anonymous_enable=NO</span><br><span class="line"><span class="meta">#</span><span class="bash"> 设置的文件里，是被chroot的用户(无法向上改变目录)</span></span><br><span class="line">chroot_local_user=YES</span><br><span class="line"><span class="meta">#</span><span class="bash"> 500 OOPS: vsftpd: refusing to run with writable root inside chroot()错误解决</span></span><br><span class="line">allow_writeable_chroot=YES</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h1 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 创建用户</span></span><br><span class="line">sudo useradd test_user -s /sbin/nologin</span><br><span class="line"><span class="meta">#</span><span class="bash"> 为用户配置密码，按提示输入两遍密码即可</span></span><br><span class="line">sudo passwd test_user</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 在用户目录下创建目录文件，并赋权给用户</span></span><br><span class="line">sudo mkdir -p /home/test_user/test_dir</span><br><span class="line">sudo chown test_user:test_user /home/test_user/test_dir</span><br></pre></td></tr></table></figure>
+<h1 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 创建用户</span></span><br><span class="line">sudo useradd test_user -s /sbin/nologin</span><br><span class="line"><span class="meta">#</span><span class="bash"> 为用户配置密码，按提示输入两遍密码即可</span></span><br><span class="line">sudo passwd test_user</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看默认密码过期时间</span></span><br><span class="line">vi /etc/login.defs</span><br><span class="line"><span class="meta">#</span><span class="bash"> 修改密码过期时间</span></span><br><span class="line">sudo chage -M 99999 test_user</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 在用户目录下创建目录文件，并赋权给用户</span></span><br><span class="line">sudo mkdir -p /home/test_user/test_dir</span><br><span class="line">sudo chown test_user:test_user /home/test_user/test_dir</span><br></pre></td></tr></table></figure>
 <h1 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 删除用户，会连带/home/test_user目录一起删除</span></span><br><span class="line">userdel -rf test_user</span><br></pre></td></tr></table></figure>
 <h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 启动 ftp 服务</span></span><br><span class="line">sudoservice vsftpd start</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看 ftp 服务状态</span></span><br><span class="line">sudoservice vsftpd status </span><br><span class="line"><span class="meta">#</span><span class="bash"> 重启 ftp 服务</span></span><br><span class="line">sudoservice vsftpd restart</span><br><span class="line"><span class="meta">#</span><span class="bash"> 关闭 ftp 服务</span></span><br><span class="line">sudoservice vsftpd stop</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 在 CentOS 7.x版本使用以下命令</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 启动 ftp 服务</span></span><br><span class="line">sudo systemctl start vsftpd.service</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看 ftp 服务状态</span></span><br><span class="line">sudo systemctl status vsftpd.service</span><br><span class="line"><span class="meta">#</span><span class="bash"> 重启 ftp 服务</span></span><br><span class="line">sudo systemctl restart vsftpd.service</span><br><span class="line"><span class="meta">#</span><span class="bash"> 关闭 ftp 服务</span></span><br><span class="line">sudo systemctl stop vsftpd.service</span><br><span class="line"><span class="meta">#</span><span class="bash"> 开机启动</span></span><br><span class="line">sudo systemctl enable vsftpd.service</span><br><span class="line"><span class="meta">#</span><span class="bash"> 禁止开机启动</span></span><br><span class="line">sudo systemctl disable vsftpd.service</span><br></pre></td></tr></table></figure>
       
@@ -663,18 +663,14 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/d08f134.html" rel="next" title="CentOS安装JDK">
-                <i class="fa fa-chevron-left"></i> CentOS安装JDK
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/posts/9af5b5dc.html" rel="prev" title="CentOS 7 Firewall防火墙配置">
-                CentOS 7 Firewall防火墙配置 <i class="fa fa-chevron-right"></i>
+              <a href="/posts/d08f134.html" rel="prev" title="CentOS安装JDK">
+                CentOS安装JDK <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -751,7 +747,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">170</span>
+                    <span class="site-state-item-count">171</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -816,7 +812,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">26</span>
+                      
+                    
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1103,7 +1101,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">137</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">139</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1198,7 +1200,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love" id="animate">
     <i class="fa fa-heart"></i>
   </span>
@@ -1212,7 +1214,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">555k</span>
+    <span title="站点总字数">557k</span>
   
 
   
