@@ -112,7 +112,7 @@
 <meta property="og:site_name" content="forever杨的个人博客">
 <meta property="og:description" content="crontab 使用注意事项如果通过 crontab 执行1、crontab 无法获取 jdk 变量，要在 java 命令之前写入jdk绝对路径2、要把路径切换到要执行的 sh 路径下注意：二者缺一不可">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-11-06T02:31:43.558Z">
+<meta property="og:updated_time" content="2021-02-06T10:59:16.181Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux crontab 命令">
 <meta name="twitter:description" content="crontab 使用注意事项如果通过 crontab 执行1、crontab 无法获取 jdk 变量，要在 java 命令之前写入jdk绝对路径2、要把路径切换到要执行的 sh 路径下注意：二者缺一不可">
@@ -252,7 +252,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">171</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">172</span></a>
 
   </li>
         
@@ -290,7 +290,7 @@
       
     
 
-    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">139</span></a>
+    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">141</span></a>
 
   </li>
         
@@ -471,7 +471,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-11-06 10:31:43" itemprop="dateModified" datetime="2020-11-06T10:31:43+08:00">2020-11-06</time>
+                <time title="修改时间：2021-02-06 18:59:16" itemprop="dateModified" datetime="2021-02-06T18:59:16+08:00">2021-02-06</time>
               
             
           </span>
@@ -525,7 +525,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">814</span>
+                <span title="字数">968</span>
               
 
               
@@ -584,7 +584,7 @@
 </li>
 </ul>
 <h2 id="查询-crontab-定时器配置情况"><a href="#查询-crontab-定时器配置情况" class="headerlink" title="查询 crontab 定时器配置情况"></a>查询 crontab 定时器配置情况</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crontab -l</span><br></pre></td></tr></table></figure>
-<h2 id="编辑-crontab-定时器"><a href="#编辑-crontab-定时器" class="headerlink" title="编辑 crontab 定时器"></a>编辑 crontab 定时器</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">crontab -e</span><br><span class="line"><span class="comment"># 当 crontab 调用时，错误和标准输出会写成 mail 通知你</span></span><br><span class="line">* * * * * /opt/restart.sh</span><br><span class="line"><span class="comment"># 标准输出重定向到 /dev/null，输出到这里就找不回来了</span></span><br><span class="line">* * * * * /opt/restart.sh &gt; /dev/null</span><br><span class="line"><span class="comment"># 标准输出和错误输出都重定向到 /dev/null</span></span><br><span class="line">* * * * * /opt/restart.sh &gt; /dev/null 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<h2 id="编辑-crontab-定时器"><a href="#编辑-crontab-定时器" class="headerlink" title="编辑 crontab 定时器"></a>编辑 crontab 定时器</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">crontab -e</span><br><span class="line"><span class="comment"># 当 crontab 调用时，错误和标准输出会写成 mail 通知你</span></span><br><span class="line">* * * * * /opt/restart.sh</span><br><span class="line"><span class="comment"># 标准输出重定向到 /dev/null，输出到这里就找不回来了</span></span><br><span class="line">* * * * * /opt/restart.sh &gt; /dev/null</span><br><span class="line"><span class="comment"># 标准输出和错误输出都重定向到 /dev/null</span></span><br><span class="line">* * * * * /opt/restart.sh &gt; /dev/null 2&gt;&amp;1</span><br><span class="line"><span class="comment"># 覆盖输出到指定日志文件</span></span><br><span class="line">* * * * * /opt/restart.sh &gt;/opt/logs/xxxxlog 2&gt;&amp;1</span><br><span class="line"><span class="comment"># 追加输出到指定日志文件</span></span><br><span class="line">* * * * * /opt/restart.sh &gt;&gt;/opt/logs/xxxxlog 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -646,8 +646,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/53b5960c.html" rel="next" title="Linux ls 命令">
-                <i class="fa fa-chevron-left"></i> Linux ls 命令
+              <a href="/posts/e22f47ab.html" rel="next" title="Tomcat 启动脚本">
+                <i class="fa fa-chevron-left"></i> Tomcat 启动脚本
               </a>
             
           </div>
@@ -656,8 +656,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/posts/aea02818.html" rel="prev" title="Linux curl 命令">
-                Linux curl 命令 <i class="fa fa-chevron-right"></i>
+              <a href="/posts/7b744fec.html" rel="prev" title="Linux find 命令">
+                Linux find 命令 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -734,7 +734,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">171</span>
+                    <span class="site-state-item-count">172</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1092,7 +1092,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">139</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">141</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1201,7 +1205,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">557k</span>
+    <span title="站点总字数">558k</span>
   
 
   
