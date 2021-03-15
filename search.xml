@@ -119,17 +119,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Oracle 编码配置]]></title>
-    <url>%2Fposts%2Fa4a638d8.html</url>
-    <content type="text"><![CDATA[查编码1select userenv('language') from dual 编码配置123456789101112131415oracle数据库的编码select * from nls_database_parameters where parameter ='NLS_CHARACTERSET';oracle客户端编码select * from nls_instance_parameters where parameter='NLS_LANGUAGE';conn /as sysdba;shutdown immediate;startup mount;alter system enable restricted session;alter system set job_queue_processes=0;ALTER SYSTEM SET AQ_TM_PROCESSES=0;alter database open;ALTER DATABASE character set INTERNAL_USE AL32UTF8;shutdown immediate;startup;]]></content>
-      <categories>
-        <category>Oracle</category>
-      </categories>
-      <tags>
-        <tag>编码</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Oracle 整库迁移]]></title>
     <url>%2Fposts%2Fd5d4c80.html</url>
     <content type="text"><![CDATA[导出123456789101112expdp 用户名/密码 directory=DMP logfile=e_T_C_CNCM_EXTINFO.log dumpfile=T_C_CNCM_EXTINFO%U.dmp PARALLEL=6 cluster=no compression=ALL tables=(table1,table2)directory=DMP -- 这个是虚拟目录（日志文件和DMP文件存放路径）， 需求提前在数据库里面创建，需要DBA权限。create directory DMP as '/dmp/backup';grant read,write,EXECUTE on directory DMP to 用户名;logfile=e_T_C_CNCM_EXTINFO.log -- EXPDP日志dumpfile=T_C_CNCM_EXTINFO%U.dmp -- 输出的DMP文件，其中%U为并行导出产生的序号，如果开6个并行，就可能会有六个文件，自动从01-06编号PARALLEL=6 -- 并行导出，可以根据主机CPU增加，最好不要超过CODE数cluster=no -- 关闭cluster（防止非共享磁盘写文件问题）compression -- 压缩tables=() -- 可以写多个table 导入123456impdp 用户名/密码 directory=DMP logfile=i_T_C_APT_TEMPLATE_DETAIL.log dumpfile=T_C_APT_TEMPLATE_DETAIL%U.dmp PARALLEL=4 table_exists_action=truncate -- table_exists_action 可选参数：-- trauncate：导入时 trauncate 清空原表数据再导入-- replace：先 drop 表，然后创建表，最后插入数据 -- append：在原来数据的基础上增加数据 SELECT DIRECTORY_NAME ,DIRECTORY_PATH FROM DBA_DIRECTORIES; /data/app/oracle/admin/orcl/dpdump/ create directory DATA_PUMP_DIR as ‘/data/dmp’;]]></content>
@@ -139,6 +128,17 @@
       <tags>
         <tag>expdp</tag>
         <tag>impdp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Oracle 编码配置]]></title>
+    <url>%2Fposts%2Fa4a638d8.html</url>
+    <content type="text"><![CDATA[查编码1select userenv('language') from dual 编码配置123456789101112131415oracle数据库的编码select * from nls_database_parameters where parameter ='NLS_CHARACTERSET';oracle客户端编码select * from nls_instance_parameters where parameter='NLS_LANGUAGE';conn /as sysdba;shutdown immediate;startup mount;alter system enable restricted session;alter system set job_queue_processes=0;ALTER SYSTEM SET AQ_TM_PROCESSES=0;alter database open;ALTER DATABASE character set INTERNAL_USE AL32UTF8;shutdown immediate;startup;]]></content>
+      <categories>
+        <category>Oracle</category>
+      </categories>
+      <tags>
+        <tag>编码</tag>
       </tags>
   </entry>
   <entry>
@@ -164,17 +164,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Oracle 归档日志]]></title>
-    <url>%2Fposts%2Fe34c2a97.html</url>
-    <content type="text"><![CDATA[开启、关闭归档 开启 12 关闭 123456-- 关闭数据库SQL&gt; shutdown immediate；-- 开启数据库至mount状态SQL&gt; startup mount;-- 修改数据库模式SQL&gt; alter datebase noarchivelog; 查询归档模式是否开启123456SQL&gt; archive log list;Database log mode No Archive ModeAutomatic archival DisabledArchive destination USE_DB_RECOVERY_FILE_DESTOldest online log sequence 10107Current log sequence 10109 问题归档日志空间占满 ORA-00257: archiver error. Connect internal only, until freed 查看归档12SQL&gt; select * from V$FLASH_RECOVERY_AREA_USAGE;SQL&gt; quit 调整归档日志大小123456-- 查看归档日志信息SQL&gt; show parameter db_recovery;-- 查看归档日志大小SQL&gt; show parameter db_recovery_file_dest_size;-- 调整归档日志大小SQL&gt; alter system set db_recovery_file_dest_size=400g; Select to_char(completion_time,’yyyy-mm-dd’) as date1,count(0) as cnt,round(sum((blocks*block_size)/1024/1024)) as mb from v$archived_log group by to_char(completion_time,’yyyy-mm-dd’) order by date1 desc; –CNT为每天归档次数，MB为每天的归档量 /data/app/oracle/fast_recovery_area/ORCL/archivelog/ 删除归档日志123456789101112131415$ rman$ connect target sys/oracleRMAN&gt; crosscheck archivelog all;RMAN&gt; delete expired archivelog all;-- 注：删除过期的归档-- 这样就把归档文件删除了。再进入sqlplus 查看ARCHIVELOG日志使用率！-- 以上处理方法是当遇到出现日志写满报错时的处理，建议最好做个任务，定时删除日志，如下：-- 删除七天前的归档RMAN&gt; DELETE ARCHIVELOG ALL COMPLETED BEFORE 'SYSDATE-7';-- 删除七天到现在的归档 RMAN&gt; DELETE ARCHIVELOG FROM TIME 'SYSDATE-7';DELETE ARCHIVELOG FROM TIME 'SYSDATE-1'; del_archivelog.sh 1234567891011121314#!/bin/bashecho "--------------------------`date`--------------------------"source ~/.bash_profilemkdir -p /data/del_archivelogLOG_DIR=/data/del_archivelog/DATEL=`date '+%Y-%m-%d'`LOG_NAME=$&#123;LOG_DIR&#125;$&#123;DATEL&#125;".log"rman log=$LOG_NAME target / &lt;&lt;EOFcrosscheck archivelog all;delete noprompt archivelog all completed before 'sysdate-2';EOFecho -e "\n"echo "--------------------------finished--------------------------" 每天6点执行脚本 del_archivelog.sh，并将执行结果输出到 task.log 10 6 * * * sh ~/del_archivelog.sh &gt;&gt; ~/del_archivelog/task.log 2&gt;&amp;1 &amp;]]></content>
-      <categories>
-        <category>Oracle</category>
-      </categories>
-      <tags>
-        <tag>archiver</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Oracle dblink操作]]></title>
     <url>%2Fposts%2F5bb4128a.html</url>
     <content type="text"><![CDATA[创建1234-- 语法-- create &lt;public&gt; database link &lt;dblink_name&gt; connect to &lt;user&gt; identified by &lt;user_pwd&gt; using &lt;dblink&gt;create database link db_test connect to scott identified by tiger using '(DESCRIPTION=(ADDRESS_LIST =(ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.1.1)(PORT = 1521)))(CONNECT_DATA=(SERVER = DEDICATED)(SERVICE_NAME = orcl)))'; 删除1drop &lt;public&gt; database link db_test]]></content>
@@ -183,6 +172,17 @@
       </categories>
       <tags>
         <tag>dblink</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Oracle 归档日志]]></title>
+    <url>%2Fposts%2Fe34c2a97.html</url>
+    <content type="text"><![CDATA[开启、关闭归档 开启 12 关闭 123456-- 关闭数据库SQL&gt; shutdown immediate；-- 开启数据库至mount状态SQL&gt; startup mount;-- 修改数据库模式SQL&gt; alter datebase noarchivelog; 查询归档模式是否开启123456SQL&gt; archive log list;Database log mode No Archive ModeAutomatic archival DisabledArchive destination USE_DB_RECOVERY_FILE_DESTOldest online log sequence 10107Current log sequence 10109 问题归档日志空间占满 ORA-00257: archiver error. Connect internal only, until freed 查看归档12SQL&gt; select * from V$FLASH_RECOVERY_AREA_USAGE;SQL&gt; quit 调整归档日志大小123456-- 查看归档日志信息SQL&gt; show parameter db_recovery;-- 查看归档日志大小SQL&gt; show parameter db_recovery_file_dest_size;-- 调整归档日志大小SQL&gt; alter system set db_recovery_file_dest_size=400g; Select to_char(completion_time,’yyyy-mm-dd’) as date1,count(0) as cnt,round(sum((blocks*block_size)/1024/1024)) as mb from v$archived_log group by to_char(completion_time,’yyyy-mm-dd’) order by date1 desc; –CNT为每天归档次数，MB为每天的归档量 /data/app/oracle/fast_recovery_area/ORCL/archivelog/ 删除归档日志123456789101112131415$ rman$ connect target sys/oracleRMAN&gt; crosscheck archivelog all;RMAN&gt; delete expired archivelog all;-- 注：删除过期的归档-- 这样就把归档文件删除了。再进入sqlplus 查看ARCHIVELOG日志使用率！-- 以上处理方法是当遇到出现日志写满报错时的处理，建议最好做个任务，定时删除日志，如下：-- 删除七天前的归档RMAN&gt; DELETE ARCHIVELOG ALL COMPLETED BEFORE 'SYSDATE-7';-- 删除七天到现在的归档 RMAN&gt; DELETE ARCHIVELOG FROM TIME 'SYSDATE-7';DELETE ARCHIVELOG FROM TIME 'SYSDATE-1'; del_archivelog.sh 1234567891011121314#!/bin/bashecho "--------------------------`date`--------------------------"source ~/.bash_profilemkdir -p /data/del_archivelogLOG_DIR=/data/del_archivelog/DATEL=`date '+%Y-%m-%d'`LOG_NAME=$&#123;LOG_DIR&#125;$&#123;DATEL&#125;".log"rman log=$LOG_NAME target / &lt;&lt;EOFcrosscheck archivelog all;delete noprompt archivelog all completed before 'sysdate-2';EOFecho -e "\n"echo "--------------------------finished--------------------------" 每天6点执行脚本 del_archivelog.sh，并将执行结果输出到 task.log 10 6 * * * sh ~/del_archivelog.sh &gt;&gt; ~/del_archivelog/task.log 2&gt;&amp;1 &amp;]]></content>
+      <categories>
+        <category>Oracle</category>
+      </categories>
+      <tags>
+        <tag>archiver</tag>
       </tags>
   </entry>
   <entry>
@@ -265,6 +265,18 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[docker nexus3安装和配置]]></title>
+    <url>%2Fposts%2F5ed27d2e.html</url>
+    <content type="text"><![CDATA[nexus3 docker-compose.yml 123456789101112version: "3.8"services: nexus3: container_name: ts_nexus3 image: sonatype/nexus3:3.26.1 ports: - "8081:8081" volumes: - "./data:/nexus-data" - "/etc/localtime:/etc/localtime" restart: always 问题：Error creating bundle cache.Unable to update instance pid: Unable to create directory /nexus-data/instances 解决：sudo chmod -R 775 data/]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+        <tag>nexus3</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[docker mysql安装和配置]]></title>
     <url>%2Fposts%2F1299dfc1.html</url>
     <content type="text"><![CDATA[mysql docker-compose.yml 123456789101112131415161718version: "3.8"services: mysql: container_name: ts_mysql image: mysql:5.7.31 ports: - "3306:3306" volumes: - "./data/:/var/lib/mysql" - "./logs/:/var/log/mysql" - "./conf/conf.d:/etc/mysql/conf.d" - "./conf/mysql.conf.d:/etc/mysql/mysql.conf.d" - "./conf/my.cnf:/etc/mysql/my.cnf" - "/etc/localtime:/etc/localtime" environment: MYSQL_ROOT_PASSWORD: "Tisson0000!" restart: always my.cnf 123456789101112131415161718192021222324# Copyright (c) 2016, Oracle and/or its affiliates. All rights reserved.## This program is free software; you can redistribute it and/or modify# it under the terms of the GNU General Public License, version 2.0,# as published by the Free Software Foundation.## This program is also distributed with certain software (including# but not limited to OpenSSL) that is licensed under separate terms,# as designated in a particular file or component or in included license# documentation. The authors of MySQL hereby grant you an additional# permission to link the program and your derivative works with the# separately licensed software that they have included with MySQL.## This program is distributed in the hope that it will be useful,# but WITHOUT ANY WARRANTY; without even the implied warranty of# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the# GNU General Public License, version 2.0, for more details.## You should have received a copy of the GNU General Public License# along with this program; if not, write to the Free Software# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA!includedir /etc/mysql/conf.d/!includedir /etc/mysql/mysql.conf.d/]]></content>
@@ -286,18 +298,6 @@
       <tags>
         <tag>docker</tag>
         <tag>gitlab</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[docker nexus3安装和配置]]></title>
-    <url>%2Fposts%2F5ed27d2e.html</url>
-    <content type="text"><![CDATA[nexus3 docker-compose.yml 123456789101112version: "3.8"services: nexus3: container_name: ts_nexus3 image: sonatype/nexus3:3.26.1 ports: - "8081:8081" volumes: - "./data:/nexus-data" - "/etc/localtime:/etc/localtime" restart: always 问题：Error creating bundle cache.Unable to update instance pid: Unable to create directory /nexus-data/instances 解决：sudo chmod -R 775 data/]]></content>
-      <categories>
-        <category>docker</category>
-      </categories>
-      <tags>
-        <tag>docker</tag>
-        <tag>nexus3</tag>
       </tags>
   </entry>
   <entry>
@@ -404,9 +404,9 @@
         <category>kettle</category>
       </categories>
       <tags>
-        <tag>kettle</tag>
-        <tag>Snowflake</tag>
         <tag>Java</tag>
+        <tag>Snowflake</tag>
+        <tag>kettle</tag>
       </tags>
   </entry>
   <entry>
@@ -520,8 +520,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>JAR</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -628,8 +628,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>Snowflake</tag>
         <tag>Twitter</tag>
+        <tag>Snowflake</tag>
       </tags>
   </entry>
   <entry>
@@ -880,6 +880,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[docker 命令]]></title>
+    <url>%2Fposts%2F71631b3f.html</url>
+    <content type="text"><![CDATA[docker container ls 列出所有容器 用法 1docker container ls [options] 选项 | 参数 | 默认值 | 描述 || ————– | —— | ——————————– || -all, -a | false | 显示所有容器(默认只显示运行的) || --filter, -f | | 根据提供的条件过滤输出 || --format | | 使用Go模板打印容器 || -last, -n | -1 | 显示最后创建的容器(包括所有状态) || --latest, -l | false | 显示最新创建的容器(包括所有状态) || -no-trunc | false | 不要截断输出 || --quiet, -q | false | 只显示数字ID || -size, -s | false | 显示文件大小 | docker container rm 删除一个或多个容器 用法 1docker container rm [options] CONTAINER [CONTAINER...] 选项 | 参数 | 默认值 | 描述 || ————— | —— | ———————————– || --force, -f | false | 强制移走正在运行的容器(使用SIGKILL) || --link, -l | false | 删除指定的链接 || --volumes, -v | false | 删除与容器关联的卷 | 相关命令 命令 描述 docker container attach 附加到正在运行的容器 docker container commit 从容器的更改创建一个新的映像 docker container cp 在容器和本地文件系统之间复制文件/文件夹 docker container create 创建一个新的容器 docker container diff 检查容器文件系统上文件或目录的更改 docker container exec 在运行容器中运行命令 docker container export 将容器的文件系统导出为tar存档 docker container inspect 显示一个或多个容器的详细信息 docker container kill 杀死一个或多个运行容器 docker container logs 获取容器的日志 docker container ls 列出容器 docker container pause 暂停一个或多个容器内的所有进程 docker container port 列出端口映射或容器的特定映射 docker container prune 取出所有停止的容器 docker container rename 重命名容器 docker container restart 重新启动一个或多个容器 docker container rm 删除(移除)一个或多个容器 docker container run 在新容器中运行命令 docker container start 启动一个或多个停止的容器 docker container stats 显示容器的实时流资源使用统计信息 docker container stop 停止一个或多个运行容器 docker container top 显示容器的正在运行的进程 docker container unpause 取消暂停一个或多个容器内的所有流程 docker container update 更新一个或多个容器的配置 docker container wait 阻止一个或多个容器停止，然后打印退出代码]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>container</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[docker-compose 安装和使用]]></title>
     <url>%2Fposts%2F9bc29391.html</url>
     <content type="text"><![CDATA[安装 1234$ sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose$ sudo curl --proxy 192.168.123.1:1234 -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose 可执行权限 1$ sudo chmod +x /usr/local/bin/docker-compose 验证安装 12$ docker-compose --versiondocker-compose version 1.22.0, build 1719ceb 使用 1$ docker-compose -f grafana/docker-compose.yml up]]></content>
@@ -899,17 +910,6 @@
       </categories>
       <tags>
         <tag>docker-compose</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[docker 命令]]></title>
-    <url>%2Fposts%2F71631b3f.html</url>
-    <content type="text"><![CDATA[docker container ls 列出所有容器 用法 1docker container ls [options] 选项 | 参数 | 默认值 | 描述 || ————– | —— | ——————————– || -all, -a | false | 显示所有容器(默认只显示运行的) || --filter, -f | | 根据提供的条件过滤输出 || --format | | 使用Go模板打印容器 || -last, -n | -1 | 显示最后创建的容器(包括所有状态) || --latest, -l | false | 显示最新创建的容器(包括所有状态) || -no-trunc | false | 不要截断输出 || --quiet, -q | false | 只显示数字ID || -size, -s | false | 显示文件大小 | docker container rm 删除一个或多个容器 用法 1docker container rm [options] CONTAINER [CONTAINER...] 选项 | 参数 | 默认值 | 描述 || ————— | —— | ———————————– || --force, -f | false | 强制移走正在运行的容器(使用SIGKILL) || --link, -l | false | 删除指定的链接 || --volumes, -v | false | 删除与容器关联的卷 | 相关命令 命令 描述 docker container attach 附加到正在运行的容器 docker container commit 从容器的更改创建一个新的映像 docker container cp 在容器和本地文件系统之间复制文件/文件夹 docker container create 创建一个新的容器 docker container diff 检查容器文件系统上文件或目录的更改 docker container exec 在运行容器中运行命令 docker container export 将容器的文件系统导出为tar存档 docker container inspect 显示一个或多个容器的详细信息 docker container kill 杀死一个或多个运行容器 docker container logs 获取容器的日志 docker container ls 列出容器 docker container pause 暂停一个或多个容器内的所有进程 docker container port 列出端口映射或容器的特定映射 docker container prune 取出所有停止的容器 docker container rename 重命名容器 docker container restart 重新启动一个或多个容器 docker container rm 删除(移除)一个或多个容器 docker container run 在新容器中运行命令 docker container start 启动一个或多个停止的容器 docker container stats 显示容器的实时流资源使用统计信息 docker container stop 停止一个或多个运行容器 docker container top 显示容器的正在运行的进程 docker container unpause 取消暂停一个或多个容器内的所有流程 docker container update 更新一个或多个容器的配置 docker container wait 阻止一个或多个容器停止，然后打印退出代码]]></content>
-      <categories>
-        <category>docker</category>
-      </categories>
-      <tags>
-        <tag>container</tag>
       </tags>
   </entry>
   <entry>
@@ -976,9 +976,9 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>BigPipe</tag>
         <tag>jsp</tag>
         <tag>freemarker</tag>
+        <tag>BigPipe</tag>
         <tag>spring-boot</tag>
       </tags>
   </entry>
@@ -1276,6 +1276,18 @@
       </categories>
   </entry>
   <entry>
+    <title><![CDATA[Linux ls 命令]]></title>
+    <url>%2Fposts%2F53b5960c.html</url>
+    <content type="text"><![CDATA[ls12# 统计文件夹中文件数ls -l |grep "^-"|wc -l 保留最新的1个文件夹，删除其他文件夹（使用-d）1ls -t -d /home/txrd/tisson-web-open/logs/undertow-* | tail -n +2 | xargs rm -rf]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>ls</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Linux lsof 命令]]></title>
     <url>%2Fposts%2Ffc091577.html</url>
     <content type="text"><![CDATA[lsof检测端口未被占用1lsof -i:&lt;port&gt; 指定进程号，可以查看该进程打开的文件 1lsof -p &lt;pid&gt;]]></content>
@@ -1288,14 +1300,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[zookeeper 清理日志文件]]></title>
-    <url>%2Fposts%2Fc0bbcacd.html</url>
-    <content type="text"><![CDATA[clear123456789101112131415161718192021222324252627282930#!/usr/bin/env bash# @Author: YL# @Date: 2017-11-01 08:59:34# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:09# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`cd ..NODE_HOME=`pwd`# snapshotNODE_DATA_DIR=$NODE_HOME/data/version-2# snapshot logNODE_LOG_DIR=$NODE_HOME/logs/version-2# zk logNODE_LOGS=$NODE_HOME/logs# 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中count=3count=$[$count+1]ls -t $NODE_LOG_DIR/log.* | tail -n +$count | xargs rm -fls -t $NODE_DATA_DIR/snapshot.* | tail -n +$count | xargs rm -fls -t $NODE_LOGS/zookeeper.log.* | tail -n +$count | xargs rm -f# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"STDOUT_FILE=$NODE_LOGS/stdout.logecho "$DATE_PATTERN clear logs success" | tee -a $STDOUT_FILE]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
     <title><![CDATA[Linux netstat 命令]]></title>
     <url>%2Fposts%2F6c05ba39.html</url>
     <content type="text"><![CDATA[netstat netstat 通过进程查看占用端口12# netstat -nap | grep 9836netstat -anp | grep &lt;pid&gt;]]></content>
@@ -1306,6 +1310,14 @@
         <tag>netstat</tag>
         <tag>shell</tag>
       </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Tomcat 启动脚本]]></title>
+    <url>%2Fposts%2Fe22f47ab.html</url>
+    <content type="text"><![CDATA[Tomcat 启动脚本主 Tomcat + 应用部署 Tomcat 应用部署方式 12345678910111213141516171819[txrd@host-148 /data/]$ tree -af .├── ./apache-tomcat-8.5.57│ └── ./bin│ └── ./conf│ └── ./lib│ └── ./temp│ └── ./webapps│ └── ./work├── ./szim│ └── ./project │ └── ./szim.war │ └──./tomcat │ └── ./conf│ └── ./temp│ └── ./webapps│ └── ./work│ └──./logs.sh │ └──./restart.sh restart.sh 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109#!/usr/bin/env bash# @Author: YL# @Date: 2020-08-17 09:33:43# @Last Modified by: YL# @Last Modified time: 2020-08-17 14:50:43export LANG=en_US.UTF-8# Tomcat 主目录export CATALINA_HOME=/data/apache-tomcat-8.5.57cd `dirname $0`PROJECT_HOME=`pwd`# Tomcat 应用部署目录TC_HOME="$PROJECT_HOME/tomcat"# Tomcat 应用部署目录export CATALINA_BASE=$TC_HOME# crontab 检测日记文件TC_STDOUT_FILE="$TC_HOME/logs/stdout.out"# 检测 Tomcat 是否启动（进程ID）PIDS=`ps -ef | grep $TC_HOME | grep -v grep | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`#===========================================================================================# JVM Configuration#===========================================================================================# export JAVA_HOME=/usr/java/jdk1.8.0_251# export PATH=$JAVA_HOME/bin:$PATH# export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHJVM_OPTS="$JVM_OPTS -server -Xms1g -Xmx1g -Xss256k"JVM_OPTS="$JVM_OPTS -XX:+DisableExplicitGC -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled"JVM_OPTS="$JVM_OPTS -Xloggc:$TC_HOME/logs/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M"JVM_OPTS="$JVM_OPTS -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$TC_HOME/logs/dump-`date +"%Y-%m-%d"`.hprof"JVM_OPTS="$JVM_OPTS -Dspring.profiles.active=pro"# Tomcat 启动参数配置export JAVA_OPTS="$JVM_OPTS"#===========================================================================================# log file delete#===========================================================================================function cleanLog()&#123; ls -d -t $TC_HOME/logs/catalina.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/host-manager.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/localhost.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/manager.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/*.hprof | tail -n +3 | xargs rm -rf&#125;cleanLog# 优雅停机function gracefulShutdown()&#123; if [ -z "$PIDS" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME does not started!" | tee -a $STDOUT_FILE else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PIDS begining" | tee -a $STDOUT_FILE for PID in $PIDS ; do kill $PID &gt; /dev/null 2&gt;&amp;1 echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PID success" | tee -a $STDOUT_FILE done # 检测是否停机成功 COUNT=0 while [ $COUNT -lt 1 ]; do sleep 1 COUNT=1 for PID in $PIDS ; do PID_EXIST=`ps -f -p $PID | grep java` if [ -n "$PID_EXIST" ]; then COUNT=0 break fi done done fi&#125;function operate()&#123; if [[ "$1" = "kill" ]] ; then gracefulShutdown elif [[ "$1" = "start" ]]; then cd $CATALINA_HOME/bin sh startup.sh else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" | tee -a $TC_STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$PIDS" = "" ]] ; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" &gt;&gt; $TC_STDOUT_FILE operate start else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME pid $PIDS" &gt;&gt; $TC_STDOUT_FILE fielse echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILEfi 单应用部署 Tomcat 应用部署方式 12345678910111213[txrd@host-148 /data/szim]$ tree -af .├── ./project │ └── ./szim.war └── ./tomcat │ └── ./bin│ └── ./conf│ └── ./lib│ └── ./temp│ └── ./webapps│ └── ./work├── ./logs.sh ├── ./restart.sh restart.sh 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109#!/usr/bin/env bash# @Author: YL# @Date: 2020-08-17 09:33:43# @Last Modified by: YL# @Last Modified time: 2020-08-17 14:50:43export LANG=en_US.UTF-8# Tomcat 主目录export CATALINA_HOME=/data/apache-tomcat-8.5.57cd `dirname $0`PROJECT_HOME=`pwd`# Tomcat 应用部署目录TC_HOME="$PROJECT_HOME/tomcat"# Tomcat 应用部署目录export CATALINA_BASE=$TC_HOME# crontab 检测日记文件TC_STDOUT_FILE="$TC_HOME/logs/stdout.out"# 检测 Tomcat 是否启动（进程ID）PIDS=`ps -ef | grep $TC_HOME | grep -v grep | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`#===========================================================================================# JVM Configuration#===========================================================================================# export JAVA_HOME=/usr/java/jdk1.8.0_251# export PATH=$JAVA_HOME/bin:$PATH# export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHJVM_OPTS="$JVM_OPTS -server -Xms1g -Xmx1g -Xss256k"JVM_OPTS="$JVM_OPTS -XX:+DisableExplicitGC -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled"JVM_OPTS="$JVM_OPTS -Xloggc:$TC_HOME/logs/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M"JVM_OPTS="$JVM_OPTS -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$TC_HOME/logs/dump-`date +"%Y-%m-%d"`.hprof"JVM_OPTS="$JVM_OPTS -Dspring.profiles.active=pro"# Tomcat 启动参数配置export JAVA_OPTS="$JVM_OPTS"#===========================================================================================# log file delete#===========================================================================================function cleanLog()&#123; ls -d -t $TC_HOME/logs/catalina.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/host-manager.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/localhost.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/manager.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/*.hprof | tail -n +3 | xargs rm -rf&#125;cleanLog# 优雅停机function gracefulShutdown()&#123; if [ -z "$PIDS" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME does not started!" | tee -a $STDOUT_FILE else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PIDS begining" | tee -a $STDOUT_FILE for PID in $PIDS ; do kill $PID &gt; /dev/null 2&gt;&amp;1 echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PID success" | tee -a $STDOUT_FILE done # 检测是否停机成功 COUNT=0 while [ $COUNT -lt 1 ]; do sleep 1 COUNT=1 for PID in $PIDS ; do PID_EXIST=`ps -f -p $PID | grep java` if [ -n "$PID_EXIST" ]; then COUNT=0 break fi done done fi&#125;function operate()&#123; if [[ "$1" = "kill" ]] ; then gracefulShutdown elif [[ "$1" = "start" ]]; then cd $CATALINA_HOME/bin sh startup.sh else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" | tee -a $TC_STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$PIDS" = "" ]] ; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" &gt;&gt; $TC_STDOUT_FILE operate start else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME pid $PIDS" &gt;&gt; $TC_STDOUT_FILE fielse echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILEfi 使用说明12345sh restart.sh start # 重启sh restart.sh # 重启sh restart.sh restart # 重启sh restart.sh check # 检测服务是否启动，没有启动，则启动之，否则不做其他操作sh restart.sh kill # kill掉已启动的服务进程]]></content>
+      <categories>
+        <category>Tomcat</category>
+      </categories>
   </entry>
   <entry>
     <title><![CDATA[Linux tail 命令]]></title>
@@ -1332,78 +1344,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux tar 命令]]></title>
-    <url>%2Fposts%2Fbd083454.html</url>
-    <content type="text"><![CDATA[tar 解压 1tar -zxvf xxx.tar.gz 打包 1tar -zcvf xxx.tar.gz 待压缩的文件名 解压 tar zxvf 文件名.tar.gz 压缩 tar zcvf 文件名.tar.gz 待压缩的文件名 tar -zcvf tomcat.tar.gz –exclude=.log –exclude=.log. –exclude=.out –exclude=.out. –exclude=.tgz.bak –exclude=.war tomcat/ 排除文件夹（注意排除的文件夹最后不能加/） tar -zcvf gitlab.source.tar.gz –exclude=node_modules –exclude=target gitlab/]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>tar</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[zookeeper stop脚本]]></title>
-    <url>%2Fposts%2F7bd064dc.html</url>
-    <content type="text"><![CDATA[stop12345678910#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:00# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:49# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stop]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux unzip 命令]]></title>
-    <url>%2Fposts%2F64f75729.html</url>
-    <content type="text"><![CDATA[unzip解压war、jar、zip、rar等文件1unzip -oq /opt/xxx.war -d /opt/ddd]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>unzip</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux du 命令]]></title>
-    <url>%2Fposts%2F2e023d93.html</url>
-    <content type="text"><![CDATA[du计算当前文件夹下占用空间，排序1du -sh * | sort -nr]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>du</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux vi 命令]]></title>
-    <url>%2Fposts%2F87207300.html</url>
-    <content type="text"><![CDATA[vilinux文件格式的问题（使用unix格式）123456789# 查看文件格式vi 文件名:set ff # :set fileencoding# 设置文件格式为unix:set ff=unix# 保存退出:wq# 也可以直接使用dos2unix 文件名]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>vi</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[zookeeper重启脚本]]></title>
-    <url>%2Fposts%2F6c1ad93d.html</url>
-    <content type="text"><![CDATA[restart12345678910111213#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:10# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:30# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stopsleep 3./zkServer.sh start]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[zookeeper 启动脚本]]></title>
-    <url>%2Fposts%2Faf01b9a2.html</url>
-    <content type="text"><![CDATA[start12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-28 10:23:20# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:41# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`NODE_BIN_DIR=`pwd`NODE_LIB_DIR=$NODE_BIN_DIR/../lib/cd ..NODE_HOME=`pwd`# mkdir logs dirNODE_DATA_LOG_DIR=`sed '/dataLogDir/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`NODE_LOGS_DIR=""if [ -n "$NODE_DATA_LOG_DIR" ]; then NODE_LOGS_DIR=$NODE_DATA_LOG_DIRelse NODE_LOGS_DIR=$NODE_HOME/logsfiif [ ! -d $NODE_LOGS_DIR ]; then mkdir $NODE_LOGS_DIRfiSTDOUT_FILE=$NODE_LOGS_DIR/stdout.logecho "[$(date '+%Y-%m-%d %H:%M:%S')] NODE_BIN_DIR: $NODE_BIN_DIR" | tee -a $STDOUT_FILE# pidNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`if [ -n "$NODE_PID" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')] ERROR: The $NODE_LIB_DIR already started! pid: $NODE_PID" | tee -a $STDOUT_FILE exit 1fi# portNODE_PORT=`sed '/clientPort/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`if [ -n "$NODE_PORT" ]; then NODE_PORT_COUNT=`netstat -tln | grep $NODE_PORT | wc -l` if [ $NODE_PORT_COUNT -gt 0 ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')] ERROR: The $NODE_LIB_DIR port $NODE_PORT already used!" | tee -a $STDOUT_FILE exit 1 fifi# startingcd $NODE_BIN_DIR./zkServer.sh startNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`echo "[$(date '+%Y-%m-%d %H:%M:%S')] The $NODE_LIB_DIR started OK! pid: $NODE_PID" | tee -a $STDOUT_FILE]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
     <title><![CDATA[jar启动脚本]]></title>
     <url>%2Fposts%2F6d838077.html</url>
     <content type="text"><![CDATA[-Djava.ext.dirs和-Dloader.path区别 -Djava.ext.dirs 使用-Djava.ext.dirs配置外部jar包引用时，会覆盖jdk默认的lib/ext下的扩展包 -Dloader.path jar启动脚本123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263#!/usr/bin/env bash# @Author: YL# @Date: 2017-08-31 15:52:30# @Last Modified by: YL# @Last Modified time: 2017-12-18 14:12:45export LANG=en_US.UTF-8export JAVA_HOME=/usr/java/jdk1.8.0_144export PATH=$PATH:$JAVA_HOME/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHcd `dirname $0`PROJECT_HOME=`pwd`PROJECT_LIB=$PROJECT_HOME/libPROJECT_LOGS=$PROJECT_HOME/logsSTDOUT_FILE=$PROJECT_HOME/logs/stdout.logPROJECT_JAR=$PROJECT_HOME/tisson-ftp.jar# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $PROJECT_JAR"# pidPROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'`function operate()&#123; if [[ "$1" = "kill" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN kill $PROJECT_PID begining" | tee -a $STDOUT_FILE kill -9 $PROJECT_PID echo "$DATE_PATTERN kill $PROJECT_PID success" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not alive" | tee -a $STDOUT_FILE fi elif [[ "$1" = "start" ]] ; then # cd $PROJECT_HOME # starting nohup java -server -Xms512m -Xmx512m -Xss256k -Dloader.path=$PROJECT_LIB -Djava.io.tmpdir=$PROJECT_LOGS -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$PROJECT_LOGS/$PROJECT_PID.hprof -jar $PROJECT_JAR &gt;&gt; $STDOUT_FILE 2&gt;&amp;1 &amp; PROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'` echo "$DATE_PATTERN The $PROJECT_JAR started OK! pid: $PROJECT_PID" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILE fi&#125;if [[ "$1" = "start" || "$1" = "check" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN already started! pid: $PROJECT_PID" &gt;&gt; $STDOUT_FILE exit 1 fi operate startelif [[ "$1" = "" || "$1" = "restart" ]]; then operate kill echo "$DATE_PATTERN starting" | tee -a $STDOUT_FILE operate startelif [[ "$1" = "kill" ]]; then operate killelse echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILEfi]]></content>
@@ -1416,15 +1356,27 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux cat 命令]]></title>
-    <url>%2Fposts%2Fbe15a742.html</url>
-    <content type="text"><![CDATA[cat统计出现次数12# linux统计某一文件中字符串“sent ip”出现的次数：cat nohup.log |grep "sent ip" |wc -l 清空默认文件中的内容1cat /dev/null &gt; filename]]></content>
+    <title><![CDATA[Linux tar 命令]]></title>
+    <url>%2Fposts%2Fbd083454.html</url>
+    <content type="text"><![CDATA[tar 解压 1tar -zxvf xxx.tar.gz 打包 1tar -zcvf xxx.tar.gz 待压缩的文件名 解压 tar zxvf 文件名.tar.gz 压缩 tar zcvf 文件名.tar.gz 待压缩的文件名 tar -zcvf tomcat.tar.gz –exclude=.log –exclude=.log. –exclude=.out –exclude=.out. –exclude=.tgz.bak –exclude=.war tomcat/ 排除文件夹（注意排除的文件夹最后不能加/） tar -zcvf gitlab.source.tar.gz –exclude=node_modules –exclude=target gitlab/]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>cat</tag>
+        <tag>tar</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux unzip 命令]]></title>
+    <url>%2Fposts%2F64f75729.html</url>
+    <content type="text"><![CDATA[unzip解压war、jar、zip、rar等文件1unzip -oq /opt/xxx.war -d /opt/ddd]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>unzip</tag>
       </tags>
   </entry>
   <entry>
@@ -1440,6 +1392,38 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Linux vi 命令]]></title>
+    <url>%2Fposts%2F87207300.html</url>
+    <content type="text"><![CDATA[vilinux文件格式的问题（使用unix格式）123456789# 查看文件格式vi 文件名:set ff # :set fileencoding# 设置文件格式为unix:set ff=unix# 保存退出:wq# 也可以直接使用dos2unix 文件名]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>vi</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux cat 命令]]></title>
+    <url>%2Fposts%2Fbe15a742.html</url>
+    <content type="text"><![CDATA[cat统计出现次数12# linux统计某一文件中字符串“sent ip”出现的次数：cat nohup.log |grep "sent ip" |wc -l 清空默认文件中的内容1cat /dev/null &gt; filename]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>cat</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper重启脚本]]></title>
+    <url>%2Fposts%2F6c1ad93d.html</url>
+    <content type="text"><![CDATA[restart12345678910111213#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:10# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:30# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stopsleep 3./zkServer.sh start]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
     <title><![CDATA[Linux cp 命令]]></title>
     <url>%2Fposts%2F2835e3e.html</url>
     <content type="text"><![CDATA[cp复制文件夹1234cp -r [old source] -d [new source]# -p 保持原有文件权限cp -r -p [old source] -d [new source]]]></content>
@@ -1450,6 +1434,14 @@
         <tag>shell</tag>
         <tag>cp</tag>
       </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper stop脚本]]></title>
+    <url>%2Fposts%2F7bd064dc.html</url>
+    <content type="text"><![CDATA[stop12345678910#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:00# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:49# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stop]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
   </entry>
   <entry>
     <title><![CDATA[Linux curl 命令]]></title>
@@ -1464,14 +1456,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Tomcat 启动脚本]]></title>
-    <url>%2Fposts%2Fe22f47ab.html</url>
-    <content type="text"><![CDATA[Tomcat 启动脚本主 Tomcat + 应用部署 Tomcat 应用部署方式 12345678910111213141516171819[txrd@host-148 /data/]$ tree -af .├── ./apache-tomcat-8.5.57│ └── ./bin│ └── ./conf│ └── ./lib│ └── ./temp│ └── ./webapps│ └── ./work├── ./szim│ └── ./project │ └── ./szim.war │ └──./tomcat │ └── ./conf│ └── ./temp│ └── ./webapps│ └── ./work│ └──./logs.sh │ └──./restart.sh restart.sh 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109#!/usr/bin/env bash# @Author: YL# @Date: 2020-08-17 09:33:43# @Last Modified by: YL# @Last Modified time: 2020-08-17 14:50:43export LANG=en_US.UTF-8# Tomcat 主目录export CATALINA_HOME=/data/apache-tomcat-8.5.57cd `dirname $0`PROJECT_HOME=`pwd`# Tomcat 应用部署目录TC_HOME="$PROJECT_HOME/tomcat"# Tomcat 应用部署目录export CATALINA_BASE=$TC_HOME# crontab 检测日记文件TC_STDOUT_FILE="$TC_HOME/logs/stdout.out"# 检测 Tomcat 是否启动（进程ID）PIDS=`ps -ef | grep $TC_HOME | grep -v grep | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`#===========================================================================================# JVM Configuration#===========================================================================================# export JAVA_HOME=/usr/java/jdk1.8.0_251# export PATH=$JAVA_HOME/bin:$PATH# export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHJVM_OPTS="$JVM_OPTS -server -Xms1g -Xmx1g -Xss256k"JVM_OPTS="$JVM_OPTS -XX:+DisableExplicitGC -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled"JVM_OPTS="$JVM_OPTS -Xloggc:$TC_HOME/logs/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M"JVM_OPTS="$JVM_OPTS -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$TC_HOME/logs/dump-`date +"%Y-%m-%d"`.hprof"JVM_OPTS="$JVM_OPTS -Dspring.profiles.active=pro"# Tomcat 启动参数配置export JAVA_OPTS="$JVM_OPTS"#===========================================================================================# log file delete#===========================================================================================function cleanLog()&#123; ls -d -t $TC_HOME/logs/catalina.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/host-manager.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/localhost.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/manager.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/*.hprof | tail -n +3 | xargs rm -rf&#125;cleanLog# 优雅停机function gracefulShutdown()&#123; if [ -z "$PIDS" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME does not started!" | tee -a $STDOUT_FILE else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PIDS begining" | tee -a $STDOUT_FILE for PID in $PIDS ; do kill $PID &gt; /dev/null 2&gt;&amp;1 echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PID success" | tee -a $STDOUT_FILE done # 检测是否停机成功 COUNT=0 while [ $COUNT -lt 1 ]; do sleep 1 COUNT=1 for PID in $PIDS ; do PID_EXIST=`ps -f -p $PID | grep java` if [ -n "$PID_EXIST" ]; then COUNT=0 break fi done done fi&#125;function operate()&#123; if [[ "$1" = "kill" ]] ; then gracefulShutdown elif [[ "$1" = "start" ]]; then cd $CATALINA_HOME/bin sh startup.sh else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" | tee -a $TC_STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$PIDS" = "" ]] ; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" &gt;&gt; $TC_STDOUT_FILE operate start else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME pid $PIDS" &gt;&gt; $TC_STDOUT_FILE fielse echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILEfi 单应用部署 Tomcat 应用部署方式 12345678910111213[txrd@host-148 /data/szim]$ tree -af .├── ./project │ └── ./szim.war └── ./tomcat │ └── ./bin│ └── ./conf│ └── ./lib│ └── ./temp│ └── ./webapps│ └── ./work├── ./logs.sh ├── ./restart.sh restart.sh 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109#!/usr/bin/env bash# @Author: YL# @Date: 2020-08-17 09:33:43# @Last Modified by: YL# @Last Modified time: 2020-08-17 14:50:43export LANG=en_US.UTF-8# Tomcat 主目录export CATALINA_HOME=/data/apache-tomcat-8.5.57cd `dirname $0`PROJECT_HOME=`pwd`# Tomcat 应用部署目录TC_HOME="$PROJECT_HOME/tomcat"# Tomcat 应用部署目录export CATALINA_BASE=$TC_HOME# crontab 检测日记文件TC_STDOUT_FILE="$TC_HOME/logs/stdout.out"# 检测 Tomcat 是否启动（进程ID）PIDS=`ps -ef | grep $TC_HOME | grep -v grep | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`#===========================================================================================# JVM Configuration#===========================================================================================# export JAVA_HOME=/usr/java/jdk1.8.0_251# export PATH=$JAVA_HOME/bin:$PATH# export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHJVM_OPTS="$JVM_OPTS -server -Xms1g -Xmx1g -Xss256k"JVM_OPTS="$JVM_OPTS -XX:+DisableExplicitGC -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled"JVM_OPTS="$JVM_OPTS -Xloggc:$TC_HOME/logs/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M"JVM_OPTS="$JVM_OPTS -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$TC_HOME/logs/dump-`date +"%Y-%m-%d"`.hprof"JVM_OPTS="$JVM_OPTS -Dspring.profiles.active=pro"# Tomcat 启动参数配置export JAVA_OPTS="$JVM_OPTS"#===========================================================================================# log file delete#===========================================================================================function cleanLog()&#123; ls -d -t $TC_HOME/logs/catalina.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/host-manager.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/localhost.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/manager.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/*.hprof | tail -n +3 | xargs rm -rf&#125;cleanLog# 优雅停机function gracefulShutdown()&#123; if [ -z "$PIDS" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME does not started!" | tee -a $STDOUT_FILE else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PIDS begining" | tee -a $STDOUT_FILE for PID in $PIDS ; do kill $PID &gt; /dev/null 2&gt;&amp;1 echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PID success" | tee -a $STDOUT_FILE done # 检测是否停机成功 COUNT=0 while [ $COUNT -lt 1 ]; do sleep 1 COUNT=1 for PID in $PIDS ; do PID_EXIST=`ps -f -p $PID | grep java` if [ -n "$PID_EXIST" ]; then COUNT=0 break fi done done fi&#125;function operate()&#123; if [[ "$1" = "kill" ]] ; then gracefulShutdown elif [[ "$1" = "start" ]]; then cd $CATALINA_HOME/bin sh startup.sh else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" | tee -a $TC_STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$PIDS" = "" ]] ; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" &gt;&gt; $TC_STDOUT_FILE operate start else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME pid $PIDS" &gt;&gt; $TC_STDOUT_FILE fielse echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILEfi 使用说明12345sh restart.sh start # 重启sh restart.sh # 重启sh restart.sh restart # 重启sh restart.sh check # 检测服务是否启动，没有启动，则启动之，否则不做其他操作sh restart.sh kill # kill掉已启动的服务进程]]></content>
-      <categories>
-        <category>Tomcat</category>
-      </categories>
-  </entry>
-  <entry>
     <title><![CDATA[Linux find 命令]]></title>
     <url>%2Fposts%2F7b744fec.html</url>
     <content type="text"><![CDATA[查找文件并删除123456789101112# 删除指定时间前的 jpg 文件find /opt/upload/ -mtime +30 -type f -name *.jpg -exec rm -f &#123;&#125; \;# 删除隐藏文件（-fr）find /opt/upload/ -type d -name .svn -exec rm -fr &#123;&#125; \;# 删除30天前的文件find /opt/upload -mtime +30 -type f -name "*.jpg" -exec rm -rf &#123;&#125; \;# find: 路径必须在表达式之前，在*前加\find /opt/upload/ -mtime +15 -type f -name \*.log -exec rm -f &#123;&#125; \; 打印指定时间前的文件1find project/upload/ -mtime +30 -type f -print]]></content>
@@ -1482,6 +1466,34 @@
         <tag>shell</tag>
         <tag>find</tag>
       </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux du 命令]]></title>
+    <url>%2Fposts%2F2e023d93.html</url>
+    <content type="text"><![CDATA[du计算当前文件夹下占用空间，排序1du -sh * | sort -nr]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>du</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper 清理日志文件]]></title>
+    <url>%2Fposts%2Fc0bbcacd.html</url>
+    <content type="text"><![CDATA[clear123456789101112131415161718192021222324252627282930#!/usr/bin/env bash# @Author: YL# @Date: 2017-11-01 08:59:34# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:09# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`cd ..NODE_HOME=`pwd`# snapshotNODE_DATA_DIR=$NODE_HOME/data/version-2# snapshot logNODE_LOG_DIR=$NODE_HOME/logs/version-2# zk logNODE_LOGS=$NODE_HOME/logs# 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中count=3count=$[$count+1]ls -t $NODE_LOG_DIR/log.* | tail -n +$count | xargs rm -fls -t $NODE_DATA_DIR/snapshot.* | tail -n +$count | xargs rm -fls -t $NODE_LOGS/zookeeper.log.* | tail -n +$count | xargs rm -f# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"STDOUT_FILE=$NODE_LOGS/stdout.logecho "$DATE_PATTERN clear logs success" | tee -a $STDOUT_FILE]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper 启动脚本]]></title>
+    <url>%2Fposts%2Faf01b9a2.html</url>
+    <content type="text"><![CDATA[start12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-28 10:23:20# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:41# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`NODE_BIN_DIR=`pwd`NODE_LIB_DIR=$NODE_BIN_DIR/../lib/cd ..NODE_HOME=`pwd`# mkdir logs dirNODE_DATA_LOG_DIR=`sed '/dataLogDir/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`NODE_LOGS_DIR=""if [ -n "$NODE_DATA_LOG_DIR" ]; then NODE_LOGS_DIR=$NODE_DATA_LOG_DIRelse NODE_LOGS_DIR=$NODE_HOME/logsfiif [ ! -d $NODE_LOGS_DIR ]; then mkdir $NODE_LOGS_DIRfiSTDOUT_FILE=$NODE_LOGS_DIR/stdout.logecho "[$(date '+%Y-%m-%d %H:%M:%S')] NODE_BIN_DIR: $NODE_BIN_DIR" | tee -a $STDOUT_FILE# pidNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`if [ -n "$NODE_PID" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')] ERROR: The $NODE_LIB_DIR already started! pid: $NODE_PID" | tee -a $STDOUT_FILE exit 1fi# portNODE_PORT=`sed '/clientPort/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`if [ -n "$NODE_PORT" ]; then NODE_PORT_COUNT=`netstat -tln | grep $NODE_PORT | wc -l` if [ $NODE_PORT_COUNT -gt 0 ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')] ERROR: The $NODE_LIB_DIR port $NODE_PORT already used!" | tee -a $STDOUT_FILE exit 1 fifi# startingcd $NODE_BIN_DIR./zkServer.sh startNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`echo "[$(date '+%Y-%m-%d %H:%M:%S')] The $NODE_LIB_DIR started OK! pid: $NODE_PID" | tee -a $STDOUT_FILE]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
   </entry>
   <entry>
     <title><![CDATA[zookeeper evn 环境变量配置脚本]]></title>
@@ -1501,18 +1513,6 @@
       <tags>
         <tag>shell</tag>
         <tag>grep</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux ls 命令]]></title>
-    <url>%2Fposts%2F53b5960c.html</url>
-    <content type="text"><![CDATA[ls12# 统计文件夹中文件数ls -l |grep "^-"|wc -l 保留最新的1个文件夹，删除其他文件夹（使用-d）1ls -t -d /home/txrd/tisson-web-open/logs/undertow-* | tail -n +2 | xargs rm -rf]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>ls</tag>
       </tags>
   </entry>
   <entry>
@@ -1598,6 +1598,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[pagehelper 使用笔记]]></title>
+    <url>%2Fposts%2F4f0d5500.html</url>
+    <content type="text"><![CDATA[主要是记录一些在使用mybatis + pagehelper过程中遇到的一些问题，和要注意的知识点 PageHelper 分页12345// 获取第1页，10条内容，默认查询总数countPageHelper.startPage(1, 10);// 获取第1页，10条内容，不查询总数countPageHelper.startPage(1, 10, false);]]></content>
+      <categories>
+        <category>mybatis</category>
+      </categories>
+      <tags>
+        <tag>pagehelper</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[spring-data-jpa 使用笔记]]></title>
     <url>%2Fposts%2F43f916ea.html</url>
     <content type="text"><![CDATA[主要是记录一些在使用spring-data-jpa + Hibernate过程中遇到的一些问题，和要注意的知识点 Pageable 和 PageRequest 分页在Mysql、Oracle中分页从0开始1Pageable pageable = new PageRequest(0, 10); 查看org.springframework.data.domain.PageRequest源码可知，分页从0开始 123public Pageable first() &#123; return new PageRequest(0, this.getPageSize(), this.getSort());&#125;]]></content>
@@ -1607,17 +1618,6 @@
       <tags>
         <tag>Hibernate</tag>
         <tag>spring-data-jpa</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[pagehelper 使用笔记]]></title>
-    <url>%2Fposts%2F4f0d5500.html</url>
-    <content type="text"><![CDATA[主要是记录一些在使用mybatis + pagehelper过程中遇到的一些问题，和要注意的知识点 PageHelper 分页12345// 获取第1页，10条内容，默认查询总数countPageHelper.startPage(1, 10);// 获取第1页，10条内容，不查询总数countPageHelper.startPage(1, 10, false);]]></content>
-      <categories>
-        <category>mybatis</category>
-      </categories>
-      <tags>
-        <tag>pagehelper</tag>
       </tags>
   </entry>
   <entry>
@@ -1644,17 +1644,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Hibernate的DynamicInsert、DynamicUpdate介绍]]></title>
-    <url>%2Fposts%2F2ed26d9a.html</url>
-    <content type="text"><![CDATA[作用 使用 Dynamic Update 如果使用了 Dynamic Update，需要注意的是，当select后，显式的把某些字段set为NULL，hibernate 会认为你修改了该字段，会生成到 update 语句中。一般先 select 实体出来，再 save 的话，只会 update 该实体被修改的字段。否则会 update 所有表字段。添加Dynamic Update配置可以减少被 update 的字段。 使用 Dynamic Insert 如果使用了 Dynamic Insert，并且数据库配置了默认值，当 insert，并且new 实体时，该属性没有 set 值的话，会使用数据库默认值，否则会使用实体的值。 配置方式 第一种：使用注解配置12345678910111213@Entiry(name = "t_user")@DynamicInsert@DynamicUpdatepublic class User &#123; @Id @GeneratedValue private Long id; private Strin name; private Integer age; private Integer status; // getter setter&#125; 第二种：使用.hbm.xml配置12345&lt;hibernate-mapping&gt; &lt;class name="xxx.User" table="t_user" dynamic-insert="true" dynamic-update="true"&gt; &lt;!-- 省略配置 --&gt; &lt;/class&gt;&lt;/hibernate-mapping&gt; 效果主要比较一下insert、update语句的区别，其中update一个已有的实体对象时，hibernate会再执行一次select操作再去update123456789101112131415161718192021222324252627282930@RunWith(SpringJUnit4ClassRunner.class)@SpringBootTestpublic class ApplicationTests &#123; @Autowired private UserRepository repository; @Test public void test() throws Exception &#123; // 1、插入新记录 // 配置 dynamic insert // insert into user (name) values (?) // 未配置 dynamic insert // insert into user (age, name, status) values (?, ?, ?) User user = new User("AAA"); User save = repository.save(user); // 2、更新记录 // 配置 dynamic update // select user0_.id as id1_1_0_, user0_.age as age2_1_0_, user0_.name as name3_1_0_, user0_.status as status4_1_0_ from user user0_ where user0_.id=? // update user set name=? where id=? // 未配置 dynamic update // select user0_.id as id1_1_0_, user0_.age as age2_1_0_, user0_.name as name3_1_0_, user0_.status as status4_1_0_ from user user0_ where user0_.id=? // update user set age=?, name=?, status=? where id=? save.setName("BBB"); repository.save(save); &#125;&#125;]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Hibernate</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[hibernate格式化输出sql语句（spring-data-jpa）]]></title>
     <url>%2Fposts%2F723691b5.html</url>
     <content type="text"><![CDATA[以下配置是基于 spring-boot 的 application.yml 配置123456789spring: jpa:# hibernate:# ddl-auto: create show-sql: true# database: mysql properties: hibernate: format_sql: true]]></content>
@@ -1664,6 +1653,17 @@
       <tags>
         <tag>Hibernate</tag>
         <tag>spring-data-jpa</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hibernate的DynamicInsert、DynamicUpdate介绍]]></title>
+    <url>%2Fposts%2F2ed26d9a.html</url>
+    <content type="text"><![CDATA[作用 使用 Dynamic Update 如果使用了 Dynamic Update，需要注意的是，当select后，显式的把某些字段set为NULL，hibernate 会认为你修改了该字段，会生成到 update 语句中。一般先 select 实体出来，再 save 的话，只会 update 该实体被修改的字段。否则会 update 所有表字段。添加Dynamic Update配置可以减少被 update 的字段。 使用 Dynamic Insert 如果使用了 Dynamic Insert，并且数据库配置了默认值，当 insert，并且new 实体时，该属性没有 set 值的话，会使用数据库默认值，否则会使用实体的值。 配置方式 第一种：使用注解配置12345678910111213@Entiry(name = "t_user")@DynamicInsert@DynamicUpdatepublic class User &#123; @Id @GeneratedValue private Long id; private Strin name; private Integer age; private Integer status; // getter setter&#125; 第二种：使用.hbm.xml配置12345&lt;hibernate-mapping&gt; &lt;class name="xxx.User" table="t_user" dynamic-insert="true" dynamic-update="true"&gt; &lt;!-- 省略配置 --&gt; &lt;/class&gt;&lt;/hibernate-mapping&gt; 效果主要比较一下insert、update语句的区别，其中update一个已有的实体对象时，hibernate会再执行一次select操作再去update123456789101112131415161718192021222324252627282930@RunWith(SpringJUnit4ClassRunner.class)@SpringBootTestpublic class ApplicationTests &#123; @Autowired private UserRepository repository; @Test public void test() throws Exception &#123; // 1、插入新记录 // 配置 dynamic insert // insert into user (name) values (?) // 未配置 dynamic insert // insert into user (age, name, status) values (?, ?, ?) User user = new User("AAA"); User save = repository.save(user); // 2、更新记录 // 配置 dynamic update // select user0_.id as id1_1_0_, user0_.age as age2_1_0_, user0_.name as name3_1_0_, user0_.status as status4_1_0_ from user user0_ where user0_.id=? // update user set name=? where id=? // 未配置 dynamic update // select user0_.id as id1_1_0_, user0_.age as age2_1_0_, user0_.name as name3_1_0_, user0_.status as status4_1_0_ from user user0_ where user0_.id=? // update user set age=?, name=?, status=? where id=? save.setName("BBB"); repository.save(save); &#125;&#125;]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Hibernate</tag>
       </tags>
   </entry>
   <entry>
@@ -1958,18 +1958,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[CentOS安装JDK]]></title>
-    <url>%2Fposts%2Fd08f134.html</url>
-    <content type="text"><![CDATA[1、准备创建目录12$ mkdir /usr/java$ cd /usr/java 下载 jdk-8u73-linux-x64.tar.gz，解压1$ tar -zxvf jdk-8u73-linux-x64.tar.gz 会解压到 /usr/java/jdk1.8.0_73 下 2、配置环境变量(两种方式二选一配置即可)2.1 编辑 /etc/profile 文件修改 /etc/profile 文件当本机仅仅作为开发使用时推荐使用这种方法，因为此种配置时所有用户的 shell 都有权使用这些环境变量，可能会给系统带来安全性问题。1$ vi /etc/profile 增加如下内容123export JAVA_HOME=/usr/java/jdkexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH 保存退出 :wq12$ . /etc/profile$ echo $JAVA_HOME 2.2 编辑用户目录下的 .bash_profile修改 .bash_profile 文件这种方法更为安全，它可以把使用这些环境变量的权限控制到用户级别，如果需要给某个用户权限使用这些环境变量，只需要修改其个人用户主目录下的 .bash_profile 文件就可以了123export JAVA_HOME=/usr/java/jdkexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH 然后执行使之生效1source .bash_profile 可以看到 JAVA_HOME 不是指向真实的 jdk 目录 /usr/java/jdk1.8.0_73，而是指向 /usr/java/jdk 3、创建软链接为jdk真实目录创建一个命名更加间洁快捷方式123$ ln -s /usr/java/jdk1.8.0_73 /usr/java/jdk$ source /etc/profile#$ source .bash_profile 至此，配置完成]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>JDK</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[CentOS 部署 FTP 服务]]></title>
     <url>%2Fposts%2F9c4dd72b.html</url>
     <content type="text"><![CDATA[安装vsftpd 检测是否已经安装vsftpd 123$ rpm -qa|grep vsftpd# 有打印信息说明已经安装，信息格式如下：vsftpd-3.0.2-27.el7.x86_64 如果已经安装，则可以更新，或者删除重新安装 安装 123456# 使用 yum 安装 vsftpd$ yum install vsftpd# 设置开机启动vsftpd服务$ chkconfig vsftpd on# 启动vsftpd服务$ service vsftpd start 配置防火墙 123456# 打开/etc/sysconfig/iptables文件vi /etc/sysconfig/iptables # 在REJECT行之前添加如下代码-A RH-Firewall-1-INPUT -m state --state NEW -m tcp -p tcp --dport 21 -j ACCEPT# 保存和关闭文件，重启防火墙service iptables restart vsftpd配置 在/etc/vsftpd/vsftpd.conf文件修改以下配置 123456# 禁止匿名用户anonymous登录anonymous_enable=NO# 设置的文件里，是被chroot的用户(无法向上改变目录)chroot_local_user=YES# 500 OOPS: vsftpd: refusing to run with writable root inside chroot()错误解决allow_writeable_chroot=YES 创建用户12345678910111213# 创建用户sudo useradd test_user -s /sbin/nologin# 为用户配置密码，按提示输入两遍密码即可sudo passwd test_user# 查看默认密码过期时间vi /etc/login.defs# 修改密码过期时间sudo chage -M 99999 test_user# 在用户目录下创建目录文件，并赋权给用户sudo mkdir -p /home/test_user/test_dirsudo chown test_user:test_user /home/test_user/test_dir 删除用户12# 删除用户，会连带/home/test_user目录一起删除userdel -rf test_user 常用命令12345678910111213141516171819202122# 启动 ftp 服务sudoservice vsftpd start# 查看 ftp 服务状态sudoservice vsftpd status # 重启 ftp 服务sudoservice vsftpd restart# 关闭 ftp 服务sudoservice vsftpd stop# 在 CentOS 7.x版本使用以下命令# 启动 ftp 服务sudo systemctl start vsftpd.service# 查看 ftp 服务状态sudo systemctl status vsftpd.service# 重启 ftp 服务sudo systemctl restart vsftpd.service# 关闭 ftp 服务sudo systemctl stop vsftpd.service# 开机启动sudo systemctl enable vsftpd.service# 禁止开机启动sudo systemctl disable vsftpd.service]]></content>
@@ -1980,6 +1968,18 @@
         <tag>CentOS</tag>
         <tag>vsftpd</tag>
         <tag>FTP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[CentOS安装JDK]]></title>
+    <url>%2Fposts%2Fd08f134.html</url>
+    <content type="text"><![CDATA[1、准备创建目录12$ mkdir /usr/java$ cd /usr/java 下载 jdk-8u73-linux-x64.tar.gz，解压1$ tar -zxvf jdk-8u73-linux-x64.tar.gz 会解压到 /usr/java/jdk1.8.0_73 下 2、配置环境变量(两种方式二选一配置即可)2.1 编辑 /etc/profile 文件修改 /etc/profile 文件当本机仅仅作为开发使用时推荐使用这种方法，因为此种配置时所有用户的 shell 都有权使用这些环境变量，可能会给系统带来安全性问题。1$ vi /etc/profile 增加如下内容123export JAVA_HOME=/usr/java/jdkexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH 保存退出 :wq12$ . /etc/profile$ echo $JAVA_HOME 2.2 编辑用户目录下的 .bash_profile修改 .bash_profile 文件这种方法更为安全，它可以把使用这些环境变量的权限控制到用户级别，如果需要给某个用户权限使用这些环境变量，只需要修改其个人用户主目录下的 .bash_profile 文件就可以了123export JAVA_HOME=/usr/java/jdkexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH 然后执行使之生效1source .bash_profile 可以看到 JAVA_HOME 不是指向真实的 jdk 目录 /usr/java/jdk1.8.0_73，而是指向 /usr/java/jdk 3、创建软链接为jdk真实目录创建一个命名更加间洁快捷方式123$ ln -s /usr/java/jdk1.8.0_73 /usr/java/jdk$ source /etc/profile#$ source .bash_profile 至此，配置完成]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>JDK</tag>
       </tags>
   </entry>
 </search>
