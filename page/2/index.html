@@ -251,7 +251,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">172</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">174</span></a>
 
   </li>
         
@@ -289,7 +289,7 @@
       
     
 
-    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">141</span></a>
+    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">143</span></a>
 
   </li>
         
@@ -392,6 +392,233 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/e34c2a97.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/e34c2a97.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/2/index.html">Oracle 归档日志</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-09-28 16:23:05" itemprop="dateCreated datePublished" datetime="2020-09-28T16:23:05+08:00">2020-09-28</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-11-05 18:51:03" itemprop="dateModified" datetime="2020-11-05T18:51:03+08:00">2020-11-05</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Oracle/" itemprop="url" rel="index"><span itemprop="name">Oracle</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数：</span>
+                
+                <span title="字数">2k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">2 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/archiver/" rel="tag" class="color1">archiver</a>
+        
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="开启、关闭归档"><a href="#开启、关闭归档" class="headerlink" title="开启、关闭归档"></a>开启、关闭归档</h1><blockquote>
+<p>开启</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>关闭</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 关闭数据库</span></span><br><span class="line">SQL&gt; shutdown immediate；</span><br><span class="line"><span class="comment">-- 开启数据库至mount状态</span></span><br><span class="line">SQL&gt; startup mount;</span><br><span class="line"><span class="comment">-- 修改数据库模式</span></span><br><span class="line">SQL&gt; alter datebase noarchivelog;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/e34c2a97.html" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -1982,7 +2209,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/5ed27d2e.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/a4f9cef0.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
@@ -2002,7 +2229,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/posts/5ed27d2e.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/2/index.html">docker nexus3安装和配置</a>
+                <a href="/posts/a4f9cef0.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/2/index.html">docker gitlab安装和配置</a>
               
             
           </h2>
@@ -2091,7 +2318,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">402</span>
+                <span title="字数">588</span>
               
 
               
@@ -2125,7 +2352,7 @@
         
            <a href="/tags/docker/" rel="tag" class="color1">docker</a>
         
-           <a href="/tags/nexus3/" rel="tag" class="color2">nexus3</a>
+           <a href="/tags/gitlab/" rel="tag" class="color2">gitlab</a>
         
       </div>
     
@@ -2141,12 +2368,16 @@
       
         
           
-            <h1 id="nexus3"><a href="#nexus3" class="headerlink" title="nexus3"></a>nexus3</h1><blockquote>
-<p>docker-compose.yml</p>
+            <h1 id="使用docker安装"><a href="#使用docker安装" class="headerlink" title="使用docker安装"></a>使用docker安装</h1><blockquote>
+<p>docker-compose.yaml</p>
 </blockquote>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">"3.8"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  nexus3:</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">ts_nexus3</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">sonatype/nexus3:3.26.1</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"8081:8081"</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"./data:/nexus-data"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"/etc/localtime:/etc/localtime"</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure>
-<p>问题：Error creating bundle cache.<br>Unable to update instance pid: Unable to create directory /nexus-data/instances</p>
-<p>解决：sudo chmod -R 775 data/</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">"3.8"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  gitlab:</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">ts_gitlab</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">gitlab/gitlab-ce:13.2.6-ce.0</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"8082:8082"</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"./data:/var/opt/gitlab"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"./logs:/var/log/gitlab"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"./config:/etc/gitlab"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"/etc/localtime:/etc/localtime"</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="attr">      GITLAB_OMNIBUS_CONFIG:</span> <span class="string">|</span></span><br><span class="line"><span class="string">        external_url "http://ip:8082"</span></span><br><span class="line"><span class="string">        gitlab_rails['time_zone']=CST</span></span><br><span class="line"><span class="string"></span><span class="attr">    restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure>
+<p><code>GITLAB_OMNIBUS_CONFIG</code>查看<a href="https://docs.gitlab.com/omnibus/docker/" target="_blank" rel="noopener">https://docs.gitlab.com/omnibus/docker/</a></p>
+<h1 id="编辑站点信息"><a href="#编辑站点信息" class="headerlink" title="编辑站点信息"></a>编辑站点信息</h1><blockquote>
+<p>vi /etc/gitlab.rb</p>
+</blockquote>
+<p>配置</p>
+<p>gitlab-ctl reconfigure</p>
 
           
         
@@ -2426,7 +2657,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/a4f9cef0.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/5ed27d2e.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
@@ -2446,7 +2677,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/posts/a4f9cef0.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/2/index.html">docker gitlab安装和配置</a>
+                <a href="/posts/5ed27d2e.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/2/index.html">docker nexus3安装和配置</a>
               
             
           </h2>
@@ -2535,7 +2766,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">588</span>
+                <span title="字数">402</span>
               
 
               
@@ -2569,7 +2800,7 @@
         
            <a href="/tags/docker/" rel="tag" class="color1">docker</a>
         
-           <a href="/tags/gitlab/" rel="tag" class="color2">gitlab</a>
+           <a href="/tags/nexus3/" rel="tag" class="color2">nexus3</a>
         
       </div>
     
@@ -2585,16 +2816,12 @@
       
         
           
-            <h1 id="使用docker安装"><a href="#使用docker安装" class="headerlink" title="使用docker安装"></a>使用docker安装</h1><blockquote>
-<p>docker-compose.yaml</p>
+            <h1 id="nexus3"><a href="#nexus3" class="headerlink" title="nexus3"></a>nexus3</h1><blockquote>
+<p>docker-compose.yml</p>
 </blockquote>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">"3.8"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  gitlab:</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">ts_gitlab</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">gitlab/gitlab-ce:13.2.6-ce.0</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"8082:8082"</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"./data:/var/opt/gitlab"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"./logs:/var/log/gitlab"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"./config:/etc/gitlab"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"/etc/localtime:/etc/localtime"</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="attr">      GITLAB_OMNIBUS_CONFIG:</span> <span class="string">|</span></span><br><span class="line"><span class="string">        external_url "http://ip:8082"</span></span><br><span class="line"><span class="string">        gitlab_rails['time_zone']=CST</span></span><br><span class="line"><span class="string"></span><span class="attr">    restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure>
-<p><code>GITLAB_OMNIBUS_CONFIG</code>查看<a href="https://docs.gitlab.com/omnibus/docker/" target="_blank" rel="noopener">https://docs.gitlab.com/omnibus/docker/</a></p>
-<h1 id="编辑站点信息"><a href="#编辑站点信息" class="headerlink" title="编辑站点信息"></a>编辑站点信息</h1><blockquote>
-<p>vi /etc/gitlab.rb</p>
-</blockquote>
-<p>配置</p>
-<p>gitlab-ctl reconfigure</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">"3.8"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  nexus3:</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">ts_nexus3</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">sonatype/nexus3:3.26.1</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"8081:8081"</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"./data:/nexus-data"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"/etc/localtime:/etc/localtime"</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure>
+<p>问题：Error creating bundle cache.<br>Unable to update instance pid: Unable to create directory /nexus-data/instances</p>
+<p>解决：sudo chmod -R 775 data/</p>
 
           
         
@@ -3526,214 +3753,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/4d2ee75e.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/4d2ee75e.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/2/index.html">Oracle 按分区同步数据到另一个库</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2020-05-12 09:01:05 / 修改时间：09:50:51" itemprop="dateCreated datePublished" datetime="2020-05-12T09:01:05+08:00">2020-05-12</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Oracle/" itemprop="url" rel="index"><span itemprop="name">Oracle</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数：</span>
-                
-                <span title="字数">524</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
-        <span class="post-meta-item-icon">
-          <i class="fa fa-tags"></i>
-        </span>
-        <span class="post-meta-item-text">标签</span>
-        
-           <a href="/tags/Oracle/" rel="tag" class="color1">Oracle</a>
-        
-      </div>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><p>A库中某些大表（1年数据量10+亿条）数据只保留最近3个月数据，超过3个月的数据，都迁移到B库中保存，然后删除A库中已经迁移的数据。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/4d2ee75e.html" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-         
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3783,7 +3802,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">172</span>
+                    <span class="site-state-item-count">174</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -4145,7 +4164,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">141</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">143</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -4238,7 +4261,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">560k</span>
+    <span title="站点总字数">570k</span>
   
 
   
