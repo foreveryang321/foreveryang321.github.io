@@ -114,8 +114,8 @@
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>dns</tag>
         <tag>CentOS</tag>
+        <tag>dns</tag>
       </tags>
   </entry>
   <entry>
@@ -287,6 +287,18 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[docker gitlab安装和配置]]></title>
+    <url>%2Fposts%2Fa4f9cef0.html</url>
+    <content type="text"><![CDATA[使用docker安装 docker-compose.yaml 123456789101112131415161718version: "3.8"services: gitlab: container_name: ts_gitlab image: gitlab/gitlab-ce:13.2.6-ce.0 ports: - "8082:8082" volumes: - "./data:/var/opt/gitlab" - "./logs:/var/log/gitlab" - "./config:/etc/gitlab" - "/etc/localtime:/etc/localtime" environment: GITLAB_OMNIBUS_CONFIG: | external_url "http://ip:8082" gitlab_rails['time_zone']=CST restart: always GITLAB_OMNIBUS_CONFIG查看https://docs.gitlab.com/omnibus/docker/ 编辑站点信息 vi /etc/gitlab.rb 配置 gitlab-ctl reconfigure]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+        <tag>gitlab</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[docker mysql安装和配置]]></title>
     <url>%2Fposts%2F1299dfc1.html</url>
     <content type="text"><![CDATA[mysql docker-compose.yml 123456789101112131415161718version: "3.8"services: mysql: container_name: ts_mysql image: mysql:5.7.31 ports: - "3306:3306" volumes: - "./data/:/var/lib/mysql" - "./logs/:/var/log/mysql" - "./conf/conf.d:/etc/mysql/conf.d" - "./conf/mysql.conf.d:/etc/mysql/mysql.conf.d" - "./conf/my.cnf:/etc/mysql/my.cnf" - "/etc/localtime:/etc/localtime" environment: MYSQL_ROOT_PASSWORD: "test123456" restart: always my.cnf 123456789101112131415161718192021222324# Copyright (c) 2016, Oracle and/or its affiliates. All rights reserved.## This program is free software; you can redistribute it and/or modify# it under the terms of the GNU General Public License, version 2.0,# as published by the Free Software Foundation.## This program is also distributed with certain software (including# but not limited to OpenSSL) that is licensed under separate terms,# as designated in a particular file or component or in included license# documentation. The authors of MySQL hereby grant you an additional# permission to link the program and your derivative works with the# separately licensed software that they have included with MySQL.## This program is distributed in the hope that it will be useful,# but WITHOUT ANY WARRANTY; without even the implied warranty of# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the# GNU General Public License, version 2.0, for more details.## You should have received a copy of the GNU General Public License# along with this program; if not, write to the Free Software# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA!includedir /etc/mysql/conf.d/!includedir /etc/mysql/mysql.conf.d/]]></content>
@@ -308,18 +320,6 @@
       <tags>
         <tag>docker</tag>
         <tag>nexus3</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[docker gitlab安装和配置]]></title>
-    <url>%2Fposts%2Fa4f9cef0.html</url>
-    <content type="text"><![CDATA[使用docker安装 docker-compose.yaml 123456789101112131415161718version: "3.8"services: gitlab: container_name: ts_gitlab image: gitlab/gitlab-ce:13.2.6-ce.0 ports: - "8082:8082" volumes: - "./data:/var/opt/gitlab" - "./logs:/var/log/gitlab" - "./config:/etc/gitlab" - "/etc/localtime:/etc/localtime" environment: GITLAB_OMNIBUS_CONFIG: | external_url "http://ip:8082" gitlab_rails['time_zone']=CST restart: always GITLAB_OMNIBUS_CONFIG查看https://docs.gitlab.com/omnibus/docker/ 编辑站点信息 vi /etc/gitlab.rb 配置 gitlab-ctl reconfigure]]></content>
-      <categories>
-        <category>docker</category>
-      </categories>
-      <tags>
-        <tag>docker</tag>
-        <tag>gitlab</tag>
       </tags>
   </entry>
   <entry>
@@ -535,17 +535,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[XML 使用]]></title>
-    <url>%2Fposts%2F9605cdb8.html</url>
-    <content type="text"><![CDATA[XML 报文换行 正常换行 123456789&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"&gt; &lt;soapenv:Body&gt; &lt;ns1:message xmlns:ns1="MessageServer"&gt; &lt;ns1:arg0&gt;191&lt;/ns1:arg0&gt; &lt;ns1:arg1&gt;标题：My alert title&amp;#x000A;状态：alerting&amp;#x000A;信息：webfronts&lt;/ns1:arg1&gt; &lt;/ns1:message&gt; &lt;/soapenv:Body&gt;&lt;/soapenv:Envelope&gt; 前提，不能用&lt;![CDATA[]]&gt;把内容包起来，也不能使用\r\n等 12&lt;!-- 这样是不能换行的，会原样显示&amp;#x000A;字符出来 --&gt;&lt;ns1:arg1&gt;&lt;![CDATA[标题：My alert title&amp;#x000A;状态：alerting&amp;#x000A;信息：webfronts]]&gt;&lt;/ns1:arg1&gt;]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>XML</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Java 应用 JAR 包部署启动脚本]]></title>
     <url>%2Fposts%2F42919bde.html</url>
     <content type="text"><![CDATA[restart.sh 脚本 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788#!/usr/bin/env bash# @Author: YL# @Date: 2019-05-08 15:52:30# @Last Modified by: YL# @Last Modified time: 2019-11-01 09:36:19export LANG=en_US.UTF-8cd `dirname $0`CURRENT_DIR=`pwd`LOGS_DIR=$CURRENT_DIR/logsSTDOUT_FILE=$CURRENT_DIR/logs/stdout.logPROJECT_HOME=$CURRENT_DIR/projectJAR_FILE=$PROJECT_HOME/ts-asig-service.jar# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE"# pidPIDS=`ps -ef | grep java | grep -v grep | grep "$JAR_FILE" | awk '&#123;print $2&#125;'`# JVM optionsJAVA_OPT="-server -Xms1g -Xmx1g -Xss256k"JAVA_OPT="$&#123;JAVA_OPT&#125; -Dloader.path=$&#123;PROJECT_HOME&#125;/lib/ -Djava.io.tmpdir=$&#123;LOGS_DIR&#125;"JAVA_OPT="$&#123;JAVA_OPT&#125; -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70"JAVA_OPT="$&#123;JAVA_OPT&#125; -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$&#123;LOGS_DIR&#125;/dump-`date +"%Y-%m-%d"`.hprof"JAVA_OPT="$&#123;JAVA_OPT&#125; -Ddubbo.protocol.port=20886"JAVA_OPT="$&#123;JAVA_OPT&#125; -Dspring.profiles.active=pro -Dfile.encoding=UTF-8"JAVA_OPT="$&#123;JAVA_OPT&#125; -jar $&#123;JAR_FILE&#125;"# Graceful shutdownfunction gracefulShutdown()&#123; if [ -z "$PIDS" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE does not started!" | tee -a $STDOUT_FILE else echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE kill $PIDS begining" | tee -a $STDOUT_FILE for PID in $PIDS ; do kill $PID &gt; /dev/null 2&gt;&amp;1 done # check for graceful shutdown COUNT=0 while [ $COUNT -lt 1 ]; do sleep 1 COUNT=1 for PID in $PIDS ; do PID_EXIST=`ps -f -p $PID | grep java` if [ -n "$PID_EXIST" ]; then COUNT=0 break fi done done echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE kill $PID success" | tee -a $STDOUT_FILE fi&#125;function operate()&#123; if [[ "$1" = "kill" ]]; then gracefulShutdown elif [[ "$1" = "start" ]] ; then cd $PROJECT_HOME # starting nohup $JAVA_HOME/bin/java $JAVA_OPT &gt;&gt; $STDOUT_FILE 2&gt;&amp;1 &amp; PIDS=`ps -ef | grep java | grep -v grep | grep "$JAR_FILE" | awk '&#123;print $2&#125;'` echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE started OK! pid: $PIDS" | tee -a $STDOUT_FILE else echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE is not support $1" | tee -a $STDOUT_FILE fi&#125;if [[ "$1" = "start" || "$1" = "check" ]]; then if [ -n "$PIDS" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE already started! pid: $PIDS" &gt;&gt; $STDOUT_FILE exit 1 fi operate startelif [[ "$1" = "" || "$1" = "restart" ]]; then operate kill echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE starting" | tee -a $STDOUT_FILE ls -d -t $LOGS_DIR/undertow* | tail -n +3 | xargs rm -rf operate startelif [[ "$1" = "kill" ]]; then operate killelse echo "[$(date '+%Y-%m-%d %H:%M:%S')] $JAR_FILE is not support $1" | tee -a $STDOUT_FILEfi]]></content>
@@ -555,6 +544,17 @@
       <tags>
         <tag>JAR</tag>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[XML 使用]]></title>
+    <url>%2Fposts%2F9605cdb8.html</url>
+    <content type="text"><![CDATA[XML 报文换行 正常换行 123456789&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"&gt; &lt;soapenv:Body&gt; &lt;ns1:message xmlns:ns1="MessageServer"&gt; &lt;ns1:arg0&gt;191&lt;/ns1:arg0&gt; &lt;ns1:arg1&gt;标题：My alert title&amp;#x000A;状态：alerting&amp;#x000A;信息：webfronts&lt;/ns1:arg1&gt; &lt;/ns1:message&gt; &lt;/soapenv:Body&gt;&lt;/soapenv:Envelope&gt; 前提，不能用&lt;![CDATA[]]&gt;把内容包起来，也不能使用\r\n等 12&lt;!-- 这样是不能换行的，会原样显示&amp;#x000A;字符出来 --&gt;&lt;ns1:arg1&gt;&lt;![CDATA[标题：My alert title&amp;#x000A;状态：alerting&amp;#x000A;信息：webfronts]]&gt;&lt;/ns1:arg1&gt;]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>XML</tag>
       </tags>
   </entry>
   <entry>
@@ -707,8 +707,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>spring-boot</tag>
         <tag>Apache</tag>
+        <tag>spring-boot</tag>
         <tag>alibaba</tag>
         <tag>Dubbo</tag>
       </tags>
@@ -721,8 +721,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>spring-boot</tag>
         <tag>Apache</tag>
+        <tag>spring-boot</tag>
         <tag>alibaba</tag>
         <tag>Dubbo</tag>
       </tags>
@@ -870,8 +870,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>spring-boot</tag>
         <tag>Apache</tag>
+        <tag>spring-boot</tag>
         <tag>alibaba</tag>
         <tag>Dubbo</tag>
       </tags>
@@ -913,6 +913,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[docker 命令]]></title>
+    <url>%2Fposts%2F71631b3f.html</url>
+    <content type="text"><![CDATA[docker container ls 列出所有容器 用法 1docker container ls [options] 选项 | 参数 | 默认值 | 描述 || ————– | —— | ——————————– || -all, -a | false | 显示所有容器(默认只显示运行的) || --filter, -f | | 根据提供的条件过滤输出 || --format | | 使用Go模板打印容器 || -last, -n | -1 | 显示最后创建的容器(包括所有状态) || --latest, -l | false | 显示最新创建的容器(包括所有状态) || -no-trunc | false | 不要截断输出 || --quiet, -q | false | 只显示数字ID || -size, -s | false | 显示文件大小 | docker container rm 删除一个或多个容器 用法 1docker container rm [options] CONTAINER [CONTAINER...] 选项 | 参数 | 默认值 | 描述 || ————— | —— | ———————————– || --force, -f | false | 强制移走正在运行的容器(使用SIGKILL) || --link, -l | false | 删除指定的链接 || --volumes, -v | false | 删除与容器关联的卷 | 相关命令 命令 描述 docker container attach 附加到正在运行的容器 docker container commit 从容器的更改创建一个新的映像 docker container cp 在容器和本地文件系统之间复制文件/文件夹 docker container create 创建一个新的容器 docker container diff 检查容器文件系统上文件或目录的更改 docker container exec 在运行容器中运行命令 docker container export 将容器的文件系统导出为tar存档 docker container inspect 显示一个或多个容器的详细信息 docker container kill 杀死一个或多个运行容器 docker container logs 获取容器的日志 docker container ls 列出容器 docker container pause 暂停一个或多个容器内的所有进程 docker container port 列出端口映射或容器的特定映射 docker container prune 取出所有停止的容器 docker container rename 重命名容器 docker container restart 重新启动一个或多个容器 docker container rm 删除(移除)一个或多个容器 docker container run 在新容器中运行命令 docker container start 启动一个或多个停止的容器 docker container stats 显示容器的实时流资源使用统计信息 docker container stop 停止一个或多个运行容器 docker container top 显示容器的正在运行的进程 docker container unpause 取消暂停一个或多个容器内的所有流程 docker container update 更新一个或多个容器的配置 docker container wait 阻止一个或多个容器停止，然后打印退出代码]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>container</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[安装 docker 环境 for CentOS]]></title>
     <url>%2Fposts%2F2fff8f5e.html</url>
     <content type="text"><![CDATA[安装 Docker 删除旧版本 123456789101112131415sudo yum remove docker \ docker-client \ docker-client-latest \ docker-common \ docker-latest \ docker-latest-logrotate \ docker-logrotate \ docker-selinux \ docker-engine-selinux \ docker-engine# 或者sudo yum remove flannel docker* -ysudo yum -y remove docker docker-common docker-selinux docker-engine docker-engine-selinux container-selinux docker-cesudo rm -rf /var/lib/docker 配置 repo 1234567891011121314151617sudo yum install -y yum-utils \ device-mapper-persistent-data \ lvm2 sudo yum-config-manager \ --add-repo \ https://download.docker.com/linux/centos/docker-ce.repo# 或者使用阿里云sudo yum-config-manager \ --add-repo \ https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo# Optionalsudo yum-config-manager --enable docker-ce-edgesudo yum-config-manager --enable docker-ce-testsudo yum-config-manager --disable docker-ce-edge 斯蒂芬森 12345678910111213141516171819202122# 配置yum源阿里云镜像## 备份原来的yum源cd /etc/yum.repos.d/sudo mv CentOS-Base.repo CentOS-Base.repo_bak## 获取阿里云yum源sudo wget -e "http_proxy=192.168.123.1:1234" -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo## 清除原有yum源缓存sudo yum clean all## 生成阿里云yum源缓存sudo yum makecache## 或者sudo rm -f /var/lib/rpm/__*sudo rpm --rebuilddb -v -vsudo yum clean dbcachesudo yum clean metadatasudo yum clean rpmdbsudo yum clean headerssudo yum clean allsudo rm -rf /var/cache/yum/timedhosts.txtsudo rm -rf /var/cache/yum/*sudo yum makecache 安装 docker 在线安装 1234567891011# 安装最新版本sudo yum install docker-ce#安装指定版本 docker# 可以查看所有仓库中所有docker版本，并选择特定版本安装yum list docker-ce --showduplicates | sort -rdocker-ce.x86_64 18.03.0.ce-1.el7.centos docker-ce-stablesudo yum install docker-ce-&lt;VERSION STRING&gt;# 或者sudo curl https://releases.rancher.com/install-docker/19.03.sh | shsudo curl --proxy 192.168.123.1:1234 https://releases.rancher.com/install-docker/19.03.sh | sh 离线安装 123sudo yum install -y docker-ce-cli-19.03.12-3.el7.x86_64.rpmsudo yum install -y containerd.io-1.3.7-3.1.el7.x86_64.rpmsudo yum install -y docker-ce-19.03.12-3.el7.x86_64.rpm 启动并加入开机启动 12345678# 启动 dockersudo systemctl start docker# 停止运行 dockersudo systemctl stop docker# 开机启动sudo systemctl enable docker# 禁止开机启动sudo systemctl disable docker 版本锁定 防止升级、变更版本 123sudo yum install yum-plugin-versionlocksudo yum versionlock add docker-ce docker-ce-clisudo yum versionlock list 将当前用户加入docker组，并重启docker 12sudo gpasswd -a $&#123;USER&#125; dockersudo systemctl restart docker 验证安装 12345678910111213141516171819$ docker versionClient: Version: 18.06.1-ce API version: 1.38 Go version: go1.10.3 Git commit: e68fc7a Built: Tue Aug 21 17:23:03 2018 OS/Arch: linux/amd64 Experimental: falseServer: Engine: Version: 18.06.1-ce API version: 1.38 (minimum version 1.12) Go version: go1.10.3 Git commit: e68fc7a Built: Tue Aug 21 17:25:29 2018 OS/Arch: linux/amd64 Experimental: false Docker 配置 代理1234567891011# 配置 docker pull 代理# sudo rm -rf /etc/systemd/system/docker.service.d# cat /etc/systemd/system/docker.service.d/http-proxy.confsudo mkdir -p /etc/systemd/system/docker.service.dsudo tee /etc/systemd/system/docker.service.d/http-proxy.conf &lt;&lt;-'EOF'[Service]Environment="HTTP_PROXY=http://192.168.123.1:1234" "NO_PROXY=localhost,127.0.0.1,172.16.120.0/24"EOFsudo systemctl daemon-reloadsudo systemctl enable dockersudo systemctl restart docker 其中172.16.120.0/24为宿主机 ip Docker 配置 加速源1234567891011# sudo rm -rf /etc/docker/daemon.jsonsudo mkdir -p /etc/dockersudo tee /etc/docker/daemon.json &lt;&lt;-'EOF'&#123;"registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"],"log-driver":"json-file","log-opts":&#123; "max-size" :"50m","max-file":"10"&#125;&#125;EOFsudo systemctl daemon-reloadsudo systemctl restart docker 进入容器 12345# centosdocker exec -it &lt;container-name&gt; /bin/bash# alpinedocker exec -it &lt;container-name&gt; sh]]></content>
@@ -932,17 +943,6 @@
       </categories>
       <tags>
         <tag>docker-compose</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[docker 命令]]></title>
-    <url>%2Fposts%2F71631b3f.html</url>
-    <content type="text"><![CDATA[docker container ls 列出所有容器 用法 1docker container ls [options] 选项 | 参数 | 默认值 | 描述 || ————– | —— | ——————————– || -all, -a | false | 显示所有容器(默认只显示运行的) || --filter, -f | | 根据提供的条件过滤输出 || --format | | 使用Go模板打印容器 || -last, -n | -1 | 显示最后创建的容器(包括所有状态) || --latest, -l | false | 显示最新创建的容器(包括所有状态) || -no-trunc | false | 不要截断输出 || --quiet, -q | false | 只显示数字ID || -size, -s | false | 显示文件大小 | docker container rm 删除一个或多个容器 用法 1docker container rm [options] CONTAINER [CONTAINER...] 选项 | 参数 | 默认值 | 描述 || ————— | —— | ———————————– || --force, -f | false | 强制移走正在运行的容器(使用SIGKILL) || --link, -l | false | 删除指定的链接 || --volumes, -v | false | 删除与容器关联的卷 | 相关命令 命令 描述 docker container attach 附加到正在运行的容器 docker container commit 从容器的更改创建一个新的映像 docker container cp 在容器和本地文件系统之间复制文件/文件夹 docker container create 创建一个新的容器 docker container diff 检查容器文件系统上文件或目录的更改 docker container exec 在运行容器中运行命令 docker container export 将容器的文件系统导出为tar存档 docker container inspect 显示一个或多个容器的详细信息 docker container kill 杀死一个或多个运行容器 docker container logs 获取容器的日志 docker container ls 列出容器 docker container pause 暂停一个或多个容器内的所有进程 docker container port 列出端口映射或容器的特定映射 docker container prune 取出所有停止的容器 docker container rename 重命名容器 docker container restart 重新启动一个或多个容器 docker container rm 删除(移除)一个或多个容器 docker container run 在新容器中运行命令 docker container start 启动一个或多个停止的容器 docker container stats 显示容器的实时流资源使用统计信息 docker container stop 停止一个或多个运行容器 docker container top 显示容器的正在运行的进程 docker container unpause 取消暂停一个或多个容器内的所有流程 docker container update 更新一个或多个容器的配置 docker container wait 阻止一个或多个容器停止，然后打印退出代码]]></content>
-      <categories>
-        <category>docker</category>
-      </categories>
-      <tags>
-        <tag>container</tag>
       </tags>
   </entry>
   <entry>
@@ -1004,17 +1004,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Redis 使用场景]]></title>
-    <url>%2Fposts%2Fc77ba0b2.html</url>
-    <content type="text"><![CDATA[场景一：取最新N条数据网站最新文章、最新评论等。使用 Redis 列表(List)集合，LPUSH 命令向 list 集合头部插入数据，LTRIM 命令对 list 集合进行修剪(trim) 123456789# 将一个或多个值插入到列表头部# LPUSH key value1 [value2] 127.0.0.1:6379&gt; LPUSH latest.comments "foo"(integer) 1# 对一个列表进行修剪(trim)，就是说，让列表只保留指定区间内的元素，不在指定区间之内的元素都将被删除# LTRIM key start stop 127.0.0.1:6379&gt; LTRIM latest.comments 0 10OK 场景二：排行榜应用，取 TOP N操作场景二和场景一不同之处在于，场景一操作以时间为权重，场景二是以某一个条件为权重。比如：赞次数、评论次数等。这个时候就需要使用 Redis 有序集合(sorted set)。将需要排序的值设置为有序集合的 score，将具体的数据设置为相应的 value，每次只需要执行 ZDAA 命令即可。 123# 向有序集合添加一个或多个成员，或者更新已存在成员的分数# ZADD key score1 value1 [score2 value12] 127.0.0.1:6379&gt; ZADD myzset 1 "one" 场景三：计数器Redis 命令是原子性的，可以利用 INCR、DECR 命令来构建计数器系统，其底层写入是单线程模型，并发写入会按先后顺序执行。 12345678910111213141516# 将 key 中储存的数字值增一# INCR key127.0.0.1:6379&gt; INCR KEY_NAME# 延伸# 将 key 所储存的值加上给定的增量值（increment）# INCRBY key increment# 将 key 所储存的值加上给定的浮点增量值（increment）# INCRBYFLOAT key increment# 将 key 中储存的数字值减一# DECR key127.0.0.1:6379&gt; DECR KEY_NAME # 延伸# key 所储存的值减去给定的减量值（decrement）# DECRBY key decrement 场景四：缓存Redis 作为分布式缓存中间件，其性能优于 Memcached，且数据结构更加多样化。 场景五：队列使用 Redis 列表(List) 可以构建队列系统，使用 Redis 有序集合(sorted set)甚至可以构建有优先级的队列系统。 场景六：Pub、Sub实时消息系统使用 Redis 的 Pub/Sub 可以构建实时的消息系统。 场景七：Unique 操作获取所有数据去重。使用 Redis 集合(Set)数据结构最合适不过了，只需要不断将数据往 set 中丢就行了，set 会自动去重。 场景八：精确设置过期时间比如场景二中，score 可以设置成过期时间的时间戳，这样就可以简单的通过过期时间排序，定时清除过期数据。]]></content>
-      <categories>
-        <category>redis</category>
-      </categories>
-      <tags>
-        <tag>redis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[restful api 规范]]></title>
     <url>%2Fposts%2Ffea0c721.html</url>
     <content type="text"><![CDATA[RESTful API 设计规范 原文地址：https://github.com/godruoyi/restful-api-specification 关于「能愿动词」的使用为了避免歧义，文档大量使用了「能愿动词」，对应的解释如下： 必须 (MUST)：绝对，严格遵循，请照做，无条件遵守； 一定不可 (MUST NOT)：禁令，严令禁止； 应该 (SHOULD) ：强烈建议这样做，但是不强求； 不该 (SHOULD NOT)：强烈不建议这样做，但是不强求； 可以 (MAY) 和 可选 (OPTIONAL) ：选择性高一点，在这个文档内，此词语使用较少； 参见：RFC 2119 Protocol客户端在通过 API 与后端服务通信的过程中，应该 使用 HTTPS 协议。 API Root URLAPI 的根入口点应尽可能保持足够简单，这里有两个常见的 URL 根例子： api.example.com/* example.com/api/* 如果你的应用很庞大或者你预计它将会变的很庞大，那 应该 将 API 放到子域下（api.example.com）。这种做法可以保持某些规模化上的灵活性。 Versioning所有的 API 必须保持向后兼容，你 必须 在引入新版本 API 的同时确保旧版本 API 仍然可用。所以 应该 为其提供版本支持。 目前比较常见的两种版本号形式： 在 URL 中嵌入版本编号1api.example.com/v1/* 这种做法是版本号直观、易于调试；另一种做法是，将版本号放在 HTTP Header 头中： Endpoints端点就是指向特定资源或资源集合的 URL。在端点的设计中，你 必须 遵守下列约定： URL 的命名 必须 全部小写 URL 中资源（resource）的命名 必须 是名词，并且 必须 是复数形式 必须 优先使用 Restful 类型的 URL URL 必须 是易读的 URL 一定不可 暴露服务器架构 至于 URL 是否必须使用连字符（-） 或下划线（_），不做硬性规定，但 必须 根据团队情况统一一种风格。 来看一个反例 https://api.example.com/getUserInfo?userid=1 https://api.example.com/getusers https://api.example.com/sv/u https://api.example.com/cgi-bin/users/get_user.php?userid=1 再来看一个正列 https://api.example.com/zoos https://api.example.com/animals https://api.example.com/zoos/{zoo}/animals https://api.example.com/animal_types https://api.example.com/employees HTTP 动词对于资源的具体操作类型，由 HTTP 动词表示。常用的 HTTP 动词有下面五个（括号里是对应的 SQL 命令）。 GET（SELECT）：从服务器取出资源（一项或多项）。 POST（CREATE）：在服务器新建一个资源。 PUT（UPDATE）：在服务器更新资源（客户端提供改变后的完整资源）。 PATCH（UPDATE）：在服务器更新资源（客户端提供改变的属性）。 DELETE（DELETE）：从服务器删除资源。 其中 1 删除资源 必须 用 DELETE 方法2 创建新的资源 必须 使用 POST 方法3 更新资源 应该 使用 PUT 方法4 获取资源信息 必须 使用 GET 方法 针对每一个端点来说，下面列出所有可行的 HTTP 动词和端点的组合 请求方法 URL 描述 GET /zoos 列出所有的动物园(ID和名称，不要太详细) POST /zoos 新增一个新的动物园 GET /zoos/{zoo} 获取指定动物园详情 PUT /zoos/{zoo} 更新指定动物园(整个对象) PATCH /zoos/{zoo} 更新动物园(部分对象) DELETE /zoos/{zoo} 删除指定动物园 GET /zoos/{zoo}/animals 检索指定动物园下的动物列表(ID和名称，不要太详细) GET /animals 列出所有动物(ID和名称)。 POST /animals 新增新的动物 GET /animals/{animal} 获取指定的动物详情 PUT /animals/{animal} 更新指定的动物(整个对象) PATCH /animals/{animal} 更新指定的动物(部分对象) GET /animal_types 获取所有动物类型(ID和名称，不要太详细) GET /animal_types/{type} 获取指定的动物类型详情 GET /employees 检索整个雇员列表 GET /employees/{employee} 检索指定特定的员工 GET /zoos/{zoo}/employees 检索在这个动物园工作的雇员的名单(身份证和姓名) POST /employees 新增指定新员工 POST /zoos/{zoo}/employees 在特定的动物园雇佣一名员工 DELETE /zoos/{zoo}/employees/{employee} 从某个动物园解雇一名员工 超出 Restful 端点的，应该 模仿上表的方式来定义端点。 Filtering 如果记录数量很多，服务器不可能都将它们返回给用户。API 应该 提供参数，过滤返回结果。下面是一些常见的参数。 ?limit=10：指定返回记录的数量 ?offset=10：指定返回记录的开始位置。 ?page=2&amp;per_page=100：指定第几页，以及每页的记录数。 ?sortby=name&amp;order=asc：指定返回结果按照哪个属性排序，以及排序顺序。 ?animal_type_id=1：指定筛选条件 所有 URL 参数 必须 是全小写，必须 使用下划线类型的参数形式。 分页参数 必须 固定为 page、per_page 经常使用的、复杂的查询 应该 标签化，降低维护成本。如 1234GET /trades?status=closed&amp;sort=sortby=name&amp;order=asc# 可为其定制快捷方式GET /trades/recently_closed Authentication应该 使用 OAuth2.0 的方式为 API 调用者提供登录认证。必须 先通过登录接口获取 Access Token 后再通过该 token 调用需要身份认证的 API。 Oauth 的端点设计示列 RFC 6749 /token Twitter /oauth2/token Fackbook /oauth/access_token Google /o/oauth2/token Github /login/oauth/access_token Instagram /oauth/authorize 客户端在获得 access token 的同时 必须 在响应中包含一个名为 expires_in 的数据，它表示当前获得的 token 会在多少 秒 后失效。 12345&#123; "access_token": "token....", "token_type": "Bearer", "expires_in": 3600&#125; 客户端在请求需要认证的 API 时，必须 在请求头 Authorization 中带上 access_token。 1Authorization: Bearer token... 当超过指定的秒数后，access token 就会过期，再次用过期/或无效的 token 访问时，服务端 应该 返回 invalid_token 的错误或 401 错误码。 12345678HTTP/1.1 401 UnauthorizedContent-Type: application/jsonCache-Control: no-storePragma: no-cache&#123; "error": "invalid_token"&#125; Laravel 开发中，应该 使用 JWT 来为管理你的 Token，并且 一定不可 在 api 中间件中开启请求 session。 Response所有的 API 响应，必须 遵守 HTTP 设计规范，必须 选择合适的 HTTP 状态码。一定不可 所有接口都返回状态码为 200 的 HTTP 响应，如： 1234567891011HTTP/1.1 200 okContent-Type: application/jsonServer: example.com&#123; "code": 0, "msg": "success", "data": &#123; "username": "username" &#125;&#125; 或 12345678HTTP/1.1 200 okContent-Type: application/jsonServer: example.com&#123; "code": -1, "msg": "该活动不存在",&#125; 下表列举了常见的 HTTP 状态码 状态码 描述 1xx 代表请求已被接受，需要继续处理 2xx 请求已成功，请求所希望的响应头或数据体将随此响应返回 3xx 重定向 4xx 客户端原因引起的错误 5xx 服务端原因引起的错误 只有来自客户端的请求被正确的处理后才能返回 2xx 的响应，所以当 API 返回 2xx 类型的状态码时，前端 必须 认定该请求已处理成功。 必须强调的是，所有 API 一定不可 返回 1xx 类型的状态码。当 API 发生错误时，必须 返回出错时的详细信息。目前常见返回错误信息的方法有两种： 1、将错误详细放入 HTTP 响应首部； 123X-MYNAME-ERROR-CODE: 4001X-MYNAME-ERROR-MESSAGE: Bad authentication tokenX-MYNAME-ERROR-INFO: http://docs.example.com/api/v1/authentication 2、直接放入响应实体中； 123456789HTTP/1.1 401 UnauthorizedServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 10:02:59 GMTConnection: keep-alive&#123;"error_code":40100,"message":"Unauthorized"&#125; 考虑到易读性和客户端的易处理性，我们 必须 把错误信息直接放到响应实体中，并且错误格式 应该 满足如下格式： 1234&#123; "message": "您查找的资源不存在", "error_code": 404001&#125; 其中错误码（error_code）必须 和 HTTP 状态码对应，也方便错误码归类，如： 123456789HTTP/1.1 429 Too Many RequestsServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 10:15:52 GMTConnection: keep-alive&#123;"error_code":429001,"message":"你操作太频繁了"&#125; 123456789HTTP/1.1 403 ForbiddenServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 10:19:27 GMTConnection: keep-alive&#123;"error_code":403002,"message":"用户已禁用"&#125; 应该 在返回的错误信息中，同时包含面向开发者和面向用户的提示信息，前者可方便开发人员调试，后者可直接展示给终端用户查看如： 12345678&#123; "message": "直接展示给终端用户的错误信息", "error_code": "业务错误码", "error": "供开发者查看的错误信息", "debug": [ "错误堆栈，必须开启 debug 才存在" ]&#125; 下面详细列举了各种情况 API 的返回说明。 200 ok200 状态码是最常见的 HTTP 状态码，在所有 成功 的 GET 请求中，必须 返回此状态码。HTTP 响应实体部分 必须 直接就是数据，不要做多余的包装。 错误示例： 1234567891011HTTP/1.1 200 okContent-Type: application/jsonServer: example.com&#123; "user": &#123; "id":1, "nickname":"fwest", "username": "example" &#125;&#125; 正确示例： 1、获取单个资源详情 12345&#123; "id": 1, "username": "godruoyi", "age": 88,&#125; 2、获取资源集合 123456789101112[ &#123; "id": 1, "username": "godruoyi", "age": 88, &#125;, &#123; "id": 2, "username": "foo", "age": 88, &#125;] 3、额外的媒体信息 123456789101112131415161718192021222324252627282930&#123; "data": [ &#123; "id": 1, "avatar": "https://lorempixel.com/640/480/?32556", "nickname": "fwest", "last_logined_time": "2018-05-29 04:56:43", "has_registed": true &#125;, &#123; "id": 2, "avatar": "https://lorempixel.com/640/480/?86144", "nickname": "zschowalter", "last_logined_time": "2018-06-16 15:18:34", "has_registed": true &#125; ], "meta": &#123; "pagination": &#123; "total": 101, "count": 2, "per_page": 2, "current_page": 1, "total_pages": 51, "links": &#123; "next": "http://api.example.com?page=2" &#125; &#125; &#125;&#125; 其中，分页和其他额外的媒体信息，必须放到 meta 字段中。 201 Created当服务器创建数据成功时，应该 返回此状态码。常见的应用场景是使用 POST 提交用户信息，如： 添加了新用户 上传了图片 创建了新活动 等，都可以返回 201 状态码。需要注意的是，你可以选择在用户创建成功后返回新用户的数据 123456789101112131415HTTP/1.1 201 CreatedServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedDate: Sun, 24 Jun 2018 09:13:40 GMTConnection: keep-alive&#123; "id": 1, "avatar": "https:\/\/lorempixel.com\/640\/480\/?32556", "nickname": "fwest", "last_logined_time": "2018-05-29 04:56:43", "created_at": "2018-06-16 17:55:55", "updated_at": "2018-06-16 17:55:55"&#125; 也可以返回一个响应实体为空的 HTTP Response 如： 123456HTTP/1.1 201 CreatedServer: nginx/1.11.9Content-Type: text/html; charset=UTF-8Transfer-Encoding: chunkedDate: Sun, 24 Jun 2018 09:12:20 GMTConnection: keep-alive 这里我们 应该 采用第二种方式，因为大多数情况下，客户端只需要知道该请求操作成功与否，并不需要返回新资源的信息。 202 Accepted该状态码表示服务器已经接受到了来自客户端的请求，但还未开始处理。常用短信发送、邮件通知、模板消息推送等这类很耗时需要队列支持的场景中； 返回该状态码时，响应实体 必须 为空。 123456HTTP/1.1 202 AcceptedServer: nginx/1.11.9Content-Type: text/html; charset=UTF-8Transfer-Encoding: chunkedDate: Sun, 24 Jun 2018 09:25:15 GMTConnection: keep-alive 204 No Content该状态码表示响应实体不包含任何数据，其中： 在使用 DELETE 方法删除资源 成功 时，必须 返回该状态码 使用 PUT、PATCH 方法更新数据 成功 时，也 应该 返回此状态码 1234HTTP/1.1 204 No ContentServer: nginx/1.11.9Date: Sun, 24 Jun 2018 09:29:12 GMTConnection: keep-alive 3xx 重定向所有 API 不该 返回 3xx 类型的状态码。因为 3xx 类型的响应格式一般为下列格式： 123456789101112131415161718192021HTTP/1.1 302 FoundServer: nginx/1.11.9Content-Type: text/html; charset=UTF-8Transfer-Encoding: chunkedCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 09:41:50 GMTLocation: https://example.comConnection: keep-alive&lt;!DOCTYPE html&gt;&lt;html&gt; &lt;head&gt; &lt;meta charset="UTF-8" /&gt; &lt;meta http-equiv="refresh" content="0;url=https://example.com" /&gt; &lt;title&gt;Redirecting to https://example.com&lt;/title&gt; &lt;/head&gt; &lt;body&gt; Redirecting to &lt;a href="https://example.com"&gt;https://example.com&lt;/a&gt;. &lt;/body&gt;&lt;/html&gt; 所有 API 一定不可 返回纯 HTML 结构的响应；若一定要使用重定向功能，可以 返回一个响应实体为空的 3xx 响应，并在响应头中加上 Location 字段: 1234567HTTP/1.1 302 FoundServer: nginx/1.11.9Content-Type: text/html; charset=UTF-8Transfer-Encoding: chunkedDate: Sun, 24 Jun 2018 09:52:50 GMTLocation: https://godruoyi.comConnection: keep-alive 400 Bad Request由于明显的客户端错误（例如，请求语法格式错误、无效的请求、无效的签名等），服务器 应该 放弃该请求。 当服务器无法从其他 4xx 类型的状态码中找出合适的来表示错误类型时，都 必须 返回该状态码。 123456789HTTP/1.1 400 Bad RequestServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 13:22:36 GMTConnection: keep-alive&#123;"error_code":40000,"message":"无效的签名"&#125; 401 Unauthorized该状态码表示当前请求需要身份认证，以下情况都 必须 返回该状态码。 未认证用户访问需要认证的 API access_token 无效/过期 客户端在收到 401 响应后，都 应该 提示用户进行下一步的登录操作。 12345678910HTTP/1.1 401 UnauthorizedServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedWWW-Authenticate: JWTAuthCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 13:17:02 GMTConnection: keep-alive"message":"Token Signature could not be verified.","error_code": "40100"&#125; 403 Forbidden该状态码可以简单的理解为没有权限访问该请求，服务器收到请求但拒绝提供服务。 如当普通用户请求操作管理员用户时，必须 返回该状态码。 123456789HTTP/1.1 403 ForbiddenServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 13:05:34 GMTConnection: keep-alive&#123;"error_code":40301,"message":"权限不足"&#125; 404 Not Found该状态码表示用户请求的资源不存在，如 获取不存在的用户信息 （get /users/9999999） 访问不存在的端点 都 必须 返回该状态码，若该资源已永久不存在，则 应该 返回 401 响应。 405 Method Not Allowed当客户端使用的 HTTP 请求方法不被服务器允许时，必须 返回该状态码。 如客户端调用了 POST 方法来访问只支持 GET 方法的 API 该响应 必须 返回一个 Allow 头信息用以表示出当前资源能够接受的请求方法的列表。 12345678910HTTP/1.1 405 Method Not AllowedServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedAllow: GET, HEADCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 12:30:57 GMTConnection: keep-alive&#123;"message":"405 Method Not Allowed","error_code": 40500&#125; 406 Not AcceptableAPI 在不支持客户端指定的数据格式时，应该返回此状态码。如支持 JSON 和 XML 输出的 API 被指定返回 YAML 格式的数据时。 Http 协议一般通过请求首部的 Accept 来指定数据格式 408 Request Timeout客户端请求超时时 必须 返回该状态码，需要注意的时，该状态码表示 客户端请求超时，在涉及第三方 API 调用超时时，一定不可 返回该状态码。 409 Confilct该状态码表示因为请求存在冲突无法处理。如通过手机号码提供注册功能的 API，当用户提交的手机号已存在时，必须 返回此状态码。 123456789HTTP/1.1 409 ConflictServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 12:19:04 GMTConnection: keep-alive&#123;"error_code":40900,"message":"手机号已存在"&#125; 410 Gone和 404 类似，该状态码也表示请求的资源不存在，只是 410 状态码进一步表示所请求的资源已不存在，并且未来也不会存在。在收到 410 状态码后，客户端 应该 停止再次请求该资源。 413 Request Entity Too Large该状态码表示服务器拒绝处理当前请求，因为该请求提交的实体数据大小超过了服务器愿意或者能够处理的范围。 此种情况下，服务器可以关闭连接以免客户端继续发送此请求。 如果这个状况是临时的，服务器 应该 返回一个 Retry-After 的响应头，以告知客户端可以在多少时间以后重新尝试。 414 Request-URI Too Long该状态码表示请求的 URI 长度超过了服务器能够解释的长度，因此服务器拒绝对该请求提供服务。 415 Unsupported Media Type通常表示服务器不支持客户端请求首部 Content-Type 指定的数据格式。如在只接受 JSON 格式的 API 中放入 XML 类型的数据并向服务器发送，都 应该 返回该状态码。 该状态码也可用于如：只允许上传图片格式的文件，但是客户端提交媒体文件非法或不是图片类型，这时 应该 返回该状态码： 123456789HTTP/1.1 415 Unsupported Media TypeServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 12:09:40 GMTConnection: keep-alive&#123;"error_code":41500,"message":"不允许上传的图片格式"&#125; 429 Too Many Requests该状态码表示用户请求次数超过允许范围。如 API 设定为 60次/分钟，当用户在一分钟内请求次数超过 60 次后，都 应该 返回该状态码。并且也 应该 在响应首部中加上下列头部： 1234X-RateLimit-Limit: 10 请求速率（由应用设定，其单位一般为小时/分钟等，这里是 10次/5分钟）X-RateLimit-Remaining: 0 当前剩余的请求数量X-RateLimit-Reset: 1529839462 重置时间Retry-After: 120 下一次访问应该等待的时间（秒） 列子 12345678910111213HTTP/1.1 429 Too Many RequestsServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedX-RateLimit-Limit: 10X-RateLimit-Remaining: 0X-RateLimit-Reset: 1529839462Retry-After: 290Cache-Control: no-cache, privateDate: Sun, 24 Jun 2018 11:19:32 GMTConnection: keep-alive&#123;"message":"You have exceeded your rate limit.","error_code":42900&#125; 必须 为所有的 API 设置 Rate Limit 支持。 500 Internal Server Error该状态码 必须 在服务器出错时抛出，对于所有的 500 错误，都 应该 提供完整的错误信息支持，也方便跟踪调试。 503 Service Unavailable该状态码表示服务器暂时处理不可用状态，当服务器需要维护或第三方 API 请求超时/不可达时，都 应该 返回该状态码，其中若是主动关闭 API 服务，应该在返回的响应首部加上 Retry-After 头部，表示多少秒后可以再次访问。 12345678910HTTP/1.1 503 Service UnavailableServer: nginx/1.11.9Content-Type: application/jsonTransfer-Encoding: chunkedCache-Control: no-cache, privateDate: Sun, 24 Jun 2018 10:56:20 GMTRetry-After: 60Connection: keep-alive&#123;"error_code":50300,"message":"服务维护中"&#125; 其他 HTTP 状态码请参考 HTTP 状态码- 维基百科]]></content>
@@ -1023,6 +1012,17 @@
       </categories>
       <tags>
         <tag>restful api</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Redis 使用场景]]></title>
+    <url>%2Fposts%2Fc77ba0b2.html</url>
+    <content type="text"><![CDATA[场景一：取最新N条数据网站最新文章、最新评论等。使用 Redis 列表(List)集合，LPUSH 命令向 list 集合头部插入数据，LTRIM 命令对 list 集合进行修剪(trim) 123456789# 将一个或多个值插入到列表头部# LPUSH key value1 [value2] 127.0.0.1:6379&gt; LPUSH latest.comments "foo"(integer) 1# 对一个列表进行修剪(trim)，就是说，让列表只保留指定区间内的元素，不在指定区间之内的元素都将被删除# LTRIM key start stop 127.0.0.1:6379&gt; LTRIM latest.comments 0 10OK 场景二：排行榜应用，取 TOP N操作场景二和场景一不同之处在于，场景一操作以时间为权重，场景二是以某一个条件为权重。比如：赞次数、评论次数等。这个时候就需要使用 Redis 有序集合(sorted set)。将需要排序的值设置为有序集合的 score，将具体的数据设置为相应的 value，每次只需要执行 ZDAA 命令即可。 123# 向有序集合添加一个或多个成员，或者更新已存在成员的分数# ZADD key score1 value1 [score2 value12] 127.0.0.1:6379&gt; ZADD myzset 1 "one" 场景三：计数器Redis 命令是原子性的，可以利用 INCR、DECR 命令来构建计数器系统，其底层写入是单线程模型，并发写入会按先后顺序执行。 12345678910111213141516# 将 key 中储存的数字值增一# INCR key127.0.0.1:6379&gt; INCR KEY_NAME# 延伸# 将 key 所储存的值加上给定的增量值（increment）# INCRBY key increment# 将 key 所储存的值加上给定的浮点增量值（increment）# INCRBYFLOAT key increment# 将 key 中储存的数字值减一# DECR key127.0.0.1:6379&gt; DECR KEY_NAME # 延伸# key 所储存的值减去给定的减量值（decrement）# DECRBY key decrement 场景四：缓存Redis 作为分布式缓存中间件，其性能优于 Memcached，且数据结构更加多样化。 场景五：队列使用 Redis 列表(List) 可以构建队列系统，使用 Redis 有序集合(sorted set)甚至可以构建有优先级的队列系统。 场景六：Pub、Sub实时消息系统使用 Redis 的 Pub/Sub 可以构建实时的消息系统。 场景七：Unique 操作获取所有数据去重。使用 Redis 集合(Set)数据结构最合适不过了，只需要不断将数据往 set 中丢就行了，set 会自动去重。 场景八：精确设置过期时间比如场景二中，score 可以设置成过期时间的时间戳，这样就可以简单的通过过期时间排序，定时清除过期数据。]]></content>
+      <categories>
+        <category>redis</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
       </tags>
   </entry>
   <entry>
@@ -1038,18 +1038,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[spring cache 常用缓存注解介绍]]></title>
-    <url>%2Fposts%2F3bef8a86.html</url>
-    <content type="text"><![CDATA[spring-cache 常用缓存注解介绍 包地址 注解名 作用域 作用 org.springframework.cache.annotation CacheConfig 类级别 s设置缓存的公共配置 Cacheable 方法级别 缓存读取操作 CacheEvict 方法级别 缓存失效操作 CachePut 方法级别 缓存更新操作 Caching 方法级别 h混合读取、失效、更新操作 CacheConfig主要作用是全局配置，比如配置缓存名称（cacheNames），只需要在类上面使用这个注解配置一次，类下面的方法就默认使用全局配置了。 Cacheable这个注解是最重要的，主要实现的是功能在进行读操作的时候，先从缓存中查询，如果查询不到，再走业务流程获取数据，获取成功后，保存到缓存中。 属性 默认值 描述 value 缓存的名称，在 spring 配置文件中定义，必须指定至少一个 cacheNames 缓存的名称，在 spring 配置文件中定义，必须指定至少一个 key 缓存的 key，可以为空，如果指定要按照 SpEL 表达式编写，如果不指定，则缺省按照方法的所有参数进行组合 keyGenerator cacheManager cacheResolver condition 缓存的条件，可以为空，使用 SpEL 编写，返回 true 或者 false，只有为 true 才进行缓存。不能使用返回结果 unless 不缓存的条件，可以为空，使用 SpEL 编写，返回 true 或者 false，只有为 false才进行缓存。可以使用返回结果 sync CacheEvict这个注解主要是配合@Cacheable一起使用，它的主要作用是清除缓存。当进行一些更新、删除操作时，就需要删除缓存。如果不删除缓存就会出现读取不到最新数据的情况。它有一个重要的数据allEntries默认是false。当true是，会清除所有缓存，而不以指定的key为主。 CachePut 这个注解总是会把数据缓存，而不会每次检测缓存是否存在 Caching这个注解是Cacheable、CachePut、CacheEvict的综合体，可以使用这个注解包含以上3个注解。]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>spring</tag>
-        <tag>cache</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[spring retry 使用]]></title>
     <url>%2Fposts%2F9cd0a544.html</url>
     <content type="text"><![CDATA[@Retryable 被注解的方法发生异常时会重试 参数 默认值 说明 value 空 指定发生的异常，进行重试 include 空 指定异常重试。和value一样，默认空，当exclude也为空时，所有异常都重试 exclude 空 指定异常不重试。默认空，当include也为空时，所有异常都重试 maxAttemps 3 重试次数 backoff 空 重试补偿机制 @Backoff 参数 默认值 说明 delay 1000L 指定延迟时间 multiplier 0.0D 指定延迟的倍数。比如delay=5000l,multiplier=2时，第一次重试为5秒后，第二次为10秒，第三次为20秒 @Recover 当重试到达指定次数时，被注解的方法将被回调，可以在该方法中进行日志处理。需要注意的是发生的异常和入参类型一致时才会回调。 示例 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263import org.springframework.retry.annotation.Backoff;import org.springframework.retry.annotation.Recover;import org.springframework.retry.annotation.Retryable;import org.springframework.stereotype.Service;/** * @author Created by YL on 2018/7/18 */@Service@Slf4jpublic class RetryService &#123; @Retryable( value = &#123;Exception.class&#125;, maxAttempts = 10, backoff = @Backoff(delay = 10000L) ) public String retry() throws Exception &#123; throw new Exception("测试 spring retry"); &#125; @Recover public void exception(Exception e) &#123; log.error("errmsg: &#123;&#125;", e.getMessage(), e); &#125;&#125;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.boot.builder.SpringApplicationBuilder;import org.springframework.retry.annotation.EnableRetry;@SpringBootApplication@EnableRetrypublic class App &#123; /** * Common */ private static SpringApplicationBuilder configureSpringBuilder(SpringApplicationBuilder builder) &#123; //builder.application().addListeners(new EnvironmentPreparedEventListener()); builder.application().addPrimarySources(Collections.singletonList(App.class)); return builder.sources(App.class); &#125; // /** // * for WAR deploy // */ // @Override // protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) &#123; // // // 外部容器部署 web 环境要在这里配置 EnvironmentPreparedEvent 监听器才生效 // // builder.application().addListeners(new EnvironmentPreparedEventListener()); // // return builder.sources(Application.class); // return super.configure(configureSpringBuilder(builder)); // &#125; /** * for JAR deploy */ public static void main(String[] args) &#123; // SpringApplication.run(Application.class, args); SpringApplicationBuilder builder = configureSpringBuilder(new SpringApplicationBuilder()); builder.application().run(args); &#125;&#125;]]></content>
@@ -1059,6 +1047,18 @@
       <tags>
         <tag>spring</tag>
         <tag>retry</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[spring cache 常用缓存注解介绍]]></title>
+    <url>%2Fposts%2F3bef8a86.html</url>
+    <content type="text"><![CDATA[spring-cache 常用缓存注解介绍 包地址 注解名 作用域 作用 org.springframework.cache.annotation CacheConfig 类级别 s设置缓存的公共配置 Cacheable 方法级别 缓存读取操作 CacheEvict 方法级别 缓存失效操作 CachePut 方法级别 缓存更新操作 Caching 方法级别 h混合读取、失效、更新操作 CacheConfig主要作用是全局配置，比如配置缓存名称（cacheNames），只需要在类上面使用这个注解配置一次，类下面的方法就默认使用全局配置了。 Cacheable这个注解是最重要的，主要实现的是功能在进行读操作的时候，先从缓存中查询，如果查询不到，再走业务流程获取数据，获取成功后，保存到缓存中。 属性 默认值 描述 value 缓存的名称，在 spring 配置文件中定义，必须指定至少一个 cacheNames 缓存的名称，在 spring 配置文件中定义，必须指定至少一个 key 缓存的 key，可以为空，如果指定要按照 SpEL 表达式编写，如果不指定，则缺省按照方法的所有参数进行组合 keyGenerator cacheManager cacheResolver condition 缓存的条件，可以为空，使用 SpEL 编写，返回 true 或者 false，只有为 true 才进行缓存。不能使用返回结果 unless 不缓存的条件，可以为空，使用 SpEL 编写，返回 true 或者 false，只有为 false才进行缓存。可以使用返回结果 sync CacheEvict这个注解主要是配合@Cacheable一起使用，它的主要作用是清除缓存。当进行一些更新、删除操作时，就需要删除缓存。如果不删除缓存就会出现读取不到最新数据的情况。它有一个重要的数据allEntries默认是false。当true是，会清除所有缓存，而不以指定的key为主。 CachePut 这个注解总是会把数据缓存，而不会每次检测缓存是否存在 Caching这个注解是Cacheable、CachePut、CacheEvict的综合体，可以使用这个注解包含以上3个注解。]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>spring</tag>
+        <tag>cache</tag>
       </tags>
   </entry>
   <entry>
@@ -1265,6 +1265,30 @@
       </categories>
   </entry>
   <entry>
+    <title><![CDATA[Linux unzip 命令]]></title>
+    <url>%2Fposts%2F64f75729.html</url>
+    <content type="text"><![CDATA[unzip解压war、jar、zip、rar等文件1unzip -oq /opt/xxx.war -d /opt/ddd]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>unzip</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux grep 命令]]></title>
+    <url>%2Fposts%2F1f104b3f.html</url>
+    <content type="text"><![CDATA[grep统计出现次数1grep 'sign.*time.*openid' access_p80_weixinv3.log | awk '&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;' | sort -n 4 183.3.234.4510 183.3.234.5720 183.3.234.58 查询前后日志grep -5 ‘parttern’ inputfile //打印匹配行的前后5行grep -C 5 ‘parttern’ inputfile //打印匹配行的前后5行grep -A 5 ‘parttern’ inputfile //打印匹配行的后5行grep -B 5 ‘parttern’ inputfile //打印匹配行的前5行 正则：数字12# 正则匹配1802****269的手机号码grep '1802[0-9]\&#123;4\&#125;269' info.log]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>grep</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Linux ls 命令]]></title>
     <url>%2Fposts%2F53b5960c.html</url>
     <content type="text"><![CDATA[ls12# 统计文件夹中文件数ls -l |grep "^-"|wc -l 保留最新的1个文件夹，删除其他文件夹（使用-d）1ls -t -d /home/yl/api-web-open/logs/undertow-* | tail -n +2 | xargs rm -rf]]></content>
@@ -1274,6 +1298,30 @@
       <tags>
         <tag>shell</tag>
         <tag>ls</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux find 命令]]></title>
+    <url>%2Fposts%2F7b744fec.html</url>
+    <content type="text"><![CDATA[查找文件并删除123456789101112# 删除指定时间前的 jpg 文件find /opt/upload/ -mtime +30 -type f -name *.jpg -exec rm -f &#123;&#125; \;# 删除隐藏文件（-fr）find /opt/upload/ -type d -name .svn -exec rm -fr &#123;&#125; \;# 删除30天前的文件find /opt/upload -mtime +30 -type f -name "*.jpg" -exec rm -rf &#123;&#125; \;# find: 路径必须在表达式之前，在*前加\find /opt/upload/ -mtime +15 -type f -name \*.log -exec rm -f &#123;&#125; \; 打印指定时间前的文件1find project/upload/ -mtime +30 -type f -print]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>find</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux sed 命令]]></title>
+    <url>%2Fposts%2Fb8ec468d.html</url>
+    <content type="text"><![CDATA[sed打印指定行数1sed -n '12457431, 12457440p' tomcat/logs/catalina.out]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>sed</tag>
       </tags>
   </entry>
   <entry>
@@ -1289,98 +1337,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[zookeeper evn 环境变量配置脚本]]></title>
-    <url>%2Fposts%2F57428144.html</url>
-    <content type="text"><![CDATA[zookeeper-env1234567891011121314151617181920#!/usr/bin/env bash# @Author: YL# @Date: 2017-10-31 10:27:16# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:43# 此文件放到 zookeeper 的 conf 目录下# java envexport JAVA_HOME=/usr/java/jdk1.8.0_131export PATH=$JAVA_HOME/bin:$PATHexport JVMFLAGS="-Xms1536m -Xmx1536m $JVMFLAGS"cd `dirname $0`cd ..NODE_HOME=`pwd`# zookeeper envZOO_LOG_DIR=$NODE_HOME/logsZOO_LOG4J_PROP="INFO,ROLLINGFILE"]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux sed 命令]]></title>
-    <url>%2Fposts%2Fb8ec468d.html</url>
-    <content type="text"><![CDATA[sed打印指定行数1sed -n '12457431, 12457440p' tomcat/logs/catalina.out]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>sed</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux tail 命令]]></title>
-    <url>%2Fposts%2F29bd046e.html</url>
-    <content type="text"><![CDATA[tail]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>tail</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux tar 命令]]></title>
-    <url>%2Fposts%2Fbd083454.html</url>
-    <content type="text"><![CDATA[tar 解压 1tar -zxvf xxx.tar.gz 打包 1tar -zcvf xxx.tar.gz 待压缩的文件名 解压 tar zxvf 文件名.tar.gz 压缩 tar zcvf 文件名.tar.gz 待压缩的文件名 tar -zcvf tomcat.tar.gz –exclude=.log –exclude=.log. –exclude=.out –exclude=.out. –exclude=.tgz.bak –exclude=.war tomcat/ 排除文件夹（注意排除的文件夹最后不能加/） tar -zcvf gitlab.source.tar.gz –exclude=node_modules –exclude=target gitlab/]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>tar</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[zookeeper 启动脚本]]></title>
-    <url>%2Fposts%2Faf01b9a2.html</url>
-    <content type="text"><![CDATA[start12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-28 10:23:20# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:41# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`NODE_BIN_DIR=`pwd`NODE_LIB_DIR=$NODE_BIN_DIR/../lib/cd ..NODE_HOME=`pwd`# mkdir logs dirNODE_DATA_LOG_DIR=`sed '/dataLogDir/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`NODE_LOGS_DIR=""if [ -n "$NODE_DATA_LOG_DIR" ]; then NODE_LOGS_DIR=$NODE_DATA_LOG_DIRelse NODE_LOGS_DIR=$NODE_HOME/logsfiif [ ! -d $NODE_LOGS_DIR ]; then mkdir $NODE_LOGS_DIRfiSTDOUT_FILE=$NODE_LOGS_DIR/stdout.logecho "[$(date '+%Y-%m-%d %H:%M:%S')] NODE_BIN_DIR: $NODE_BIN_DIR" | tee -a $STDOUT_FILE# pidNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`if [ -n "$NODE_PID" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')] ERROR: The $NODE_LIB_DIR already started! pid: $NODE_PID" | tee -a $STDOUT_FILE exit 1fi# portNODE_PORT=`sed '/clientPort/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`if [ -n "$NODE_PORT" ]; then NODE_PORT_COUNT=`netstat -tln | grep $NODE_PORT | wc -l` if [ $NODE_PORT_COUNT -gt 0 ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')] ERROR: The $NODE_LIB_DIR port $NODE_PORT already used!" | tee -a $STDOUT_FILE exit 1 fifi# startingcd $NODE_BIN_DIR./zkServer.sh startNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`echo "[$(date '+%Y-%m-%d %H:%M:%S')] The $NODE_LIB_DIR started OK! pid: $NODE_PID" | tee -a $STDOUT_FILE]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux unzip 命令]]></title>
-    <url>%2Fposts%2F64f75729.html</url>
-    <content type="text"><![CDATA[unzip解压war、jar、zip、rar等文件1unzip -oq /opt/xxx.war -d /opt/ddd]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>unzip</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[zookeeper stop脚本]]></title>
-    <url>%2Fposts%2F7bd064dc.html</url>
-    <content type="text"><![CDATA[stop12345678910#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:00# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:49# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stop]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux grep 命令]]></title>
-    <url>%2Fposts%2F1f104b3f.html</url>
-    <content type="text"><![CDATA[grep统计出现次数1grep 'sign.*time.*openid' access_p80_weixinv3.log | awk '&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;' | sort -n 4 183.3.234.4510 183.3.234.5720 183.3.234.58 查询前后日志grep -5 ‘parttern’ inputfile //打印匹配行的前后5行grep -C 5 ‘parttern’ inputfile //打印匹配行的前后5行grep -A 5 ‘parttern’ inputfile //打印匹配行的后5行grep -B 5 ‘parttern’ inputfile //打印匹配行的前5行 正则：数字12# 正则匹配1802****269的手机号码grep '1802[0-9]\&#123;4\&#125;269' info.log]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>grep</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Tomcat 启动脚本]]></title>
-    <url>%2Fposts%2Fe22f47ab.html</url>
-    <content type="text"><![CDATA[Tomcat 启动脚本主 Tomcat + 应用部署 Tomcat 应用部署方式 12345678910111213141516171819[txrd@host-148 /data/]$ tree -af .├── ./apache-tomcat-8.5.57│ └── ./bin│ └── ./conf│ └── ./lib│ └── ./temp│ └── ./webapps│ └── ./work├── ./szim│ └── ./project │ └── ./szim.war │ └── ./tomcat │ └── ./conf│ └── ./temp│ └── ./webapps│ └── ./work│ └── ./logs.sh │ └── ./restart.sh restart.sh 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109#!/usr/bin/env bash# @Author: YL# @Date: 2020-08-17 09:33:43# @Last Modified by: YL# @Last Modified time: 2020-08-17 14:50:43export LANG=en_US.UTF-8# Tomcat 主目录export CATALINA_HOME=/data/apache-tomcat-8.5.57cd `dirname $0`PROJECT_HOME=`pwd`# Tomcat 应用部署目录TC_HOME="$PROJECT_HOME/tomcat"# Tomcat 应用部署目录export CATALINA_BASE=$TC_HOME# crontab 检测日记文件TC_STDOUT_FILE="$TC_HOME/logs/stdout.out"# 检测 Tomcat 是否启动（进程ID）PIDS=`ps -ef | grep $TC_HOME | grep -v grep | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`#===========================================================================================# JVM Configuration#===========================================================================================# export JAVA_HOME=/usr/java/jdk1.8.0_251# export PATH=$JAVA_HOME/bin:$PATH# export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHJVM_OPTS="$JVM_OPTS -server -Xms1g -Xmx1g -Xss256k"JVM_OPTS="$JVM_OPTS -XX:+DisableExplicitGC -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled"JVM_OPTS="$JVM_OPTS -Xloggc:$TC_HOME/logs/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M"JVM_OPTS="$JVM_OPTS -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$TC_HOME/logs/dump-`date +"%Y-%m-%d"`.hprof"JVM_OPTS="$JVM_OPTS -Dspring.profiles.active=pro"# Tomcat 启动参数配置export JAVA_OPTS="$JVM_OPTS"#===========================================================================================# log file delete#===========================================================================================function cleanLog()&#123; ls -d -t $TC_HOME/logs/catalina.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/host-manager.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/localhost.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/manager.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/*.hprof | tail -n +3 | xargs rm -rf&#125;cleanLog# 优雅停机function gracefulShutdown()&#123; if [ -z "$PIDS" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME does not started!" | tee -a $STDOUT_FILE else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PIDS begining" | tee -a $STDOUT_FILE for PID in $PIDS ; do kill $PID &gt; /dev/null 2&gt;&amp;1 echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PID success" | tee -a $STDOUT_FILE done # 检测是否停机成功 COUNT=0 while [ $COUNT -lt 1 ]; do sleep 1 COUNT=1 for PID in $PIDS ; do PID_EXIST=`ps -f -p $PID | grep java` if [ -n "$PID_EXIST" ]; then COUNT=0 break fi done done fi&#125;function operate()&#123; if [[ "$1" = "kill" ]] ; then gracefulShutdown elif [[ "$1" = "start" ]]; then cd $CATALINA_HOME/bin sh startup.sh else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" | tee -a $TC_STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$PIDS" = "" ]] ; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" &gt;&gt; $TC_STDOUT_FILE operate start else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME pid $PIDS" &gt;&gt; $TC_STDOUT_FILE fielse echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILEfi 单应用部署 Tomcat 应用部署方式 12345678910111213[txrd@host-148 /data/szim]$ tree -af .├── ./project │ └── ./szim.war └── ./tomcat │ └── ./bin│ └── ./conf│ └── ./lib│ └── ./temp│ └── ./webapps│ └── ./work├── ./logs.sh ├── ./restart.sh restart.sh 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109#!/usr/bin/env bash# @Author: YL# @Date: 2020-08-17 09:33:43# @Last Modified by: YL# @Last Modified time: 2020-08-17 14:50:43export LANG=en_US.UTF-8# Tomcat 主目录export CATALINA_HOME=/data/apache-tomcat-8.5.57cd `dirname $0`PROJECT_HOME=`pwd`# Tomcat 应用部署目录TC_HOME="$PROJECT_HOME/tomcat"# Tomcat 应用部署目录export CATALINA_BASE=$TC_HOME# crontab 检测日记文件TC_STDOUT_FILE="$TC_HOME/logs/stdout.out"# 检测 Tomcat 是否启动（进程ID）PIDS=`ps -ef | grep $TC_HOME | grep -v grep | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`#===========================================================================================# JVM Configuration#===========================================================================================# export JAVA_HOME=/usr/java/jdk1.8.0_251# export PATH=$JAVA_HOME/bin:$PATH# export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHJVM_OPTS="$JVM_OPTS -server -Xms1g -Xmx1g -Xss256k"JVM_OPTS="$JVM_OPTS -XX:+DisableExplicitGC -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled"JVM_OPTS="$JVM_OPTS -Xloggc:$TC_HOME/logs/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M"JVM_OPTS="$JVM_OPTS -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$TC_HOME/logs/dump-`date +"%Y-%m-%d"`.hprof"JVM_OPTS="$JVM_OPTS -Dspring.profiles.active=pro"# Tomcat 启动参数配置export JAVA_OPTS="$JVM_OPTS"#===========================================================================================# log file delete#===========================================================================================function cleanLog()&#123; ls -d -t $TC_HOME/logs/catalina.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/host-manager.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/localhost.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/manager.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/*.hprof | tail -n +3 | xargs rm -rf&#125;cleanLog# 优雅停机function gracefulShutdown()&#123; if [ -z "$PIDS" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME does not started!" | tee -a $STDOUT_FILE else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PIDS begining" | tee -a $STDOUT_FILE for PID in $PIDS ; do kill $PID &gt; /dev/null 2&gt;&amp;1 echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PID success" | tee -a $STDOUT_FILE done # 检测是否停机成功 COUNT=0 while [ $COUNT -lt 1 ]; do sleep 1 COUNT=1 for PID in $PIDS ; do PID_EXIST=`ps -f -p $PID | grep java` if [ -n "$PID_EXIST" ]; then COUNT=0 break fi done done fi&#125;function operate()&#123; if [[ "$1" = "kill" ]] ; then gracefulShutdown elif [[ "$1" = "start" ]]; then cd $CATALINA_HOME/bin sh startup.sh else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" | tee -a $TC_STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$PIDS" = "" ]] ; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" &gt;&gt; $TC_STDOUT_FILE operate start else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME pid $PIDS" &gt;&gt; $TC_STDOUT_FILE fielse echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILEfi 使用说明12345sh restart.sh start # 重启sh restart.sh # 重启sh restart.sh restart # 重启sh restart.sh check # 检测服务是否启动，没有启动，则启动之，否则不做其他操作sh restart.sh kill # kill掉已启动的服务进程]]></content>
-      <categories>
-        <category>Tomcat</category>
-      </categories>
-  </entry>
-  <entry>
     <title><![CDATA[Linux netstat 命令]]></title>
     <url>%2Fposts%2F6c05ba39.html</url>
     <content type="text"><![CDATA[netstat netstat 通过进程查看占用端口12# netstat -nap | grep 9836netstat -anp | grep &lt;pid&gt;]]></content>
@@ -1390,18 +1346,6 @@
       <tags>
         <tag>netstat</tag>
         <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[jar启动脚本]]></title>
-    <url>%2Fposts%2F6d838077.html</url>
-    <content type="text"><![CDATA[-Djava.ext.dirs和-Dloader.path区别 -Djava.ext.dirs 使用-Djava.ext.dirs配置外部jar包引用时，会覆盖jdk默认的lib/ext下的扩展包 -Dloader.path jar启动脚本123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263#!/usr/bin/env bash# @Author: YL# @Date: 2017-08-31 15:52:30# @Last Modified by: YL# @Last Modified time: 2017-12-18 14:12:45export LANG=en_US.UTF-8export JAVA_HOME=/usr/java/jdk1.8.0_144export PATH=$PATH:$JAVA_HOME/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHcd `dirname $0`PROJECT_HOME=`pwd`PROJECT_LIB=$PROJECT_HOME/libPROJECT_LOGS=$PROJECT_HOME/logsSTDOUT_FILE=$PROJECT_HOME/logs/stdout.logPROJECT_JAR=$PROJECT_HOME/yl-ftp.jar# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $PROJECT_JAR"# pidPROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'`function operate()&#123; if [[ "$1" = "kill" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN kill $PROJECT_PID begining" | tee -a $STDOUT_FILE kill -9 $PROJECT_PID echo "$DATE_PATTERN kill $PROJECT_PID success" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not alive" | tee -a $STDOUT_FILE fi elif [[ "$1" = "start" ]] ; then # cd $PROJECT_HOME # starting nohup java -server -Xms512m -Xmx512m -Xss256k -Dloader.path=$PROJECT_LIB -Djava.io.tmpdir=$PROJECT_LOGS -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$PROJECT_LOGS/$PROJECT_PID.hprof -jar $PROJECT_JAR &gt;&gt; $STDOUT_FILE 2&gt;&amp;1 &amp; PROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'` echo "$DATE_PATTERN The $PROJECT_JAR started OK! pid: $PROJECT_PID" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILE fi&#125;if [[ "$1" = "start" || "$1" = "check" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN already started! pid: $PROJECT_PID" &gt;&gt; $STDOUT_FILE exit 1 fi operate startelif [[ "$1" = "" || "$1" = "restart" ]]; then operate kill echo "$DATE_PATTERN starting" | tee -a $STDOUT_FILE operate startelif [[ "$1" = "kill" ]]; then operate killelse echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILEfi]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>jar</tag>
       </tags>
   </entry>
   <entry>
@@ -1417,15 +1361,15 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux vi 命令]]></title>
-    <url>%2Fposts%2F87207300.html</url>
-    <content type="text"><![CDATA[vilinux文件格式的问题（使用unix格式）123456789# 查看文件格式vi 文件名:set ff # :set fileencoding# 设置文件格式为unix:set ff=unix# 保存退出:wq# 也可以直接使用dos2unix 文件名]]></content>
+    <title><![CDATA[Linux tail 命令]]></title>
+    <url>%2Fposts%2F29bd046e.html</url>
+    <content type="text"><![CDATA[tail]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>vi</tag>
+        <tag>tail</tag>
       </tags>
   </entry>
   <entry>
@@ -1453,9 +1397,49 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[zookeeper 清理日志文件]]></title>
-    <url>%2Fposts%2Fc0bbcacd.html</url>
-    <content type="text"><![CDATA[clear123456789101112131415161718192021222324252627282930#!/usr/bin/env bash# @Author: YL# @Date: 2017-11-01 08:59:34# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:09# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`cd ..NODE_HOME=`pwd`# snapshotNODE_DATA_DIR=$NODE_HOME/data/version-2# snapshot logNODE_LOG_DIR=$NODE_HOME/logs/version-2# zk logNODE_LOGS=$NODE_HOME/logs# 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中count=3count=$[$count+1]ls -t $NODE_LOG_DIR/log.* | tail -n +$count | xargs rm -fls -t $NODE_DATA_DIR/snapshot.* | tail -n +$count | xargs rm -fls -t $NODE_LOGS/zookeeper.log.* | tail -n +$count | xargs rm -f# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"STDOUT_FILE=$NODE_LOGS/stdout.logecho "$DATE_PATTERN clear logs success" | tee -a $STDOUT_FILE]]></content>
+    <title><![CDATA[zookeeper evn 环境变量配置脚本]]></title>
+    <url>%2Fposts%2F57428144.html</url>
+    <content type="text"><![CDATA[zookeeper-env1234567891011121314151617181920#!/usr/bin/env bash# @Author: YL# @Date: 2017-10-31 10:27:16# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:43# 此文件放到 zookeeper 的 conf 目录下# java envexport JAVA_HOME=/usr/java/jdk1.8.0_131export PATH=$JAVA_HOME/bin:$PATHexport JVMFLAGS="-Xms1536m -Xmx1536m $JVMFLAGS"cd `dirname $0`cd ..NODE_HOME=`pwd`# zookeeper envZOO_LOG_DIR=$NODE_HOME/logsZOO_LOG4J_PROP="INFO,ROLLINGFILE"]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux vi 命令]]></title>
+    <url>%2Fposts%2F87207300.html</url>
+    <content type="text"><![CDATA[vilinux文件格式的问题（使用unix格式）123456789# 查看文件格式vi 文件名:set ff # :set fileencoding# 设置文件格式为unix:set ff=unix# 保存退出:wq# 也可以直接使用dos2unix 文件名]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>vi</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux tar 命令]]></title>
+    <url>%2Fposts%2Fbd083454.html</url>
+    <content type="text"><![CDATA[tar 解压 1tar -zxvf xxx.tar.gz 打包 1tar -zcvf xxx.tar.gz 待压缩的文件名 解压 tar zxvf 文件名.tar.gz 压缩 tar zcvf 文件名.tar.gz 待压缩的文件名 tar -zcvf tomcat.tar.gz –exclude=.log –exclude=.log. –exclude=.out –exclude=.out. –exclude=.tgz.bak –exclude=.war tomcat/ 排除文件夹（注意排除的文件夹最后不能加/） tar -zcvf gitlab.source.tar.gz –exclude=node_modules –exclude=target gitlab/]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>tar</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper stop脚本]]></title>
+    <url>%2Fposts%2F7bd064dc.html</url>
+    <content type="text"><![CDATA[stop12345678910#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:00# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:49# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stop]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper 启动脚本]]></title>
+    <url>%2Fposts%2Faf01b9a2.html</url>
+    <content type="text"><![CDATA[start12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-28 10:23:20# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:41# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`NODE_BIN_DIR=`pwd`NODE_LIB_DIR=$NODE_BIN_DIR/../lib/cd ..NODE_HOME=`pwd`# mkdir logs dirNODE_DATA_LOG_DIR=`sed '/dataLogDir/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`NODE_LOGS_DIR=""if [ -n "$NODE_DATA_LOG_DIR" ]; then NODE_LOGS_DIR=$NODE_DATA_LOG_DIRelse NODE_LOGS_DIR=$NODE_HOME/logsfiif [ ! -d $NODE_LOGS_DIR ]; then mkdir $NODE_LOGS_DIRfiSTDOUT_FILE=$NODE_LOGS_DIR/stdout.logecho "[$(date '+%Y-%m-%d %H:%M:%S')] NODE_BIN_DIR: $NODE_BIN_DIR" | tee -a $STDOUT_FILE# pidNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`if [ -n "$NODE_PID" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')] ERROR: The $NODE_LIB_DIR already started! pid: $NODE_PID" | tee -a $STDOUT_FILE exit 1fi# portNODE_PORT=`sed '/clientPort/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`if [ -n "$NODE_PORT" ]; then NODE_PORT_COUNT=`netstat -tln | grep $NODE_PORT | wc -l` if [ $NODE_PORT_COUNT -gt 0 ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')] ERROR: The $NODE_LIB_DIR port $NODE_PORT already used!" | tee -a $STDOUT_FILE exit 1 fifi# startingcd $NODE_BIN_DIR./zkServer.sh startNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`echo "[$(date '+%Y-%m-%d %H:%M:%S')] The $NODE_LIB_DIR started OK! pid: $NODE_PID" | tee -a $STDOUT_FILE]]></content>
       <categories>
         <category>zookeeper</category>
       </categories>
@@ -1469,16 +1453,32 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[Linux find 命令]]></title>
-    <url>%2Fposts%2F7b744fec.html</url>
-    <content type="text"><![CDATA[查找文件并删除123456789101112# 删除指定时间前的 jpg 文件find /opt/upload/ -mtime +30 -type f -name *.jpg -exec rm -f &#123;&#125; \;# 删除隐藏文件（-fr）find /opt/upload/ -type d -name .svn -exec rm -fr &#123;&#125; \;# 删除30天前的文件find /opt/upload -mtime +30 -type f -name "*.jpg" -exec rm -rf &#123;&#125; \;# find: 路径必须在表达式之前，在*前加\find /opt/upload/ -mtime +15 -type f -name \*.log -exec rm -f &#123;&#125; \; 打印指定时间前的文件1find project/upload/ -mtime +30 -type f -print]]></content>
+    <title><![CDATA[Linux curl 命令]]></title>
+    <url>%2Fposts%2Faea02818.html</url>
+    <content type="text"><![CDATA[查询出口IP1curl icanhazip.com GET 请求1curl https://www.baidu.com?q=xxxx POST 请求1curl http://ip:port/api/add_user -XPOST -d "send message..." 发送 POST JSON 请求1curl -H "Content-Type: application/json" -X POST --data '&#123;"data":"1"&#125;' http://127.0.0.1/ 使用代理1curl -x 192.168.2.5:3128 https://www.baidu.com?q=xxxx 输出请求信息12345678# http_code# time_connect# time_starttransfer# time_total# size_download# speed_download# 参考地址：curl http://www.baidu.com?q=xxxx -so /dev/null -w "%&#123;http_code&#125;\t%&#123;time_connect&#125;\t%&#123;time_starttransfer&#125;\t%&#123;time_total&#125;\t%&#123;size_download&#125;\t%&#123;speed_download&#125;\t" 下载文件并重命名12# culr -L &lt;url&gt; -o &lt;filename&gt;curl -L http://mirrors.aliyun.com/repo/Centos-7.repo -o /etc/yum.repos.d/CentOS-Base.repo \]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>find</tag>
+        <tag>curl</tag>
       </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper 清理日志文件]]></title>
+    <url>%2Fposts%2Fc0bbcacd.html</url>
+    <content type="text"><![CDATA[clear123456789101112131415161718192021222324252627282930#!/usr/bin/env bash# @Author: YL# @Date: 2017-11-01 08:59:34# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:09# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`cd ..NODE_HOME=`pwd`# snapshotNODE_DATA_DIR=$NODE_HOME/data/version-2# snapshot logNODE_LOG_DIR=$NODE_HOME/logs/version-2# zk logNODE_LOGS=$NODE_HOME/logs# 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中count=3count=$[$count+1]ls -t $NODE_LOG_DIR/log.* | tail -n +$count | xargs rm -fls -t $NODE_DATA_DIR/snapshot.* | tail -n +$count | xargs rm -fls -t $NODE_LOGS/zookeeper.log.* | tail -n +$count | xargs rm -f# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"STDOUT_FILE=$NODE_LOGS/stdout.logecho "$DATE_PATTERN clear logs success" | tee -a $STDOUT_FILE]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Tomcat 启动脚本]]></title>
+    <url>%2Fposts%2Fe22f47ab.html</url>
+    <content type="text"><![CDATA[Tomcat 启动脚本主 Tomcat + 应用部署 Tomcat 应用部署方式 12345678910111213141516171819[txrd@host-148 /data/]$ tree -af .├── ./apache-tomcat-8.5.57│ └── ./bin│ └── ./conf│ └── ./lib│ └── ./temp│ └── ./webapps│ └── ./work├── ./szim│ └── ./project │ └── ./szim.war │ └── ./tomcat │ └── ./conf│ └── ./temp│ └── ./webapps│ └── ./work│ └── ./logs.sh │ └── ./restart.sh restart.sh 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109#!/usr/bin/env bash# @Author: YL# @Date: 2020-08-17 09:33:43# @Last Modified by: YL# @Last Modified time: 2020-08-17 14:50:43export LANG=en_US.UTF-8# Tomcat 主目录export CATALINA_HOME=/data/apache-tomcat-8.5.57cd `dirname $0`PROJECT_HOME=`pwd`# Tomcat 应用部署目录TC_HOME="$PROJECT_HOME/tomcat"# Tomcat 应用部署目录export CATALINA_BASE=$TC_HOME# crontab 检测日记文件TC_STDOUT_FILE="$TC_HOME/logs/stdout.out"# 检测 Tomcat 是否启动（进程ID）PIDS=`ps -ef | grep $TC_HOME | grep -v grep | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`#===========================================================================================# JVM Configuration#===========================================================================================# export JAVA_HOME=/usr/java/jdk1.8.0_251# export PATH=$JAVA_HOME/bin:$PATH# export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHJVM_OPTS="$JVM_OPTS -server -Xms1g -Xmx1g -Xss256k"JVM_OPTS="$JVM_OPTS -XX:+DisableExplicitGC -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled"JVM_OPTS="$JVM_OPTS -Xloggc:$TC_HOME/logs/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M"JVM_OPTS="$JVM_OPTS -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$TC_HOME/logs/dump-`date +"%Y-%m-%d"`.hprof"JVM_OPTS="$JVM_OPTS -Dspring.profiles.active=pro"# Tomcat 启动参数配置export JAVA_OPTS="$JVM_OPTS"#===========================================================================================# log file delete#===========================================================================================function cleanLog()&#123; ls -d -t $TC_HOME/logs/catalina.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/host-manager.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/localhost.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/manager.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/*.hprof | tail -n +3 | xargs rm -rf&#125;cleanLog# 优雅停机function gracefulShutdown()&#123; if [ -z "$PIDS" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME does not started!" | tee -a $STDOUT_FILE else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PIDS begining" | tee -a $STDOUT_FILE for PID in $PIDS ; do kill $PID &gt; /dev/null 2&gt;&amp;1 echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PID success" | tee -a $STDOUT_FILE done # 检测是否停机成功 COUNT=0 while [ $COUNT -lt 1 ]; do sleep 1 COUNT=1 for PID in $PIDS ; do PID_EXIST=`ps -f -p $PID | grep java` if [ -n "$PID_EXIST" ]; then COUNT=0 break fi done done fi&#125;function operate()&#123; if [[ "$1" = "kill" ]] ; then gracefulShutdown elif [[ "$1" = "start" ]]; then cd $CATALINA_HOME/bin sh startup.sh else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" | tee -a $TC_STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$PIDS" = "" ]] ; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" &gt;&gt; $TC_STDOUT_FILE operate start else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME pid $PIDS" &gt;&gt; $TC_STDOUT_FILE fielse echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILEfi 单应用部署 Tomcat 应用部署方式 12345678910111213[txrd@host-148 /data/szim]$ tree -af .├── ./project │ └── ./szim.war └── ./tomcat │ └── ./bin│ └── ./conf│ └── ./lib│ └── ./temp│ └── ./webapps│ └── ./work├── ./logs.sh ├── ./restart.sh restart.sh 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109#!/usr/bin/env bash# @Author: YL# @Date: 2020-08-17 09:33:43# @Last Modified by: YL# @Last Modified time: 2020-08-17 14:50:43export LANG=en_US.UTF-8# Tomcat 主目录export CATALINA_HOME=/data/apache-tomcat-8.5.57cd `dirname $0`PROJECT_HOME=`pwd`# Tomcat 应用部署目录TC_HOME="$PROJECT_HOME/tomcat"# Tomcat 应用部署目录export CATALINA_BASE=$TC_HOME# crontab 检测日记文件TC_STDOUT_FILE="$TC_HOME/logs/stdout.out"# 检测 Tomcat 是否启动（进程ID）PIDS=`ps -ef | grep $TC_HOME | grep -v grep | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`#===========================================================================================# JVM Configuration#===========================================================================================# export JAVA_HOME=/usr/java/jdk1.8.0_251# export PATH=$JAVA_HOME/bin:$PATH# export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHJVM_OPTS="$JVM_OPTS -server -Xms1g -Xmx1g -Xss256k"JVM_OPTS="$JVM_OPTS -XX:+DisableExplicitGC -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled"JVM_OPTS="$JVM_OPTS -Xloggc:$TC_HOME/logs/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M"JVM_OPTS="$JVM_OPTS -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$TC_HOME/logs/dump-`date +"%Y-%m-%d"`.hprof"JVM_OPTS="$JVM_OPTS -Dspring.profiles.active=pro"# Tomcat 启动参数配置export JAVA_OPTS="$JVM_OPTS"#===========================================================================================# log file delete#===========================================================================================function cleanLog()&#123; ls -d -t $TC_HOME/logs/catalina.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/host-manager.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/localhost.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/manager.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/*.hprof | tail -n +3 | xargs rm -rf&#125;cleanLog# 优雅停机function gracefulShutdown()&#123; if [ -z "$PIDS" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME does not started!" | tee -a $STDOUT_FILE else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PIDS begining" | tee -a $STDOUT_FILE for PID in $PIDS ; do kill $PID &gt; /dev/null 2&gt;&amp;1 echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PID success" | tee -a $STDOUT_FILE done # 检测是否停机成功 COUNT=0 while [ $COUNT -lt 1 ]; do sleep 1 COUNT=1 for PID in $PIDS ; do PID_EXIST=`ps -f -p $PID | grep java` if [ -n "$PID_EXIST" ]; then COUNT=0 break fi done done fi&#125;function operate()&#123; if [[ "$1" = "kill" ]] ; then gracefulShutdown elif [[ "$1" = "start" ]]; then cd $CATALINA_HOME/bin sh startup.sh else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" | tee -a $TC_STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$PIDS" = "" ]] ; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" &gt;&gt; $TC_STDOUT_FILE operate start else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME pid $PIDS" &gt;&gt; $TC_STDOUT_FILE fielse echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILEfi 使用说明12345sh restart.sh start # 重启sh restart.sh # 重启sh restart.sh restart # 重启sh restart.sh check # 检测服务是否启动，没有启动，则启动之，否则不做其他操作sh restart.sh kill # kill掉已启动的服务进程]]></content>
+      <categories>
+        <category>Tomcat</category>
+      </categories>
   </entry>
   <entry>
     <title><![CDATA[Linux du 命令]]></title>
@@ -1493,15 +1493,15 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux curl 命令]]></title>
-    <url>%2Fposts%2Faea02818.html</url>
-    <content type="text"><![CDATA[查询出口IP1curl icanhazip.com GET 请求1curl https://www.baidu.com?q=xxxx POST 请求1curl http://ip:port/api/add_user -XPOST -d "send message..." 发送 POST JSON 请求1curl -H "Content-Type: application/json" -X POST --data '&#123;"data":"1"&#125;' http://127.0.0.1/ 使用代理1curl -x 192.168.2.5:3128 https://www.baidu.com?q=xxxx 输出请求信息12345678# http_code# time_connect# time_starttransfer# time_total# size_download# speed_download# 参考地址：curl http://www.baidu.com?q=xxxx -so /dev/null -w "%&#123;http_code&#125;\t%&#123;time_connect&#125;\t%&#123;time_starttransfer&#125;\t%&#123;time_total&#125;\t%&#123;size_download&#125;\t%&#123;speed_download&#125;\t" 下载文件并重命名12# culr -L &lt;url&gt; -o &lt;filename&gt;curl -L http://mirrors.aliyun.com/repo/Centos-7.repo -o /etc/yum.repos.d/CentOS-Base.repo \]]></content>
+    <title><![CDATA[jar启动脚本]]></title>
+    <url>%2Fposts%2F6d838077.html</url>
+    <content type="text"><![CDATA[-Djava.ext.dirs和-Dloader.path区别 -Djava.ext.dirs 使用-Djava.ext.dirs配置外部jar包引用时，会覆盖jdk默认的lib/ext下的扩展包 -Dloader.path jar启动脚本123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263#!/usr/bin/env bash# @Author: YL# @Date: 2017-08-31 15:52:30# @Last Modified by: YL# @Last Modified time: 2017-12-18 14:12:45export LANG=en_US.UTF-8export JAVA_HOME=/usr/java/jdk1.8.0_144export PATH=$PATH:$JAVA_HOME/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHcd `dirname $0`PROJECT_HOME=`pwd`PROJECT_LIB=$PROJECT_HOME/libPROJECT_LOGS=$PROJECT_HOME/logsSTDOUT_FILE=$PROJECT_HOME/logs/stdout.logPROJECT_JAR=$PROJECT_HOME/yl-ftp.jar# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $PROJECT_JAR"# pidPROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'`function operate()&#123; if [[ "$1" = "kill" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN kill $PROJECT_PID begining" | tee -a $STDOUT_FILE kill -9 $PROJECT_PID echo "$DATE_PATTERN kill $PROJECT_PID success" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not alive" | tee -a $STDOUT_FILE fi elif [[ "$1" = "start" ]] ; then # cd $PROJECT_HOME # starting nohup java -server -Xms512m -Xmx512m -Xss256k -Dloader.path=$PROJECT_LIB -Djava.io.tmpdir=$PROJECT_LOGS -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$PROJECT_LOGS/$PROJECT_PID.hprof -jar $PROJECT_JAR &gt;&gt; $STDOUT_FILE 2&gt;&amp;1 &amp; PROJECT_PID=`ps -ef | grep "$PROJECT_JAR" | grep -v grep | awk '&#123;print $2&#125;'` echo "$DATE_PATTERN The $PROJECT_JAR started OK! pid: $PROJECT_PID" | tee -a $STDOUT_FILE else echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILE fi&#125;if [[ "$1" = "start" || "$1" = "check" ]]; then if [ -n "$PROJECT_PID" ]; then echo "$DATE_PATTERN already started! pid: $PROJECT_PID" &gt;&gt; $STDOUT_FILE exit 1 fi operate startelif [[ "$1" = "" || "$1" = "restart" ]]; then operate kill echo "$DATE_PATTERN starting" | tee -a $STDOUT_FILE operate startelif [[ "$1" = "kill" ]]; then operate killelse echo "$DATE_PATTERN is not support $1" | tee -a $STDOUT_FILEfi]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>shell</tag>
-        <tag>curl</tag>
+        <tag>Java</tag>
+        <tag>jar</tag>
       </tags>
   </entry>
   <entry>
@@ -1609,18 +1609,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[hibernate显示sql中的参数值（logback）]]></title>
-    <url>%2Fposts%2F9eea8fb4.html</url>
-    <content type="text"><![CDATA[以下是 logback 的日志输出配置，只要是在 logback 的配置文件中添加以下配置 12&lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt;&lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt; 完整的 logback 配置如下 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;configuration scan="true" scanPeriod="60 seconds" debug="false"&gt; &lt;property name="logger.charset" value="UTF-8"/&gt; &lt;property name="logger.path" value="$&#123;catalina.home&#125;/logs"/&gt; &lt;property name="logger.pattern" value="[%d&#123;yyyy-MM-dd HH:mm:ss&#125; %highlight(%-5p)] %yellow(%t) %cyan(%c.%M\\(%L\\)) | %m%n"/&gt; &lt;property name="logger.maxHistory" value="15"/&gt; &lt;springProfile name="dev, local"&gt; &lt;appender name="stdout" class="ch.qos.logback.core.ConsoleAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;/appender&gt; &lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt; &lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt; &lt;!--&lt;logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="DEBUG"/&gt; &lt;logger name="org.hibernate.SQL" level="DEBUG"/&gt; &lt;logger name="org.hibernate.type" level="INFO"/&gt; &lt;logger name="org.hibernate.engine.QueryParameters" level="DEBUG"/&gt; &lt;logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG"/&gt;--&gt; &lt;!--&lt;logger name="org.apache.ibatis" level="debug"/&gt; &lt;logger name="java.sql.Connection" level="debug"/&gt; &lt;logger name="java.sql.Statement" level="debug"/&gt; &lt;logger name="java.sql.PreparedStatement" level="debug"/&gt;--&gt; &lt;root level="info"&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt; &lt;springProfile name="prod"&gt; &lt;!--See http://logback.qos.ch/manual/appenders.html#RollingFileAppender --&gt; &lt;!--and http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy --&gt; &lt;!--for further documentation --&gt; &lt;appender name="stdout" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;File&gt;$&#123;logger.path&#125;/info.log&lt;/File&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/info.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="warn" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/warn.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;WARN&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/warn.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/error.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;ERROR&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/error.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;logger name="warn" level="WARN"/&gt; &lt;logger name="error" level="ERROR"/&gt; &lt;root level="info"&gt; &lt;appender-ref ref="warn"/&gt; &lt;appender-ref ref="error"/&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt;&lt;/configuration&gt;]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>logback</tag>
-        <tag>Hibernate</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[hibernate格式化输出sql语句（spring-data-jpa）]]></title>
     <url>%2Fposts%2F723691b5.html</url>
     <content type="text"><![CDATA[以下配置是基于spring-boot的application.yml配置 123456789spring: jpa:# hibernate:# ddl-auto: create show-sql: true# database: mysql properties: hibernate: format_sql: true]]></content>
@@ -1630,6 +1618,18 @@
       <tags>
         <tag>Hibernate</tag>
         <tag>spring-data-jpa</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[hibernate显示sql中的参数值（logback）]]></title>
+    <url>%2Fposts%2F9eea8fb4.html</url>
+    <content type="text"><![CDATA[以下是 logback 的日志输出配置，只要是在 logback 的配置文件中添加以下配置 12&lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt;&lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt; 完整的 logback 配置如下 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;configuration scan="true" scanPeriod="60 seconds" debug="false"&gt; &lt;property name="logger.charset" value="UTF-8"/&gt; &lt;property name="logger.path" value="$&#123;catalina.home&#125;/logs"/&gt; &lt;property name="logger.pattern" value="[%d&#123;yyyy-MM-dd HH:mm:ss&#125; %highlight(%-5p)] %yellow(%t) %cyan(%c.%M\\(%L\\)) | %m%n"/&gt; &lt;property name="logger.maxHistory" value="15"/&gt; &lt;springProfile name="dev, local"&gt; &lt;appender name="stdout" class="ch.qos.logback.core.ConsoleAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;/appender&gt; &lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt; &lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt; &lt;!--&lt;logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="DEBUG"/&gt; &lt;logger name="org.hibernate.SQL" level="DEBUG"/&gt; &lt;logger name="org.hibernate.type" level="INFO"/&gt; &lt;logger name="org.hibernate.engine.QueryParameters" level="DEBUG"/&gt; &lt;logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG"/&gt;--&gt; &lt;!--&lt;logger name="org.apache.ibatis" level="debug"/&gt; &lt;logger name="java.sql.Connection" level="debug"/&gt; &lt;logger name="java.sql.Statement" level="debug"/&gt; &lt;logger name="java.sql.PreparedStatement" level="debug"/&gt;--&gt; &lt;root level="info"&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt; &lt;springProfile name="prod"&gt; &lt;!--See http://logback.qos.ch/manual/appenders.html#RollingFileAppender --&gt; &lt;!--and http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy --&gt; &lt;!--for further documentation --&gt; &lt;appender name="stdout" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;File&gt;$&#123;logger.path&#125;/info.log&lt;/File&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/info.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="warn" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/warn.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;WARN&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/warn.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/error.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;ERROR&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/error.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;logger name="warn" level="WARN"/&gt; &lt;logger name="error" level="ERROR"/&gt; &lt;root level="info"&gt; &lt;appender-ref ref="warn"/&gt; &lt;appender-ref ref="error"/&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt;&lt;/configuration&gt;]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>logback</tag>
+        <tag>Hibernate</tag>
       </tags>
   </entry>
   <entry>
@@ -1705,18 +1705,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[nodejs 使用]]></title>
-    <url>%2Fposts%2F8d0f4649.html</url>
-    <content type="text"><![CDATA[nvm：node 和 npm 多版本管理 windows 安装包下载：https://github.com/coreybutler/nvm-windows/releases 配置环境变量 1234567891011121314# window 下配置## 假设 nvm 安装目录是D:\nvm，则配置：NVM_HOME=D:\nvmNVM_SYMLINK=D:\nvm\nodejs# D:\nvm\nodejs\bin\node## PATH 配置，新增%NVM_HOME%%NVM_SYMLINK%# mac 在export NVM_DIR=&quot;$HOME/.nvm&quot;export NVM_SYMLINK_CURRENT=true# ~/.nvm/current/bin/node 更换下载源 123456789# 1、进入 nvm 安装目录，编辑 setting.txt，追加两行代码node_mirror: https://npm.taobao.org/mirrors/node/# 配置npm_mirror可能会导致npm、cnpm等安装依赖时各种错误# npm_mirror: https://npm.taobao.org/mirrors/npm/# 2、通过命令行配置nvm node_mirror https://npm.taobao.org/mirrors/node/# 配置npm_mirror可能会导致npm、cnpm等安装依赖时各种错误# nvm npm_mirror https://npm.taobao.org/mirrors/npm/ 使用 nvm 管理版本 12345678910# 安装最新版本nodenvm install latest# 安装某一个版本 nodenvm install 10.22.0# 使用某一具体版本nvm use 14.3.0# 列出当前已安装的所有版本nvm list# 卸载某一具体版本nvm uninstall 14.2.0 使用nvm管理node、npm，不需要配置npm下载包路径 yarn123456789# 查询源地址yarn config get registry# 配置taobao源加速yarn config set registry &apos;https://registry.npm.taobao.org&apos;# 安装组件、插件yarn add ant-design-vueyarn add --dev hard-source-webpack-plugin npm配置国内访问外网是很慢的，安装NodeJS是自带的npm地址默认是：http://registry.npmjs.org，访问很慢，所以一般换成国内镜像地址。 用户目录下：.npmrc 1234# 使用 NVM 安装node、npm不需要配置prefix、cache# prefix=D:\nvm\node_global# cache=D:\nvm\node_cacheregistry=https://registry.npm.taobao.org/ 通过config命令 123npm config set registry https://registry.npm.taobao.org/ npm info underscore#（如果配置成功，这个命令会有字符串response）npm --registry=https://registry.npm.taobao.org 命令行指定 1npm --registry https://registry.npm.taobao.org/ info underscore 编辑node_modules/npm/.npmrc加入下面内容 1registry = https://registry.npm.taobao.org/ 如果上面的npm地址不行的话，可以试试淘宝的npmhttps://registry.npm.taobao.org或者https://r.npm.taobao.org/ 123npm set registry https://registry.npm.taobao.org/# 或者npm --registry https://registry.npm.taobao.org/ info underscore npm下载包路径在安装完nodejs后，npm install -g jshint是被安装在默认路径（C:\Users\用户名\AppData\Roaming\npm）下的 可以通过修改nodejs安装路径下的node_modules/npm/.npmrc文件prefix=D:\MyTools\nodejs\node_global （修改全局路径）cache=D:\MyTools\nodejs\node_cache （修改全局路径） 请注意prefix、cache不能设置成一样的路径，否则通过npm安装模块时，会报错 npm 使用123456789101112# -S 是--save 的缩写，它可以让你安装的模块记录到package.json文件当中npm install -S xxx# 这是删除模块，也可以删除全局模块npm uninstall xxxnpm uninstall -g xxx# -D就是--save-dev 这样安装的包的名称及版本号就会存在package.json的devDependencies这个里面，而--save会将包的名称及版本号放在dependencies里面npm install -D xxx# 显示 webpack 配置npm run eject nrm：npm registry 设置 使用 nrm 进行多 registry 切换 1234567891011121314$ npm install -g nrm$ nrm lsD:\Workspace\vuejs-project&gt;nrm ls* npm ---- https://registry.npmjs.org/ cnpm --- http://r.cnpmjs.org/ taobao - https://registry.npm.taobao.org/ nj ----- https://registry.nodejitsu.com/ rednpm - http://registry.mirror.cqupt.edu.cn/ npmMirror https://skimdb.npmjs.com/registry/ edunpm - http://registry.enpmjs.org/# 切换源$ nrm use taobaoRegistry has been set to: https://registry.npm.taobao.org/ npm-check检查依赖包版本123456# 安装 npm-checknpm install -g npm-check# 检查 npm 包版本npm-check -u -gnpm-check -u -Snpm-check -u -D]]></content>
-      <categories>
-        <category>nodejs</category>
-      </categories>
-      <tags>
-        <tag>npm</tag>
-        <tag>cnpm</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[xampp 安装 memcache 监控]]></title>
     <url>%2Fposts%2Fd01399d3.html</url>
     <content type="text"><![CDATA[xampp安装memcache监控现在 memadmin下载memadmin，解压到xampp/htdocs下 查看 php 版本信息123&lt;?php echo phpinfo();?&gt; 下载 php-memcache.dll根据查看到的php的信息，在php-memcache下载对应本版的Thread Safe，里面包含了php-memcache.dll。 解压下载包，然后把php-memcache.dll拷贝到xampp/php/ext下 在xampp/php/php.ini最后添加以下内容12345678;php-memcachedextension=php_memcache.dll[Memcache]memcache.allow_failover = 1memcache.max_failover_attempts=20memcache.chunk_size =8192memcache.default_port = 11211 访问 memadminhttp://host:port/memadmin]]></content>
@@ -1727,6 +1715,18 @@
         <tag>xampp</tag>
         <tag>memcache</tag>
         <tag>php</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[nodejs 使用]]></title>
+    <url>%2Fposts%2F8d0f4649.html</url>
+    <content type="text"><![CDATA[nvm：node 和 npm 多版本管理 windows 安装包下载：https://github.com/coreybutler/nvm-windows/releases 配置环境变量 1234567891011121314# window 下配置## 假设 nvm 安装目录是D:\nvm，则配置：NVM_HOME=D:\nvmNVM_SYMLINK=D:\nvm\nodejs# D:\nvm\nodejs\bin\node## PATH 配置，新增%NVM_HOME%%NVM_SYMLINK%# mac 在export NVM_DIR=&quot;$HOME/.nvm&quot;export NVM_SYMLINK_CURRENT=true# ~/.nvm/current/bin/node 更换下载源 123456789# 1、进入 nvm 安装目录，编辑 setting.txt，追加两行代码node_mirror: https://npm.taobao.org/mirrors/node/# 配置npm_mirror可能会导致npm、cnpm等安装依赖时各种错误# npm_mirror: https://npm.taobao.org/mirrors/npm/# 2、通过命令行配置nvm node_mirror https://npm.taobao.org/mirrors/node/# 配置npm_mirror可能会导致npm、cnpm等安装依赖时各种错误# nvm npm_mirror https://npm.taobao.org/mirrors/npm/ 使用 nvm 管理版本 12345678910# 安装最新版本nodenvm install latest# 安装某一个版本 nodenvm install 10.22.0# 使用某一具体版本nvm use 14.3.0# 列出当前已安装的所有版本nvm list# 卸载某一具体版本nvm uninstall 14.2.0 使用nvm管理node、npm，不需要配置npm下载包路径 yarn123456789# 查询源地址yarn config get registry# 配置taobao源加速yarn config set registry &apos;https://registry.npm.taobao.org&apos;# 安装组件、插件yarn add ant-design-vueyarn add --dev hard-source-webpack-plugin npm配置国内访问外网是很慢的，安装NodeJS是自带的npm地址默认是：http://registry.npmjs.org，访问很慢，所以一般换成国内镜像地址。 用户目录下：.npmrc 1234# 使用 NVM 安装node、npm不需要配置prefix、cache# prefix=D:\nvm\node_global# cache=D:\nvm\node_cacheregistry=https://registry.npm.taobao.org/ 通过config命令 123npm config set registry https://registry.npm.taobao.org/ npm info underscore#（如果配置成功，这个命令会有字符串response）npm --registry=https://registry.npm.taobao.org 命令行指定 1npm --registry https://registry.npm.taobao.org/ info underscore 编辑node_modules/npm/.npmrc加入下面内容 1registry = https://registry.npm.taobao.org/ 如果上面的npm地址不行的话，可以试试淘宝的npmhttps://registry.npm.taobao.org或者https://r.npm.taobao.org/ 123npm set registry https://registry.npm.taobao.org/# 或者npm --registry https://registry.npm.taobao.org/ info underscore npm下载包路径在安装完nodejs后，npm install -g jshint是被安装在默认路径（C:\Users\用户名\AppData\Roaming\npm）下的 可以通过修改nodejs安装路径下的node_modules/npm/.npmrc文件prefix=D:\MyTools\nodejs\node_global （修改全局路径）cache=D:\MyTools\nodejs\node_cache （修改全局路径） 请注意prefix、cache不能设置成一样的路径，否则通过npm安装模块时，会报错 npm 使用123456789101112# -S 是--save 的缩写，它可以让你安装的模块记录到package.json文件当中npm install -S xxx# 这是删除模块，也可以删除全局模块npm uninstall xxxnpm uninstall -g xxx# -D就是--save-dev 这样安装的包的名称及版本号就会存在package.json的devDependencies这个里面，而--save会将包的名称及版本号放在dependencies里面npm install -D xxx# 显示 webpack 配置npm run eject nrm：npm registry 设置 使用 nrm 进行多 registry 切换 1234567891011121314$ npm install -g nrm$ nrm lsD:\Workspace\vuejs-project&gt;nrm ls* npm ---- https://registry.npmjs.org/ cnpm --- http://r.cnpmjs.org/ taobao - https://registry.npm.taobao.org/ nj ----- https://registry.nodejitsu.com/ rednpm - http://registry.mirror.cqupt.edu.cn/ npmMirror https://skimdb.npmjs.com/registry/ edunpm - http://registry.enpmjs.org/# 切换源$ nrm use taobaoRegistry has been set to: https://registry.npm.taobao.org/ npm-check检查依赖包版本123456# 安装 npm-checknpm install -g npm-check# 检查 npm 包版本npm-check -u -gnpm-check -u -Snpm-check -u -D]]></content>
+      <categories>
+        <category>nodejs</category>
+      </categories>
+      <tags>
+        <tag>npm</tag>
+        <tag>cnpm</tag>
       </tags>
   </entry>
   <entry>
@@ -1808,6 +1808,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[使用RSA注意事项]]></title>
+    <url>%2Fposts%2Fef742936.html</url>
+    <content type="text"><![CDATA[比较以下两种写法 第一种：这种写法会造成内存溢出 1Cipher cipher = Cipher.getInstance("RSA", new BouncyCastleProvider()); 第二种：推荐这种写法 12345// BC 可用 BouncyCastleProvider.PROVIDER_NAME 代替if (StringUtils.isNullOrEmpty(Security.getProperty("BC"))) &#123; Security.addProvider(new BouncyCastleProvider());&#125;Cipher cipher = Cipher.getInstance("RSA", "BC"); 还有一种写法是要替换jdk的jar包，不推荐 要依赖bcprov-jdk16包12345&lt;dependency&gt; &lt;groupId&gt;org.bouncycastle&lt;/groupId&gt; &lt;artifactId&gt;bcprov-jdk16&lt;/artifactId&gt; &lt;version&gt;1.46&lt;/version&gt;&lt;/dependency&gt;]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>RSA</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[store.js的使用]]></title>
     <url>%2Fposts%2F78a81828.html</url>
     <content type="text"><![CDATA[基于store.js实现localStorage缓存过期策略 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150151152153154155156157158159160161162163164165166167168169170171172173174175176177178179180181182183184185186187188189190191192193194195196197198199200201202203204205206207208209210211212213214215216217218219220221222223224225226227228229230231232233234235236237238239240241242243244245246"use strict";(function(s) &#123; /** * 判断是否支持localStorage本地存储 */ if (!s.enabled) &#123; console.error('localStorage is not supported by your browser.') return; &#125; /** * 规定日期格式 * 比如：yyyy年MM月dd日 HH:mm:ss S、yyyy-MM-dd HH:mm:ss S...... */ function _checkFormat(fmt) &#123; if (!/^y+[\u5e74-]?M+[\u6708-]?(d+)[\u65e5]? H+[\u65f6:]?m+[\u5206:]?s+[\u79d2]?(( S)?)$/.test(fmt)) &#123; throw new Error('"' + fmt + '" is not supported by the format.'); return false; &#125; return true; &#125; /** * 时间格式化：时间毫秒数、Date对象 ---&gt; 时间字符串 默认格式化格式：yyyy-MM-dd HH:mm:ss */ function _date2str(str, fmt) &#123; if (fmt === undefined) &#123; fmt = 'yyyy-MM-dd HH:mm:ss'; &#125; _checkFormat(fmt); var date; if (typeof str === 'number') &#123; date = new Date(str); &#125; else if (_isValidDate(str)) &#123; date = str; &#125; var o = &#123; 'M+' : date.getMonth() + 1, // 月 'd+' : date.getDate(), // 日 'H+' : date.getHours(), // 小时（24小时制） 'm+' : date.getMinutes(), // 分 's+' : date.getSeconds(), // 秒 'S' : date.getMilliseconds() // 毫秒 &#125;; if (/(y+)/.test(fmt)) &#123; fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '') .substr(4 - RegExp.$1.length)); &#125; for ( var k in o) &#123; if (new RegExp('(' + k + ')').test(fmt)) &#123; fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length))); &#125; &#125; return fmt; &#125; /** * 时间格式化：将时间字符串 ---&gt; Date对象 默认格式化格式：yyyy-MM-dd HH:mm:ss，使用中文不能格式化 */ function _str2date(str, fmt) &#123; if (fmt === undefined) &#123; fmt = 'yyyy-MM-dd HH:mm:ss'; &#125; _checkFormat(fmt); var o = [ 'y+', // 年 'M+', // 月 'd+', // 日 'H+', // 小时（24小时制） 'm+', // 分 's+', // 秒 'S' // 毫秒 ]; var date = new Date(); for (var k = 0; k &lt; o.length; k++) &#123; var s = o[k]; if (new RegExp('(' + s + ')').test(fmt)) &#123; var r = RegExp.$1; var rl = RegExp.$1.length; var si = fmt.indexOf(RegExp.$1); var ei = si + rl; var n = 0; if (r.indexOf('S') &gt; -1) &#123; n = parseInt(str.substr(si)); date.setMilliseconds(n); // 设置 Date 对象中的毫秒 (0 ~ 999)。 &#125; else &#123; n = parseInt(str.substring(si, ei)); if (r.indexOf('y') &gt; -1) &#123; date.setFullYear(n); // 设置 Date 对象中的年份（四位数字）。 &#125; else if (r.indexOf('M') &gt; -1) &#123; date.setMonth(n - 1); // 设置 Date 对象中月份 (0 ~ 11)。 &#125; else if (r.indexOf('d') &gt; -1) &#123; date.setDate(n); // 设置 Date 对象中月的某一天 (1 ~ 31)。 &#125; else if (r.indexOf('H') &gt; -1) &#123; date.setHours(n); // 设置 Date 对象中的小时 (0 ~ 23)。 &#125; else if (r.indexOf('m') &gt; -1) &#123; date.setMinutes(n); // 设置 Date 对象中的分钟 (0 ~ 59)。 &#125; else if (r.indexOf('s') &gt; -1) &#123; date.setSeconds(n); // 设置 Date 对象中的秒钟 (0 ~ 59)。 &#125; &#125; &#125; &#125; return date; &#125; /** * 转换：毫秒 ---&gt; 天时分秒毫秒 */ function _ms2s(ms) &#123; var s = parseInt(ms / 1000);// 秒 var m = 0;// 分 var h = 0;// 小时 var d = 0;// 天 if (s &gt;= 60) &#123; m = parseInt(s / 60); s = parseInt(s % 60); if (m &gt;= 60) &#123; h = parseInt(m / 60); m = parseInt(m % 60); if (h &gt;= 24) &#123; d = parseInt(h / 24); h = parseInt(h % 24); &#125; &#125; &#125; var str = ''; if (s &gt; 0) str = '' + parseInt(s) + '\u79d2' + str; if (m &gt; 0) str = '' + parseInt(m) + '\u5206' + str; if (h &gt; 0) str = '' + parseInt(h) + '\u5c0f\u65f6' + str; if (d &gt; 0) str = '' + parseInt(d) + '\u5929' + str; return str; &#125; /** * 设置有效时间，返回对象 */ function VConstructor(val, exp) &#123; var item = &#123;&#125;; // 创建时间、有效时间 var createTime = (new Date()).getTime(), effectiveTime; if (typeof exp === 'number') &#123; effectiveTime = new Date(createTime + exp * 60000); &#125; else if (typeof exp === 'string') &#123; effectiveTime = _str2date(exp); &#125; if (effectiveTime &amp;&amp; !_isValidDate(effectiveTime)) &#123; throw new Error('effectiveTime cannot be converted to a valid Date instance'); &#125; effectiveTime = effectiveTime.getTime(); item['c'] = _date2str(createTime); item['e'] = _date2str(effectiveTime); item['t'] = _ms2s(effectiveTime - createTime); item['v'] = val; return item; &#125; /** * 判断是否是Date对象 */ function _isValidDate(date) &#123; return Object.prototype.toString.call(date) === '[object Date]' &amp;&amp; !isNaN(date.getTime()); &#125; /** * 判断是否设置了有效时间 */ function _hasEffective(item) &#123; if (item) &#123; if (typeof item === 'object' &amp;&amp; 'c' in item &amp;&amp; 'e' in item &amp;&amp; 'v' in item) &#123; return true; &#125; &#125; return false; &#125; /** * 判断是否是有效 */ function _isEffective(item) &#123; var ntime = (new Date()).getTime(); return ntime &lt; _str2date(item.e); &#125; /** * 判断key是否是字符串，如果不是，则转换成字符串 */ function _keyAsString(key) &#123; if (typeof key !== 'string') &#123; console.warn(key + ' used as a key, but it is not a string.'); key = String(key); &#125; return key; &#125; /** * exp 失效时间：默认为0（单位：分钟） */ s.setExp = function(key, val, exp) &#123; key = _keyAsString(key); if (exp === undefined) &#123; exp = 0; &#125; s.set(key, new VConstructor(val, exp)); &#125;; s.getExp = function(key) &#123; key = _keyAsString(key); var item = null; try &#123; item = s.get(key); &#125; catch (e) &#123; return null; &#125; if (_hasEffective(item)) &#123; if (_isEffective(item)) &#123; return item.v; &#125; else &#123; s.remove(key); return null; &#125; &#125; else &#123; return item; &#125; &#125;; s.getAllExp = function() &#123; var ret = &#123;&#125;; s.forEachExp(function(key, val) &#123; ret[key] = val; &#125;) return ret; &#125;; s.forEachExp = function(callback) &#123; var storage = s.getAll(); for ( var key in storage) &#123; callback(key, s.getExp(key)); &#125; &#125;;&#125;)(store);]]></content>
@@ -1817,17 +1828,6 @@
       <tags>
         <tag>localStorage</tag>
         <tag>store.js</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[使用RSA注意事项]]></title>
-    <url>%2Fposts%2Fef742936.html</url>
-    <content type="text"><![CDATA[比较以下两种写法 第一种：这种写法会造成内存溢出 1Cipher cipher = Cipher.getInstance("RSA", new BouncyCastleProvider()); 第二种：推荐这种写法 12345// BC 可用 BouncyCastleProvider.PROVIDER_NAME 代替if (StringUtils.isNullOrEmpty(Security.getProperty("BC"))) &#123; Security.addProvider(new BouncyCastleProvider());&#125;Cipher cipher = Cipher.getInstance("RSA", "BC"); 还有一种写法是要替换jdk的jar包，不推荐 要依赖bcprov-jdk16包12345&lt;dependency&gt; &lt;groupId&gt;org.bouncycastle&lt;/groupId&gt; &lt;artifactId&gt;bcprov-jdk16&lt;/artifactId&gt; &lt;version&gt;1.46&lt;/version&gt;&lt;/dependency&gt;]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>RSA</tag>
       </tags>
   </entry>
   <entry>
@@ -1912,6 +1912,19 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[CentOS 部署 FTP 服务]]></title>
+    <url>%2Fposts%2F9c4dd72b.html</url>
+    <content type="text"><![CDATA[安装vsftpd 检测是否已经安装vsftpd 123$ rpm -qa|grep vsftpd# 有打印信息说明已经安装，信息格式如下：vsftpd-3.0.2-27.el7.x86_64 如果已经安装，则可以更新，或者删除重新安装 安装 123456# 使用 yum 安装 vsftpd$ yum install vsftpd# 设置开机启动vsftpd服务$ chkconfig vsftpd on# 启动vsftpd服务$ service vsftpd start 配置防火墙 123456# 打开/etc/sysconfig/iptables文件vi /etc/sysconfig/iptables # 在REJECT行之前添加如下代码-A RH-Firewall-1-INPUT -m state --state NEW -m tcp -p tcp --dport 21 -j ACCEPT# 保存和关闭文件，重启防火墙service iptables restart vsftpd配置 在/etc/vsftpd/vsftpd.conf文件修改以下配置 123456# 禁止匿名用户anonymous登录anonymous_enable=NO# 设置的文件里，是被chroot的用户(无法向上改变目录)chroot_local_user=YES# 500 OOPS: vsftpd: refusing to run with writable root inside chroot()错误解决allow_writeable_chroot=YES 创建用户12345678910111213# 创建用户sudo useradd test_user -s /sbin/nologin# 为用户配置密码，按提示输入两遍密码即可sudo passwd test_user# 查看默认密码过期时间vi /etc/login.defs# 修改密码过期时间sudo chage -M 99999 test_user# 在用户目录下创建目录文件，并赋权给用户sudo mkdir -p /home/test_user/test_dirsudo chown test_user:test_user /home/test_user/test_dir 删除用户12# 删除用户，会连带/home/test_user目录一起删除userdel -rf test_user 常用命令12345678910111213141516171819202122# 启动 ftp 服务sudoservice vsftpd start# 查看 ftp 服务状态sudoservice vsftpd status # 重启 ftp 服务sudoservice vsftpd restart# 关闭 ftp 服务sudoservice vsftpd stop# 在 CentOS 7.x版本使用以下命令# 启动 ftp 服务sudo systemctl start vsftpd.service# 查看 ftp 服务状态sudo systemctl status vsftpd.service# 重启 ftp 服务sudo systemctl restart vsftpd.service# 关闭 ftp 服务sudo systemctl stop vsftpd.service# 开机启动sudo systemctl enable vsftpd.service# 禁止开机启动sudo systemctl disable vsftpd.service]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>vsftpd</tag>
+        <tag>FTP</tag>
+        <tag>CentOS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[CentOS安装JDK]]></title>
     <url>%2Fposts%2Fd08f134.html</url>
     <content type="text"><![CDATA[1、准备创建目录12$ mkdir /usr/java$ cd /usr/java 下载 jdk-8u73-linux-x64.tar.gz，解压1$ tar -zxvf jdk-8u73-linux-x64.tar.gz 会解压到 /usr/java/jdk1.8.0_73 下 2、配置环境变量(两种方式二选一配置即可)2.1 编辑 /etc/profile 文件修改 /etc/profile 文件当本机仅仅作为开发使用时推荐使用这种方法，因为此种配置时所有用户的 shell 都有权使用这些环境变量，可能会给系统带来安全性问题。1$ vi /etc/profile 增加如下内容123export JAVA_HOME=/usr/java/jdkexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH 保存退出 :wq12$ . /etc/profile$ echo $JAVA_HOME 2.2 编辑用户目录下的 .bash_profile修改 .bash_profile 文件这种方法更为安全，它可以把使用这些环境变量的权限控制到用户级别，如果需要给某个用户权限使用这些环境变量，只需要修改其个人用户主目录下的 .bash_profile 文件就可以了123export JAVA_HOME=/usr/java/jdkexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH 然后执行使之生效1source .bash_profile 可以看到 JAVA_HOME 不是指向真实的 jdk 目录 /usr/java/jdk1.8.0_73，而是指向 /usr/java/jdk 3、创建软链接为jdk真实目录创建一个命名更加间洁快捷方式123$ ln -s /usr/java/jdk1.8.0_73 /usr/java/jdk$ source /etc/profile#$ source .bash_profile 至此，配置完成]]></content>
@@ -1921,19 +1934,6 @@
       <tags>
         <tag>Java</tag>
         <tag>JDK</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[CentOS 部署 FTP 服务]]></title>
-    <url>%2Fposts%2F9c4dd72b.html</url>
-    <content type="text"><![CDATA[安装vsftpd 检测是否已经安装vsftpd 123$ rpm -qa|grep vsftpd# 有打印信息说明已经安装，信息格式如下：vsftpd-3.0.2-27.el7.x86_64 如果已经安装，则可以更新，或者删除重新安装 安装 123456# 使用 yum 安装 vsftpd$ yum install vsftpd# 设置开机启动vsftpd服务$ chkconfig vsftpd on# 启动vsftpd服务$ service vsftpd start 配置防火墙 123456# 打开/etc/sysconfig/iptables文件vi /etc/sysconfig/iptables # 在REJECT行之前添加如下代码-A RH-Firewall-1-INPUT -m state --state NEW -m tcp -p tcp --dport 21 -j ACCEPT# 保存和关闭文件，重启防火墙service iptables restart vsftpd配置 在/etc/vsftpd/vsftpd.conf文件修改以下配置 123456# 禁止匿名用户anonymous登录anonymous_enable=NO# 设置的文件里，是被chroot的用户(无法向上改变目录)chroot_local_user=YES# 500 OOPS: vsftpd: refusing to run with writable root inside chroot()错误解决allow_writeable_chroot=YES 创建用户12345678910111213# 创建用户sudo useradd test_user -s /sbin/nologin# 为用户配置密码，按提示输入两遍密码即可sudo passwd test_user# 查看默认密码过期时间vi /etc/login.defs# 修改密码过期时间sudo chage -M 99999 test_user# 在用户目录下创建目录文件，并赋权给用户sudo mkdir -p /home/test_user/test_dirsudo chown test_user:test_user /home/test_user/test_dir 删除用户12# 删除用户，会连带/home/test_user目录一起删除userdel -rf test_user 常用命令12345678910111213141516171819202122# 启动 ftp 服务sudoservice vsftpd start# 查看 ftp 服务状态sudoservice vsftpd status # 重启 ftp 服务sudoservice vsftpd restart# 关闭 ftp 服务sudoservice vsftpd stop# 在 CentOS 7.x版本使用以下命令# 启动 ftp 服务sudo systemctl start vsftpd.service# 查看 ftp 服务状态sudo systemctl status vsftpd.service# 重启 ftp 服务sudo systemctl restart vsftpd.service# 关闭 ftp 服务sudo systemctl stop vsftpd.service# 开机启动sudo systemctl enable vsftpd.service# 禁止开机启动sudo systemctl disable vsftpd.service]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>CentOS</tag>
-        <tag>vsftpd</tag>
-        <tag>FTP</tag>
       </tags>
   </entry>
 </search>
