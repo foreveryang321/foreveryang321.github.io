@@ -104,18 +104,18 @@
 
 
 
-  <meta name="description" content="nvm：node 和 npm 多版本管理  windows 安装包下载：https://github.com/coreybutler/nvm-windows/releases   配置环境变量  1234567891011121314# window 下配置## 假设 nvm 安装目录是D:\nvm，则配置：NVM_HOME=D:\nvmNVM_SYMLINK=D:\nvm\nodejs# D:\">
+  <meta name="description" content="nvm：node 和 npm 多版本管理  windows 安装包下载：https://github.com/coreybutler/nvm-windows/releases   配置环境变量  12345678910111213141516171819202122# window 下配置## 假设 nvm 安装目录是D:\nvm，则配置：NVM_HOME=D:\nvmNVM_SYMLINK=D:">
 <meta name="keywords" content="npm,cnpm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nodejs 使用">
 <meta property="og:url" content="https://blog.yl-online.top/posts/8d0f4649.html">
 <meta property="og:site_name" content="forever杨的个人博客">
-<meta property="og:description" content="nvm：node 和 npm 多版本管理  windows 安装包下载：https://github.com/coreybutler/nvm-windows/releases   配置环境变量  1234567891011121314# window 下配置## 假设 nvm 安装目录是D:\nvm，则配置：NVM_HOME=D:\nvmNVM_SYMLINK=D:\nvm\nodejs# D:\">
+<meta property="og:description" content="nvm：node 和 npm 多版本管理  windows 安装包下载：https://github.com/coreybutler/nvm-windows/releases   配置环境变量  12345678910111213141516171819202122# window 下配置## 假设 nvm 安装目录是D:\nvm，则配置：NVM_HOME=D:\nvmNVM_SYMLINK=D:">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-03-18T08:18:57.349Z">
+<meta property="og:updated_time" content="2021-07-05T06:23:17.113Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nodejs 使用">
-<meta name="twitter:description" content="nvm：node 和 npm 多版本管理  windows 安装包下载：https://github.com/coreybutler/nvm-windows/releases   配置环境变量  1234567891011121314# window 下配置## 假设 nvm 安装目录是D:\nvm，则配置：NVM_HOME=D:\nvmNVM_SYMLINK=D:\nvm\nodejs# D:\">
+<meta name="twitter:description" content="nvm：node 和 npm 多版本管理  windows 安装包下载：https://github.com/coreybutler/nvm-windows/releases   配置环境变量  12345678910111213141516171819202122# window 下配置## 假设 nvm 安装目录是D:\nvm，则配置：NVM_HOME=D:\nvmNVM_SYMLINK=D:">
 
 
 
@@ -252,7 +252,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>文章<span class="badge">170</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>文章<span class="badge">172</span></a>
 
   </li>
         
@@ -271,7 +271,7 @@
       
     
 
-    <a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">28</span></a>
+    <a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">29</span></a>
 
   </li>
         
@@ -290,7 +290,7 @@
       
     
 
-    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">140</span></a>
+    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">143</span></a>
 
   </li>
         
@@ -471,7 +471,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-03-18 16:18:57" itemprop="dateModified" datetime="2021-03-18T16:18:57+08:00">2021-03-18</time>
+                <time title="修改时间：2021-07-05 14:23:17" itemprop="dateModified" datetime="2021-07-05T14:23:17+08:00">2021-07-05</time>
               
             
           </span>
@@ -525,7 +525,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">3k</span>
+                <span title="字数">3.5k</span>
               
 
               
@@ -579,7 +579,7 @@
 <ul>
 <li>配置环境变量</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># window 下配置</span><br><span class="line">## 假设 nvm 安装目录是D:\nvm，则配置：</span><br><span class="line">NVM_HOME=D:\nvm</span><br><span class="line">NVM_SYMLINK=D:\nvm\nodejs</span><br><span class="line"># D:\nvm\nodejs\bin\node</span><br><span class="line"></span><br><span class="line">## PATH 配置，新增</span><br><span class="line">%NVM_HOME%</span><br><span class="line">%NVM_SYMLINK%</span><br><span class="line"></span><br><span class="line"># mac 在</span><br><span class="line">export NVM_DIR=&quot;$HOME/.nvm&quot;</span><br><span class="line">export NVM_SYMLINK_CURRENT=true</span><br><span class="line"># ~/.nvm/current/bin/node</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># window 下配置</span><br><span class="line">## 假设 nvm 安装目录是D:\nvm，则配置：</span><br><span class="line">NVM_HOME=D:\nvm</span><br><span class="line">NVM_SYMLINK=D:\nvm\nodejs</span><br><span class="line"># D:\nvm\nodejs\bin\node</span><br><span class="line"></span><br><span class="line">## PATH 配置，新增</span><br><span class="line">%NVM_HOME%</span><br><span class="line">%NVM_SYMLINK%</span><br><span class="line"></span><br><span class="line"># mac 在</span><br><span class="line">export NVM_DIR=&quot;$HOME/.nvm&quot;</span><br><span class="line">export NVM_SYMLINK_CURRENT=true</span><br><span class="line">## nvm 加速</span><br><span class="line">export NVM_NODEJS_ORG_MIRROR=&quot;https://npm.taobao.org/mirrors/node&quot;</span><br><span class="line">## 这句一定要放在NVM_DIR、NVM_NODEJS_ORG_MIRROR等配置之后</span><br><span class="line">### This loads nvm</span><br><span class="line">[ -s &quot;$(brew --prefix nvm)/nvm.sh&quot; ] &amp;&amp; . &quot;$(brew --prefix nvm)/nvm.sh&quot;</span><br><span class="line"># source &quot;$(brew --prefix nvm)/nvm.sh&quot;</span><br><span class="line">### This loads nvm bash_completion</span><br><span class="line">[ -s &quot;$(brew --prefix nvm)/etc/bash_completion.d/nvm&quot; ] &amp;&amp; . &quot;$(brew --prefix nvm)/etc/bash_completion.d/nvm&quot;</span><br><span class="line"># ~/.nvm/current/bin/node</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <ul>
 <li><p>更换下载源</p>
@@ -590,7 +590,8 @@
 </li>
 </ul>
 <p>使用nvm管理node、npm，不需要配置npm下载包路径</p>
-<h1 id="yarn"><a href="#yarn" class="headerlink" title="yarn"></a>yarn</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 查询源地址</span><br><span class="line">yarn config get registry</span><br><span class="line"></span><br><span class="line"># 配置taobao源加速</span><br><span class="line">yarn config set registry &apos;https://registry.npm.taobao.org&apos;</span><br><span class="line"></span><br><span class="line"># 安装组件、插件</span><br><span class="line">yarn add ant-design-vue</span><br><span class="line">yarn add --dev hard-source-webpack-plugin</span><br></pre></td></tr></table></figure>
+<!-- more -->
+<h1 id="yarn"><a href="#yarn" class="headerlink" title="yarn"></a>yarn</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># npm install -g cnpm</span><br><span class="line"># npm install -g yarn</span><br><span class="line"></span><br><span class="line"># 查询源地址</span><br><span class="line">yarn config get registry</span><br><span class="line"></span><br><span class="line"># 配置taobao源加速</span><br><span class="line">yarn config set registry &apos;https://registry.npm.taobao.org&apos;</span><br><span class="line"></span><br><span class="line"># 安装组件、插件</span><br><span class="line">yarn add ant-design-vue</span><br><span class="line">yarn add --dev hard-source-webpack-plugin</span><br></pre></td></tr></table></figure>
 <h1 id="npm配置"><a href="#npm配置" class="headerlink" title="npm配置"></a>npm配置</h1><p>国内访问外网是很慢的，安装NodeJS是自带的npm地址默认是：<a href="http://registry.npmjs.org，访问很慢，所以一般换成国内镜像地址。" target="_blank" rel="noopener">http://registry.npmjs.org，访问很慢，所以一般换成国内镜像地址。</a></p>
 <blockquote>
 <p>用户目录下：.npmrc</p>
@@ -681,8 +682,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/d01399d3.html" rel="next" title="xampp 安装 memcache 监控">
-                <i class="fa fa-chevron-left"></i> xampp 安装 memcache 监控
+              <a href="/posts/2dba5ee9.html" rel="next" title="hexo初体验">
+                <i class="fa fa-chevron-left"></i> hexo初体验
               </a>
             
           </div>
@@ -691,8 +692,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/posts/9b6062f9.html" rel="prev" title="Sublime Text 3 的一些常用插件">
-                Sublime Text 3 的一些常用插件 <i class="fa fa-chevron-right"></i>
+              <a href="/posts/d01399d3.html" rel="prev" title="xampp 安装 memcache 监控">
+                xampp 安装 memcache 监控 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -769,7 +770,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">170</span>
+                    <span class="site-state-item-count">172</span>
                     <span class="site-state-item-name">文章</span>
                   </a>
                 </div>
@@ -838,7 +839,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">28</span>
+                      
+                    
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1131,7 +1134,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">140</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">143</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1229,7 +1238,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">509k</span>
+    <span title="站点总字数">514k</span>
   
 
   

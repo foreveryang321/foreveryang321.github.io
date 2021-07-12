@@ -107,14 +107,14 @@
   <meta name="description" content="安装 Docker 删除旧版本 123456789101112131415sudo yum remove docker \                  docker-client \                  docker-client-latest \                  docker-common \                  docker-latest \">
 <meta name="keywords" content="docker-compose">
 <meta property="og:type" content="article">
-<meta property="og:title" content="安装 docker 环境 for CentOS">
+<meta property="og:title" content="安装 docker 环境">
 <meta property="og:url" content="https://blog.yl-online.top/posts/2fff8f5e.html">
 <meta property="og:site_name" content="forever杨的个人博客">
 <meta property="og:description" content="安装 Docker 删除旧版本 123456789101112131415sudo yum remove docker \                  docker-client \                  docker-client-latest \                  docker-common \                  docker-latest \">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-02-26T02:32:29.000Z">
+<meta property="og:updated_time" content="2021-07-08T03:15:13.155Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="安装 docker 环境 for CentOS">
+<meta name="twitter:title" content="安装 docker 环境">
 <meta name="twitter:description" content="安装 Docker 删除旧版本 123456789101112131415sudo yum remove docker \                  docker-client \                  docker-client-latest \                  docker-common \                  docker-latest \">
 
 
@@ -132,7 +132,7 @@
   };
 </script>
 
-  <title>安装 docker 环境 for CentOS | forever杨的个人博客</title>
+  <title>安装 docker 环境 | forever杨的个人博客</title>
   
 
 
@@ -252,7 +252,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>文章<span class="badge">170</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>文章<span class="badge">172</span></a>
 
   </li>
         
@@ -271,7 +271,7 @@
       
     
 
-    <a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">28</span></a>
+    <a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">29</span></a>
 
   </li>
         
@@ -290,7 +290,7 @@
       
     
 
-    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">140</span></a>
+    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">143</span></a>
 
   </li>
         
@@ -428,7 +428,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">安装 docker 环境 for CentOS
+          <h2 class="post-title" itemprop="name headline">安装 docker 环境
 
               
             
@@ -471,7 +471,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-02-26 10:32:29" itemprop="dateModified" datetime="2021-02-26T10:32:29+08:00">2021-02-26</time>
+                <time title="修改时间：2021-07-08 11:15:13" itemprop="dateModified" datetime="2021-07-08T11:15:13+08:00">2021-07-08</time>
               
             
           </span>
@@ -525,7 +525,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">4.2k</span>
+                <span title="字数">5.2k</span>
               
 
               
@@ -539,7 +539,7 @@
                 
                   <span class="post-meta-item-text">时长 &asymp;</span>
                 
-                <span title="时长">4 分钟</span>
+                <span title="时长">5 分钟</span>
               
             </div>
           
@@ -583,13 +583,17 @@
 </blockquote>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install -y yum-utils \</span><br><span class="line">  device-mapper-persistent-data \</span><br><span class="line">  lvm2</span><br><span class="line">  </span><br><span class="line">sudo yum-config-manager \</span><br><span class="line">    --add-repo \</span><br><span class="line">    https://download.docker.com/linux/centos/docker-ce.repo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者使用阿里云</span></span><br><span class="line">sudo yum-config-manager \</span><br><span class="line">    --add-repo \</span><br><span class="line">    https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br><span class="line"></span><br><span class="line"><span class="comment"># Optional</span></span><br><span class="line">sudo yum-config-manager --<span class="built_in">enable</span> docker-ce-edge</span><br><span class="line">sudo yum-config-manager --<span class="built_in">enable</span> docker-ce-test</span><br><span class="line">sudo yum-config-manager --<span class="built_in">disable</span> docker-ce-edge</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>斯蒂芬森</p>
+<p>yum 加速和代理</p>
 </blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 配置yum源阿里云镜像</span></span><br><span class="line"><span class="comment">## 备份原来的yum源</span></span><br><span class="line"><span class="built_in">cd</span> /etc/yum.repos.d/</span><br><span class="line">sudo mv CentOS-Base.repo CentOS-Base.repo_bak</span><br><span class="line"><span class="comment">## 获取阿里云yum源</span></span><br><span class="line">sudo wget -e <span class="string">"http_proxy=192.168.123.1:1234"</span> -O  /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line"><span class="comment">## 清除原有yum源缓存</span></span><br><span class="line">sudo yum clean all</span><br><span class="line"><span class="comment">## 生成阿里云yum源缓存</span></span><br><span class="line">sudo yum makecache</span><br><span class="line"></span><br><span class="line"><span class="comment">## 或者</span></span><br><span class="line">sudo rm -f /var/lib/rpm/__*</span><br><span class="line">sudo rpm --rebuilddb -v -v</span><br><span class="line">sudo yum clean dbcache</span><br><span class="line">sudo yum clean metadata</span><br><span class="line">sudo yum clean rpmdb</span><br><span class="line">sudo yum clean headers</span><br><span class="line">sudo yum clean all</span><br><span class="line">sudo rm -rf /var/cache/yum/timedhosts.txt</span><br><span class="line">sudo rm -rf /var/cache/yum/*</span><br><span class="line">sudo yum makecache</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 加速配置（阿里云加速）</span></span><br><span class="line"><span class="comment">## 备份原来的yum源</span></span><br><span class="line"><span class="built_in">cd</span> /etc/yum.repos.d/</span><br><span class="line">sudo mv CentOS-Base.repo CentOS-Base.repo_bak</span><br><span class="line"><span class="comment">## 获取阿里云yum源</span></span><br><span class="line">sudo wget -e <span class="string">"http_proxy=192.168.123.1:1234"</span> -O  /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 代理配置</span></span><br><span class="line">sudo sed -i <span class="string">'/^proxy=/d'</span>  /etc/yum.conf</span><br><span class="line">sudo sh -c <span class="string">"echo proxy=http://192.168.123.1:1234 &gt;&gt; /etc/yum.conf"</span></span><br><span class="line">sudo cat /etc/yum.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清除原有yum源缓存</span></span><br><span class="line">sudo yum clean all</span><br><span class="line"><span class="comment">## 生成阿里云yum源缓存</span></span><br><span class="line">sudo yum makecache</span><br><span class="line"><span class="comment">## 或者</span></span><br><span class="line">sudo rm -f /var/lib/rpm/__*</span><br><span class="line">sudo rpm --rebuilddb -v -v</span><br><span class="line">sudo yum clean dbcache</span><br><span class="line">sudo yum clean metadata</span><br><span class="line">sudo yum clean rpmdb</span><br><span class="line">sudo yum clean headers</span><br><span class="line">sudo yum clean all</span><br><span class="line">sudo rm -rf /var/cache/yum/timedhosts.txt</span><br><span class="line">sudo rm -rf /var/cache/yum/*</span><br><span class="line">sudo yum makecache</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <ul>
 <li><p>安装 docker</p>
+<blockquote>
+<p>创建 docker 和 data 目录（可不创建，使用默认路径）</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker 默认下载目录 /var/lib/docker/</span></span><br><span class="line">sudo mkdir -p /data/docker</span><br><span class="line">cd /var/lib</span><br><span class="line">sudo ln -s /data/docker docker</span><br><span class="line">sudo chmod 770 -R /var/lib/docker/</span><br><span class="line">sudo chmod 777 -R /data/docker</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>在线安装</p>
 </blockquote>
@@ -603,9 +607,6 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动 docker</span></span><br><span class="line">sudo systemctl start docker</span><br><span class="line"><span class="comment"># 停止运行 docker</span></span><br><span class="line">sudo systemctl stop docker</span><br><span class="line"><span class="comment"># 开机启动</span></span><br><span class="line">sudo systemctl <span class="built_in">enable</span> docker</span><br><span class="line"><span class="comment"># 禁止开机启动</span></span><br><span class="line">sudo systemctl <span class="built_in">disable</span> docker</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>版本锁定</p>
-<blockquote>
-<p>防止升级、变更版本</p>
-</blockquote>
 </li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install yum-plugin-versionlock</span><br><span class="line">sudo yum versionlock add docker-ce docker-ce-cli</span><br><span class="line">sudo yum versionlock list</span><br></pre></td></tr></table></figure>
@@ -618,9 +619,10 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ docker version</span><br><span class="line">Client:</span><br><span class="line"> Version:           18.06.1-ce</span><br><span class="line"> API version:       1.38</span><br><span class="line"> Go version:        go1.10.3</span><br><span class="line"> Git commit:        e68fc7a</span><br><span class="line"> Built:             Tue Aug 21 17:23:03 2018</span><br><span class="line"> OS/Arch:           linux/amd64</span><br><span class="line"> Experimental:      <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">Server:</span><br><span class="line"> Engine:</span><br><span class="line">  Version:          18.06.1-ce</span><br><span class="line">  API version:      1.38 (minimum version 1.12)</span><br><span class="line">  Go version:       go1.10.3</span><br><span class="line">  Git commit:       e68fc7a</span><br><span class="line">  Built:            Tue Aug 21 17:25:29 2018</span><br><span class="line">  OS/Arch:          linux/amd64</span><br><span class="line">  Experimental:     <span class="literal">false</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h1 id="Docker-配置-代理"><a href="#Docker-配置-代理" class="headerlink" title="Docker 配置 代理"></a>Docker 配置 代理</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 配置 docker pull 代理</span></span><br><span class="line"><span class="comment"># sudo rm -rf /etc/systemd/system/docker.service.d</span></span><br><span class="line"><span class="comment"># cat /etc/systemd/system/docker.service.d/http-proxy.conf</span></span><br><span class="line">sudo mkdir -p /etc/systemd/system/docker.service.d</span><br><span class="line">sudo tee /etc/systemd/system/docker.service.d/http-proxy.conf &lt;&lt;-<span class="string">'EOF'</span></span><br><span class="line">[Service]</span><br><span class="line">Environment=<span class="string">"HTTP_PROXY=http://192.168.123.1:1234"</span> <span class="string">"NO_PROXY=localhost,127.0.0.1,172.16.120.0/24"</span></span><br><span class="line">EOF</span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> docker</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
+<h1 id="Docker-配置代理"><a href="#Docker-配置代理" class="headerlink" title="Docker 配置代理"></a>Docker 配置代理</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 配置 docker pull 代理</span></span><br><span class="line"><span class="comment"># sudo rm -rf /etc/systemd/system/docker.service.d</span></span><br><span class="line"><span class="comment"># cat /etc/systemd/system/docker.service.d/http-proxy.conf</span></span><br><span class="line">sudo mkdir -p /etc/systemd/system/docker.service.d</span><br><span class="line">sudo tee /etc/systemd/system/docker.service.d/http-proxy.conf &lt;&lt;-<span class="string">'EOF'</span></span><br><span class="line">[Service]</span><br><span class="line">Environment=<span class="string">"HTTP_PROXY=http://192.168.123.1:1234"</span> <span class="string">"NO_PROXY=localhost,127.0.0.1,172.16.120.0/24"</span></span><br><span class="line">EOF</span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> docker</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
 <p>其中<code>172.16.120.0/24</code>为宿主机 ip</p>
-<h1 id="Docker-配置-加速源"><a href="#Docker-配置-加速源" class="headerlink" title="Docker 配置 加速源"></a>Docker 配置 加速源</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> sudo rm -rf /etc/docker/daemon.json</span></span><br><span class="line">sudo mkdir -p /etc/docker</span><br><span class="line">sudo tee /etc/docker/daemon.json &lt;&lt;-'EOF'</span><br><span class="line">&#123;</span><br><span class="line">"registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"],</span><br><span class="line">"log-driver":"json-file",</span><br><span class="line">"log-opts":&#123; "max-size" :"50m","max-file":"10"&#125;</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
+<h1 id="Docker-配置加速源"><a href="#Docker-配置加速源" class="headerlink" title="Docker 配置加速源"></a>Docker 配置加速源</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> sudo rm -rf /etc/docker/daemon.json</span></span><br><span class="line">sudo mkdir -p /etc/docker</span><br><span class="line">sudo tee /etc/docker/daemon.json &lt;&lt;-'EOF'</span><br><span class="line">&#123;</span><br><span class="line">"registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"],</span><br><span class="line">"log-driver":"json-file",</span><br><span class="line">"log-opts":&#123; "max-size" :"50m","max-file":"10"&#125;</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
+<h1 id="安装-docker-compose"><a href="#安装-docker-compose" class="headerlink" title="安装 docker-compose"></a>安装 docker-compose</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 安装</span></span><br><span class="line">sudo curl -L "http://rancher-mirror.cnrancher.com/docker-compose/v1.26.1/docker-compose-Linux-x86_64" -o /usr/local/bin/docker-compose</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> sudo curl --proxy 192.168.123.1:1234 -L <span class="string">"http://rancher-mirror.cnrancher.com/docker-compose/v1.26.1/docker-compose-Linux-x86_64"</span> -o /usr/<span class="built_in">local</span>/bin/docker-compose</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> sudo curl --proxy 192.168.123.1:1234 -L <span class="string">"https://github.com/docker/compose/releases/download/1.26.2/docker-compose-<span class="variable">$(uname -s)</span>-<span class="variable">$(uname -m)</span>"</span> -o /usr/<span class="built_in">local</span>/bin/docker-compose</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 配置权限</span></span><br><span class="line">sudo chmod +x /usr/local/bin/docker-compose</span><br><span class="line"><span class="meta">#</span><span class="bash"> sudo ln -s /usr/<span class="built_in">local</span>/bin/docker-compose /usr/bin/docker-compose</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 验证是否安装成功</span></span><br><span class="line">docker-compose --version</span><br></pre></td></tr></table></figure>
 <h1 id="进入容器"><a href="#进入容器" class="headerlink" title="进入容器"></a>进入容器</h1>  <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># centos</span></span><br><span class="line">docker <span class="built_in">exec</span> -it &lt;container-name&gt; /bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># alpine</span></span><br><span class="line">docker <span class="built_in">exec</span> -it &lt;container-name&gt; sh</span><br></pre></td></tr></table></figure>
       
     </div>
@@ -654,7 +656,7 @@
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
     
-    <a href="https://blog.yl-online.top/posts/2fff8f5e.html" title="安装 docker 环境 for CentOS">https://blog.yl-online.top/posts/2fff8f5e.html</a>
+    <a href="https://blog.yl-online.top/posts/2fff8f5e.html" title="安装 docker 环境">https://blog.yl-online.top/posts/2fff8f5e.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。如果文章内容对你有用，请记录到你的笔记中。本博客站点随时会停止服务，请不要收藏、转载！</li>
@@ -768,7 +770,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">170</span>
+                    <span class="site-state-item-count">172</span>
                     <span class="site-state-item-name">文章</span>
                   </a>
                 </div>
@@ -837,7 +839,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">28</span>
+                      
+                    
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1130,7 +1134,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">140</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">143</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1194,7 +1204,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-Docker"><span class="nav-number">1.</span> <span class="nav-text">安装 Docker</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-配置-代理"><span class="nav-number">2.</span> <span class="nav-text">Docker 配置 代理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-配置-加速源"><span class="nav-number">3.</span> <span class="nav-text">Docker 配置 加速源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进入容器"><span class="nav-number">4.</span> <span class="nav-text">进入容器</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-Docker"><span class="nav-number">1.</span> <span class="nav-text">安装 Docker</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-配置代理"><span class="nav-number">2.</span> <span class="nav-text">Docker 配置代理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-配置加速源"><span class="nav-number">3.</span> <span class="nav-text">Docker 配置加速源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-docker-compose"><span class="nav-number">4.</span> <span class="nav-text">安装 docker-compose</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进入容器"><span class="nav-number">5.</span> <span class="nav-text">进入容器</span></a></li></ol></div>
             
 
           </div>
@@ -1228,7 +1238,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">509k</span>
+    <span title="站点总字数">514k</span>
   
 
   
