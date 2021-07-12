@@ -112,7 +112,7 @@
 <meta property="og:site_name" content="forever杨的个人博客">
 <meta property="og:description" content="参数详解stagesstages用于定义流水线全局可使用的阶段，阶段元素的顺序既是作业执行的顺序。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-07-12T08:27:55.859Z">
+<meta property="og:updated_time" content="2021-07-12T08:33:57.815Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="gitlab-ci.yml 配置详情">
 <meta name="twitter:description" content="参数详解stagesstages用于定义流水线全局可使用的阶段，阶段元素的顺序既是作业执行的顺序。">
@@ -454,7 +454,7 @@
                 
               
 
-              <time title="创建时间：2021-07-12 08:41:05 / 修改时间：16:27:55" itemprop="dateCreated datePublished" datetime="2021-07-12T08:41:05+08:00">2021-07-12</time>
+              <time title="创建时间：2021-07-12 08:41:05 / 修改时间：16:33:57" itemprop="dateCreated datePublished" datetime="2021-07-12T08:41:05+08:00">2021-07-12</time>
             
 
             
@@ -513,7 +513,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">8.9k</span>
+                <span title="字数">9k</span>
               
 
               
@@ -752,7 +752,10 @@
 <li>1 day</li>
 <li>1 week</li>
 </ul>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">timed</span> <span class="string">rollout</span> <span class="number">10</span><span class="string">%:</span></span><br><span class="line"><span class="attr">  stage:</span> <span class="string">deploy</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">echo</span> <span class="string">'Rolling out 10% ...'</span></span><br><span class="line"><span class="attr">  when:</span> <span class="string">delayed</span></span><br><span class="line"><span class="attr">  start_in:</span> <span class="number">30</span> <span class="string">minutes</span></span><br></pre></td></tr></table></figure>
+<p>当一个阶段包含一个被延迟的作业时，延迟的作业完成后，管道才会继续运行。</p>
+<p>与其他类型的作业类似，延迟作业的计时器只有在前一个阶段通过后才会启动。</p>
+<p>下面的示例创建了一个名为<code>job1</code>的作业，在前一个阶段完成30分钟后执行：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">job1:</span></span><br><span class="line"><span class="attr">  stage:</span> <span class="string">deploy</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">echo</span> <span class="string">'job1'</span></span><br><span class="line"><span class="attr">  when:</span> <span class="string">delayed</span></span><br><span class="line"><span class="attr">  start_in:</span> <span class="number">30</span> <span class="string">minutes</span></span><br></pre></td></tr></table></figure>
 
       
     </div>
