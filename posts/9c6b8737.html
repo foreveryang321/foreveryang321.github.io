@@ -1,0 +1,1968 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#fff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=6.6.0" color="#fff">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="参数详解stagesstages用于定义流水线全局可使用的阶段，阶段元素的顺序既是作业执行的顺序。">
+<meta name="keywords" content="gitlab,git,ci,cd">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gitlab-ci.yml 配置详情">
+<meta property="og:url" content="https://blog.yl-online.top/posts/9c6b8737.html">
+<meta property="og:site_name" content="forever杨的个人博客">
+<meta property="og:description" content="参数详解stagesstages用于定义流水线全局可使用的阶段，阶段元素的顺序既是作业执行的顺序。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-07-12T07:48:10.240Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="gitlab-ci.yml 配置详情">
+<meta name="twitter:description" content="参数详解stagesstages用于定义流水线全局可使用的阶段，阶段元素的顺序既是作业执行的顺序。">
+
+
+
+
+
+
+  <link rel="canonical" href="https://blog.yl-online.top/posts/9c6b8737.html">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>gitlab-ci.yml 配置详情 | forever杨的个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">forever杨的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">I want to be forever young!</h1>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>文章<span class="badge">173</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">29</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">146</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/404.html" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/about/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/9c6b8737.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">gitlab-ci.yml 配置详情
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-07-12 08:41:05 / 修改时间：15:48:10" itemprop="dateCreated datePublished" datetime="2021-07-12T08:41:05+08:00">2021-07-12</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/gitlab/" itemprop="url" rel="index"><span itemprop="name">gitlab</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数：</span>
+                
+                <span title="字数">7.3k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">7 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/gitlab/" rel="tag" class="color1">gitlab</a>
+        
+           <a href="/tags/git/" rel="tag" class="color2">git</a>
+        
+           <a href="/tags/ci/" rel="tag" class="color3">ci</a>
+        
+           <a href="/tags/cd/" rel="tag" class="color4">cd</a>
+        
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="参数详解"><a href="#参数详解" class="headerlink" title="参数详解"></a>参数详解</h1><h2 id="stages"><a href="#stages" class="headerlink" title="stages"></a>stages</h2><p><code>stages</code>用于定义流水线全局可使用的阶段，阶段元素的顺序既是作业执行的顺序。</p>
+<a id="more"></a>
+<p>官方默认预定义的5个阶段（按顺序）：<code>.pre</code>、<code>build</code>、<code>test</code>、<code>deploy</code>、<code>.post</code>。</p>
+<ul>
+<li><p>相同阶段作业<code>并行执行</code>。默认情况下<code>Gitlab Runner</code>运行器只会同时执行一个作业，只有满足以下条件<code>之一</code>时才会真正的并行执行：</p>
+<ul>
+<li>作业运行在<code>不同的</code>运行器上</li>
+<li>修改<code>Gitlab Runner</code>运行器<code>config.toml</code> <code>concurrent</code>设置，默认是1</li>
+</ul>
+</li>
+<li><p>默认情况下，上一个阶段作业全部运行成功后，才会运行下一阶段作业</p>
+</li>
+<li><p>如果作业没定义阶段，则默认使用<code>test</code>阶段</p>
+</li>
+<li><p>默认情况下，任何一个前置作业失败，<code>commit</code>提交会被标记为<code>fail</code>状态，并且下一阶段作业都不会运行。</p>
+</li>
+<li><p><code>.pre</code>保证永远是管道中的第一阶段</p>
+</li>
+<li><p><code>.post</code>保证永远是管道中的最后一个阶段</p>
+</li>
+<li><p>用户自定义的阶段，在<code>.pre</code>之后，<code>.post</code>之前执行，<code>.pre</code>和<code>.post</code>顺序是不可变的，比如以下配置是等同的：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1</span></span><br><span class="line"><span class="attr">stages:</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">.pre</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">a</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">b</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">.post</span></span><br><span class="line"><span class="comment"># 2</span></span><br><span class="line"><span class="attr">stages:</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">a</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">.pre</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">b</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">.post</span></span><br><span class="line"><span class="comment"># 3</span></span><br><span class="line"><span class="attr">stages:</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">a</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">b</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="stage"><a href="#stage" class="headerlink" title="stage"></a>stage</h2><p><code>stage</code>定义每个作业所处的阶段。作业没有第一<code>stage</code>的话，默认是<code>test</code>阶段。</p>
+<h2 id="before-script"><a href="#before-script" class="headerlink" title="before_script"></a>before_script</h2><p><code>before_script</code>用于定义在所有作业之前需要执行的命令。比如安装软件、安装依赖、更新代码等。</p>
+<h2 id="script"><a href="#script" class="headerlink" title="script"></a>script</h2><p><code>script</code>是定义作业中唯一必须参数，用于配置运行器需要执行的脚本。所有作业都必须有一个<code>script</code>配置，如：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">job1:</span></span><br><span class="line"><span class="attr">  script:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">echo</span> <span class="string">'hello world'</span></span><br></pre></td></tr></table></figure>
+<p>表示<code>job1</code>作业需要执行命令输出“hello world”。</p>
+<!-- more -->
+<h2 id="after-script"><a href="#after-script" class="headerlink" title="after_script"></a>after_script</h2><p><code>after_script</code>用于定义在所有作业（即使作业执行失败）之后需要执行的命名。比如：清理缓存、清空工作区间等。</p>
+<p>如果作业<code>timeout</code>或<code>cancelled</code>，<code>after_script</code>命令不会执行。</p>
+<h2 id="image"><a href="#image" class="headerlink" title="image"></a>image</h2><p><code>image</code>是指定作业使用的<code>Docker</code>镜像。</p>
+<h2 id="services"><a href="#services" class="headerlink" title="services"></a>services</h2><p><code>services</code>是指定使用<code>Docker</code>镜像服务。</p>
+<h2 id="rules"><a href="#rules" class="headerlink" title="rules"></a>rules</h2><p>在管道中使用<code>rules</code>来定义包含或排除作业。</p>
+<p><code>rules</code>按顺序计算，直到第一次匹配成功为止。当匹配成功时，在管道中，作业要么被包含或被排除，具体取决于配置。</p>
+<p><code>rules</code>替换<code>only/except</code>，并且它们不能在同一个作业中一起使用。</p>
+<p><code>rules</code>接受一个用下列方法定义的规则数组，可以多个组合在一起使用：</p>
+<ul>
+<li>if</li>
+<li>changes</li>
+<li>exists</li>
+<li>allow_failuree</li>
+<li>variables</li>
+<li>when（未定义时默认为：on_success）</li>
+</ul>
+<h3 id="rules-if"><a href="#rules-if" class="headerlink" title="rules:if"></a>rules:if</h3><p>使用<code>rules:if</code>子句指定何时将作业添加到管道：</p>
+<ul>
+<li>如果<code>if</code>语句为<code>true</code>，则将作业添加到管道中。</li>
+<li>如果<code>if</code>语句为<code>true</code>，但是与<code>when:never</code>结合使用，则不会将作业添加到管道中。</li>
+<li>如果<code>if</code>语句都不为<code>true</code>，则不会将作业添加到管道中。</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">job:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">echo</span> <span class="string">"Hello, Rules!"</span></span><br><span class="line"><span class="attr">  rules:</span></span><br><span class="line"><span class="attr">    - if:</span> <span class="string">'$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /^feature/ &amp;&amp; $CI_MERGE_REQUEST_TARGET_BRANCH_NAME != $CI_DEFAULT_BRANCH'</span></span><br><span class="line"><span class="attr">      when:</span> <span class="string">never</span></span><br><span class="line"><span class="attr">    - if:</span> <span class="string">'$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /^feature/'</span></span><br><span class="line"><span class="attr">      when:</span> <span class="string">manual</span></span><br><span class="line"><span class="attr">      allow_failure:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">    - if:</span> <span class="string">'$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME'</span></span><br></pre></td></tr></table></figure>
+<p>补充细节：</p>
+<ul>
+<li>如果<code>rule</code>匹配且未定义<code>when</code>，则该规则将为作业定义<code>when</code>，默认为<code>on_success</code>。</li>
+<li>可以为每个<code>rule</code>定义一次<code>when</code>，或者为将适用于所有规则的<code>job</code>级别定义一次<code>when</code>。<code>job</code>级别和<code>rule</code>中的<code>when</code>不能混为一谈。</li>
+<li>与<code>script</code>中的变量不同，<code>rule</code>中的变量格式为<code>$VARIABLE</code>。</li>
+</ul>
+<h3 id="rules-changes"><a href="#rules-changes" class="headerlink" title="rules:changes"></a>rules:changes</h3><p>使用<code>rules:changes</code>通过检查对特定文件的更改来指定何时将作业添加到管道中。</p>
+<blockquote>
+<p>仅在<code>branched</code>管道或<code>merge_requests</code>管道中使用<code>rules:changes</code>。</p>
+</blockquote>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">docker</span> <span class="attr">build:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">docker</span> <span class="string">build</span> <span class="bullet">-t</span> <span class="attr">my-image:$CI_COMMIT_REF_SLUG</span> <span class="string">.</span></span><br><span class="line"><span class="attr">  rules:</span></span><br><span class="line">    <span class="comment"># 1、如果是合并请求</span></span><br><span class="line"><span class="attr">    - if:</span> <span class="string">'$CI_PIPELINE_SOURCE == "merge_request_event"'</span></span><br><span class="line"><span class="attr">      changes:</span></span><br><span class="line">        <span class="comment"># 2、检查Dockerfile是否有更改</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">Dockerfile</span></span><br><span class="line">      <span class="comment"># 3、作为手工作业添加到管道中</span></span><br><span class="line"><span class="attr">      when:</span> <span class="string">manual</span></span><br><span class="line">      <span class="comment"># 4、即使作业没有被触发，管道也会继续运行</span></span><br><span class="line"><span class="attr">      allow_failure:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>补充细节：</p>
+<ul>
+<li><code>rules:changes</code>工作方式与<code>only:changes</code>和<code>except:changes</code>相同。</li>
+<li>你可以使用<code>when:never</code>来实现类似于<code>except:changes</code>的规则。</li>
+</ul>
+<h3 id="rules-exists"><a href="#rules-exists" class="headerlink" title="rules:exists"></a>rules:exists</h3><p>使用<code>exists</code>用于在存储库中存在某些文件时运行作业。</p>
+<p>例子：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">job:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">docker</span> <span class="string">build</span> <span class="bullet">-t</span> <span class="attr">my-image:$CI_COMMIT_REF_SLUG</span> <span class="string">.</span></span><br><span class="line"><span class="attr">  rules:</span></span><br><span class="line"><span class="attr">    - exists:</span></span><br><span class="line">        <span class="comment"># Dockerfile存在于存储库中的任何位置，作业都会运行</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">Dockerfile</span></span><br></pre></td></tr></table></figure>
+<p>补充细节：</p>
+<ul>
+<li></li>
+<li>出于性能考虑，<code>GitLab</code>最多匹配<code>10,000</code>个已存在的模式或文件路径。超过<code>10,000</code>个文件时，<code>exists</code>规则总是假定项目中有的匹配。</li>
+</ul>
+<h3 id="rules-allow-failure"><a href="#rules-allow-failure" class="headerlink" title="rules:allow_failure"></a>rules:allow_failure</h3><p><code>rules:allow_failure</code>允许作业失败而不停止管道。</p>
+<p><code>allow_failure:true</code>和<code>when:manual</code>结合使用，管道会继续运行，无需等待手动作业的结果。而<code>allow_failure:false</code>与<code>when:manual</code>结合会导致管道等待手动作业运行后再继续。</p>
+<p>例子：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">job:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">echo</span> <span class="string">"Hello, Rules!"</span></span><br><span class="line"><span class="attr">  rules:</span></span><br><span class="line"><span class="attr">    - if:</span> <span class="string">'$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH'</span></span><br><span class="line"><span class="attr">      when:</span> <span class="string">manual</span></span><br><span class="line"><span class="attr">      allow_failure:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h3 id="rules-variables"><a href="#rules-variables" class="headerlink" title="rules:variables"></a>rules:variables</h3><p>在<code>rules</code>中使用<code>variables</code>为特定的条件定义变量。</p>
+<p>例子：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">job:</span></span><br><span class="line"><span class="attr">  variables:</span></span><br><span class="line"><span class="attr">    DEPLOY_VARIABLE:</span> <span class="string">"default-deploy"</span></span><br><span class="line"><span class="attr">  rules:</span></span><br><span class="line"><span class="attr">    - if:</span> <span class="string">$CI_COMMIT_REF_NAME</span> <span class="string">==</span> <span class="string">$CI_DEFAULT_BRANCH</span></span><br><span class="line"><span class="attr">      variables:</span> <span class="comment"># Override DEPLOY_VARIABLE defined</span></span><br><span class="line"><span class="attr">        DEPLOY_VARIABLE:</span> <span class="string">"deploy-production"</span> <span class="comment"># at the job level.</span></span><br><span class="line"><span class="attr">    - if:</span> <span class="string">$CI_COMMIT_REF_NAME</span> <span class="string">=~</span> <span class="string">/feature/</span></span><br><span class="line"><span class="attr">      variables:</span></span><br><span class="line"><span class="attr">        IS_A_FEATURE:</span> <span class="string">"true"</span> <span class="comment"># Define a new variable.</span></span><br><span class="line"><span class="attr">  script:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">echo</span> <span class="string">"Run script with $DEPLOY_VARIABLE as an argument"</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">echo</span> <span class="string">"Run another script if $IS_A_FEATURE exists"</span></span><br></pre></td></tr></table></figure>
+<h2 id="only-和-except"><a href="#only-和-except" class="headerlink" title="only 和 except"></a>only 和 except</h2><p><code>only</code>和<code>except</code>用于做限制策略，控制何时向管道添加作业。</p>
+<ul>
+<li><code>only</code>用来定义什么时候运行作业。</li>
+<li><code>except</code>用来定义什么时候不运行作业。</li>
+</ul>
+<p>策略规则：</p>
+<ul>
+<li><code>only</code>和<code>except</code>可以同时使用。</li>
+<li><code>only</code>和<code>except</code>可以使用正则表达式。</li>
+<li><code>only</code>和<code>except</code>可以使用特殊关键字。比如：<code>api</code>、<code>branches</code>、<code>chat</code>、<code>external</code>、<code>external_pull_requests</code>、<code>merge_requests</code>、<code>pipelines</code>、<code>pushes</code>、<code>schedules</code>、<code>tags</code>、<code>triggers</code>、<code>web</code>等。</li>
+<li><code>only</code>和<code>except</code>允许指定过滤<code>forks</code>作业的存储库路径。</li>
+</ul>
+<p>可以使用四个关键词：</p>
+<ul>
+<li>refs</li>
+<li>variables</li>
+<li>changes</li>
+<li>kubernetes</li>
+</ul>
+<h3 id="only-refs-except-refs"><a href="#only-refs-except-refs" class="headerlink" title="only:refs/except:refs"></a>only:refs/except:refs</h3><p>使用<code>only:refs</code>和<code>except:refs</code>关键字来控制什么时候根据分支名称（branches）或管道类型（pipeline types）向管道中添加作业。</p>
+<ul>
+<li><p>分支名称，比如： <code>main</code> or <code>my-feature-branch</code>。</p>
+</li>
+<li><p>匹配分支的正则表达式，比如 <code>/^feature-.*/</code>。</p>
+</li>
+<li><p>以下关键字</p>
+<p>| 关键字                 | 描述                                                         |<br>| ———————- | ———————————————————— |<br>| api                    | 用于由管道<code>API</code>触发的管道。理解：当一个pipline被另一个piplines api所触发时(不是触发器API)。 |<br>| branches               | 当一个分支被push上来。                                       |<br>| chat                   | 用于使用<code>GitLab ChatOps</code>命令创建的管道。                     |<br>| external               | 当您使用除<code>GitLab</code>之外的<code>CI</code>服务时，比如：<code>Jenkins</code>。        |<br>| external_pull_requests | 当<code>GitHub</code>上的外部拉取请求被创建或更新时。                   |<br>| merge_requests         | 用于创建或更新合并请求时创建的管道。                         |<br>| pipilines              | 对于使用带有<code>CI_JOB_TOKEN</code>的<code>API</code>或<code>trigger</code>关键字创建的多项目管道。 |<br>| pushes                 | 用于由<code>git push</code>事件触发的管道，包括用于<code>branches</code>和<code>tags</code>。 |<br>| schedules              | 针对预定好的<code>pipline</code>计划而言。                              |<br>| tags                   | 当一个打了tag标记的Release被提交时。                         |<br>| triggers               | 用于使用<code>trigger token</code>创建的管道。                          |<br>| web                    | 在<code>GitLab WEB</code>页面上<code>Pipelines</code>标签页下，按下<code>run pipline</code>的情况。 |</p>
+</li>
+</ul>
+<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">job1:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">echo</span></span><br><span class="line"><span class="attr">  only:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">main</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">/^issue-.*$/</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">merge_requests</span></span><br><span class="line"></span><br><span class="line"><span class="attr">job2:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">echo</span></span><br><span class="line"><span class="attr">  except:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">main</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">/^stable-branch.*$/</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">schedules</span></span><br></pre></td></tr></table></figure>
+<h4 id="补充细节"><a href="#补充细节" class="headerlink" title="补充细节"></a>补充细节</h4><ul>
+<li><p>预定的管道运行在特定的分支上，所以配置了<code>only: braches</code>的作业也会运行在预定的管道上。添加<code>except: schedules</code>以防止只有配置了<code>only: branches</code>的作业在预定的管道上运行。</p>
+</li>
+<li><p><code>only</code>或<code>except</code>没有使用任何关键字，则等同于<code>only: refs</code>或<code>except: refs</code>。以下<code>job1</code>和<code>job2</code>是等同的：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">job1:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">echo</span> <span class="string">'job1'</span></span><br><span class="line"><span class="attr">  only:</span></span><br><span class="line">  	<span class="bullet">-</span> <span class="string">branches</span></span><br><span class="line"></span><br><span class="line"><span class="attr">job2:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">echo</span> <span class="string">'job2'</span></span><br><span class="line"><span class="attr">  only:</span></span><br><span class="line"><span class="attr">    refs:</span></span><br><span class="line">    	<span class="bullet">-</span> <span class="string">branches</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果作业没有使用<code>only</code>、<code>except</code>或者<code>rules</code>，则默认<code>only</code>是<code>branches</code>和<code>tags</code>。以下<code>job1</code>和<code>job2</code>是等同的：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">job1:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">echo</span> <span class="string">'job1'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">job2:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">echo</span> <span class="string">'job2'</span></span><br><span class="line"><span class="attr">  only:</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">branches</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">tags</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="only-variables-except-variables"><a href="#only-variables-except-variables" class="headerlink" title="only:variables/except:variables"></a>only:variables/except:variables</h3><p>根据<a href="https://docs.gitlab.com/ee/ci/variables/index.html" target="_blank" rel="noopener">CI/CD variables</a>的状态，使用<code>only:variables</code>或<code>except:variables</code>关键字来控制何时向管道中添加作业。</p>
+<h4 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">job:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">echo</span> <span class="string">'job'</span></span><br><span class="line"><span class="attr">  only:</span></span><br><span class="line"><span class="attr">    variables:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">$RELEASE</span> <span class="string">==</span> <span class="string">"staging"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">$STAGING</span></span><br></pre></td></tr></table></figure>
+<p>你可以使用<code>except:variables</code>来根据提交消息排除作业</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">end-to-end:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">rake</span> <span class="attr">test:end-to-end</span></span><br><span class="line"><span class="attr">  except:</span></span><br><span class="line"><span class="attr">    variables:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">$CI_COMMIT_MESSAGE</span> <span class="string">=~</span> <span class="string">/skip-end-to-end-tests/</span></span><br></pre></td></tr></table></figure>
+<p>可以使用<code>&amp;&amp;</code>和<code>||</code>来构建更复杂的变量表达式</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">job1:</span></span><br><span class="line"><span class="attr">  script:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">echo</span> <span class="string">This</span> <span class="string">rule</span> <span class="string">uses</span> <span class="string">parentheses.</span></span><br><span class="line"><span class="attr">  only:</span></span><br><span class="line"><span class="attr">    variables:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">($CI_COMMIT_BRANCH</span> <span class="string">==</span> <span class="string">"main"</span> <span class="string">||</span> <span class="string">$CI_COMMIT_BRANCH</span> <span class="string">==</span> <span class="string">"develop"</span><span class="string">)</span> <span class="string">&amp;&amp;</span> <span class="string">$MY_VARIABLE</span></span><br></pre></td></tr></table></figure>
+<h3 id="only-changes-except-changes"><a href="#only-changes-except-changes" class="headerlink" title="only:changes/except:changes"></a>only:changes/except:changes</h3><p>当<code>Git push</code>事件修改文件时，使用<code>changes</code>关键字和 <code>only</code>来运行作业，或<code>except</code>来跳过作业。</p>
+<ul>
+<li>文件路径。</li>
+<li>单个目录的通配符路径，例如<code>path/to/directory/*</code>，或一个目录及其所有子目录，例如<code>path/to/directory/**/*</code>。</li>
+<li>所有具有相同或多个扩展名的文件的通配符(glob)路径，例如<code>*.md</code>或<code>path/to/directory/*.{rb、py sh}</code>。</li>
+<li>用双引号括起来的根目录或所有目录中的文件的通配符路径。例如<code>&quot;*.json&quot;</code>或<code>&quot;**/*.json&quot;</code>。</li>
+</ul>
+<p><code>change</code>可以用于以下<code>refs</code>：</p>
+<ul>
+<li><p>branches</p>
+</li>
+<li><p>external_pull_requests</p>
+</li>
+<li><p>merge_requests</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">docker</span> <span class="string">build</span> <span class="string">service</span> <span class="attr">one:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">docker</span> <span class="string">build</span> <span class="bullet">-t</span> <span class="attr">my-service-one-image:$CI_COMMIT_REF_SLUG</span> <span class="string">.</span></span><br><span class="line"><span class="attr">  only:</span></span><br><span class="line"><span class="attr">    refs:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">merge_requests</span></span><br><span class="line"><span class="attr">    changes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">Dockerfile</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">service-one/**/*</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="例子-2"><a href="#例子-2" class="headerlink" title="例子"></a>例子</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">docker</span> <span class="attr">build:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">docker</span> <span class="string">build</span> <span class="bullet">-t</span> <span class="attr">my-image:$CI_COMMIT_REF_SLUG</span> <span class="string">.</span></span><br><span class="line"><span class="attr">  only:</span></span><br><span class="line"><span class="attr">    refs:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">branches</span></span><br><span class="line"><span class="attr">    changes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">Dockerfile</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">docker/scripts/*</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">dockerfiles/**/*</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">more_scripts/*.&#123;rb,py,sh&#125;</span></span><br></pre></td></tr></table></figure>
+<h4 id="补充细节-1"><a href="#补充细节-1" class="headerlink" title="补充细节"></a>补充细节</h4><ul>
+<li>如果使用除<code>branches</code>、<code>external_pull_requests</code>或<code>merge_requests</code> 之外的引用，则<code>changes</code>无法确定给定文件是新文件还是旧文件，因此总是返回<code>true</code>。</li>
+<li>如果使用<code>only:changes</code>与其他<code>refs</code>配置，则作业会忽略<code>changes</code>且始终运行。</li>
+<li>如果使用<code>except:changes</code>与其他<code>refs</code>配置，则作业会忽略<code>changes</code>且永远不会运行。</li>
+</ul>
+<h3 id="only-kubernetes-except-kubernetes"><a href="#only-kubernetes-except-kubernetes" class="headerlink" title="only:kubernetes/except:kubernetes"></a>only:kubernetes/except:kubernetes</h3><p>略</p>
+<h3 id="needs"><a href="#needs" class="headerlink" title="needs"></a>needs</h3><p>使用<code>needs:</code>乱序执行作业。使用<code>needs</code>的作业之间的关系可以可视化为有向无环图。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+      <div>
+        
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>forever杨</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    
+    <a href="https://blog.yl-online.top/posts/9c6b8737.html" title="gitlab-ci.yml 配置详情">https://blog.yl-online.top/posts/9c6b8737.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。如果文章内容对你有用，请记录到你的笔记中。本博客站点随时会停止服务，请不要收藏、转载！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/gitlab/" rel="tag"># gitlab</a>
+          
+            <a href="/tags/git/" rel="tag"># git</a>
+          
+            <a href="/tags/ci/" rel="tag"># ci</a>
+          
+            <a href="/tags/cd/" rel="tag"># cd</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/504f0829.html" rel="next" title="gitlab-runner 配置">
+                <i class="fa fa-chevron-left"></i> gitlab-runner 配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div id="gitalk-container">
+    </div>
+    
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/avatar.jpg" alt="forever杨">
+            
+              <p class="site-author-name" itemprop="name">forever杨</p>
+              <p class="site-description motion-element" itemprop="description">开心又过一日，唔开心又过一日</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/index.html">
+                
+                    <span class="site-state-item-count">173</span>
+                    <span class="site-state-item-name">文章</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">146</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/foreveryang321" title="GitHub &rarr; https://github.com/foreveryang321" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://tidyko.com/" title="https://tidyko.com/" rel="noopener" target="_blank">Tidy的个人博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#参数详解"><span class="nav-number">1.</span> <span class="nav-text">参数详解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#stages"><span class="nav-number">1.1.</span> <span class="nav-text">stages</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stage"><span class="nav-number">1.2.</span> <span class="nav-text">stage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#before-script"><span class="nav-number">1.3.</span> <span class="nav-text">before_script</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#script"><span class="nav-number">1.4.</span> <span class="nav-text">script</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#after-script"><span class="nav-number">1.5.</span> <span class="nav-text">after_script</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#image"><span class="nav-number">1.6.</span> <span class="nav-text">image</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#services"><span class="nav-number">1.7.</span> <span class="nav-text">services</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rules"><span class="nav-number">1.8.</span> <span class="nav-text">rules</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#rules-if"><span class="nav-number">1.8.1.</span> <span class="nav-text">rules:if</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rules-changes"><span class="nav-number">1.8.2.</span> <span class="nav-text">rules:changes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rules-exists"><span class="nav-number">1.8.3.</span> <span class="nav-text">rules:exists</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rules-allow-failure"><span class="nav-number">1.8.4.</span> <span class="nav-text">rules:allow_failure</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rules-variables"><span class="nav-number">1.8.5.</span> <span class="nav-text">rules:variables</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#only-和-except"><span class="nav-number">1.9.</span> <span class="nav-text">only 和 except</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#only-refs-except-refs"><span class="nav-number">1.9.1.</span> <span class="nav-text">only:refs/except:refs</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#例子"><span class="nav-number">1.9.1.1.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#补充细节"><span class="nav-number">1.9.1.2.</span> <span class="nav-text">补充细节</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#only-variables-except-variables"><span class="nav-number">1.9.2.</span> <span class="nav-text">only:variables/except:variables</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#例子-1"><span class="nav-number">1.9.2.1.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#only-changes-except-changes"><span class="nav-number">1.9.3.</span> <span class="nav-text">only:changes/except:changes</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#例子-2"><span class="nav-number">1.9.3.1.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#补充细节-1"><span class="nav-number">1.9.3.2.</span> <span class="nav-text">补充细节</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#only-kubernetes-except-kubernetes"><span class="nav-number">1.9.4.</span> <span class="nav-text">only:kubernetes/except:kubernetes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#needs"><span class="nav-number">1.9.5.</span> <span class="nav-text">needs</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">forever杨</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点总字数：</span>
+    
+    <span title="站点总字数">522k</span>
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/reading_progress/reading_progress.js"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+
+  
+  
+    
+  
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+
+  
+  
+  <script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+  <script>
+    var gitalk = new Gitalk({
+      clientID: '105db2a541a87c6d8a8a',
+      clientSecret: '0b16c78377f367f4af98cb3e1b6db08a85a06740',
+      repo: 'foreveryang321.github.io',
+      owner: 'foreveryang321',
+      admin: ['foreveryang321'],
+      id: md5(location.pathname),
+      distractionFreeMode: 'true',
+      body: location.href
+    })
+    gitalk.render('gitalk-container')
+  </script>
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap');
+      $(e).after($wrap);
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text();
+        }).toArray().join('\n');
+        var ta = document.createElement('textarea');
+        var range = document.createRange(); //For Chrome
+        var sel = window.getSelection(); //For Chrome
+        var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+        ta.style.top = yPosition + 'px'; //Prevent page scroll
+        ta.style.position = 'absolute';
+        ta.style.opacity = '0';
+        ta.value = code;
+        ta.textContent = code; //For FireFox
+        ta.contentEditable = true;
+        ta.readOnly = false;
+        document.body.appendChild(ta);
+        range.selectNode(ta);
+        sel.removeAllRanges();
+        sel.addRange(range);
+        ta.setSelectionRange(0, code.length);
+        var result = document.execCommand('copy');
+        
+          if (result) $(this).text('复制成功');
+          else $(this).text('复制失败');
+        
+        ta.blur(); //For iOS
+        $(this).blur();
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn');
+        setTimeout(function () {
+          $b.text('复制');
+        }, 300);
+      }).append(e);
+    })
+  </script>
+
+
+  
+
+</body>
+</html>
