@@ -3307,7 +3307,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/a4f9cef0.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/5ed27d2e.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
@@ -3327,7 +3327,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/posts/a4f9cef0.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/2/index.html">docker gitlab安装和配置</a>
+                <a href="/posts/5ed27d2e.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/2/index.html">docker nexus3安装和配置</a>
               
             
           </h2>
@@ -3416,7 +3416,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">588</span>
+                <span title="字数">402</span>
               
 
               
@@ -3450,7 +3450,7 @@
         
            <a href="/tags/docker/" rel="tag" class="color1">docker</a>
         
-           <a href="/tags/gitlab/" rel="tag" class="color2">gitlab</a>
+           <a href="/tags/nexus3/" rel="tag" class="color2">nexus3</a>
         
       </div>
     
@@ -3466,16 +3466,12 @@
       
         
           
-            <h1 id="使用docker安装"><a href="#使用docker安装" class="headerlink" title="使用docker安装"></a>使用docker安装</h1><blockquote>
-<p>docker-compose.yaml</p>
+            <h1 id="nexus3"><a href="#nexus3" class="headerlink" title="nexus3"></a>nexus3</h1><blockquote>
+<p>docker-compose.yml</p>
 </blockquote>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">"3.8"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  gitlab:</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">ts_gitlab</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">gitlab/gitlab-ce:13.2.6-ce.0</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"8082:8082"</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"./data:/var/opt/gitlab"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"./logs:/var/log/gitlab"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"./config:/etc/gitlab"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"/etc/localtime:/etc/localtime"</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="attr">      GITLAB_OMNIBUS_CONFIG:</span> <span class="string">|</span></span><br><span class="line"><span class="string">        external_url "http://ip:8082"</span></span><br><span class="line"><span class="string">        gitlab_rails['time_zone']=CST</span></span><br><span class="line"><span class="string"></span><span class="attr">    restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure>
-<p><code>GITLAB_OMNIBUS_CONFIG</code>查看<a href="https://docs.gitlab.com/omnibus/docker/" target="_blank" rel="noopener">https://docs.gitlab.com/omnibus/docker/</a></p>
-<h1 id="编辑站点信息"><a href="#编辑站点信息" class="headerlink" title="编辑站点信息"></a>编辑站点信息</h1><blockquote>
-<p>vi /etc/gitlab.rb</p>
-</blockquote>
-<p>配置</p>
-<p>gitlab-ctl reconfigure</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">"3.8"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  nexus3:</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">ts_nexus3</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">sonatype/nexus3:3.26.1</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"8081:8081"</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"./data:/nexus-data"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"/etc/localtime:/etc/localtime"</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure>
+<p>问题：Error creating bundle cache.<br>Unable to update instance pid: Unable to create directory /nexus-data/instances</p>
+<p>解决：sudo chmod -R 775 data/</p>
 
           
         
@@ -4247,7 +4243,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">522k</span>
+    <span title="站点总字数">523k</span>
   
 
   
