@@ -112,7 +112,7 @@
 <meta property="og:site_name" content="forever杨的个人博客">
 <meta property="og:description" content="参数详解stagesstages用于定义流水线全局可使用的阶段，阶段元素的顺序既是作业执行的顺序。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-07-12T08:33:57.815Z">
+<meta property="og:updated_time" content="2021-07-13T03:07:53.339Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="gitlab-ci.yml 配置详情">
 <meta name="twitter:description" content="参数详解stagesstages用于定义流水线全局可使用的阶段，阶段元素的顺序既是作业执行的顺序。">
@@ -454,12 +454,24 @@
                 
               
 
-              <time title="创建时间：2021-07-12 08:41:05 / 修改时间：16:33:57" itemprop="dateCreated datePublished" datetime="2021-07-12T08:41:05+08:00">2021-07-12</time>
+              <time title="创建时间：2021-07-12 08:41:05" itemprop="dateCreated datePublished" datetime="2021-07-12T08:41:05+08:00">2021-07-12</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2021-07-13 11:07:53" itemprop="dateModified" datetime="2021-07-13T11:07:53+08:00">2021-07-13</time>
               
             
           </span>
@@ -513,7 +525,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">9k</span>
+                <span title="字数">11k</span>
               
 
               
@@ -527,7 +539,7 @@
                 
                   <span class="post-meta-item-text">时长 &asymp;</span>
                 
-                <span title="时长">8 分钟</span>
+                <span title="时长">10 分钟</span>
               
             </div>
           
@@ -604,12 +616,12 @@
 <p><code>rules</code>替换<code>only/except</code>，并且它们不能在同一个作业中一起使用。</p>
 <p><code>rules</code>接受一个用下列方法定义的规则数组，可以多个组合在一起使用：</p>
 <ul>
-<li>if</li>
-<li>changes</li>
-<li>exists</li>
-<li>allow_failuree</li>
-<li>variables</li>
-<li>when（未定义时默认为：on_success）</li>
+<li><code>if</code></li>
+<li><code>changes</code></li>
+<li><code>exists</code></li>
+<li><code>allow_failuree</code></li>
+<li><code>variables</code></li>
+<li><code>when</code>（未定义时默认为：<code>on_success</code>）</li>
 </ul>
 <h3 id="rules-if"><a href="#rules-if" class="headerlink" title="rules:if"></a>rules:if</h3><p>使用<code>rules:if</code>子句指定何时将作业添加到管道：</p>
 <ul>
@@ -618,7 +630,7 @@
 <li>如果<code>if</code>语句都不为<code>true</code>，则不会将作业添加到管道中。</li>
 </ul>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">job:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">echo</span> <span class="string">"Hello, Rules!"</span></span><br><span class="line"><span class="attr">  rules:</span></span><br><span class="line"><span class="attr">    - if:</span> <span class="string">'$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /^feature/ &amp;&amp; $CI_MERGE_REQUEST_TARGET_BRANCH_NAME != $CI_DEFAULT_BRANCH'</span></span><br><span class="line"><span class="attr">      when:</span> <span class="string">never</span></span><br><span class="line"><span class="attr">    - if:</span> <span class="string">'$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /^feature/'</span></span><br><span class="line"><span class="attr">      when:</span> <span class="string">manual</span></span><br><span class="line"><span class="attr">      allow_failure:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">    - if:</span> <span class="string">'$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME'</span></span><br></pre></td></tr></table></figure>
-<p>补充细节：</p>
+<p>其他细节：</p>
 <ul>
 <li>如果<code>rule</code>匹配且未定义<code>when</code>，则该规则将为作业定义<code>when</code>，默认为<code>on_success</code>。</li>
 <li>可以为每个<code>rule</code>定义一次<code>when</code>，或者为将适用于所有规则的<code>job</code>级别定义一次<code>when</code>。<code>job</code>级别和<code>rule</code>中的<code>when</code>不能混为一谈。</li>
@@ -628,8 +640,8 @@
 <blockquote>
 <p>仅在<code>branched</code>管道或<code>merge_requests</code>管道中使用<code>rules:changes</code>。</p>
 </blockquote>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">docker</span> <span class="attr">build:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">docker</span> <span class="string">build</span> <span class="bullet">-t</span> <span class="attr">my-image:$CI_COMMIT_REF_SLUG</span> <span class="string">.</span></span><br><span class="line"><span class="attr">  rules:</span></span><br><span class="line">    <span class="comment"># 1、如果是合并请求</span></span><br><span class="line"><span class="attr">    - if:</span> <span class="string">'$CI_PIPELINE_SOURCE == "merge_request_event"'</span></span><br><span class="line"><span class="attr">      changes:</span></span><br><span class="line">        <span class="comment"># 2、检查Dockerfile是否有更改</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">Dockerfile</span></span><br><span class="line">      <span class="comment"># 3、作为手工作业添加到管道中</span></span><br><span class="line"><span class="attr">      when:</span> <span class="string">manual</span></span><br><span class="line">      <span class="comment"># 4、即使作业没有被触发，管道也会继续运行</span></span><br><span class="line"><span class="attr">      allow_failure:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<p>补充细节：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">docker</span> <span class="attr">build:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">docker</span> <span class="string">build</span> <span class="bullet">-t</span> <span class="attr">my-image:$CI_COMMIT_REF_SLUG</span> <span class="string">.</span></span><br><span class="line"><span class="attr">  rules:</span></span><br><span class="line">    <span class="comment"># 1、如果是合并请求</span></span><br><span class="line"><span class="attr">    - if:</span> <span class="string">'$CI_PIPELINE_SOURCE == "merge_request_event"'</span></span><br><span class="line"><span class="attr">      changes:</span></span><br><span class="line">        <span class="comment"># 2、检查Dockerfile是否有更改</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">Dockerfile</span></span><br><span class="line">      <span class="comment"># 3、作为手动作业添加到管道中</span></span><br><span class="line"><span class="attr">      when:</span> <span class="string">manual</span></span><br><span class="line">      <span class="comment"># 4、即使作业没有被触发，管道也会继续运行</span></span><br><span class="line"><span class="attr">      allow_failure:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>其他细节：</p>
 <ul>
 <li><code>rules:changes</code>工作方式与<code>only:changes</code>和<code>except:changes</code>相同。</li>
 <li>你可以使用<code>when:never</code>来实现类似于<code>except:changes</code>的规则。</li>
@@ -637,9 +649,9 @@
 <h3 id="rules-exists"><a href="#rules-exists" class="headerlink" title="rules:exists"></a>rules:exists</h3><p>使用<code>exists</code>用于在存储库中存在某些文件时运行作业。</p>
 <p>例子：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">job:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">docker</span> <span class="string">build</span> <span class="bullet">-t</span> <span class="attr">my-image:$CI_COMMIT_REF_SLUG</span> <span class="string">.</span></span><br><span class="line"><span class="attr">  rules:</span></span><br><span class="line"><span class="attr">    - exists:</span></span><br><span class="line">        <span class="comment"># Dockerfile存在于存储库中的任何位置，作业都会运行</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">Dockerfile</span></span><br></pre></td></tr></table></figure>
-<p>补充细节：</p>
+<p>其他细节：</p>
 <ul>
-<li></li>
+<li>Glob patterns are interpreted with Ruby <a href="https://docs.ruby-lang.org/en/2.7.0/File.html#method-c-fnmatch" target="_blank" rel="noopener"><code>File.fnmatch</code></a> with the flags <code>File::FNM_PATHNAME | File::FNM_DOTMATCH | File::FNM_EXTGLOB</code>.</li>
 <li>出于性能考虑，<code>GitLab</code>最多匹配<code>10,000</code>个已存在的模式或文件路径。超过<code>10,000</code>个文件时，<code>exists</code>规则总是假定项目中有的匹配。</li>
 </ul>
 <h3 id="rules-allow-failure"><a href="#rules-allow-failure" class="headerlink" title="rules:allow_failure"></a>rules:allow_failure</h3><p><code>rules:allow_failure</code>允许作业失败而不停止管道。</p>
@@ -663,10 +675,10 @@
 </ul>
 <p>可以使用四个关键词：</p>
 <ul>
-<li>refs</li>
-<li>variables</li>
-<li>changes</li>
-<li>kubernetes</li>
+<li><code>refs</code></li>
+<li><code>variables</code></li>
+<li><code>changes</code></li>
+<li><code>kubernetes</code></li>
 </ul>
 <h3 id="only-refs-except-refs"><a href="#only-refs-except-refs" class="headerlink" title="only:refs/except:refs"></a>only:refs/except:refs</h3><p>使用<code>only:refs</code>和<code>except:refs</code>关键字来控制什么时候根据分支名称（branches）或管道类型（pipeline types）向管道中添加作业。</p>
 <ul>
@@ -675,11 +687,74 @@
 <li><p>匹配分支的正则表达式，比如 <code>/^feature-.*/</code>。</p>
 </li>
 <li><p>以下关键字</p>
-<p>| 关键字                 | 描述                                                         |<br>| ———————- | ———————————————————— |<br>| api                    | 用于由管道<code>API</code>触发的管道。理解：当一个pipline被另一个piplines api所触发时(不是触发器API)。 |<br>| branches               | 当一个分支被push上来。                                       |<br>| chat                   | 用于使用<code>GitLab ChatOps</code>命令创建的管道。                     |<br>| external               | 当您使用除<code>GitLab</code>之外的<code>CI</code>服务时，比如：<code>Jenkins</code>。        |<br>| external_pull_requests | 当<code>GitHub</code>上的外部拉取请求被创建或更新时。                   |<br>| merge_requests         | 用于创建或更新合并请求时创建的管道。                         |<br>| pipilines              | 对于使用带有<code>CI_JOB_TOKEN</code>的<code>API</code>或<code>trigger</code>关键字创建的多项目管道。 |<br>| pushes                 | 用于由<code>git push</code>事件触发的管道，包括用于<code>branches</code>和<code>tags</code>。 |<br>| schedules              | 针对预定好的<code>pipline</code>计划而言。                              |<br>| tags                   | 当一个打了tag标记的Release被提交时。                         |<br>| triggers               | 用于使用<code>trigger token</code>创建的管道。                          |<br>| web                    | 在<code>GitLab WEB</code>页面上<code>Pipelines</code>标签页下，按下<code>run pipline</code>的情况。 |</p>
 </li>
 </ul>
-<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">job1:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">echo</span></span><br><span class="line"><span class="attr">  only:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">main</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">/^issue-.*$/</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">merge_requests</span></span><br><span class="line"></span><br><span class="line"><span class="attr">job2:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">echo</span></span><br><span class="line"><span class="attr">  except:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">main</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">/^stable-branch.*$/</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">schedules</span></span><br></pre></td></tr></table></figure>
-<h4 id="补充细节"><a href="#补充细节" class="headerlink" title="补充细节"></a>补充细节</h4><ul>
+<table>
+<thead>
+<tr>
+<th>关键字</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>api</td>
+<td>用于由管道<code>API</code>触发的管道。理解：当一个pipline被另一个piplines api所触发时(不是触发器API)。</td>
+</tr>
+<tr>
+<td>branches</td>
+<td>当一个分支被push上来。</td>
+</tr>
+<tr>
+<td>chat</td>
+<td>用于使用<code>GitLab ChatOps</code>命令创建的管道。</td>
+</tr>
+<tr>
+<td>external</td>
+<td>当您使用除<code>GitLab</code>之外的<code>CI</code>服务时，比如：<code>Jenkins</code>。</td>
+</tr>
+<tr>
+<td>external_pull_requests</td>
+<td>当<code>GitHub</code>上的外部拉取请求被创建或更新时。</td>
+</tr>
+<tr>
+<td>merge_requests</td>
+<td>用于创建或更新合并请求时创建的管道。</td>
+</tr>
+<tr>
+<td>pipilines</td>
+<td>对于使用带有<code>CI_JOB_TOKEN</code>的<code>API</code>或<code>trigger</code>关键字创建的多项目管道。</td>
+</tr>
+<tr>
+<td>pushes</td>
+<td>用于由<code>git push</code>事件触发的管道，包括用于<code>branches</code>和<code>tags</code>。</td>
+</tr>
+<tr>
+<td>schedules</td>
+<td>针对预定好的<code>pipline</code>计划而言。</td>
+</tr>
+<tr>
+<td>tags</td>
+<td>当一个打了tag标记的Release被提交时。</td>
+</tr>
+<tr>
+<td>triggers</td>
+<td>用于使用<code>trigger token</code>创建的管道。</td>
+</tr>
+<tr>
+<td>web</td>
+<td>在<code>GitLab WEB</code>页面上<code>Pipelines</code>标签页下，按下<code>run pipline</code>的情况。</td>
+</tr>
+</tbody>
+</table>
+<p>例子：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">job1:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">echo</span></span><br><span class="line"><span class="attr">  only:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">main</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">/^issue-.*$/</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">merge_requests</span></span><br><span class="line"></span><br><span class="line"><span class="attr">job2:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">echo</span></span><br><span class="line"><span class="attr">  except:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">main</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">/^stable-branch.*$/</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">schedules</span></span><br></pre></td></tr></table></figure>
+<p>其他细节：</p>
+<ul>
 <li><p>预定的管道运行在特定的分支上，所以配置了<code>only: braches</code>的作业也会运行在预定的管道上。添加<code>except: schedules</code>以防止只有配置了<code>only: branches</code>的作业在预定的管道上运行。</p>
 </li>
 <li><p><code>only</code>或<code>except</code>没有使用任何关键字，则等同于<code>only: refs</code>或<code>except: refs</code>。以下<code>job1</code>和<code>job2</code>是等同的：</p>
@@ -690,7 +765,7 @@
 </li>
 </ul>
 <h3 id="only-variables-except-variables"><a href="#only-variables-except-variables" class="headerlink" title="only:variables/except:variables"></a>only:variables/except:variables</h3><p>根据<a href="https://docs.gitlab.com/ee/ci/variables/index.html" target="_blank" rel="noopener">CI/CD variables</a>的状态，使用<code>only:variables</code>或<code>except:variables</code>关键字来控制何时向管道中添加作业。</p>
-<h4 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">job:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">echo</span> <span class="string">'job'</span></span><br><span class="line"><span class="attr">  only:</span></span><br><span class="line"><span class="attr">    variables:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">$RELEASE</span> <span class="string">==</span> <span class="string">"staging"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">$STAGING</span></span><br></pre></td></tr></table></figure>
+<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">job:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">echo</span> <span class="string">'job'</span></span><br><span class="line"><span class="attr">  only:</span></span><br><span class="line"><span class="attr">    variables:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">$RELEASE</span> <span class="string">==</span> <span class="string">"staging"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">$STAGING</span></span><br></pre></td></tr></table></figure>
 <p>你可以使用<code>except:variables</code>来根据提交消息排除作业</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">end-to-end:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">rake</span> <span class="attr">test:end-to-end</span></span><br><span class="line"><span class="attr">  except:</span></span><br><span class="line"><span class="attr">    variables:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">$CI_COMMIT_MESSAGE</span> <span class="string">=~</span> <span class="string">/skip-end-to-end-tests/</span></span><br></pre></td></tr></table></figure>
 <p>可以使用<code>&amp;&amp;</code>和<code>||</code>来构建更复杂的变量表达式</p>
@@ -704,16 +779,18 @@
 </ul>
 <p><code>change</code>可以用于以下<code>refs</code>：</p>
 <ul>
-<li><p>branches</p>
+<li><p><code>branches</code></p>
 </li>
-<li><p>external_pull_requests</p>
+<li><p><code>external_pull_requests</code></p>
 </li>
-<li><p>merge_requests</p>
+<li><p><code>merge_requests</code></p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">docker</span> <span class="string">build</span> <span class="string">service</span> <span class="attr">one:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">docker</span> <span class="string">build</span> <span class="bullet">-t</span> <span class="attr">my-service-one-image:$CI_COMMIT_REF_SLUG</span> <span class="string">.</span></span><br><span class="line"><span class="attr">  only:</span></span><br><span class="line"><span class="attr">    refs:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">merge_requests</span></span><br><span class="line"><span class="attr">    changes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">Dockerfile</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">service-one/**/*</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h4 id="例子-2"><a href="#例子-2" class="headerlink" title="例子"></a>例子</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">docker</span> <span class="attr">build:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">docker</span> <span class="string">build</span> <span class="bullet">-t</span> <span class="attr">my-image:$CI_COMMIT_REF_SLUG</span> <span class="string">.</span></span><br><span class="line"><span class="attr">  only:</span></span><br><span class="line"><span class="attr">    refs:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">branches</span></span><br><span class="line"><span class="attr">    changes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">Dockerfile</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">docker/scripts/*</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">dockerfiles/**/*</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">more_scripts/*.&#123;rb,py,sh&#125;</span></span><br></pre></td></tr></table></figure>
-<h4 id="补充细节-1"><a href="#补充细节-1" class="headerlink" title="补充细节"></a>补充细节</h4><ul>
+<p>例子：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">docker</span> <span class="attr">build:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">docker</span> <span class="string">build</span> <span class="bullet">-t</span> <span class="attr">my-image:$CI_COMMIT_REF_SLUG</span> <span class="string">.</span></span><br><span class="line"><span class="attr">  only:</span></span><br><span class="line"><span class="attr">    refs:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">branches</span></span><br><span class="line"><span class="attr">    changes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">Dockerfile</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">docker/scripts/*</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">dockerfiles/**/*</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">more_scripts/*.&#123;rb,py,sh&#125;</span></span><br></pre></td></tr></table></figure>
+<p>其他细节</p>
+<ul>
 <li>如果使用除<code>branches</code>、<code>external_pull_requests</code>或<code>merge_requests</code> 之外的引用，则<code>changes</code>无法确定给定文件是新文件还是旧文件，因此总是返回<code>true</code>。</li>
 <li>如果使用<code>only:changes</code>与其他<code>refs</code>配置，则作业会忽略<code>changes</code>且始终运行。</li>
 <li>如果使用<code>except:changes</code>与其他<code>refs</code>配置，则作业会忽略<code>changes</code>且永远不会运行。</li>
@@ -732,31 +809,113 @@
 <h2 id="when"><a href="#when" class="headerlink" title="when"></a>when</h2><p>使用<code>when</code>来实现在失败时或失败后运行的作业。</p>
 <p><code>when</code>的有效值为：</p>
 <ul>
-<li>on_success（默认）-只有当前置阶段的所有作业都成功时才执行作业，或者因为它们具有<code>allow_failure: true</code>而被认为成功时才执行作业。</li>
-<li>on_failure - 只有在前置阶段至少有一个作业失败时才执行作业。</li>
-<li>always - 执行作业而不考虑前置阶段作业的状态。</li>
-<li>manual - 手动执行工作。</li>
-<li>delayed - 将作业的执行延迟一段指定的时间。<code>GitLab</code> 11.14中新增特性。</li>
-<li>never<ul>
+<li><code>on_success</code>（默认）-只有当前置阶段的所有作业都成功时才执行作业，或者因为它们具有<code>allow_failure: true</code>而被认为成功时才执行作业。</li>
+<li><code>on_failure</code> - 只有在前置阶段至少有一个作业失败时才执行作业。</li>
+<li><code>always</code> - 执行作业而不考虑前置阶段作业的状态。</li>
+<li><code>manual</code> - 手动执行工作。</li>
+<li><code>delayed</code> - 将作业的执行延迟一段指定的时间。<code>GitLab</code> 11.14中新增特性。</li>
+<li><code>never</code><ul>
 <li>根据作业规则，不执行作业。</li>
 <li>根据<a href="https://docs.gitlab.com/ee/ci/yaml/#workflow" target="_blank" rel="noopener">workflow:rules</a>，不运行流水线。</li>
 </ul>
 </li>
 </ul>
-<h3 id="when-manual"><a href="#when-manual" class="headerlink" title="when:manual"></a>when:manual</h3><h3 id="when-delayed"><a href="#when-delayed" class="headerlink" title="when:delayed"></a>when:delayed</h3><p>使用<code>when:delayed</code>执行脚本，或者避免作业立即进入挂起状态。</p>
+<h3 id="when-manual"><a href="#when-manual" class="headerlink" title="when:manual"></a>when:manual</h3><p>手动作业是一种不会自动执行的作业，必须由用户显式启动。一般在部署到生产环境时使用手动作业。当管道启动时，手动作业显示为跳过，而不会自动运行。</p>
+<h3 id="when-delayed"><a href="#when-delayed" class="headerlink" title="when:delayed"></a>when:delayed</h3><p>使用<code>when:delayed</code>执行脚本，或者避免作业立即进入挂起状态。</p>
 <p>可以使用<code>start_in</code>关键字设置句点。默认<code>start_in</code>的值是以秒为单位的运行时间，除非提供了一个单位。<code>start_in</code>必须小于等于一周。有效值的示例包括：</p>
 <ul>
-<li>‘5’</li>
-<li>5 seconds</li>
-<li>30 minutes</li>
-<li>1 day</li>
-<li>1 week</li>
+<li><code>&#39;5&#39;</code></li>
+<li><code>5 seconds</code></li>
+<li><code>30 minutes</code></li>
+<li><code>1 day</code></li>
+<li><code>1 week</code></li>
 </ul>
 <p>当一个阶段包含一个被延迟的作业时，延迟的作业完成后，管道才会继续运行。</p>
 <p>与其他类型的作业类似，延迟作业的计时器只有在前一个阶段通过后才会启动。</p>
 <p>下面的示例创建了一个名为<code>job1</code>的作业，在前一个阶段完成30分钟后执行：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">job1:</span></span><br><span class="line"><span class="attr">  stage:</span> <span class="string">deploy</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">echo</span> <span class="string">'job1'</span></span><br><span class="line"><span class="attr">  when:</span> <span class="string">delayed</span></span><br><span class="line"><span class="attr">  start_in:</span> <span class="number">30</span> <span class="string">minutes</span></span><br></pre></td></tr></table></figure>
-
+<h2 id="environment"><a href="#environment" class="headerlink" title="environment"></a>environment</h2><p>略</p>
+<h2 id="cache"><a href="#cache" class="headerlink" title="cache"></a>cache</h2><p>使用缓存指定要在作业之间缓存的文件和目录列表。只能使用本地工作副本中的路径。</p>
+<h3 id="cache-paths"><a href="#cache-paths" class="headerlink" title="cache:paths"></a>cache:paths</h3><p>使用cache:paths关键字选择要缓存的文件或目录。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">rspec:</span></span><br><span class="line"><span class="attr">  script:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">echo</span> <span class="string">"This job uses a cache."</span></span><br><span class="line"><span class="attr">  cache:</span></span><br><span class="line"><span class="attr">    key:</span> <span class="string">binaries-cache</span></span><br><span class="line"><span class="attr">    paths:</span></span><br><span class="line">      <span class="comment">#  缓存binaries目录下所有apk文件</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">binaries/*.apk</span></span><br><span class="line">      <span class="comment"># 缓存 .config 文件</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">.config</span></span><br></pre></td></tr></table></figure>
+<h3 id="cache-key"><a href="#cache-key" class="headerlink" title="cache:key"></a>cache:key</h3><p>使用<code>cache:key</code>给每个缓存一个唯一的标识键。使用相同<code>cache key</code>的所有作业使用相同的缓存，包括在不同的管道中。</p>
+<p>如果不设置，则默认密钥为<code>default</code>。所有带有<code>cache:</code>但没有<code>cache:key</code>的作业都共享<code>default</code>的缓存。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">cache-job:</span></span><br><span class="line"><span class="attr">  script:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">echo</span> <span class="string">"This job uses a cache."</span></span><br><span class="line"><span class="attr">  cache:</span></span><br><span class="line"><span class="attr">    key:</span> <span class="string">binaries-cache-$CI_COMMIT_REF_SLUG</span></span><br><span class="line"><span class="attr">    paths:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">binaries/</span></span><br></pre></td></tr></table></figure>
+<p>其他细节：</p>
+<ul>
+<li>如果是<code>windows</code>系统下，需要把<code>$</code>替换成<code>%</code>，比如：<code>%CI_COMMIT_REF_SLUG%</code>。</li>
+<li><code>cache:key</code>不能包含<ul>
+<li><code>/</code>符号，等价于<code>URI</code>编码<code>%2F</code>。</li>
+<li>仅<code>.</code>符号(任何数字)，等价于<code>URI</code>编码的<code>%2E</code>。</li>
+</ul>
+</li>
+<li>缓存是在作业之间共享的，为不同的作业使用不同的路径，或设置不同的<code>cache:key</code>，否则缓存内容会被覆盖。</li>
+</ul>
+<h3 id="cache-key-files"><a href="#cache-key-files" class="headerlink" title="cache:key:files"></a><code>cache:key:files</code></h3><p>当<code>一个</code>或<code>两个</code>特定文件发生变化时，使用<code>cache:key:files</code>生成一个新的密钥。<code>cache:key:files</code>允许重用一些缓存，并减少重建的次数，可以加快后续管道运行的速度。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">cache-job:</span></span><br><span class="line"><span class="attr">  script:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">echo</span> <span class="string">"This job uses a cache."</span></span><br><span class="line"><span class="attr">  cache:</span></span><br><span class="line"><span class="attr">    key:</span></span><br><span class="line"><span class="attr">      files:</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">Gemfile.lock</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">package.json</span></span><br><span class="line"><span class="attr">    paths:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">vendor/ruby</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">node_modules</span></span><br></pre></td></tr></table></figure>
+<p>其他细节：</p>
+<ul>
+<li><code>cache key</code>是一个<code>SHA</code>签名，它根据每个列出的更改的文件的最新提交计算得出。如果在提交中没有任何文件变动，则默认为<code>default</code>。</li>
+</ul>
+<h3 id="cache-key-prefix"><a href="#cache-key-prefix" class="headerlink" title="cache:key:prefix"></a><code>cache:key:prefix</code></h3><p>使用<code>cache:key:prefix</code>与<code>cache:key:files</code>结合计算<code>SHA</code>签名组合。</p>
+<ul>
+<li>字符串</li>
+<li>预设的<code>variables</code></li>
+<li>二者结合</li>
+</ul>
+<h3 id="cache-untracked"><a href="#cache-untracked" class="headerlink" title="cache:untracked"></a>cache:untracked</h3><p>使用<code>cache:untracked:true</code>来缓存<code>Git</code>库中所有未被跟踪的文件。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">rspec:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">test</span></span><br><span class="line"><span class="attr">  cache:</span></span><br><span class="line"><span class="attr">    untracked:</span> <span class="literal">true</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># 结合 cache:paths 使用</span></span><br><span class="line"><span class="attr">rspec:</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">test</span></span><br><span class="line"><span class="attr">  cache:</span></span><br><span class="line"><span class="attr">    untracked:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">    paths:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">binaries/</span></span><br></pre></td></tr></table></figure>
+<h3 id="cache-when"><a href="#cache-when" class="headerlink" title="cache:when"></a>cache:when</h3><p>使用<code>cache:when</code>根据作业的状态，来定义何时需要缓存。</p>
+<ul>
+<li><code>on_success</code> - 默认</li>
+<li><code>on_failure</code></li>
+<li><code>always</code></li>
+</ul>
+<h3 id="cache-policy"><a href="#cache-policy" class="headerlink" title="cache:policy"></a>cache:policy</h3><p>如果要更改<code>cache</code>的上传和下载行为，使用<code>cache:policy</code>。默认情况下，作业在启动时下载缓存，在作业结束时上传更改到缓存。</p>
+<p>缓存策略可选项：</p>
+<ul>
+<li><code>pull</code></li>
+<li><code>push</code></li>
+<li><code>pull-push</code> - 默认</li>
+</ul>
+<h2 id="artifacts"><a href="#artifacts" class="headerlink" title="artifacts"></a>artifacts</h2><p>使用<code>artifacts</code>把指定的文件和目录的列表都附加到作业，无论作业返回<code>success</code>、<code>fails</code>还是<code>always</code>状态。</p>
+<p>作业完成后，<code>artifacts</code>被发送到<code>GitLab</code>。如果大小不大于最大<code>artifacts</code>大小限制（有大小限制，可以手动修改配置支持更大的大小），可以在<code>GitLab UI</code>下载它们。</p>
+<h3 id="dependencies"><a href="#dependencies" class="headerlink" title="dependencies"></a>dependencies</h3><p>略</p>
+<h3 id="artifacts-exclude"><a href="#artifacts-exclude" class="headerlink" title="artifacts:exclude"></a>artifacts:exclude</h3><p><code>exclude</code>用来防止将文件添加到<code>artifacts</code>存档中。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">artifacts:</span></span><br><span class="line"><span class="attr">  paths:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">binaries/</span></span><br><span class="line"><span class="attr">  exclude:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">binaries/**/*.o</span></span><br></pre></td></tr></table></figure>
+<h3 id="artifacts-expire-in"><a href="#artifacts-expire-in" class="headerlink" title="artifacts:expire_in"></a>artifacts:expire_in</h3><p>使用<code>expire_in</code>指定作业<code>artifacts</code>在过期和删除之前存储的时间。如果未定义过期时间，则默认为：30天。</p>
+<p><code>expire_in</code>设置不生效：</p>
+<ul>
+<li>Artifacts from the latest job, unless this keeping the latest job artifacts is:<ul>
+<li><a href="https://docs.gitlab.com/ee/ci/pipelines/job_artifacts.html#keep-artifacts-from-most-recent-successful-jobs" target="_blank" rel="noopener">Disabled at the project level</a>.</li>
+<li><a href="https://docs.gitlab.com/ee/user/admin_area/settings/continuous_integration.html#keep-the-latest-artifacts-for-all-jobs-in-the-latest-successful-pipelines" target="_blank" rel="noopener">Disabled instance-wide</a>.</li>
+</ul>
+</li>
+<li>Pipeline artifacts. It’s not possible to specify an expiration date for these:<ul>
+<li>Pipeline artifacts from the latest pipeline are kept forever.</li>
+<li>Other pipeline artifacts are erased after one week.</li>
+</ul>
+</li>
+</ul>
+<p><code>expire_in</code>默认以<code>秒</code>为单位。有效值包括：</p>
+<ul>
+<li><code>&#39;42&#39;</code></li>
+<li><code>42 seconds</code></li>
+<li><code>3 mins 4 sec</code></li>
+<li><code>2 hrs 20 min</code></li>
+<li><code>2h20min</code></li>
+<li><code>6 mos 1 day</code></li>
+<li><code>47 yrs 6 mos and 4d</code></li>
+<li><code>3 weeks and 2 days</code></li>
+<li><code>never</code></li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">job:</span></span><br><span class="line"><span class="attr">  artifacts:</span></span><br><span class="line">    <span class="comment"># 使 artifacts 在上传一周后过期</span></span><br><span class="line"><span class="attr">    expire_in:</span> <span class="number">1</span> <span class="string">week</span></span><br></pre></td></tr></table></figure>
+<p>要覆盖过期日期并保护工件不被自动删除，可以执行以下操作：</p>
+<ul>
+<li>使用<code>Gitlab</code>页面上的<code>Keep</code>按钮。</li>
+<li>配置<code>expire_in</code>为<code>never</code>。</li>
+</ul>
+<h3 id="artifacts-expose-as"><a href="#artifacts-expose-as" class="headerlink" title="artifacts:expose_as"></a>artifacts:expose_as</h3>
       
     </div>
 
@@ -1345,7 +1504,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#参数详解"><span class="nav-number">1.</span> <span class="nav-text">参数详解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#stages"><span class="nav-number">1.1.</span> <span class="nav-text">stages</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stage"><span class="nav-number">1.2.</span> <span class="nav-text">stage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#before-script"><span class="nav-number">1.3.</span> <span class="nav-text">before_script</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#script"><span class="nav-number">1.4.</span> <span class="nav-text">script</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#after-script"><span class="nav-number">1.5.</span> <span class="nav-text">after_script</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#image"><span class="nav-number">1.6.</span> <span class="nav-text">image</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#services"><span class="nav-number">1.7.</span> <span class="nav-text">services</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rules"><span class="nav-number">1.8.</span> <span class="nav-text">rules</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#rules-if"><span class="nav-number">1.8.1.</span> <span class="nav-text">rules:if</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rules-changes"><span class="nav-number">1.8.2.</span> <span class="nav-text">rules:changes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rules-exists"><span class="nav-number">1.8.3.</span> <span class="nav-text">rules:exists</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rules-allow-failure"><span class="nav-number">1.8.4.</span> <span class="nav-text">rules:allow_failure</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rules-variables"><span class="nav-number">1.8.5.</span> <span class="nav-text">rules:variables</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#only-和-except"><span class="nav-number">1.9.</span> <span class="nav-text">only 和 except</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#only-refs-except-refs"><span class="nav-number">1.9.1.</span> <span class="nav-text">only:refs/except:refs</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#例子"><span class="nav-number">1.9.1.1.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#补充细节"><span class="nav-number">1.9.1.2.</span> <span class="nav-text">补充细节</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#only-variables-except-variables"><span class="nav-number">1.9.2.</span> <span class="nav-text">only:variables/except:variables</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#例子-1"><span class="nav-number">1.9.2.1.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#only-changes-except-changes"><span class="nav-number">1.9.3.</span> <span class="nav-text">only:changes/except:changes</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#例子-2"><span class="nav-number">1.9.3.1.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#补充细节-1"><span class="nav-number">1.9.3.2.</span> <span class="nav-text">补充细节</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#only-kubernetes-except-kubernetes"><span class="nav-number">1.9.4.</span> <span class="nav-text">only:kubernetes/except:kubernetes</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#needs"><span class="nav-number">1.10.</span> <span class="nav-text">needs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tags"><span class="nav-number">1.11.</span> <span class="nav-text">tags</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#allow-failure"><span class="nav-number">1.12.</span> <span class="nav-text">allow_failure</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#allow-failure-exit-codes"><span class="nav-number">1.12.1.</span> <span class="nav-text">allow_failure:exit_codes</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#when"><span class="nav-number">1.13.</span> <span class="nav-text">when</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#when-manual"><span class="nav-number">1.13.1.</span> <span class="nav-text">when:manual</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#when-delayed"><span class="nav-number">1.13.2.</span> <span class="nav-text">when:delayed</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#参数详解"><span class="nav-number">1.</span> <span class="nav-text">参数详解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#stages"><span class="nav-number">1.1.</span> <span class="nav-text">stages</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stage"><span class="nav-number">1.2.</span> <span class="nav-text">stage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#before-script"><span class="nav-number">1.3.</span> <span class="nav-text">before_script</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#script"><span class="nav-number">1.4.</span> <span class="nav-text">script</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#after-script"><span class="nav-number">1.5.</span> <span class="nav-text">after_script</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#image"><span class="nav-number">1.6.</span> <span class="nav-text">image</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#services"><span class="nav-number">1.7.</span> <span class="nav-text">services</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rules"><span class="nav-number">1.8.</span> <span class="nav-text">rules</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#rules-if"><span class="nav-number">1.8.1.</span> <span class="nav-text">rules:if</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rules-changes"><span class="nav-number">1.8.2.</span> <span class="nav-text">rules:changes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rules-exists"><span class="nav-number">1.8.3.</span> <span class="nav-text">rules:exists</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rules-allow-failure"><span class="nav-number">1.8.4.</span> <span class="nav-text">rules:allow_failure</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rules-variables"><span class="nav-number">1.8.5.</span> <span class="nav-text">rules:variables</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#only-和-except"><span class="nav-number">1.9.</span> <span class="nav-text">only 和 except</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#only-refs-except-refs"><span class="nav-number">1.9.1.</span> <span class="nav-text">only:refs/except:refs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#only-variables-except-variables"><span class="nav-number">1.9.2.</span> <span class="nav-text">only:variables/except:variables</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#例子"><span class="nav-number">1.9.2.1.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#only-changes-except-changes"><span class="nav-number">1.9.3.</span> <span class="nav-text">only:changes/except:changes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#only-kubernetes-except-kubernetes"><span class="nav-number">1.9.4.</span> <span class="nav-text">only:kubernetes/except:kubernetes</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#needs"><span class="nav-number">1.10.</span> <span class="nav-text">needs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tags"><span class="nav-number">1.11.</span> <span class="nav-text">tags</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#allow-failure"><span class="nav-number">1.12.</span> <span class="nav-text">allow_failure</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#allow-failure-exit-codes"><span class="nav-number">1.12.1.</span> <span class="nav-text">allow_failure:exit_codes</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#when"><span class="nav-number">1.13.</span> <span class="nav-text">when</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#when-manual"><span class="nav-number">1.13.1.</span> <span class="nav-text">when:manual</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#when-delayed"><span class="nav-number">1.13.2.</span> <span class="nav-text">when:delayed</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#environment"><span class="nav-number">1.14.</span> <span class="nav-text">environment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cache"><span class="nav-number">1.15.</span> <span class="nav-text">cache</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cache-paths"><span class="nav-number">1.15.1.</span> <span class="nav-text">cache:paths</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cache-key"><span class="nav-number">1.15.2.</span> <span class="nav-text">cache:key</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cache-key-files"><span class="nav-number">1.15.3.</span> <span class="nav-text">cache:key:files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cache-key-prefix"><span class="nav-number">1.15.4.</span> <span class="nav-text">cache:key:prefix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cache-untracked"><span class="nav-number">1.15.5.</span> <span class="nav-text">cache:untracked</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cache-when"><span class="nav-number">1.15.6.</span> <span class="nav-text">cache:when</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cache-policy"><span class="nav-number">1.15.7.</span> <span class="nav-text">cache:policy</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#artifacts"><span class="nav-number">1.16.</span> <span class="nav-text">artifacts</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dependencies"><span class="nav-number">1.16.1.</span> <span class="nav-text">dependencies</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#artifacts-exclude"><span class="nav-number">1.16.2.</span> <span class="nav-text">artifacts:exclude</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#artifacts-expire-in"><span class="nav-number">1.16.3.</span> <span class="nav-text">artifacts:expire_in</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#artifacts-expose-as"><span class="nav-number">1.16.4.</span> <span class="nav-text">artifacts:expose_as</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -1379,7 +1538,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">523k</span>
+    <span title="站点总字数">526k</span>
   
 
   
