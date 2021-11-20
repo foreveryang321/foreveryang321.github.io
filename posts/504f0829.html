@@ -104,18 +104,18 @@
 
 
 
-  <meta name="description" content="gitlab-runner安装 目录结构  12345[docker@yl-mac gitlab-runner]# tree.├── config│   └── config.toml└── docker-compose.yml">
+  <meta name="description" content="安装 目录结构  123456789101112131415161718192021222324# 宿主机通过root登录，可以使用普通用户登录[root@yl-mac gitlab-runner]# tree.├── config│   └── config.toml├── ssh│   └── config│   └── id_rsa│   └── id_rsa.pub└── docker-c">
 <meta name="keywords" content="docker,gitlab-runner,maven">
 <meta property="og:type" content="article">
 <meta property="og:title" content="gitlab-runner 配置">
 <meta property="og:url" content="https://blog.yl-online.top/posts/504f0829.html">
 <meta property="og:site_name" content="forever杨的个人博客">
-<meta property="og:description" content="gitlab-runner安装 目录结构  12345[docker@yl-mac gitlab-runner]# tree.├── config│   └── config.toml└── docker-compose.yml">
+<meta property="og:description" content="安装 目录结构  123456789101112131415161718192021222324# 宿主机通过root登录，可以使用普通用户登录[root@yl-mac gitlab-runner]# tree.├── config│   └── config.toml├── ssh│   └── config│   └── id_rsa│   └── id_rsa.pub└── docker-c">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-07-12T00:54:12.276Z">
+<meta property="og:updated_time" content="2021-09-13T03:14:26.063Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="gitlab-runner 配置">
-<meta name="twitter:description" content="gitlab-runner安装 目录结构  12345[docker@yl-mac gitlab-runner]# tree.├── config│   └── config.toml└── docker-compose.yml">
+<meta name="twitter:description" content="安装 目录结构  123456789101112131415161718192021222324# 宿主机通过root登录，可以使用普通用户登录[root@yl-mac gitlab-runner]# tree.├── config│   └── config.toml├── ssh│   └── config│   └── id_rsa│   └── id_rsa.pub└── docker-c">
 
 
 
@@ -252,7 +252,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>文章<span class="badge">173</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>文章<span class="badge">179</span></a>
 
   </li>
         
@@ -271,7 +271,7 @@
       
     
 
-    <a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">29</span></a>
+    <a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">30</span></a>
 
   </li>
         
@@ -290,7 +290,7 @@
       
     
 
-    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">146</span></a>
+    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">153</span></a>
 
   </li>
         
@@ -471,7 +471,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-07-12 08:54:12" itemprop="dateModified" datetime="2021-07-12T08:54:12+08:00">2021-07-12</time>
+                <time title="修改时间：2021-09-13 11:14:26" itemprop="dateModified" datetime="2021-09-13T11:14:26+08:00">2021-09-13</time>
               
             
           </span>
@@ -525,7 +525,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">3.6k</span>
+                <span title="字数">6.2k</span>
               
 
               
@@ -539,7 +539,7 @@
                 
                   <span class="post-meta-item-text">时长 &asymp;</span>
                 
-                <span title="时长">3 分钟</span>
+                <span title="时长">6 分钟</span>
               
             </div>
           
@@ -575,35 +575,39 @@
       
 
       
-        <h1 id="gitlab-runner安装"><a href="#gitlab-runner安装" class="headerlink" title="gitlab-runner安装"></a>gitlab-runner安装</h1><blockquote>
+        <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><blockquote>
 <p>目录结构</p>
 </blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[docker@yl-mac gitlab-runner]# tree</span><br><span class="line">.</span><br><span class="line">├── config</span><br><span class="line">│   └── config.toml</span><br><span class="line">└── docker-compose.yml</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 宿主机通过root登录，可以使用普通用户登录</span></span><br><span class="line">[root@yl-mac gitlab-runner]# tree</span><br><span class="line">.</span><br><span class="line">├── config</span><br><span class="line">│   └── config.toml</span><br><span class="line">├── ssh</span><br><span class="line">│   └── config</span><br><span class="line">│   └── id_rsa</span><br><span class="line">│   └── id_rsa.pub</span><br><span class="line">└── docker-compose.yml</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 权限</span></span><br><span class="line">[root@yl-mac gitlab-runner]# ll</span><br><span class="line">total 12</span><br><span class="line">drwxr-xr-x 2 root root 4096 Sep  9 11:49 config</span><br><span class="line">-rw-r--r-- 1 root root  343 Sep 13 08:33 docker-compose.yml</span><br><span class="line">drwxrwxrwx 2 root root 4096 Sep 13 08:39 ssh</span><br><span class="line"></span><br><span class="line">[root@yl-mac gitlab-runner]# ll ssh/</span><br><span class="line">total 16</span><br><span class="line">-rw-r--r-- 1 100 65533   25 Sep 13 08:38 config</span><br><span class="line">-rw------- 1 100 65533 2622 Sep 13 08:38 id_rsa</span><br><span class="line">-rw-r--r-- 1 100 65533  581 Sep 13 08:38 id_rsa.pub</span><br><span class="line">-rw-r--r-- 1 100 65533  692 Sep 13 08:42 known_hosts</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <blockquote>
 <p>docker-compose.xml</p>
 </blockquote>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3.8'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  gitlab-runner:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">gitlab/gitlab-runner:alpine-v14.0.1</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">gitlab-runner</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">/var/run/docker.sock:/var/run/docker.sock</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">./config:/etc/gitlab-runner</span></span><br><span class="line"><span class="comment">#    ports:</span></span><br><span class="line"><span class="comment">#      - "8093:8083"</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>注册 runner 实例</p>
-</blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 进入容器</span></span><br><span class="line">docker exec -it gitlab-runner sh</span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span><span class="bash"> 注册 java 编译类型实例，支持 maven 环境的编译</span></span><br><span class="line">gitlab-runner register --non-interactive --executor "docker"  --docker-image maven:3.6.1-jdk-8-alpine --docker-volumes '/root/.m2:/root/.m2' --url "gitlab 服务地址" --registration-token "gitlab token" --description "maven" --tag-list "maven" --run-untagged="true" --locked="false" --output-limit="40960"</span><br><span class="line"><span class="meta">#</span><span class="bash"> --docker-privileged</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 注册 docker 编译类型实例，支持 docker 镜像打包等环境的编译</span></span><br><span class="line">gitlab-runner register --non-interactive --executor "docker"  --docker-image docker:20.10.7 --docker-volumes '/var/run/docker.sock:/var/run/docker.sock' --url "gitlab 服务地址" --registration-token "gitlab token" --description "docker" --tag-list "docker" --run-untagged="true" --locked="false" --output-limit="40960"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 取消注册：通过 name</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> gitlab-runner unregister --name docker</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 取消所有注册</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> gitlab-runner unregister --all-runners</span></span><br></pre></td></tr></table></figure>
+<p>不需提前建<code>config</code>目录</p>
+<p>提前建<code>ssh</code>目录，并配置权限<code>chmod -R 777 ssh</code>，<code>755</code>、<code>766</code>权限都不行</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3.8'</span></span><br><span class="line"> </span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  gitlab-runner:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">gitlab/gitlab-runner:alpine-v14.0.1</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">gitlab-runner</span></span><br><span class="line"><span class="attr">    hostname:</span> <span class="string">gitlab-runner</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">./config:/etc/gitlab-runner</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">./ssh:/home/gitlab-runner/.ssh</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">/var/run/docker.sock:/var/run/docker.sock</span></span><br><span class="line"><span class="comment">#    ports:</span></span><br><span class="line"><span class="comment">#      - "8093:8083"</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure>
+<h1 id="注册-runner-实例"><a href="#注册-runner-实例" class="headerlink" title="注册 runner 实例"></a>注册 runner 实例</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 进入容器</span></span><br><span class="line">docker exec -it gitlab-runner sh</span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span><span class="bash"> 注册 java 编译类型实例，支持 maven 环境的编译</span></span><br><span class="line">gitlab-runner register --non-interactive --executor "docker"  --docker-image maven:3.6.1-jdk-8-alpine --docker-volumes '/root/.m2:/root/.m2' --url "gitlab 服务地址" --registration-token "gitlab token" --description "maven" --tag-list "maven" --run-untagged="true" --locked="false" --output-limit="40960" --docker-pull-policy="if-not-present"</span><br><span class="line"><span class="meta">#</span><span class="bash"> --docker-privileged</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 注册 gradle</span></span><br><span class="line">gitlab-runner register --non-interactive --executor "docker"  --docker-image gradle:7.1.1-jdk8 --docker-volumes '/root/.gradle:/home/gradle/.gradle' --docker-volumes '/var/run/docker.sock:/var/run/docker.sock' --url "gitlab 服务地址" --registration-token "gitlab token" --description "gradle" --tag-list "gradle" --run-untagged="true" --locked="false" --output-limit="40960" --docker-pull-policy="if-not-present"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 注册 docker 编译类型实例，支持 docker 镜像打包等环境的编译</span></span><br><span class="line">gitlab-runner register --non-interactive --executor "docker"  --docker-image docker:20.10.7 --docker-volumes '/var/run/docker.sock:/var/run/docker.sock' --url "gitlab 服务地址" --registration-token "gitlab token" --description "docker" --tag-list "docker" --run-untagged="true" --locked="false" --output-limit="40960" --docker-pull-policy="if-not-present"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 注册 docker-compose 实例</span></span><br><span class="line">gitlab-runner register --non-interactive --executor "docker" --docker-image docker/compose:alpine-1.29.2 --docker-volumes '/var/run/docker.sock:/var/run/docker.sock' --url "gitlab 服务地址" --registration-token "gitlab token" --description "docker-compose" --tag-list "docker-compose" --run-untagged="true" --locked="false" -output-limit="40960" --docker-pull-policy="if-not-present"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 注册 shell 执行环境</span></span><br><span class="line">gitlab-runner register --non-interactive --executor "shell"  --url "gitlab 服务地址" --registration-token "gitlab token" --description "shell" --tag-list "shell" --run-untagged="true" --locked="false" --output-limit="40960"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 取消注册：通过 name</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> gitlab-runner unregister --name docker</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 取消所有注册</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> gitlab-runner unregister --all-runners</span></span><br></pre></td></tr></table></figure>
 <p>注册后，会生成以下<code>gitlab-runner</code> 的<code>config.toml</code>配置文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">concurrent = 1</span><br><span class="line">check_interval = 0</span><br><span class="line"></span><br><span class="line">[session_server]</span><br><span class="line">  #listen_address = &quot;[::]:8093&quot; #  listen on all available interfaces on port 8093</span><br><span class="line">  #advertise_address = &quot;ip:8093&quot; # gitlab-runner 服务</span><br><span class="line">  session_timeout = 1800</span><br><span class="line"></span><br><span class="line">[[runners]]</span><br><span class="line">  name = &quot;maven&quot;</span><br><span class="line">  url = &quot;gitlab 服务地址&quot;</span><br><span class="line">  token = &quot;gitlab token&quot;</span><br><span class="line">  executor = &quot;docker&quot;</span><br><span class="line">  # 默认是4096</span><br><span class="line">  output_limit = 40960</span><br><span class="line">  [runners.custom_build_dir]</span><br><span class="line">  [runners.cache]</span><br><span class="line">    [runners.cache.s3]</span><br><span class="line">    [runners.cache.gcs]</span><br><span class="line">    [runners.cache.azure]</span><br><span class="line">  [runners.docker]</span><br><span class="line">    tls_verify = false</span><br><span class="line">    image = &quot;maven:3.3.3-jdk-8&quot;</span><br><span class="line">    privileged = false</span><br><span class="line">    disable_entrypoint_overwrite = false</span><br><span class="line">    oom_kill_disable = false</span><br><span class="line">    disable_cache = false</span><br><span class="line">    volumes = [&quot;/root/.m2:/root/.m2&quot;, &quot;/cache&quot;]</span><br><span class="line">    shm_size = 0</span><br><span class="line"></span><br><span class="line">[[runners]]</span><br><span class="line">  name = &quot;docker&quot;</span><br><span class="line">  url = &quot;gitlab 服务地址&quot;</span><br><span class="line">  token = &quot;gitlab token&quot;</span><br><span class="line">  executor = &quot;docker&quot;</span><br><span class="line">  # 默认是4096</span><br><span class="line">  output_limit = 40960</span><br><span class="line">  [runners.custom_build_dir]</span><br><span class="line">  [runners.cache]</span><br><span class="line">    [runners.cache.s3]</span><br><span class="line">    [runners.cache.gcs]</span><br><span class="line">    [runners.cache.azure]</span><br><span class="line">  [runners.docker]</span><br><span class="line">    tls_verify = false</span><br><span class="line">    image = &quot;docker:stable&quot;</span><br><span class="line">    privileged = false</span><br><span class="line">    disable_entrypoint_overwrite = false</span><br><span class="line">    oom_kill_disable = false</span><br><span class="line">    disable_cache = false</span><br><span class="line">    volumes = [&quot;/cache&quot;, &quot;/var/run/docker.sock:/var/run/docker.sock&quot;]</span><br><span class="line">    shm_size = 0</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">concurrent = 1</span><br><span class="line">check_interval = 0</span><br><span class="line"></span><br><span class="line">[session_server]</span><br><span class="line">  #listen_address = &quot;[::]:8093&quot; #  listen on all available interfaces on port 8093</span><br><span class="line">  #advertise_address = &quot;ip:8093&quot; # gitlab-runner 服务</span><br><span class="line">  session_timeout = 1800</span><br><span class="line"></span><br><span class="line">[[runners]]</span><br><span class="line">  name = &quot;maven&quot;</span><br><span class="line">  url = &quot;gitlab 服务地址&quot;</span><br><span class="line">  token = &quot;gitlab token&quot;</span><br><span class="line">  executor = &quot;docker&quot;</span><br><span class="line">  # 默认是4096</span><br><span class="line">  output_limit = 40960</span><br><span class="line">  [runners.custom_build_dir]</span><br><span class="line">  [runners.cache]</span><br><span class="line">    [runners.cache.s3]</span><br><span class="line">    [runners.cache.gcs]</span><br><span class="line">    [runners.cache.azure]</span><br><span class="line">  [runners.docker]</span><br><span class="line">    tls_verify = false</span><br><span class="line">    image = &quot;maven:3.3.3-jdk-8&quot;</span><br><span class="line">    privileged = false</span><br><span class="line">    disable_entrypoint_overwrite = false</span><br><span class="line">    oom_kill_disable = false</span><br><span class="line">    disable_cache = false</span><br><span class="line">    volumes = [&quot;/root/.m2:/root/.m2&quot;, &quot;/cache&quot;]</span><br><span class="line">    shm_size = 0</span><br><span class="line"></span><br><span class="line">[[runners]]</span><br><span class="line">  name = &quot;docker&quot;</span><br><span class="line">  url = &quot;gitlab 服务地址&quot;</span><br><span class="line">  token = &quot;gitlab token&quot;</span><br><span class="line">  executor = &quot;docker&quot;</span><br><span class="line">  # 默认是4096</span><br><span class="line">  output_limit = 40960</span><br><span class="line">  [runners.custom_build_dir]</span><br><span class="line">  [runners.cache]</span><br><span class="line">    [runners.cache.s3]</span><br><span class="line">    [runners.cache.gcs]</span><br><span class="line">    [runners.cache.azure]</span><br><span class="line">  [runners.docker]</span><br><span class="line">    tls_verify = false</span><br><span class="line">    image = &quot;docker:stable&quot;</span><br><span class="line">    privileged = false</span><br><span class="line">    disable_entrypoint_overwrite = false</span><br><span class="line">    oom_kill_disable = false</span><br><span class="line">    disable_cache = false</span><br><span class="line">    volumes = [&quot;/cache&quot;, &quot;/var/run/docker.sock:/var/run/docker.sock&quot;]</span><br><span class="line">    shm_size = 0</span><br><span class="line">[[runners]]</span><br><span class="line">  name = &quot;shell&quot;</span><br><span class="line">  output_limit = 40960</span><br><span class="line">  url = &quot;gitlab 服务地址&quot;</span><br><span class="line">  token = &quot;gitlab token&quot;</span><br><span class="line">  executor = &quot;shell&quot;</span><br><span class="line">  [runners.custom_build_dir]</span><br><span class="line">  [runners.cache]</span><br><span class="line">    [runners.cache.s3]</span><br><span class="line">    [runners.cache.gcs]</span><br><span class="line">    [runners.cache.azure]</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>下载 gitlab-runner 执行 .gitlab-ci.yml 流水线可能需要使用到的镜像</p>
 </blockquote>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 必须</span></span><br><span class="line">docker pull gitlab/gitlab-runner-helper:x86_64-c1edb478</span><br><span class="line">docker pull registry.gitlab.com/gitlab-org/gitlab-runner/gitlab-runner-helper:x86_64-c1edb478</span><br><span class="line"><span class="meta">#</span><span class="bash"> 可能使用到</span></span><br><span class="line">docker pull docker:20.10.7</span><br><span class="line">docker pull maven:3.6.1-jdk-8-alpine</span><br><span class="line">docker pull node:xxxx</span><br><span class="line">docker pull openjdk:xxxx</span><br></pre></td></tr></table></figure>
+<h1 id="gitlab-runner-容器-SSH-免密登录远程主机"><a href="#gitlab-runner-容器-SSH-免密登录远程主机" class="headerlink" title="gitlab-runner 容器 SSH 免密登录远程主机"></a>gitlab-runner 容器 SSH 免密登录远程主机</h1><h2 id="生成秘钥"><a href="#生成秘钥" class="headerlink" title="生成秘钥"></a>生成秘钥</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker-compose 先做ssh目录的持久化，在进入容器执行构建秘钥命令</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 解决权限问题，在宿主机执行</span></span><br><span class="line">chmod -R 777 ssh</span><br><span class="line"><span class="meta">#</span><span class="bash"> 以 gilab-runner 用户登录容器（不能使用root）</span></span><br><span class="line">docker exec -it -u gitlab-runner gitlab-runner sh</span><br><span class="line">cd ~</span><br><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+<h2 id="配置config"><a href="#配置config" class="headerlink" title="配置config"></a>配置config</h2><p>解决 Pseudo-terminal will not be allocated because stdin is not a terminal 问题<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 以 gilab-runner 用户登录容器（不能使用root）</span></span><br><span class="line">tee ~/.ssh/config &lt;&lt;-'EOF'</span><br><span class="line">StrictHostKeyChecking no</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure></p>
+<h2 id="受控主机"><a href="#受控主机" class="headerlink" title="受控主机"></a>受控主机</h2><p>将<code>id_rsa.pub</code>里面的内容追加到受控主机的<code>~/.ssh/authorized_keys</code>即可。</p>
 <h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><ol>
-<li><p>Maven 加速问题</p>
-<p>解决：注册<code>gitlab-runner</code>的时候，指定<code>--docker-volumes &#39;~/.m2:/root/.m2&#39;</code>配置，并在宿主机<code>~/.m2/</code>下配置<code>settings.xml</code>。默认：三方包会保存在<code>~/.m2/repository</code>中。</p>
-<p>注意：经测试启动容器指定<code>-v /data/docker/gitlab/runner/.m2:/root/.m2</code>映射，在其中放入<code>settings.xml</code>不生效</p>
+<li><p>Maven 持久化问题</p>
+<p>解决：因为<code>Mave</code>n容器默认的路径为：<code>/root/.m2</code>，所以gitlab-runner注册的时候，持久化这个路径就行了，使用<code>--docker-volumes &#39;/root/.m2:/root/.m2&#39;</code></p>
 </li>
 <li><p>Job’s log exceeded limit of 4194304 bytes.</p>
 <p>解决：在<code>gitlab-runner</code>的<code>config.toml</code>加上<code>output_limit</code>配置，默认是<code>4096（4MB）</code></p>
 </li>
 <li><p>ERROR: Uploading artifacts as “archive” to coordinator… too large archive</p>
 <p>解决：<code>admin area</code> -&gt; <code>settings</code> -&gt; <code>ci/cd</code> -&gt; <code>Continuous Integration and Deployment</code> -&gt; <code>Maximum artifacts size (MB)</code></p>
+</li>
+<li><p>Gradle 持久化问题</p>
+<p>解决：因为<code>Gradle</code>容器默认的路径为：<code>/home/gradle/.gradle</code>，所以<code>gitlab-runner</code>注册的时候，持久化这个路径就行了，使用<code>--docker-volumes &#39;/root/.gradle:/home/gradle/.gradle&#39;</code></p>
 </li>
 </ol>
 
@@ -757,7 +761,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">173</span>
+                    <span class="site-state-item-count">179</span>
                     <span class="site-state-item-name">文章</span>
                   </a>
                 </div>
@@ -828,7 +832,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">29</span>
+                      
+                    
+                    <span class="site-state-item-count">30</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1133,7 +1139,21 @@
                     
                       
                     
-                    <span class="site-state-item-count">146</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">153</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1197,7 +1217,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#gitlab-runner安装"><span class="nav-number">1.</span> <span class="nav-text">gitlab-runner安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题"><span class="nav-number">2.</span> <span class="nav-text">问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#注册-runner-实例"><span class="nav-number">2.</span> <span class="nav-text">注册 runner 实例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gitlab-runner-容器-SSH-免密登录远程主机"><span class="nav-number">3.</span> <span class="nav-text">gitlab-runner 容器 SSH 免密登录远程主机</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#生成秘钥"><span class="nav-number">3.1.</span> <span class="nav-text">生成秘钥</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置config"><span class="nav-number">3.2.</span> <span class="nav-text">配置config</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#受控主机"><span class="nav-number">3.3.</span> <span class="nav-text">受控主机</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题"><span class="nav-number">4.</span> <span class="nav-text">问题</span></a></li></ol></div>
             
 
           </div>
@@ -1231,7 +1251,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">529k</span>
+    <span title="站点总字数">572k</span>
   
 
   
