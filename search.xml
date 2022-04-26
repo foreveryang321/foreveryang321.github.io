@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[注解实现动态锁业务]]></title>
     <url>%2Fposts%2F5e4e02b5.html</url>
-    <content type="text"><![CDATA[概要基于注解、Spring AOP 和 Spring Expression表达式实现动态锁业务。 代码实现 FormLock.java 123456789101112131415161718192021222324import java.lang.annotation.Documented;import java.lang.annotation.ElementType;import java.lang.annotation.Inherited;import java.lang.annotation.Retention;import java.lang.annotation.RetentionPolicy;import java.lang.annotation.Target;/** * 防止表单重复提交锁实现注解 * * @author yangli */@Target(&#123;ElementType.METHOD, ElementType.TYPE&#125;)@Retention(RetentionPolicy.RUNTIME)@Inherited@Documentedpublic @interface FormLock &#123; /** * Spring Expression Language (SpEL) expression for computing the key dynamically. * &lt;p&gt; * 表单锁 key 的值，spring el 表达式（Spring Expression Language (SpEL) expression），动态获取表单锁的 key 值 */ String key() default "";&#125; FormLockAspect.java 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143import lombok.RequiredArgsConstructor;import lombok.extern.slf4j.Slf4j;import org.apache.commons.lang3.StringUtils;import org.aspectj.lang.ProceedingJoinPoint;import org.aspectj.lang.annotation.Around;import org.aspectj.lang.annotation.Aspect;import org.aspectj.lang.annotation.Pointcut;import org.aspectj.lang.reflect.MethodSignature;import org.redisson.api.RLock;import org.redisson.api.RedissonClient;import org.springframework.core.LocalVariableTableParameterNameDiscoverer;import org.springframework.core.annotation.AnnotationUtils;import org.springframework.expression.EvaluationContext;import org.springframework.expression.EvaluationException;import org.springframework.expression.Expression;import org.springframework.expression.ExpressionParser;import org.springframework.expression.spel.standard.SpelExpressionParser;import org.springframework.expression.spel.support.StandardEvaluationContext;import org.springframework.stereotype.Component;import java.lang.reflect.Method;import java.util.Arrays;import java.util.concurrent.TimeUnit;/** * @author yangli */@Aspect@Slf4j@Component@RequiredArgsConstructorpublic class FormLockAspect &#123; private final RedissonClient redissonClient; /** * 锁 */ private static final String LOCK_KEY = "redisson::lock::%s::%s"; private final ExpressionParser parser = new SpelExpressionParser(); private final LocalVariableTableParameterNameDiscoverer discoverer = new LocalVariableTableParameterNameDiscoverer(); @Pointcut("@annotation(com.grgbanking.prms.common.lock.FormLock)") public void pointcut() &#123; &#125; @Around("pointcut()") public Object around(ProceedingJoinPoint point) throws Throwable &#123; Method method = resolveMethod(point); FormLock formLock = AnnotationUtils.findAnnotation(method, FormLock.class); if (formLock == null) &#123; return point.proceed(); &#125; String el = formLock.key(); if (StringUtils.isBlank(el)) &#123; return point.proceed(); &#125; if (!el.startsWith("#")) &#123; return point.proceed(); &#125; Object[] args = point.getArgs(); // Expose indexed variables as well as parameter names (if discoverable) String[] paramNames = this.discoverer.getParameterNames(method); int paramCount = (paramNames != null ? paramNames.length : method.getParameterCount()); int argsCount = args.length; EvaluationContext eval = new StandardEvaluationContext(); for (int i = 0; i &lt; paramCount; i++) &#123; Object value = null; if (argsCount &gt; paramCount &amp;&amp; i == paramCount - 1) &#123; // Expose remaining arguments as vararg array for last parameter value = Arrays.copyOfRange(args, i, argsCount); &#125; else if (argsCount &gt; i) &#123; // Actual argument found - otherwise left as null value = args[i]; &#125; /** * see &#123;@link MethodBasedEvaluationContext#lazyLoadArguments()&#125; */ eval.setVariable("a" + i, value); eval.setVariable("p" + i, value); if (paramNames != null) &#123; eval.setVariable(paramNames[i], value); &#125; &#125; Expression expression = parser.parseExpression(el); /** * 这里可能会抛出异常，不用处理，这样有利于程序发现&#123;@link FormLock#key()&#125;配置错误问题 */ String lockKey; try &#123; lockKey = expression.getValue(eval, String.class); &#125; catch (EvaluationException e) &#123; throw new EvaluationException(String.format("%s 表达式错误", el)); &#125; if (StringUtils.isBlank(lockKey)) &#123; log.warn("&#123;&#125; 表达式的值为空，直接执行逻辑", el); return point.proceed(); &#125; String name = point.getTarget().getClass().getSimpleName() + "#" + method.getName(); RLock lock = null; try &#123; lock = redissonClient.getLock(String.format(LOCK_KEY, name, lockKey)); // 如果不主动释放锁，300 秒后自动释放 boolean success = lock.tryLock(100L, 300000L, TimeUnit.MILLISECONDS); if (!success) &#123; // todo 改成自己的返回格式：json、页面等 return Rs.error("表单已提交，不可重复提交"); &#125; // log.info("获得表单执行锁 ---&gt; 结束，获取数量：&#123;&#125;", notifications.size()); return point.proceed(); &#125; finally &#123; if (lock != null &amp;&amp; lock.isLocked() &amp;&amp; lock.isHeldByCurrentThread()) &#123; lock.unlock(); &#125; &#125; &#125; private Method resolveMethod(ProceedingJoinPoint point) &#123; MethodSignature signature = (MethodSignature) point.getSignature(); Class&lt;?&gt; targetClass = point.getTarget().getClass(); Method method = getDeclaredMethod(targetClass, signature.getName(), signature.getMethod().getParameterTypes()); if (method == null) &#123; throw new IllegalStateException("无法解析目标方法: " + signature.getMethod().getName()); &#125; return method; &#125; private Method getDeclaredMethod(Class&lt;?&gt; clazz, String name, Class&lt;?&gt;... parameterTypes) &#123; try &#123; return clazz.getDeclaredMethod(name, parameterTypes); &#125; catch (NoSuchMethodException e) &#123; Class&lt;?&gt; superClass = clazz.getSuperclass(); if (superClass != null) &#123; return getDeclaredMethod(superClass, name, parameterTypes); &#125; &#125; return null; &#125;&#125; 使用12345678910111213// 例子：会自动读取 dto.getFormId() 的值来作为锁的 key@FormLock(key = "#dto.formId")@RequestMapping(value = "/list", method = RequestMethod.POST)public String list(QueryDto dto) &#123; // 具体业务&#125;@Datapublic class QueryDto &#123; private String formId; private String name; ...&#125;]]></content>
+    <content type="text"><![CDATA[概要基于注解、Spring AOP 和 Spring Expression表达式实现动态锁业务。 代码实现 FormLock.java 123456789101112131415161718192021222324import java.lang.annotation.Documented;import java.lang.annotation.ElementType;import java.lang.annotation.Inherited;import java.lang.annotation.Retention;import java.lang.annotation.RetentionPolicy;import java.lang.annotation.Target;/** * 防止表单重复提交锁实现注解 * * @author yl */@Target(&#123;ElementType.METHOD, ElementType.TYPE&#125;)@Retention(RetentionPolicy.RUNTIME)@Inherited@Documentedpublic @interface FormLock &#123; /** * Spring Expression Language (SpEL) expression for computing the key dynamically. * &lt;p&gt; * 表单锁 key 的值，spring el 表达式（Spring Expression Language (SpEL) expression），动态获取表单锁的 key 值 */ String key() default "";&#125; FormLockAspect.java 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143import lombok.RequiredArgsConstructor;import lombok.extern.slf4j.Slf4j;import org.apache.commons.lang3.StringUtils;import org.aspectj.lang.ProceedingJoinPoint;import org.aspectj.lang.annotation.Around;import org.aspectj.lang.annotation.Aspect;import org.aspectj.lang.annotation.Pointcut;import org.aspectj.lang.reflect.MethodSignature;import org.redisson.api.RLock;import org.redisson.api.RedissonClient;import org.springframework.core.LocalVariableTableParameterNameDiscoverer;import org.springframework.core.annotation.AnnotationUtils;import org.springframework.expression.EvaluationContext;import org.springframework.expression.EvaluationException;import org.springframework.expression.Expression;import org.springframework.expression.ExpressionParser;import org.springframework.expression.spel.standard.SpelExpressionParser;import org.springframework.expression.spel.support.StandardEvaluationContext;import org.springframework.stereotype.Component;import java.lang.reflect.Method;import java.util.Arrays;import java.util.concurrent.TimeUnit;/** * @author yl */@Aspect@Slf4j@Component@RequiredArgsConstructorpublic class FormLockAspect &#123; private final RedissonClient redissonClient; /** * 锁 */ private static final String LOCK_KEY = "redisson::lock::%s::%s"; private final ExpressionParser parser = new SpelExpressionParser(); private final LocalVariableTableParameterNameDiscoverer discoverer = new LocalVariableTableParameterNameDiscoverer(); @Pointcut("@annotation(com.grgbanking.prms.common.lock.FormLock)") public void pointcut() &#123; &#125; @Around("pointcut()") public Object around(ProceedingJoinPoint point) throws Throwable &#123; Method method = resolveMethod(point); FormLock formLock = AnnotationUtils.findAnnotation(method, FormLock.class); if (formLock == null) &#123; return point.proceed(); &#125; String el = formLock.key(); if (StringUtils.isBlank(el)) &#123; return point.proceed(); &#125; if (!el.startsWith("#")) &#123; return point.proceed(); &#125; Object[] args = point.getArgs(); // Expose indexed variables as well as parameter names (if discoverable) String[] paramNames = this.discoverer.getParameterNames(method); int paramCount = (paramNames != null ? paramNames.length : method.getParameterCount()); int argsCount = args.length; EvaluationContext eval = new StandardEvaluationContext(); for (int i = 0; i &lt; paramCount; i++) &#123; Object value = null; if (argsCount &gt; paramCount &amp;&amp; i == paramCount - 1) &#123; // Expose remaining arguments as vararg array for last parameter value = Arrays.copyOfRange(args, i, argsCount); &#125; else if (argsCount &gt; i) &#123; // Actual argument found - otherwise left as null value = args[i]; &#125; /** * see &#123;@link MethodBasedEvaluationContext#lazyLoadArguments()&#125; */ eval.setVariable("a" + i, value); eval.setVariable("p" + i, value); if (paramNames != null) &#123; eval.setVariable(paramNames[i], value); &#125; &#125; Expression expression = parser.parseExpression(el); /** * 这里可能会抛出异常，不用处理，这样有利于程序发现&#123;@link FormLock#key()&#125;配置错误问题 */ String lockKey; try &#123; lockKey = expression.getValue(eval, String.class); &#125; catch (EvaluationException e) &#123; throw new EvaluationException(String.format("%s 表达式错误", el)); &#125; if (StringUtils.isBlank(lockKey)) &#123; log.warn("&#123;&#125; 表达式的值为空，直接执行逻辑", el); return point.proceed(); &#125; String name = point.getTarget().getClass().getSimpleName() + "#" + method.getName(); RLock lock = null; try &#123; lock = redissonClient.getLock(String.format(LOCK_KEY, name, lockKey)); // 如果不主动释放锁，300 秒后自动释放 boolean success = lock.tryLock(100L, 300000L, TimeUnit.MILLISECONDS); if (!success) &#123; // todo 改成自己的返回格式：json、页面等 return Rs.error("表单已提交，不可重复提交"); &#125; // log.info("获得表单执行锁 ---&gt; 结束，获取数量：&#123;&#125;", notifications.size()); return point.proceed(); &#125; finally &#123; if (lock != null &amp;&amp; lock.isLocked() &amp;&amp; lock.isHeldByCurrentThread()) &#123; lock.unlock(); &#125; &#125; &#125; private Method resolveMethod(ProceedingJoinPoint point) &#123; MethodSignature signature = (MethodSignature) point.getSignature(); Class&lt;?&gt; targetClass = point.getTarget().getClass(); Method method = getDeclaredMethod(targetClass, signature.getName(), signature.getMethod().getParameterTypes()); if (method == null) &#123; throw new IllegalStateException("无法解析目标方法: " + signature.getMethod().getName()); &#125; return method; &#125; private Method getDeclaredMethod(Class&lt;?&gt; clazz, String name, Class&lt;?&gt;... parameterTypes) &#123; try &#123; return clazz.getDeclaredMethod(name, parameterTypes); &#125; catch (NoSuchMethodException e) &#123; Class&lt;?&gt; superClass = clazz.getSuperclass(); if (superClass != null) &#123; return getDeclaredMethod(superClass, name, parameterTypes); &#125; &#125; return null; &#125;&#125; 使用12345678910111213// 例子：会自动读取 dto.getFormId() 的值来作为锁的 key@FormLock(key = "#dto.formId")@RequestMapping(value = "/list", method = RequestMethod.POST)public String list(QueryDto dto) &#123; // 具体业务&#125;@Datapublic class QueryDto &#123; private String formId; private String name; ...&#125;]]></content>
       <categories>
         <category>Java</category>
       </categories>
@@ -138,8 +138,8 @@
       </categories>
       <tags>
         <tag>docker</tag>
-        <tag>apisix</tag>
         <tag>etcd</tag>
+        <tag>apisix</tag>
       </tags>
   </entry>
   <entry>
@@ -151,8 +151,8 @@
       </categories>
       <tags>
         <tag>docker</tag>
-        <tag>apisix</tag>
         <tag>etcd</tag>
+        <tag>apisix</tag>
         <tag>apisix-dashboard</tag>
         <tag>keepalived</tag>
       </tags>
@@ -365,8 +365,8 @@
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>dns</tag>
         <tag>CentOS</tag>
+        <tag>dns</tag>
       </tags>
   </entry>
   <entry>
@@ -856,18 +856,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux traceroute 命令]]></title>
-    <url>%2Fposts%2F683fa9b1.html</url>
-    <content type="text"><![CDATA[traceroute1traceroute &lt;ip&gt; -nT -p &lt;port&gt; windows使用 12tracert &lt;ip&gt;tracert baidu.com]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>traceroute</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Linux telnet 命令]]></title>
     <url>%2Fposts%2F683fa9b1.html</url>
     <content type="text"><![CDATA[telnet1telnet &lt;ip&gt; &lt;port&gt; ctrl+c 不退出问题解决1234# 先输入$ ctrl+]# 在输入$ quit]]></content>
@@ -877,6 +865,18 @@
       <tags>
         <tag>shell</tag>
         <tag>telnet</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux traceroute 命令]]></title>
+    <url>%2Fposts%2F683fa9b1.html</url>
+    <content type="text"><![CDATA[traceroute1traceroute &lt;ip&gt; -nT -p &lt;port&gt; windows使用 12tracert &lt;ip&gt;tracert baidu.com]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>traceroute</tag>
       </tags>
   </entry>
   <entry>
@@ -1060,9 +1060,9 @@
       </categories>
       <tags>
         <tag>Oracle</tag>
-        <tag>spring-boot</tag>
         <tag>Hibernate</tag>
         <tag>DataJpaTest</tag>
+        <tag>spring-boot</tag>
         <tag>jpa</tag>
       </tags>
   </entry>
@@ -1398,8 +1398,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>cxf</tag>
         <tag>spring-boot</tag>
+        <tag>cxf</tag>
       </tags>
   </entry>
   <entry>
@@ -1531,14 +1531,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[zookeeper 清理日志文件]]></title>
-    <url>%2Fposts%2Fc0bbcacd.html</url>
-    <content type="text"><![CDATA[clear123456789101112131415161718192021222324252627282930#!/usr/bin/env bash# @Author: YL# @Date: 2017-11-01 08:59:34# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:09# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`cd ..NODE_HOME=`pwd`# snapshotNODE_DATA_DIR=$NODE_HOME/data/version-2# snapshot logNODE_LOG_DIR=$NODE_HOME/logs/version-2# zk logNODE_LOGS=$NODE_HOME/logs# 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中count=3count=$[$count+1]ls -t $NODE_LOG_DIR/log.* | tail -n +$count | xargs rm -fls -t $NODE_DATA_DIR/snapshot.* | tail -n +$count | xargs rm -fls -t $NODE_LOGS/zookeeper.log.* | tail -n +$count | xargs rm -f# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"STDOUT_FILE=$NODE_LOGS/stdout.logecho "$DATE_PATTERN clear logs success" | tee -a $STDOUT_FILE]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
     <title><![CDATA[Tomcat 启动脚本]]></title>
     <url>%2Fposts%2Fe22f47ab.html</url>
     <content type="text"><![CDATA[Tomcat 启动脚本主 Tomcat + 应用部署 Tomcat 应用部署方式 12345678910111213141516171819[txrd@host-148 /data/]$ tree -af .├── ./apache-tomcat-8.5.57│ └── ./bin│ └── ./conf│ └── ./lib│ └── ./temp│ └── ./webapps│ └── ./work├── ./szim│ └── ./project │ └── ./szim.war │ └── ./tomcat │ └── ./conf│ └── ./temp│ └── ./webapps│ └── ./work│ └── ./logs.sh │ └── ./restart.sh restart.sh 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109#!/usr/bin/env bash# @Author: YL# @Date: 2020-08-17 09:33:43# @Last Modified by: YL# @Last Modified time: 2020-08-17 14:50:43export LANG=en_US.UTF-8# Tomcat 主目录export CATALINA_HOME=/data/apache-tomcat-8.5.57cd `dirname $0`PROJECT_HOME=`pwd`# Tomcat 应用部署目录TC_HOME="$PROJECT_HOME/tomcat"# Tomcat 应用部署目录export CATALINA_BASE=$TC_HOME# crontab 检测日记文件TC_STDOUT_FILE="$TC_HOME/logs/stdout.out"# 检测 Tomcat 是否启动（进程ID）PIDS=`ps -ef | grep $TC_HOME | grep -v grep | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`#===========================================================================================# JVM Configuration#===========================================================================================# export JAVA_HOME=/usr/java/jdk1.8.0_251# export PATH=$JAVA_HOME/bin:$PATH# export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHJVM_OPTS="$JVM_OPTS -server -Xms1g -Xmx1g -Xss256k"JVM_OPTS="$JVM_OPTS -XX:+DisableExplicitGC -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled"JVM_OPTS="$JVM_OPTS -Xloggc:$TC_HOME/logs/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M"JVM_OPTS="$JVM_OPTS -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$TC_HOME/logs/dump-`date +"%Y-%m-%d"`.hprof"JVM_OPTS="$JVM_OPTS -Dspring.profiles.active=pro"# Tomcat 启动参数配置export JAVA_OPTS="$JVM_OPTS"#===========================================================================================# log file delete#===========================================================================================function cleanLog()&#123; ls -d -t $TC_HOME/logs/catalina.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/host-manager.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/localhost.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/manager.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/*.hprof | tail -n +3 | xargs rm -rf&#125;cleanLog# 优雅停机function gracefulShutdown()&#123; if [ -z "$PIDS" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME does not started!" | tee -a $STDOUT_FILE else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PIDS begining" | tee -a $STDOUT_FILE for PID in $PIDS ; do kill $PID &gt; /dev/null 2&gt;&amp;1 echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PID success" | tee -a $STDOUT_FILE done # 检测是否停机成功 COUNT=0 while [ $COUNT -lt 1 ]; do sleep 1 COUNT=1 for PID in $PIDS ; do PID_EXIST=`ps -f -p $PID | grep java` if [ -n "$PID_EXIST" ]; then COUNT=0 break fi done done fi&#125;function operate()&#123; if [[ "$1" = "kill" ]] ; then gracefulShutdown elif [[ "$1" = "start" ]]; then cd $CATALINA_HOME/bin sh startup.sh else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" | tee -a $TC_STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$PIDS" = "" ]] ; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" &gt;&gt; $TC_STDOUT_FILE operate start else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME pid $PIDS" &gt;&gt; $TC_STDOUT_FILE fielse echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILEfi 单应用部署 Tomcat 应用部署方式 12345678910111213[txrd@host-148 /data/szim]$ tree -af .├── ./project │ └── ./szim.war └── ./tomcat │ └── ./bin│ └── ./conf│ └── ./lib│ └── ./temp│ └── ./webapps│ └── ./work├── ./logs.sh ├── ./restart.sh restart.sh 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109#!/usr/bin/env bash# @Author: YL# @Date: 2020-08-17 09:33:43# @Last Modified by: YL# @Last Modified time: 2020-08-17 14:50:43export LANG=en_US.UTF-8# Tomcat 主目录export CATALINA_HOME=/data/apache-tomcat-8.5.57cd `dirname $0`PROJECT_HOME=`pwd`# Tomcat 应用部署目录TC_HOME="$PROJECT_HOME/tomcat"# Tomcat 应用部署目录export CATALINA_BASE=$TC_HOME# crontab 检测日记文件TC_STDOUT_FILE="$TC_HOME/logs/stdout.out"# 检测 Tomcat 是否启动（进程ID）PIDS=`ps -ef | grep $TC_HOME | grep -v grep | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`#===========================================================================================# JVM Configuration#===========================================================================================# export JAVA_HOME=/usr/java/jdk1.8.0_251# export PATH=$JAVA_HOME/bin:$PATH# export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHJVM_OPTS="$JVM_OPTS -server -Xms1g -Xmx1g -Xss256k"JVM_OPTS="$JVM_OPTS -XX:+DisableExplicitGC -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled"JVM_OPTS="$JVM_OPTS -Xloggc:$TC_HOME/logs/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M"JVM_OPTS="$JVM_OPTS -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$TC_HOME/logs/dump-`date +"%Y-%m-%d"`.hprof"JVM_OPTS="$JVM_OPTS -Dspring.profiles.active=pro"# Tomcat 启动参数配置export JAVA_OPTS="$JVM_OPTS"#===========================================================================================# log file delete#===========================================================================================function cleanLog()&#123; ls -d -t $TC_HOME/logs/catalina.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/host-manager.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/localhost.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/manager.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/*.hprof | tail -n +3 | xargs rm -rf&#125;cleanLog# 优雅停机function gracefulShutdown()&#123; if [ -z "$PIDS" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME does not started!" | tee -a $STDOUT_FILE else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PIDS begining" | tee -a $STDOUT_FILE for PID in $PIDS ; do kill $PID &gt; /dev/null 2&gt;&amp;1 echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PID success" | tee -a $STDOUT_FILE done # 检测是否停机成功 COUNT=0 while [ $COUNT -lt 1 ]; do sleep 1 COUNT=1 for PID in $PIDS ; do PID_EXIST=`ps -f -p $PID | grep java` if [ -n "$PID_EXIST" ]; then COUNT=0 break fi done done fi&#125;function operate()&#123; if [[ "$1" = "kill" ]] ; then gracefulShutdown elif [[ "$1" = "start" ]]; then cd $CATALINA_HOME/bin sh startup.sh else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" | tee -a $TC_STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$PIDS" = "" ]] ; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" &gt;&gt; $TC_STDOUT_FILE operate start else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME pid $PIDS" &gt;&gt; $TC_STDOUT_FILE fielse echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILEfi 使用说明12345sh restart.sh start # 重启sh restart.sh # 重启sh restart.sh restart # 重启sh restart.sh check # 检测服务是否启动，没有启动，则启动之，否则不做其他操作sh restart.sh kill # kill掉已启动的服务进程]]></content>
@@ -1547,17 +1539,17 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[zookeeper重启脚本]]></title>
-    <url>%2Fposts%2F6c1ad93d.html</url>
-    <content type="text"><![CDATA[restart12345678910111213#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:10# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:30# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stopsleep 3./zkServer.sh start]]></content>
+    <title><![CDATA[zookeeper 清理日志文件]]></title>
+    <url>%2Fposts%2Fc0bbcacd.html</url>
+    <content type="text"><![CDATA[clear123456789101112131415161718192021222324252627282930#!/usr/bin/env bash# @Author: YL# @Date: 2017-11-01 08:59:34# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:09# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`cd ..NODE_HOME=`pwd`# snapshotNODE_DATA_DIR=$NODE_HOME/data/version-2# snapshot logNODE_LOG_DIR=$NODE_HOME/logs/version-2# zk logNODE_LOGS=$NODE_HOME/logs# 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中count=3count=$[$count+1]ls -t $NODE_LOG_DIR/log.* | tail -n +$count | xargs rm -fls -t $NODE_DATA_DIR/snapshot.* | tail -n +$count | xargs rm -fls -t $NODE_LOGS/zookeeper.log.* | tail -n +$count | xargs rm -f# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"STDOUT_FILE=$NODE_LOGS/stdout.logecho "$DATE_PATTERN clear logs success" | tee -a $STDOUT_FILE]]></content>
       <categories>
         <category>zookeeper</category>
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[zookeeper evn 环境变量配置脚本]]></title>
-    <url>%2Fposts%2F57428144.html</url>
-    <content type="text"><![CDATA[zookeeper-env1234567891011121314151617181920#!/usr/bin/env bash# @Author: YL# @Date: 2017-10-31 10:27:16# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:43# 此文件放到 zookeeper 的 conf 目录下# java envexport JAVA_HOME=/usr/java/jdk1.8.0_131export PATH=$JAVA_HOME/bin:$PATHexport JVMFLAGS="-Xms1536m -Xmx1536m $JVMFLAGS"cd `dirname $0`cd ..NODE_HOME=`pwd`# zookeeper envZOO_LOG_DIR=$NODE_HOME/logsZOO_LOG4J_PROP="INFO,ROLLINGFILE"]]></content>
+    <title><![CDATA[zookeeper重启脚本]]></title>
+    <url>%2Fposts%2F6c1ad93d.html</url>
+    <content type="text"><![CDATA[restart12345678910111213#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:10# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:30# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stopsleep 3./zkServer.sh start]]></content>
       <categories>
         <category>zookeeper</category>
       </categories>
@@ -1574,6 +1566,14 @@
     <title><![CDATA[zookeeper stop脚本]]></title>
     <url>%2Fposts%2F7bd064dc.html</url>
     <content type="text"><![CDATA[stop12345678910#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:00# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:49# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stop]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper evn 环境变量配置脚本]]></title>
+    <url>%2Fposts%2F57428144.html</url>
+    <content type="text"><![CDATA[zookeeper-env1234567891011121314151617181920#!/usr/bin/env bash# @Author: YL# @Date: 2017-10-31 10:27:16# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:43# 此文件放到 zookeeper 的 conf 目录下# java envexport JAVA_HOME=/usr/java/jdk1.8.0_131export PATH=$JAVA_HOME/bin:$PATHexport JVMFLAGS="-Xms1536m -Xmx1536m $JVMFLAGS"cd `dirname $0`cd ..NODE_HOME=`pwd`# zookeeper envZOO_LOG_DIR=$NODE_HOME/logsZOO_LOG4J_PROP="INFO,ROLLINGFILE"]]></content>
       <categories>
         <category>zookeeper</category>
       </categories>
@@ -1600,6 +1600,18 @@
       <tags>
         <tag>shell</tag>
         <tag>crontab</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux cat 命令]]></title>
+    <url>%2Fposts%2Fbe15a742.html</url>
+    <content type="text"><![CDATA[cat统计出现次数12# linux统计某一文件中字符串“sent ip”出现的次数：cat nohup.log |grep "sent ip" |wc -l 清空默认文件中的内容1cat /dev/null &gt; filename]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>cat</tag>
       </tags>
   </entry>
   <entry>
@@ -1699,18 +1711,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux tail 命令]]></title>
-    <url>%2Fposts%2F29bd046e.html</url>
-    <content type="text"><![CDATA[tail]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>tail</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Linux tar 命令]]></title>
     <url>%2Fposts%2Fbd083454.html</url>
     <content type="text"><![CDATA[tar 解压 1tar -zxvf xxx.tar.gz 打包 1tar -zcvf xxx.tar.gz 待压缩的文件名 解压 tar zxvf 文件名.tar.gz 压缩 tar zcvf 文件名.tar.gz 待压缩的文件名 tar -zcvf tomcat.tar.gz –exclude=.log –exclude=.log. –exclude=.out –exclude=.out. –exclude=.tgz.bak –exclude=.war tomcat/ 排除文件夹（注意排除的文件夹最后不能加/） tar -zcvf gitlab.source.tar.gz –exclude=node_modules –exclude=target gitlab/]]></content>
@@ -1720,6 +1720,18 @@
       <tags>
         <tag>shell</tag>
         <tag>tar</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux tail 命令]]></title>
+    <url>%2Fposts%2F29bd046e.html</url>
+    <content type="text"><![CDATA[tail]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>tail</tag>
       </tags>
   </entry>
   <entry>
@@ -1744,18 +1756,6 @@
       <tags>
         <tag>shell</tag>
         <tag>vi</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux cat 命令]]></title>
-    <url>%2Fposts%2Fbe15a742.html</url>
-    <content type="text"><![CDATA[cat统计出现次数12# linux统计某一文件中字符串“sent ip”出现的次数：cat nohup.log |grep "sent ip" |wc -l 清空默认文件中的内容1cat /dev/null &gt; filename]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>cat</tag>
       </tags>
   </entry>
   <entry>
@@ -1863,18 +1863,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[hibernate格式化输出sql语句（spring-data-jpa）]]></title>
-    <url>%2Fposts%2F723691b5.html</url>
-    <content type="text"><![CDATA[以下配置是基于spring-boot的application.yml配置 123456789spring: jpa:# hibernate:# ddl-auto: create show-sql: true# database: mysql properties: hibernate: format_sql: true]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Hibernate</tag>
-        <tag>spring-data-jpa</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[hibernate显示sql中的参数值（logback）]]></title>
     <url>%2Fposts%2F9eea8fb4.html</url>
     <content type="text"><![CDATA[以下是 logback 的日志输出配置，只要是在 logback 的配置文件中添加以下配置 12&lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt;&lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt; 完整的 logback 配置如下 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;configuration scan="true" scanPeriod="60 seconds" debug="false"&gt; &lt;property name="logger.charset" value="UTF-8"/&gt; &lt;property name="logger.path" value="$&#123;catalina.home&#125;/logs"/&gt; &lt;property name="logger.pattern" value="[%d&#123;yyyy-MM-dd HH:mm:ss&#125; %highlight(%-5p)] %yellow(%t) %cyan(%c.%M\\(%L\\)) | %m%n"/&gt; &lt;property name="logger.maxHistory" value="15"/&gt; &lt;springProfile name="dev, local"&gt; &lt;appender name="stdout" class="ch.qos.logback.core.ConsoleAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;/appender&gt; &lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt; &lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt; &lt;!--&lt;logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="DEBUG"/&gt; &lt;logger name="org.hibernate.SQL" level="DEBUG"/&gt; &lt;logger name="org.hibernate.type" level="INFO"/&gt; &lt;logger name="org.hibernate.engine.QueryParameters" level="DEBUG"/&gt; &lt;logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG"/&gt;--&gt; &lt;!--&lt;logger name="org.apache.ibatis" level="debug"/&gt; &lt;logger name="java.sql.Connection" level="debug"/&gt; &lt;logger name="java.sql.Statement" level="debug"/&gt; &lt;logger name="java.sql.PreparedStatement" level="debug"/&gt;--&gt; &lt;root level="info"&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt; &lt;springProfile name="prod"&gt; &lt;!--See http://logback.qos.ch/manual/appenders.html#RollingFileAppender --&gt; &lt;!--and http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy --&gt; &lt;!--for further documentation --&gt; &lt;appender name="stdout" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;File&gt;$&#123;logger.path&#125;/info.log&lt;/File&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/info.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="warn" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/warn.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;WARN&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/warn.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/error.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;ERROR&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/error.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;logger name="warn" level="WARN"/&gt; &lt;logger name="error" level="ERROR"/&gt; &lt;root level="info"&gt; &lt;appender-ref ref="warn"/&gt; &lt;appender-ref ref="error"/&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt;&lt;/configuration&gt;]]></content>
@@ -1884,6 +1872,18 @@
       <tags>
         <tag>logback</tag>
         <tag>Hibernate</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[hibernate格式化输出sql语句（spring-data-jpa）]]></title>
+    <url>%2Fposts%2F723691b5.html</url>
+    <content type="text"><![CDATA[以下配置是基于spring-boot的application.yml配置 123456789spring: jpa:# hibernate:# ddl-auto: create show-sql: true# database: mysql properties: hibernate: format_sql: true]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Hibernate</tag>
+        <tag>spring-data-jpa</tag>
       </tags>
   </entry>
   <entry>
@@ -2180,9 +2180,9 @@
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>CentOS</tag>
         <tag>vsftpd</tag>
         <tag>FTP</tag>
+        <tag>CentOS</tag>
       </tags>
   </entry>
   <entry>
