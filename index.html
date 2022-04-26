@@ -251,7 +251,7 @@
       
     
 
-    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>文章<span class="badge">191</span></a>
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>文章<span class="badge">190</span></a>
 
   </li>
         
@@ -289,7 +289,7 @@
       
     
 
-    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">162</span></a>
+    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">161</span></a>
 
   </li>
         
@@ -470,7 +470,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2022-04-26 16:37:36" itemprop="dateModified" datetime="2022-04-26T16:37:36+08:00">2022-04-26</time>
+                <time title="修改时间：2022-04-26 19:23:00" itemprop="dateModified" datetime="2022-04-26T19:23:00+08:00">2022-04-26</time>
               
             
           </span>
@@ -677,12 +677,24 @@
                 
               
 
-              <time title="创建时间：2022-04-14 12:11:20 / 修改时间：08:26:14" itemprop="dateCreated datePublished" datetime="2022-04-14T12:11:20+08:00">2022-04-14</time>
+              <time title="创建时间：2022-04-14 12:11:20" itemprop="dateCreated datePublished" datetime="2022-04-14T12:11:20+08:00">2022-04-14</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2022-04-26 19:27:34" itemprop="dateModified" datetime="2022-04-26T19:27:34+08:00">2022-04-26</time>
               
             
           </span>
@@ -776,273 +788,18 @@
 
       
         
-          
-            <h1 id="ControllerAdvice-ExceptionHandler"><a href="#ControllerAdvice-ExceptionHandler" class="headerlink" title="ControllerAdvice + ExceptionHandler"></a>ControllerAdvice + ExceptionHandler</h1><blockquote>
+          <h1 id="ControllerAdvice-ExceptionHandler"><a href="#ControllerAdvice-ExceptionHandler" class="headerlink" title="ControllerAdvice + ExceptionHandler"></a>ControllerAdvice + ExceptionHandler</h1><blockquote>
 <p>BaseExceptionHandler.java</p>
 </blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestControllerAdvice</span></span><br><span class="line"><span class="meta">@Order</span>(value = Ordered.HIGHEST_PRECEDENCE)</span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseExceptionHandler</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 使用 <span class="doctag">@RequestParam</span> 注解时，如果注解的参数缺失，则会抛出此异常</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@ExceptionHandler</span>(value = MissingServletRequestParameterException.class)</span><br><span class="line">    <span class="meta">@ResponseStatus</span>(HttpStatus.OK)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Rs&lt;String&gt; <span class="title">missingServletRequestParameterException</span><span class="params">(MissingServletRequestParameterException e)</span> </span>&#123;</span><br><span class="line">        log.error(<span class="string">"缺少请求参数: &#123;&#125;"</span>, e.getMessage());</span><br><span class="line">        <span class="keyword">return</span> Rs.error(<span class="string">"缺少请求参数"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 使用 <span class="doctag">@RequestBody</span> 注解时，如果注解的参数为空，则会抛出此异常</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@ExceptionHandler</span>(HttpMessageNotReadableException.class)</span><br><span class="line">    <span class="meta">@ResponseStatus</span>(HttpStatus.OK)</span><br><span class="line">    <span class="function">Rs&lt;String&gt; <span class="title">httpMessageNotReadableException</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// Required request body is missing</span></span><br><span class="line">        <span class="keyword">return</span> Rs.error(<span class="string">"缺少 request body 参数"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 统一处理请求参数校验(实体对象传参)</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> e BindException</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> FebsResponse</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@ExceptionHandler</span>(BindException.class)</span><br><span class="line">    <span class="meta">@ResponseStatus</span>(HttpStatus.OK)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Rs&lt;String&gt; <span class="title">bindException</span><span class="params">(BindException e)</span> </span>&#123;</span><br><span class="line">        StringBuilder message = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        List&lt;FieldError&gt; fieldErrors = e.getBindingResult().getFieldErrors();</span><br><span class="line">        <span class="keyword">for</span> (FieldError error : fieldErrors) &#123;</span><br><span class="line">            message.append(error.getField()).append(error.getDefaultMessage()).append(<span class="string">","</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        message = <span class="keyword">new</span> StringBuilder(message.substring(<span class="number">0</span>, message.length() - <span class="number">1</span>));</span><br><span class="line">        log.error(message.toString());</span><br><span class="line">        <span class="keyword">return</span> Rs.error(message.toString());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * spring + hibernate-validator 验证异常</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@ExceptionHandler</span>(MethodArgumentNotValidException.class)</span><br><span class="line">    <span class="meta">@ResponseStatus</span>(HttpStatus.OK)</span><br><span class="line">    <span class="function">Rs&lt;String&gt; <span class="title">methodArgumentNotValidException</span><span class="params">(MethodArgumentNotValidException ex)</span> </span>&#123;</span><br><span class="line">        BindingResult result = ex.getBindingResult();</span><br><span class="line">        ObjectError error = result.getAllErrors().get(<span class="number">0</span>);</span><br><span class="line">        String msg = error.getDefaultMessage();</span><br><span class="line">        <span class="keyword">return</span> Rs.error(msg);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * spring + hibernate-validator 验证异常</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@ExceptionHandler</span>(value = ConstraintViolationException.class)</span><br><span class="line">    <span class="meta">@ResponseStatus</span>(HttpStatus.OK)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Rs&lt;String&gt; <span class="title">constraintViolationException</span><span class="params">(ConstraintViolationException e)</span> </span>&#123;</span><br><span class="line">        StringBuilder message = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        Set&lt;ConstraintViolation&lt;?&gt;&gt; violations = e.getConstraintViolations();</span><br><span class="line">        <span class="keyword">for</span> (ConstraintViolation&lt;?&gt; violation : violations) &#123;</span><br><span class="line">            Path path = violation.getPropertyPath();</span><br><span class="line">            String[] pathArr = StringUtils.splitByWholeSeparatorPreserveAllTokens(path.toString(), <span class="string">"."</span>);</span><br><span class="line">            message.append(pathArr[<span class="number">1</span>]).append(violation.getMessage()).append(<span class="string">","</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        message = <span class="keyword">new</span> StringBuilder(message.substring(<span class="number">0</span>, message.length() - <span class="number">1</span>));</span><br><span class="line">        log.error(message.toString());</span><br><span class="line">        <span class="keyword">return</span> Rs.error(message.toString());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ExceptionHandler</span>(value = AccessDeniedException.class)</span><br><span class="line">    <span class="meta">@ResponseStatus</span>(HttpStatus.OK)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Rs&lt;String&gt; <span class="title">accessDeniedException</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Rs.error(<span class="string">"没有权限访问该资源"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ExceptionHandler</span>(value = HttpMediaTypeNotSupportedException.class)</span><br><span class="line">    <span class="meta">@ResponseStatus</span>(HttpStatus.OK)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Rs&lt;String&gt; <span class="title">httpMediaTypeNotSupportedException</span><span class="params">(HttpMediaTypeNotSupportedException e)</span> </span>&#123;</span><br><span class="line">        String message = <span class="string">"该方法不支持"</span> + StringUtils.substringBetween(e.getMessage(), <span class="string">"'"</span>, <span class="string">"'"</span>) + <span class="string">"媒体类型"</span>;</span><br><span class="line">        log.error(message);</span><br><span class="line">        <span class="keyword">return</span> Rs.error(message);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ExceptionHandler</span>(value = HttpRequestMethodNotSupportedException.class)</span><br><span class="line">    <span class="meta">@ResponseStatus</span>(HttpStatus.OK)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Rs&lt;String&gt; <span class="title">httpRequestMethodNotSupportedException</span><span class="params">(HttpRequestMethodNotSupportedException e)</span> </span>&#123;</span><br><span class="line">        String message = <span class="string">"该方法不支持"</span> + StringUtils.substringBetween(e.getMessage(), <span class="string">"'"</span>, <span class="string">"'"</span>) + <span class="string">"请求方法"</span>;</span><br><span class="line">        log.error(<span class="string">"msg: &#123;&#125;"</span>, message);</span><br><span class="line">        <span class="keyword">return</span> Rs.error(message);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 这里不能最好不要处理 Exception 异常，否则可能会导致页面请求返回错误页面不正确问题</span></span><br><span class="line">    <span class="comment">// @ExceptionHandler(value = Exception.class)</span></span><br><span class="line">    <span class="comment">// @ResponseStatus(HttpStatus.OK)</span></span><br><span class="line">    <span class="comment">// public Rs&lt;String&gt; exception(Exception e) &#123;</span></span><br><span class="line">    <span class="comment">//     String message = e.getMessage();</span></span><br><span class="line">    <span class="comment">//     log.error("msg: &#123;&#125;", message, e);</span></span><br><span class="line">    <span class="comment">//     return Rs.error(message);</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="继承-BasicErrorController"><a href="#继承-BasicErrorController" class="headerlink" title="继承 BasicErrorController"></a>继承 BasicErrorController</h1><blockquote>
-<p>GlobalErrorController.java</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@ApiIgnore</span></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GlobalErrorController</span> <span class="keyword">extends</span> <span class="title">BasicErrorController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">GlobalErrorController</span><span class="params">(ErrorAttributes errorAttributes,</span></span></span><br><span class="line"><span class="function"><span class="params">                                 ServerProperties serverProperties,</span></span></span><br><span class="line"><span class="function"><span class="params">                                 List&lt;ErrorViewResolver&gt; errorViewResolvers)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(errorAttributes, serverProperties.getError(), errorViewResolvers);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 全局异常处理</span></span><br><span class="line"><span class="comment">     * &lt;pre&gt;</span></span><br><span class="line"><span class="comment">     *     原始异常信息格式</span></span><br><span class="line"><span class="comment">     *     &#123;</span></span><br><span class="line"><span class="comment">     *         "timestamp": 1507803567698,</span></span><br><span class="line"><span class="comment">     *         "status": 404,</span></span><br><span class="line"><span class="comment">     *         "error": "Not Found",</span></span><br><span class="line"><span class="comment">     *         "message": "No message available",</span></span><br><span class="line"><span class="comment">     *         "path": "/esb/crms"</span></span><br><span class="line"><span class="comment">     *     &#125;</span></span><br><span class="line"><span class="comment">     * &lt;/pre&gt;</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> request 请求对象</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 返回数据</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="meta">@RequestMapping</span></span><br><span class="line">    <span class="meta">@ResponseBody</span></span><br><span class="line">    <span class="keyword">public</span> ResponseEntity&lt;Map&lt;String, Object&gt;&gt; error(HttpServletRequest request) &#123;</span><br><span class="line">        <span class="comment">// &#123;timestamp=2021-07-20T08:49:22.134+0800, status=404, error=Not Found, path=/app/listxx&#125;</span></span><br><span class="line">        <span class="comment">// &#123;timestamp=2021-07-20T08:49:44.259+0800, status=500, error=Internal Server Error, path=/app/list&#125;</span></span><br><span class="line">        Map&lt;String, Object&gt; body = <span class="keyword">this</span>.getErrorAttributes(request, <span class="keyword">this</span>.getErrorAttributeOptions(request, MediaType.ALL));</span><br><span class="line">        log.error(<span class="string">"body: &#123;&#125;"</span>, body);</span><br><span class="line">        <span class="comment">// HttpStatus status = this.getStatus(request);</span></span><br><span class="line">        Object status = body.get(<span class="string">"status"</span>) != <span class="keyword">null</span> ? body.get(<span class="string">"status"</span>) : -<span class="number">99</span>;</span><br><span class="line">        String error = (String) body.get(<span class="string">"error"</span>);</span><br><span class="line">        String path = (String) body.get(<span class="string">"path"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取真实的异常信息</span></span><br><span class="line">        Object attribute = request.getAttribute(<span class="string">"javax.servlet.error.exception"</span>);</span><br><span class="line">        <span class="keyword">if</span> (attribute <span class="keyword">instanceof</span> Exception) &#123;</span><br><span class="line">            Exception e = (Exception) attribute;</span><br><span class="line">            String message = e.getCause().getMessage();</span><br><span class="line">            <span class="keyword">if</span> (StringUtils.isNotBlank(message)) &#123;</span><br><span class="line">                error = message;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">4</span>);</span><br><span class="line">        map.put(<span class="string">"code"</span>, status);</span><br><span class="line">        map.put(<span class="string">"msg"</span>, <span class="string">"error: "</span> + error + <span class="string">", path: "</span> + path);</span><br><span class="line">        map.put(<span class="string">"success"</span>, <span class="string">"0"</span>.equals(status));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ResponseEntity&lt;&gt;(map, HttpStatus.OK);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="meta">@RequestMapping</span>(produces = MediaType.TEXT_HTML_VALUE)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">errorHtml</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> </span>&#123;</span><br><span class="line">        HttpStatus status = getStatus(request);</span><br><span class="line">        Map&lt;String, Object&gt; model = Collections</span><br><span class="line">                .unmodifiableMap(getErrorAttributes(request, getErrorAttributeOptions(request, MediaType.TEXT_HTML)));</span><br><span class="line">        response.setStatus(status.value());</span><br><span class="line">        ModelAndView modelAndView = resolveErrorView(request, response, status, model);</span><br><span class="line">        modelAndView = (modelAndView != <span class="keyword">null</span>) ? modelAndView : <span class="keyword">new</span> ModelAndView(<span class="string">"error"</span>, model);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 构建一个请求Id</span></span><br><span class="line">        String reqId = String.valueOf(System.currentTimeMillis());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取真实的异常信息</span></span><br><span class="line">        Object attribute = request.getAttribute(<span class="string">"javax.servlet.error.exception"</span>);</span><br><span class="line">        <span class="keyword">if</span> (attribute <span class="keyword">instanceof</span> Exception) &#123;</span><br><span class="line">            Exception e = (Exception) attribute;</span><br><span class="line">            String message = e.getCause().getMessage();</span><br><span class="line">            String reason = e.getMessage();</span><br><span class="line">            log.error(<span class="string">"reqId: &#123;&#125;, reason: &#123;&#125;"</span>, reqId, reason, e);</span><br><span class="line">            <span class="keyword">if</span> (StringUtils.isNotBlank(message)) &#123;</span><br><span class="line">                modelAndView.addObject(<span class="string">"msg"</span>, message);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> modelAndView.addObject(<span class="string">"reqId"</span>, reqId);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>错误页面</p>
-</blockquote>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-body"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h5</span> <span class="attr">class</span>=<span class="string">"card-title"</span>&gt;</span>出错啦<span class="tag">&lt;/<span class="name">h5</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">#if</span> <span class="attr">msg</span>??&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"card-text"</span> <span class="attr">style</span>=<span class="string">"color: #9c9c9c"</span>&gt;</span>$&#123;msg&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">#else</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"card-text"</span> <span class="attr">style</span>=<span class="string">"color: #9c9c9c"</span>&gt;</span>出错了，请联系管理员或者重试......<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">#if</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">#if</span> <span class="attr">reqId</span>??&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"card-text"</span> <span class="attr">style</span>=<span class="string">"color: #9c9c9c"</span>&gt;</span>请求 Id：$&#123;reqId&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">#if</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
+          <!--noindex-->
           
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/1bad075.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/1bad075.html" class="post-title-link" itemprop="https://blog.yl-online.top/index.html">第三方社交登录介绍</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2022-04-08 15:58:36" itemprop="dateCreated datePublished" datetime="2022-04-08T15:58:36+08:00">2022-04-08</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2022-04-13 14:53:47" itemprop="dateModified" datetime="2022-04-13T14:53:47+08:00">2022-04-13</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数：</span>
-                
-                <span title="字数">1.7k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">2 分钟</span>
-              
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/97568726.html" rel="contents">
+                阅读全文 &raquo;
+              </a>
             </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
-        <span class="post-meta-item-icon">
-          <i class="fa fa-tags"></i>
-        </span>
-        <span class="post-meta-item-text">标签</span>
-        
-           <a href="/tags/social/" rel="tag" class="color1">social</a>
-        
-      </div>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="流程介绍"><a href="#流程介绍" class="headerlink" title="流程介绍"></a>流程介绍</h1><ol>
-<li>用户访问授权链接</li>
-</ol>
-<p><a href="http://localhost:8880/pds-iam/auth/authz/oauth/v20/authorize?client_id=619581896426258432&amp;redirect_uri=http://localhost:9528&amp;response_type=code" target="_blank" rel="noopener">http://localhost:8880/pds-iam/auth/authz/oauth/v20/authorize?client_id=619581896426258432&amp;redirect_uri=http://localhost:9528&amp;response_type=code</a></p>
-<p><a href="http://221.5.109.22:8301/pds-iam/auth/authz/oauth/v20/authorize?client_id=619581896426258432&amp;redirect_uri=http://221.5.109.22:8303/&amp;response_type=code" target="_blank" rel="noopener">http://221.5.109.22:8301/pds-iam/auth/authz/oauth/v20/authorize?client_id=619581896426258432&amp;redirect_uri=http://221.5.109.22:8303/&amp;response_type=code</a></p>
-<ol start="2">
-<li>点击社交登录按钮，跳到社交授权登录页面</li>
-</ol>
-<p><a href="http://localhost:8880/pds-iam/auth/authz/oauth/v20/tacs/authorize?client_id=619581896426258432&amp;redirect_uri=http://localhost:9528" target="_blank" rel="noopener">http://localhost:8880/pds-iam/auth/authz/oauth/v20/tacs/authorize?client_id=619581896426258432&amp;redirect_uri=http://localhost:9528</a></p>
-<p><a href="http://221.5.109.22:8301/pds-iam/auth/logon/oauth20/authorize/tacs?targetUrl=aHR0cDovLzIyMS41LjEwOS4yMjo4MzAxL3Bkcy1pYW0vYXV0aC9sb2dpbj9jbGllbnRfaWQ9NjE5NTgxODk2NDI2MjU4NDMyJnJlZGlyZWN0X3VyaT1odHRwOi8vMjIxLjUuMTA5LjIyOjgzMDMvJnJlc3BvbnNlX3R5cGU9Y29kZQ==" target="_blank" rel="noopener">http://221.5.109.22:8301/pds-iam/auth/logon/oauth20/authorize/tacs?targetUrl=aHR0cDovLzIyMS41LjEwOS4yMjo4MzAxL3Bkcy1pYW0vYXV0aC9sb2dpbj9jbGllbnRfaWQ9NjE5NTgxODk2NDI2MjU4NDMyJnJlZGlyZWN0X3VyaT1odHRwOi8vMjIxLjUuMTA5LjIyOjgzMDMvJnJlc3BvbnNlX3R5cGU9Y29kZQ==</a></p>
-<p><a href="http://221.5.109.22:8301/pds-iam/auth/logon/oauth20/authorize/tacs?targetUrl=aHR0cDovLzIyMS41LjEwOS4yMjo4MzAxL3Bkcy1pYW0vYXV0aC9hdXRoei9vYXV0aC92MjAvYXV0aG9yaXplP2NsaWVudF9pZD02MTk1ODE4OTY0MjYyNTg0MzImcmVkaXJlY3RfdXJpPWh0dHA6Ly8yMjEuNS4xMDkuMjI6ODMwMy8mcmVzcG9uc2VfdHlwZT1jb2Rl" target="_blank" rel="noopener">http://221.5.109.22:8301/pds-iam/auth/logon/oauth20/authorize/tacs?targetUrl=aHR0cDovLzIyMS41LjEwOS4yMjo4MzAxL3Bkcy1pYW0vYXV0aC9hdXRoei9vYXV0aC92MjAvYXV0aG9yaXplP2NsaWVudF9pZD02MTk1ODE4OTY0MjYyNTg0MzImcmVkaXJlY3RfdXJpPWh0dHA6Ly8yMjEuNS4xMDkuMjI6ODMwMy8mcmVzcG9uc2VfdHlwZT1jb2Rl</a></p>
-<ol start="3">
-<li>社交授权登录成功，带上 ticket 等参数回调</li>
-</ol>
-<p><a href="http://localhost:8880/pds-iam/auth/logon/oauth20/callback/tacs?ticket=xxxx" target="_blank" rel="noopener">http://localhost:8880/pds-iam/auth/logon/oauth20/callback/tacs?ticket=xxxx</a></p>
-<p><a href="http://221.5.109.22:8301/pds-iam/auth/logon/oauth20/callback/tacs?state=e3c527ef10ebdca0c02c38021cffc922&amp;ticket=d082ddb2ce0b4c798db6ee2a6ff505eda6148f3dfd7c27210898f9951824635d&amp;code=90000" target="_blank" rel="noopener">http://221.5.109.22:8301/pds-iam/auth/logon/oauth20/callback/tacs?state=e3c527ef10ebdca0c02c38021cffc922&amp;ticket=d082ddb2ce0b4c798db6ee2a6ff505eda6148f3dfd7c27210898f9951824635d&amp;code=90000</a></p>
-<ol start="4">
-<li>通过 ticket 获取社交登录提供者的 access_token</li>
-<li>通过获取到的社交登录提供者 access_token 调用用户信息接口获取用户信息</li>
-<li>获取到用户信息，和本地数据库用户通过 social uid 进行绑定</li>
-<li>通过 social uid 查询到已绑定的本地用户信息，将用户信息设置到授权登录管理器</li>
-<li>完成登录</li>
-</ol>
-<h1 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h1><ol>
-<li><code>AuthorizationEndpoint</code> 授权服务</li>
-</ol>
-<p>​        通过<code>PermissionAdapter</code>拦截器拦截请求判断用户是否登录，并进行跳转</p>
-<ul>
-<li>已经登录，跳转到回调页面</li>
-<li>未登录，跳转到本地<code>login</code>登录页面</li>
-</ul>
-<ol start="2">
-<li><code>SocialSignOnEndpoint</code> 第三方社交登录服务</li>
-</ol>
-<p>​        通过<code>PermissionAdapter</code>拦截器拦截请求判断用户是否登录，并进行跳转</p>
-<ul>
-<li>已经登录，跳转到回调页面</li>
-<li>未登录，跳转到<code>第三方社交登录</code>页面</li>
-</ul>
-
-          
+         
+          <!--/noindex-->
         
       
     </div>
@@ -1159,7 +916,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2022-04-22 16:54:00" itemprop="dateModified" datetime="2022-04-22T16:54:00+08:00">2022-04-22</time>
+                <time title="修改时间：2022-04-26 19:28:59" itemprop="dateModified" datetime="2022-04-26T19:28:59+08:00">2022-04-26</time>
               
             
           </span>
@@ -1206,7 +963,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">915</span>
+                <span title="字数">916</span>
               
 
               
@@ -1253,27 +1010,16 @@
 
       
         
+          <h1 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 略</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
           
-            <h1 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 略</span></span><br></pre></td></tr></table></figure>
-<h1 id="空间不足问题"><a href="#空间不足问题" class="headerlink" title="空间不足问题"></a>空间不足问题</h1><p>在使用期间我们也观察到 Load 一直突高不下的情况，经检查发现 etcd 内的数据量已达到 600 多兆，所以我们采取了定期压缩 etcd 的措施，将历史事物数据全部清除。具体代码可参考：</p>
-<ul>
-<li><p>获取当前的版本</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rev=$(ETCDCTL_API=3 etcdctl --endpoints=:2379 endpoint status --write-out="json" | egrep -o '"revision":[0-9]*' | egrep -o '[0-9].*')</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>压缩当前版本之前的所有记录</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ETCDCTL_API=3 etcdctl compact $rev</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>清理多余的碎片空间</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 清理当前 etcd 节点的碎片空间</span></span><br><span class="line">ETCDCTL_API=3 etcdctl defrag</span><br><span class="line"><span class="meta">#</span><span class="bash"> 清理集群的碎片空间</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ETCDCTL_API=3 etcdctl defrag --cluster</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>解除警告</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 一定要解除警告，否则 etcd 集群还是异常状态</span></span><br><span class="line">ETCDCTL_API=3 etcdctl alarm disarm</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="备份脚本"><a href="#备份脚本" class="headerlink" title="备份脚本"></a>备份脚本</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line">ETCD_BACKUP_DIR=/data/etcd/backup</span><br><span class="line">ENDPOINTS="127.0.0.1:2379"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果是配置 crontab 定时执行，这里需要使用 /usr/<span class="built_in">local</span>/bin/etcdctl</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 否则会报 etcdctl: <span class="built_in">command</span> not found</span></span><br><span class="line">ETCDCTL_API=3 /usr/local/bin/etcdctl --endpoints=$&#123;ENDPOINTS&#125; snapshot save $&#123;ETCD_BACKUP_DIR&#125;/etcd-snapshot-`date +%Y%m%d`.db</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 备份保留30天</span></span><br><span class="line">find $&#123;ETCD_BACKUP_DIR&#125; -name *.db -mtime +30 -exec rm -f &#123;&#125; \;</span><br></pre></td></tr></table></figure>
-<h1 id="恢复脚本"><a href="#恢复脚本" class="headerlink" title="恢复脚本"></a>恢复脚本</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 略</span></span><br></pre></td></tr></table></figure>
-
-          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/a4aedd4.html" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -1373,12 +1119,24 @@
                 
               
 
-              <time title="创建时间：2022-01-21 21:47:17 / 修改时间：10:25:51" itemprop="dateCreated datePublished" datetime="2022-01-21T21:47:17+08:00">2022-01-21</time>
+              <time title="创建时间：2022-01-21 21:47:17" itemprop="dateCreated datePublished" datetime="2022-01-21T21:47:17+08:00">2022-01-21</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2022-04-26 19:23:00" itemprop="dateModified" datetime="2022-04-26T19:23:00+08:00">2022-04-26</time>
               
             
           </span>
@@ -1575,12 +1333,24 @@
                 
               
 
-              <time title="创建时间：2022-01-06 18:43:05 / 修改时间：14:45:45" itemprop="dateCreated datePublished" datetime="2022-01-06T18:43:05+08:00">2022-01-06</time>
+              <time title="创建时间：2022-01-06 18:43:05" itemprop="dateCreated datePublished" datetime="2022-01-06T18:43:05+08:00">2022-01-06</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2022-04-26 19:23:00" itemprop="dateModified" datetime="2022-04-26T19:23:00+08:00">2022-04-26</time>
               
             
           </span>
@@ -1798,7 +1568,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-12-29 11:14:17" itemprop="dateModified" datetime="2021-12-29T11:14:17+08:00">2021-12-29</time>
+                <time title="修改时间：2022-04-26 19:25:04" itemprop="dateModified" datetime="2022-04-26T19:25:04+08:00">2022-04-26</time>
               
             
           </span>
@@ -1892,18 +1662,19 @@
 
       
         
-          
-            <h1 id="父子关系列表排序"><a href="#父子关系列表排序" class="headerlink" title="父子关系列表排序"></a>父子关系列表排序</h1><blockquote>
+          <h1 id="父子关系列表排序"><a href="#父子关系列表排序" class="headerlink" title="父子关系列表排序"></a>父子关系列表排序</h1><blockquote>
 <p>父节点在前，子节点在后</p>
 </blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 按父子节点排序，父节点在子节点前面</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param</span> departs 列表</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@return</span> 排序列表</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Depart&gt; <span class="title">sort</span><span class="params">(List&lt;Depart&gt; departs)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 先找出所有的 root 元素</span></span><br><span class="line">  Queue&lt;Depart&gt; queues = departs.stream()</span><br><span class="line">    .filter(d -&gt; d.getParentId() == <span class="keyword">null</span> || -<span class="number">1L</span> == d.getParentId())</span><br><span class="line">    .collect(Collectors.toCollection(LinkedList::<span class="keyword">new</span>));</span><br><span class="line">  <span class="keyword">return</span> findChildren(departs, queues);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> List&lt;Depart&gt; <span class="title">findChildren</span><span class="params">(List&lt;Depart&gt; departs, Queue&lt;Depart&gt; queues)</span> </span>&#123;</span><br><span class="line">  List&lt;Depart&gt; childrenList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">  <span class="keyword">while</span> (queues.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="comment">// 弹出队列</span></span><br><span class="line">    Depart poll = queues.poll();</span><br><span class="line">    childrenList.add(poll);</span><br><span class="line">    <span class="keyword">for</span> (Depart depart : departs) &#123;</span><br><span class="line">      <span class="keyword">if</span> (Objects.equals(depart.getParentId(), poll.getId())) &#123;</span><br><span class="line">        <span class="comment">// 加入队列</span></span><br><span class="line">        queues.offer(depart);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> childrenList;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>倒序迭代</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = departs.size() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">  Depart depart = departs.get(i);</span><br><span class="line">  log.info(<span class="string">"部门 ---&gt; depart: &#123;&#125;"</span>, depart);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="树结构数据"><a href="#树结构数据" class="headerlink" title="树结构数据"></a>树结构数据</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> lombok.NoArgsConstructor;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.lang3.ObjectUtils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.Serializable;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 树结构</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TreeNode</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">3083223582409151873L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String id;</span><br><span class="line">    <span class="keyword">private</span> String label;</span><br><span class="line">    <span class="keyword">private</span> String parentId;</span><br><span class="line">    <span class="keyword">private</span> List&lt;TreeNode&gt; children = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据列表，构建树结构</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> list   列表</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> rootId 根节点 Id</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 树结构数据</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;TreeNode&gt; <span class="title">convert</span><span class="params">(List&lt;TreeNode&gt; list, String rootId)</span> </span>&#123;</span><br><span class="line">        List&lt;TreeNode&gt; tree = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        Iterator&lt;TreeNode&gt; iterator = list.iterator();</span><br><span class="line">        <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">            TreeNode node = iterator.next();</span><br><span class="line">            String parentId = node.getParentId();</span><br><span class="line">            <span class="comment">// 根节点</span></span><br><span class="line">            <span class="keyword">if</span> (ObjectUtils.isEmpty(parentId) || rootId.equals(parentId)) &#123;</span><br><span class="line">                tree.add(node);</span><br><span class="line">                iterator.remove();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (TreeNode node : tree) &#123;</span><br><span class="line">            List&lt;TreeNode&gt; children = TreeNode.getChildren(node, list);</span><br><span class="line">            node.getChildren().addAll(children);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> tree;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取子节点数据</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> parentNode 父节点</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> list       所有节点集合</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 返回子节点列表</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> List&lt;TreeNode&gt; <span class="title">getChildren</span><span class="params">(TreeNode parentNode, List&lt;TreeNode&gt; list)</span> </span>&#123;</span><br><span class="line">        List&lt;TreeNode&gt; children = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        Iterator&lt;TreeNode&gt; iterator = list.iterator();</span><br><span class="line">        <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">            TreeNode node = iterator.next();</span><br><span class="line">            <span class="comment">// 如果当前节点 ID 与父节点 ID 一致，表示当前数据是该节点的子节点</span></span><br><span class="line">            <span class="keyword">if</span> (parentNode.getId().equals(node.getParentId())) &#123;</span><br><span class="line">                children.add(node);</span><br><span class="line">                iterator.remove();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 递归调用</span></span><br><span class="line">        <span class="keyword">for</span> (TreeNode node : children) &#123;</span><br><span class="line">            <span class="comment">// 调用自身方法，依次添加子节点数据</span></span><br><span class="line">            node.getChildren().addAll(getChildren(node, list));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> children;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/1f7d4723.html" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -2020,7 +1791,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2022-02-16 08:27:08" itemprop="dateModified" datetime="2022-02-16T08:27:08+08:00">2022-02-16</time>
+                <time title="修改时间：2022-04-26 19:29:47" itemprop="dateModified" datetime="2022-04-26T19:29:47+08:00">2022-04-26</time>
               
             
           </span>
@@ -2114,50 +1885,16 @@
 
       
         
+          <h1 id="Assert-断言"><a href="#Assert-断言" class="headerlink" title="Assert 断言"></a>Assert 断言</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 要求参数 object 必须为非空（Not Null），否则抛出异常，不予放行</span></span><br><span class="line"><span class="comment">// 参数 message 参数用于定制异常信息。</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">notNull</span><span class="params">(Object object, String message)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 要求参数必须空（Null），否则抛出异常，不予『放行』。</span></span></span><br><span class="line"><span class="function"><span class="comment">// 和 notNull() 方法断言规则相反</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">isNull</span><span class="params">(Object object, String message)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 要求参数必须为真（True），否则抛出异常，不予『放行』。</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">isTrue</span><span class="params">(<span class="keyword">boolean</span> expression, String message)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 要求参数（List/Set）必须非空（Not Empty），否则抛出异常，不予放行</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">notEmpty</span><span class="params">(Collection collection, String message)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 要求参数（String）必须有长度（即，Not Empty），否则抛出异常，不予放行</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">hasLength</span><span class="params">(String text, String message)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 要求参数（String）必须有内容（即，Not Blank），否则抛出异常，不予放行</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">hasText</span><span class="params">(String text, String message)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 要求参数是指定类型的实例，否则抛出异常，不予放行</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">isInstanceOf</span><span class="params">(Class type, Object obj, String message)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 要求参数 `subType` 必须是参数 superType 的子类或实现类，否则抛出异常，不予放行</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">isAssignable</span><span class="params">(Class superType, Class subType, String message)</span></span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
           
-            <h1 id="Assert-断言"><a href="#Assert-断言" class="headerlink" title="Assert 断言"></a>Assert 断言</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 要求参数 object 必须为非空（Not Null），否则抛出异常，不予放行</span></span><br><span class="line"><span class="comment">// 参数 message 参数用于定制异常信息。</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">notNull</span><span class="params">(Object object, String message)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 要求参数必须空（Null），否则抛出异常，不予『放行』。</span></span></span><br><span class="line"><span class="function"><span class="comment">// 和 notNull() 方法断言规则相反</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">isNull</span><span class="params">(Object object, String message)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 要求参数必须为真（True），否则抛出异常，不予『放行』。</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">isTrue</span><span class="params">(<span class="keyword">boolean</span> expression, String message)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 要求参数（List/Set）必须非空（Not Empty），否则抛出异常，不予放行</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">notEmpty</span><span class="params">(Collection collection, String message)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 要求参数（String）必须有长度（即，Not Empty），否则抛出异常，不予放行</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">hasLength</span><span class="params">(String text, String message)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 要求参数（String）必须有内容（即，Not Blank），否则抛出异常，不予放行</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">hasText</span><span class="params">(String text, String message)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 要求参数是指定类型的实例，否则抛出异常，不予放行</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">isInstanceOf</span><span class="params">(Class type, Object obj, String message)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 要求参数 `subType` 必须是参数 superType 的子类或实现类，否则抛出异常，不予放行</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">isAssignable</span><span class="params">(Class superType, Class subType, String message)</span></span></span><br></pre></td></tr></table></figure>
-<h2 id="ObjectUtils-对象、数组、集合操作"><a href="#ObjectUtils-对象、数组、集合操作" class="headerlink" title="ObjectUtils 对象、数组、集合操作"></a>ObjectUtils 对象、数组、集合操作</h2><blockquote>
-<p>获取对象的基本信息</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取对象的类名。参数为 null 时，返回字符串："null" </span></span><br><span class="line"><span class="function">String <span class="title">nullSafeClassName</span><span class="params">(Object obj)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 参数为 null 时，返回 0</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">nullSafeHashCode</span><span class="params">(Object object)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 参数为 null 时，返回字符串："null"</span></span></span><br><span class="line"><span class="function">String <span class="title">nullSafeToString</span><span class="params">(<span class="keyword">boolean</span>[] array)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 获取对象 HashCode（十六进制形式字符串）。参数为 null 时，返回 0 </span></span></span><br><span class="line"><span class="function">String <span class="title">getIdentityHexString</span><span class="params">(Object obj)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 获取对象的类名和 HashCode。参数为 null 时，返回字符串："" </span></span></span><br><span class="line"><span class="function">String <span class="title">identityToString</span><span class="params">(Object obj)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 相当于 toString()方法，但参数为 null 时，返回字符串：""</span></span></span><br><span class="line"><span class="function">String <span class="title">getDisplayString</span><span class="params">(Object obj)</span></span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>判断工具</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 判断数组是否为空</span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">(Object[] array)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 判断参数对象是否是数组</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">isArray</span><span class="params">(Object obj)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 判断数组中是否包含指定元素</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">containsElement</span><span class="params">(Object[] array, Object element)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 相等，或同为 null时，返回 true</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">nullSafeEquals</span><span class="params">(Object o1, Object o2)</span></span></span><br><span class="line"><span class="function"><span class="comment">/*</span></span></span><br><span class="line"><span class="function"><span class="comment">判断参数对象是否为空，判断标准为：</span></span></span><br><span class="line"><span class="function"><span class="comment">    Optional: Optional.empty()</span></span></span><br><span class="line"><span class="function"><span class="comment">       Array: length == 0</span></span></span><br><span class="line"><span class="function"><span class="comment">CharSequence: length == 0</span></span></span><br><span class="line"><span class="function"><span class="comment">  Collection: Collection.isEmpty()</span></span></span><br><span class="line"><span class="function"><span class="comment">         Map: Map.isEmpty()</span></span></span><br><span class="line"><span class="function"><span class="comment"> */</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">(Object obj)</span></span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>其他</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 向参数数组的末尾追加新元素，并返回一个新数组</span></span><br><span class="line">&lt;A, O extends A&gt; A[] addObjectToArray(A[] array, O obj)</span><br><span class="line"><span class="comment">// 原生基础类型数组 --&gt; 包装类数组</span></span><br><span class="line">Object[] toObjectArray(Object source)</span><br></pre></td></tr></table></figure>
-<h1 id="StringUtils"><a href="#StringUtils" class="headerlink" title="StringUtils"></a>StringUtils</h1><blockquote>
-<p>字符串判断工具</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 判断字符串是否为 null，或 ""。注意，包含空白符的字符串为非空</span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">(Object str)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 判断字符串是否是以指定内容结束。忽略大小写</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">endsWithIgnoreCase</span><span class="params">(String str, String suffix)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 判断字符串是否已指定内容开头。忽略大小写</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">startsWithIgnoreCase</span><span class="params">(String str, String prefix)</span> </span></span><br><span class="line"><span class="function"><span class="comment">// 是否包含空白符</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">containsWhitespace</span><span class="params">(String str)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 判断字符串非空且长度不为 0，即，Not Empty</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">hasLength</span><span class="params">(CharSequence str)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 判断字符串是否包含实际内容，即非仅包含空白符，也就是 Not Blank</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">hasText</span><span class="params">(CharSequence str)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 判断字符串指定索引处是否包含一个子串。</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">substringMatch</span><span class="params">(CharSequence str, <span class="keyword">int</span> index, CharSequence substring)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 计算一个字符串中指定子串的出现次数</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">countOccurrencesOf</span><span class="params">(String str, String sub)</span></span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>字符串操作工具</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 查找并替换指定子串</span></span><br><span class="line"><span class="function">String <span class="title">replace</span><span class="params">(String inString, String oldPattern, String newPattern)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 去除尾部的特定字符</span></span></span><br><span class="line"><span class="function">String <span class="title">trimTrailingCharacter</span><span class="params">(String str, <span class="keyword">char</span> trailingCharacter)</span> </span></span><br><span class="line"><span class="function"><span class="comment">// 去除头部的特定字符</span></span></span><br><span class="line"><span class="function">String <span class="title">trimLeadingCharacter</span><span class="params">(String str, <span class="keyword">char</span> leadingCharacter)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 去除头部的空白符</span></span></span><br><span class="line"><span class="function">String <span class="title">trimLeadingWhitespace</span><span class="params">(String str)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 去除头部的空白符</span></span></span><br><span class="line"><span class="function">String <span class="title">trimTrailingWhitespace</span><span class="params">(String str)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 去除头部和尾部的空白符</span></span></span><br><span class="line"><span class="function">String <span class="title">trimWhitespace</span><span class="params">(String str)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 删除开头、结尾和中间的空白符</span></span></span><br><span class="line"><span class="function">String <span class="title">trimAllWhitespace</span><span class="params">(String str)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 删除指定子串</span></span></span><br><span class="line"><span class="function">String <span class="title">delete</span><span class="params">(String inString, String pattern)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 删除指定字符（可以是多个）</span></span></span><br><span class="line"><span class="function">String <span class="title">deleteAny</span><span class="params">(String inString, String charsToDelete)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 对数组的每一项执行 trim() 方法</span></span></span><br><span class="line"><span class="function">String[] <span class="title">trimArrayElements</span><span class="params">(String[] array)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 将 URL 字符串进行解码</span></span></span><br><span class="line"><span class="function">String <span class="title">uriDecode</span><span class="params">(String source, Charset charset)</span></span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>路径相关工具方法</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 解析路径字符串，优化其中的 “..” </span></span><br><span class="line"><span class="function">String <span class="title">cleanPath</span><span class="params">(String path)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 解析路径字符串，解析出文件名部分</span></span></span><br><span class="line"><span class="function">String <span class="title">getFilename</span><span class="params">(String path)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 解析路径字符串，解析出文件后缀名</span></span></span><br><span class="line"><span class="function">String <span class="title">getFilenameExtension</span><span class="params">(String path)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 比较两个两个字符串，判断是否是同一个路径。会自动处理路径中的 “..” </span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">pathEquals</span><span class="params">(String path1, String path2)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 删除文件路径名中的后缀部分</span></span></span><br><span class="line"><span class="function">String <span class="title">stripFilenameExtension</span><span class="params">(String path)</span> </span></span><br><span class="line"><span class="function"><span class="comment">// 以 “. 作为分隔符，获取其最后一部分</span></span></span><br><span class="line"><span class="function">String <span class="title">unqualify</span><span class="params">(String qualifiedName)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 以指定字符作为分隔符，获取其最后一部分</span></span></span><br><span class="line"><span class="function">String <span class="title">unqualify</span><span class="params">(String qualifiedName, <span class="keyword">char</span> separator)</span></span></span><br></pre></td></tr></table></figure>
-<h1 id="CollectionUtils"><a href="#CollectionUtils" class="headerlink" title="CollectionUtils"></a>CollectionUtils</h1><blockquote>
-<p>集合判断工具</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 判断 List/Set 是否为空</span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">(Collection&lt;?&gt; collection)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 判断 Map 是否为空</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">(Map&lt;?,?&gt; map)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 判断 List/Set 中是否包含某个对象</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">containsInstance</span><span class="params">(Collection&lt;?&gt; collection, Object element)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 以迭代器的方式，判断 List/Set 中是否包含某个对象</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">contains</span><span class="params">(Iterator&lt;?&gt; iterator, Object element)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 判断 List/Set 是否包含某些对象中的任意一个</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">containsAny</span><span class="params">(Collection&lt;?&gt; source, Collection&lt;?&gt; candidates)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 判断 List/Set 中的每个元素是否唯一。即 List/Set 中不存在重复元素</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">hasUniqueObject</span><span class="params">(Collection&lt;?&gt; collection)</span></span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>集合操作工具</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将 Array 中的元素都添加到 List/Set 中</span></span><br><span class="line">&lt;E&gt; <span class="function"><span class="keyword">void</span> <span class="title">mergeArrayIntoCollection</span><span class="params">(Object array, Collection&lt;E&gt; collection)</span>  </span></span><br><span class="line"><span class="function"><span class="comment">// 将 Properties 中的键值对都添加到 Map 中</span></span></span><br><span class="line"><span class="function">&lt;K,V&gt; <span class="keyword">void</span> <span class="title">mergePropertiesIntoMap</span><span class="params">(Properties props, Map&lt;K,V&gt; map)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 返回 List 中最后一个元素</span></span></span><br><span class="line"><span class="function">&lt;T&gt; T <span class="title">lastElement</span><span class="params">(List&lt;T&gt; list)</span>  </span></span><br><span class="line"><span class="function"><span class="comment">// 返回 Set 中最后一个元素</span></span></span><br><span class="line"><span class="function">&lt;T&gt; T <span class="title">lastElement</span><span class="params">(Set&lt;T&gt; set)</span> </span></span><br><span class="line"><span class="function"><span class="comment">// 返回参数 candidates 中第一个存在于参数 source 中的元素</span></span></span><br><span class="line"><span class="function">&lt;E&gt; E <span class="title">findFirstMatch</span><span class="params">(Collection&lt;?&gt; source, Collection&lt;E&gt; candidates)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 返回 List/Set 中指定类型的元素。</span></span></span><br><span class="line"><span class="function">&lt;T&gt; T <span class="title">findValueOfType</span><span class="params">(Collection&lt;?&gt; collection, Class&lt;T&gt; type)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 返回 List/Set 中指定类型的元素。如果第一种类型未找到，则查找第二种类型，以此类推</span></span></span><br><span class="line"><span class="function">Object <span class="title">findValueOfType</span><span class="params">(Collection&lt;?&gt; collection, Class&lt;?&gt;[] types)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 返回 List/Set 中元素的类型</span></span></span><br><span class="line"><span class="function">Class&lt;?&gt; <span class="title">findCommonElementType</span><span class="params">(Collection&lt;?&gt; collection)</span></span></span><br></pre></td></tr></table></figure>
-<h1 id="FileCopyUtils"><a href="#FileCopyUtils" class="headerlink" title="FileCopyUtils"></a>FileCopyUtils</h1><blockquote>
-<p>输入</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 从文件中读入到字节数组中</span></span><br><span class="line"><span class="keyword">byte</span>[] copyToByteArray(File in)</span><br><span class="line"><span class="comment">// 从输入流中读入到字节数组中</span></span><br><span class="line"><span class="keyword">byte</span>[] copyToByteArray(InputStream in)</span><br><span class="line"><span class="comment">// 从输入流中读入到字符串中</span></span><br><span class="line"><span class="function">String <span class="title">copyToString</span><span class="params">(Reader in)</span></span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>输出</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 从字节数组到文件</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">copy</span><span class="params">(<span class="keyword">byte</span>[] in, File out)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 从文件到文件</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">copy</span><span class="params">(File in, File out)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 从字节数组到输出流</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">copy</span><span class="params">(<span class="keyword">byte</span>[] in, OutputStream out)</span> </span></span><br><span class="line"><span class="function"><span class="comment">// 从输入流到输出流</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">copy</span><span class="params">(InputStream in, OutputStream out)</span> </span></span><br><span class="line"><span class="function"><span class="comment">// 从输入流到输出流</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">copy</span><span class="params">(Reader in, Writer out)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 从字符串到输出流</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">copy</span><span class="params">(String in, Writer out)</span></span></span><br></pre></td></tr></table></figure>
-
-          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/3378bcc3.html" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -2706,7 +2443,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-12-29 11:14:17" itemprop="dateModified" datetime="2021-12-29T11:14:17+08:00">2021-12-29</time>
+                <time title="修改时间：2022-04-26 19:24:27" itemprop="dateModified" datetime="2022-04-26T19:24:27+08:00">2022-04-26</time>
               
             
           </span>
@@ -2802,85 +2539,17 @@
 
       
         
-          
-            <h1 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h1><p>apisix：2.11.0</p>
+          <h1 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h1><p>apisix：2.11.0</p>
 <p>apisix-dashboard：2.10.1</p>
-<h1 id="apisix"><a href="#apisix" class="headerlink" title="apisix"></a>apisix</h1><h2 id="配置-https"><a href="#配置-https" class="headerlink" title="配置 https"></a>配置 https</h2><blockquote>
-<p>第一步：conf/config.yaml</p>
-</blockquote>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apisix:</span></span><br><span class="line"><span class="attr">  ssl:</span></span><br><span class="line"><span class="attr">    enable:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">    listen:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="number">9443</span></span><br><span class="line"><span class="attr">    enable_http2:</span> <span class="literal">true</span></span><br><span class="line">    <span class="comment"># example.com 为默认证书的 sni</span></span><br><span class="line"><span class="attr">    fallback_sni:</span> <span class="string">example.com</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>第二步：上传 SSL 证书</p>
-</blockquote>
-<ol>
-<li>可以通过接口上传<a href="https://apisix.apache.org/zh/docs/apisix/admin-api#ssl" target="_blank" rel="noopener">https://apisix.apache.org/zh/docs/apisix/admin-api#ssl</a></li>
-<li>可以通过 dashboard 上传</li>
-</ol>
-<p><img src="/posts/cf6abfd1/ssl.png" alt=""></p>
-<h2 id="配置-ETCD-TLS"><a href="#配置-ETCD-TLS" class="headerlink" title="配置 ETCD TLS"></a>配置 ETCD TLS</h2><blockquote>
-<p>conf/config.yaml</p>
-</blockquote>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apisix:</span></span><br><span class="line"><span class="attr">  config_center:</span> <span class="string">etcd</span></span><br><span class="line"><span class="attr">  ssl:</span></span><br><span class="line"><span class="attr">    ssl_trusted_certificate:</span> <span class="string">/usr/local/apisix/ssl/etcd-ca.pem</span></span><br><span class="line"><span class="attr">etcd:</span></span><br><span class="line"><span class="attr">  host:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">"https://etcd:2379"</span></span><br><span class="line"><span class="attr">  prefix:</span> <span class="string">"/apisix"</span></span><br><span class="line"><span class="attr">  timeout:</span> <span class="number">30</span></span><br><span class="line"><span class="attr">  tls:</span></span><br><span class="line"><span class="attr">    cert:</span> <span class="string">/usr/local/apisix/ssl/etcd.pem</span></span><br><span class="line"><span class="attr">    key:</span> <span class="string">/usr/local/apisix/ssl/etcd-key.pem</span></span><br><span class="line"><span class="attr">    verify:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>注意</p>
-</blockquote>
-<ul>
-<li><p>如果<code>verify=true</code>，需要自己为 Apache APISIX 构建 OpenResty</p>
-<ul>
-<li>参考<a href="https://github.com/api7/apisix-build-tools" target="_blank" rel="noopener">https://github.com/api7/apisix-build-tools</a></li>
-<li><a href="apisix 配置 etcd TLS.md">apisix 配置 etcd TLS</a></li>
-</ul>
-</li>
-<li><p>如果<code>verify=false</code>，则不需要</p>
-</li>
-</ul>
-<h2 id="配置-gzip"><a href="#配置-gzip" class="headerlink" title="配置 gzip"></a>配置 gzip</h2><ol>
-<li>第一种</li>
-</ol>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">nginx_config:</span></span><br><span class="line"><span class="attr">  http_configuration_snippet:</span> <span class="string">|</span></span><br><span class="line"><span class="string">    gzip               on;</span></span><br><span class="line"><span class="string">    gzip_comp_level    6;</span></span><br><span class="line"><span class="string">    gzip_min_length    1000;</span></span><br><span class="line"><span class="string">    gzip_proxied       expired no-cache no-store private auth;</span></span><br><span class="line"><span class="string">    gzip_types         text/plain text/html text/css text/xml application/javascript application/json;</span></span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>第二种</li>
-</ol>
-<blockquote>
-<p> 可以配置指定路由，也可以配置全局路由级别的。需要自己为 Apache APISIX 构建 OpenResty，参考<a href="https://github.com/api7/apisix-build-tools" target="_blank" rel="noopener">https://github.com/api7/apisix-build-tools</a></p>
-</blockquote>
-<ul>
-<li>指定路由级别</li>
-</ul>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"gzip"</span>: &#123;</span><br><span class="line">    <span class="attr">"comp_level"</span>: <span class="number">6</span>,</span><br><span class="line">    <span class="attr">"disable"</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">"min_length"</span>: <span class="number">1000</span>,</span><br><span class="line">    <span class="attr">"types"</span>: [</span><br><span class="line">      <span class="string">"text/css"</span>,</span><br><span class="line">      <span class="string">"text/html"</span>,</span><br><span class="line">      <span class="string">"text/plain"</span>,</span><br><span class="line">      <span class="string">"text/xml"</span>,</span><br><span class="line">      <span class="string">"application/json"</span>,</span><br><span class="line">      <span class="string">"application/javascript"</span></span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="/posts/cf6abfd1/rule-gzip.png" alt=""></p>
-<ul>
-<li>全局路由级别</li>
-</ul>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"comp_level"</span>: <span class="number">6</span>,</span><br><span class="line">  <span class="attr">"disable"</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">"min_length"</span>: <span class="number">1000</span>,</span><br><span class="line">  <span class="attr">"types"</span>: [</span><br><span class="line">    <span class="string">"text/css"</span>,</span><br><span class="line">    <span class="string">"text/html"</span>,</span><br><span class="line">    <span class="string">"text/plain"</span>,</span><br><span class="line">    <span class="string">"text/xml"</span>,</span><br><span class="line">    <span class="string">"application/json"</span>,</span><br><span class="line">    <span class="string">"application/javascript"</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="/posts/cf6abfd1/global_rules_gzip.png" alt=""></p>
-<h2 id="response-rewrite"><a href="#response-rewrite" class="headerlink" title="response-rewrite"></a>response-rewrite</h2><blockquote>
-<p>配置全局插件，修改<code>server</code>响应头，避免暴露 apisix 服务版本</p>
-</blockquote>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="attr">  "disable":</span> <span class="literal">false</span><span class="string">,</span></span><br><span class="line"><span class="attr">  "headers":</span> <span class="string">&#123;</span></span><br><span class="line"><span class="attr">    "server":</span> <span class="string">"20.21.0"</span></span><br><span class="line">  <span class="string">&#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
-<p><img src="/posts/cf6abfd1/global_rules_response-rewrite.png" alt=""></p>
-<blockquote>
-<p>配置路由级别</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">"response-rewrite": &#123;</span><br><span class="line">  "disable": false,</span><br><span class="line">  "headers": &#123;</span><br><span class="line">    "server": "20.21.0"</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="禁用-node-status"><a href="#禁用-node-status" class="headerlink" title="禁用 node-status"></a>禁用 node-status</h2><blockquote>
-<p>conf/config.yaml</p>
-</blockquote>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">plugins:</span></span><br><span class="line">  <span class="comment"># 注释掉改插件，或者删除</span></span><br><span class="line">  <span class="comment"># - node-status</span></span><br></pre></td></tr></table></figure>
-<p>这样就不能通过 http(s)://example.com/apisix/status 查询 apisix 的状态信息了，或者通过<a href="https://apisix.apache.org/zh/docs/apisix/plugin-interceptors/" target="_blank" rel="noopener">interceptors</a>保护该接口。</p>
-<h2 id="配置日志格式"><a href="#配置日志格式" class="headerlink" title="配置日志格式"></a>配置日志格式</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">nginx_config:</span></span><br><span class="line"><span class="attr">  http:</span></span><br><span class="line"><span class="attr">    access_log_format:</span> <span class="string">'&#123;"@timestamp":"$time_iso8601","host":"$hostname","server_ip":"$server_addr","client_ip":"$remote_addr","xff":"$http_x_forwarded_for","domain":"$host","url":"$uri","referer":"$http_referer","args":"$args","upstreamtime":"$upstream_response_time","responsetime":"$request_time","request_method":"$request_method","status":"$status","size":"$body_bytes_sent","request_length":"$request_length","protocol":"$server_protocol","upstreamhost":"$upstream_addr","http_user_agent":"$http_user_agent"&#125;'</span></span><br><span class="line"><span class="attr">    access_log_format_escape:</span> <span class="string">json</span></span><br></pre></td></tr></table></figure>
-<h2 id="配置日志滚动"><a href="#配置日志滚动" class="headerlink" title="配置日志滚动"></a>配置日志滚动</h2><blockquote>
-<p>conf/config.yaml</p>
-</blockquote>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">plugins:</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">log-rotate</span></span><br><span class="line"><span class="attr">plugin_attr:</span></span><br><span class="line"><span class="attr">  log-rotate:</span></span><br><span class="line"><span class="attr">    interval:</span> <span class="number">86400</span></span><br><span class="line"><span class="attr">    max_kept:</span> <span class="number">7</span></span><br><span class="line"><span class="attr">    enable_compression:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
-<h2 id="配置防爬虫策略"><a href="#配置防爬虫策略" class="headerlink" title="配置防爬虫策略"></a>配置防爬虫策略</h2><p>可以配置指定路由，也可以配置全局路由级别。</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"denylist"</span>: [</span><br><span class="line">    <span class="string">"(?i)spider"</span>,</span><br><span class="line">    <span class="string">"(?i)bot"</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"disable"</span>: <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="/posts/cf6abfd1/global_rules_ua-restriction.png" alt=""></p>
-<p>表示拦截 ua 包含 spider 或者 bot 的请求。<code>(?i)</code>表示不区分大小写。</p>
-<h1 id="apish-dashboard"><a href="#apish-dashboard" class="headerlink" title="apish-dashboard"></a>apish-dashboard</h1><h2 id="配置-https-1"><a href="#配置-https-1" class="headerlink" title="配置 https"></a>配置 https</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">conf:</span></span><br><span class="line"><span class="attr">  listen:</span></span><br><span class="line"><span class="attr">    host:</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span></span><br><span class="line"><span class="attr">    port:</span> <span class="number">9000</span></span><br><span class="line"><span class="attr">  ssl:</span></span><br><span class="line"><span class="attr">    host:</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span></span><br><span class="line"><span class="attr">    port:</span> <span class="number">9001</span></span><br><span class="line"><span class="attr">    cert:</span> <span class="string">/usr/local/apisix-dashboard/ssl/example.com.crt</span></span><br><span class="line"><span class="attr">    key:</span> <span class="string">/usr/local/apisix-dashboard/ssl/example.com.key</span></span><br></pre></td></tr></table></figure>
-<h2 id="配置-ETCD-TLS-1"><a href="#配置-ETCD-TLS-1" class="headerlink" title="配置 ETCD TLS"></a>配置 ETCD TLS</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">conf:</span></span><br><span class="line"><span class="attr">  etcd:</span></span><br><span class="line"><span class="attr">    endpoints:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"https://etcd:2379"</span></span><br><span class="line">    <span class="comment"># username: "root"    # ignore etcd username if not enable etcd auth</span></span><br><span class="line">    <span class="comment"># password: "123456"  # ignore etcd password if not enable etcd auth</span></span><br><span class="line"><span class="attr">    mtls:</span></span><br><span class="line">      <span class="comment"># Path of your self-signed client side key</span></span><br><span class="line"><span class="attr">      key_file:</span> <span class="string">"/usr/local/apisix-dashboard/ssl/etcd-key.pem"</span></span><br><span class="line">      <span class="comment"># Path of your self-signed client side cert</span></span><br><span class="line"><span class="attr">      cert_file:</span> <span class="string">"/usr/local/apisix-dashboard/ssl/etcd.pem"</span></span><br><span class="line">      <span class="comment"># Path of your self-signed ca cert, the CA is used to sign callers' certificates</span></span><br><span class="line"><span class="attr">      ca_file:</span> <span class="string">"/usr/local/apisix-dashboard/ssl/etcd-ca.pem"</span></span><br></pre></td></tr></table></figure>
-
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/cf6abfd1.html" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -3524,9 +3193,9 @@
         
            <a href="/tags/apisix/" rel="tag" class="color2">apisix</a>
         
-           <a href="/tags/apisix-dashboard/" rel="tag" class="color3">apisix-dashboard</a>
+           <a href="/tags/etcd/" rel="tag" class="color3">etcd</a>
         
-           <a href="/tags/etcd/" rel="tag" class="color4">etcd</a>
+           <a href="/tags/apisix-dashboard/" rel="tag" class="color4">apisix-dashboard</a>
         
            <a href="/tags/keepalived/" rel="tag" class="color0">keepalived</a>
         
@@ -3884,6 +3553,230 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/210739bc.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/210739bc.html" class="post-title-link" itemprop="https://blog.yl-online.top/index.html">spring cors 配置</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-09-08 12:43:05" itemprop="dateCreated datePublished" datetime="2021-09-08T12:43:05+08:00">2021-09-08</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2021-09-13 10:32:54" itemprop="dateModified" datetime="2021-09-13T10:32:54+08:00">2021-09-13</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数：</span>
+                
+                <span title="字数">5.3k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">5 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/spring/" rel="tag" class="color1">spring</a>
+        
+           <a href="/tags/spring-boot/" rel="tag" class="color2">spring-boot</a>
+        
+           <a href="/tags/cors/" rel="tag" class="color3">cors</a>
+        
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Web 项目配置 cors 的三种方式。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/210739bc.html" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -3933,7 +3826,7 @@
                 
                   <a href="/archives/index.html">
                 
-                    <span class="site-state-item-count">191</span>
+                    <span class="site-state-item-count">190</span>
                     <span class="site-state-item-name">文章</span>
                   </a>
                 </div>
@@ -4341,9 +4234,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">162</span>
+                    <span class="site-state-item-count">161</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -4425,7 +4316,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">612k</span>
+    <span title="站点总字数">610k</span>
   
 
   
