@@ -149,8 +149,8 @@
       </categories>
       <tags>
         <tag>docker</tag>
-        <tag>etcd</tag>
         <tag>apisix</tag>
+        <tag>etcd</tag>
       </tags>
   </entry>
   <entry>
@@ -162,8 +162,8 @@
       </categories>
       <tags>
         <tag>docker</tag>
-        <tag>etcd</tag>
         <tag>apisix</tag>
+        <tag>etcd</tag>
         <tag>apisix-dashboard</tag>
         <tag>keepalived</tag>
       </tags>
@@ -179,9 +179,9 @@
         <tag>docker</tag>
         <tag>docker-compose</tag>
         <tag>gitlab</tag>
-        <tag>gitlab-ci</tag>
         <tag>gitlab-runner</tag>
         <tag>maven</tag>
+        <tag>gitlab-ci</tag>
         <tag>gradle</tag>
       </tags>
   </entry>
@@ -403,6 +403,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Oracle 编码配置]]></title>
+    <url>%2Fposts%2Fa4a638d8.html</url>
+    <content type="text"><![CDATA[查编码1select userenv('language') from dual 编码配置123456789101112131415oracle数据库的编码select * from nls_database_parameters where parameter ='NLS_CHARACTERSET';oracle客户端编码select * from nls_instance_parameters where parameter='NLS_LANGUAGE';conn /as sysdba;shutdown immediate;startup mount;alter system enable restricted session;alter system set job_queue_processes=0;ALTER SYSTEM SET AQ_TM_PROCESSES=0;alter database open;ALTER DATABASE character set INTERNAL_USE AL32UTF8;shutdown immediate;startup;]]></content>
+      <categories>
+        <category>Oracle</category>
+      </categories>
+      <tags>
+        <tag>编码</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Oracle 整库迁移]]></title>
     <url>%2Fposts%2Fd5d4c80.html</url>
     <content type="text"><![CDATA[导出123456789101112expdp 用户名/密码 directory=DMP logfile=e_T_C_CNCM_EXTINFO.log dumpfile=T_C_CNCM_EXTINFO%U.dmp PARALLEL=6 cluster=no compression=ALL tables=(table1,table2)directory=DMP -- 这个是虚拟目录（日志文件和DMP文件存放路径）， 需求提前在数据库里面创建，需要DBA权限。create directory DMP as '/dmp/backup';grant read,write,EXECUTE on directory DMP to 用户名;logfile=e_T_C_CNCM_EXTINFO.log -- EXPDP日志dumpfile=T_C_CNCM_EXTINFO%U.dmp -- 输出的DMP文件，其中%U为并行导出产生的序号，如果开6个并行，就可能会有六个文件，自动从01-06编号PARALLEL=6 -- 并行导出，可以根据主机CPU增加，最好不要超过CODE数cluster=no -- 关闭cluster（防止非共享磁盘写文件问题）compression -- 压缩tables=() -- 可以写多个table 导入123456impdp 用户名/密码 directory=DMP logfile=i_T_C_APT_TEMPLATE_DETAIL.log dumpfile=T_C_APT_TEMPLATE_DETAIL%U.dmp PARALLEL=4 table_exists_action=truncate -- table_exists_action 可选参数：-- trauncate：导入时 trauncate 清空原表数据再导入-- replace：先 drop 表，然后创建表，最后插入数据 -- append：在原来数据的基础上增加数据 SELECT DIRECTORY_NAME ,DIRECTORY_PATH FROM DBA_DIRECTORIES; /data/app/oracle/admin/orcl/dpdump/ create directory DATA_PUMP_DIR as ‘/data/dmp’;]]></content>
@@ -412,17 +423,6 @@
       <tags>
         <tag>expdp</tag>
         <tag>impdp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Oracle 编码配置]]></title>
-    <url>%2Fposts%2Fa4a638d8.html</url>
-    <content type="text"><![CDATA[查编码1select userenv('language') from dual 编码配置123456789101112131415oracle数据库的编码select * from nls_database_parameters where parameter ='NLS_CHARACTERSET';oracle客户端编码select * from nls_instance_parameters where parameter='NLS_LANGUAGE';conn /as sysdba;shutdown immediate;startup mount;alter system enable restricted session;alter system set job_queue_processes=0;ALTER SYSTEM SET AQ_TM_PROCESSES=0;alter database open;ALTER DATABASE character set INTERNAL_USE AL32UTF8;shutdown immediate;startup;]]></content>
-      <categories>
-        <category>Oracle</category>
-      </categories>
-      <tags>
-        <tag>编码</tag>
       </tags>
   </entry>
   <entry>
@@ -710,9 +710,9 @@
         <category>kettle</category>
       </categories>
       <tags>
-        <tag>kettle</tag>
-        <tag>Snowflake</tag>
         <tag>Java</tag>
+        <tag>Snowflake</tag>
+        <tag>kettle</tag>
       </tags>
   </entry>
   <entry>
@@ -815,8 +815,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>JAR</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -867,18 +867,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux traceroute 命令]]></title>
-    <url>%2Fposts%2F683fa9b1.html</url>
-    <content type="text"><![CDATA[traceroute1traceroute &lt;ip&gt; -nT -p &lt;port&gt; windows使用 12tracert &lt;ip&gt;tracert baidu.com]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>traceroute</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Linux telnet 命令]]></title>
     <url>%2Fposts%2F683fa9b1.html</url>
     <content type="text"><![CDATA[telnet1telnet &lt;ip&gt; &lt;port&gt; ctrl+c 不退出问题解决1234# 先输入$ ctrl+]# 在输入$ quit]]></content>
@@ -888,6 +876,18 @@
       <tags>
         <tag>shell</tag>
         <tag>telnet</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux traceroute 命令]]></title>
+    <url>%2Fposts%2F683fa9b1.html</url>
+    <content type="text"><![CDATA[traceroute1traceroute &lt;ip&gt; -nT -p &lt;port&gt; windows使用 12tracert &lt;ip&gt;tracert baidu.com]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>traceroute</tag>
       </tags>
   </entry>
   <entry>
@@ -934,8 +934,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>Snowflake</tag>
         <tag>Twitter</tag>
+        <tag>Snowflake</tag>
       </tags>
   </entry>
   <entry>
@@ -980,8 +980,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>Apache</tag>
         <tag>spring-boot</tag>
+        <tag>Apache</tag>
         <tag>alibaba</tag>
         <tag>Dubbo</tag>
       </tags>
@@ -994,8 +994,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>Apache</tag>
         <tag>spring-boot</tag>
+        <tag>Apache</tag>
         <tag>alibaba</tag>
         <tag>Dubbo</tag>
       </tags>
@@ -1012,6 +1012,18 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Jpipe - A Java implementation of Facebook's bigPipe technology.]]></title>
+    <url>%2Fposts%2F97f95e0.html</url>
+    <content type="text"><![CDATA[JpipeA Java implementation of Facebook’s bigPipe technology. Jpipe 是通过自定义标签实现的，所以对后端代码零侵入。 HTML 是完成前台页面的功能，而自定义标签可以在后台完成某些操作。 特性 jsp 标签支持 freemarker 指令支持 freemarker 中使用 jsp 标签 为什么使用 BigPipe 解决速度瓶颈 降低延迟时间 BigPipe 适合什么场景主要适用于： 请求时间较长，后端程序需要读取多个API获取数据 页面内容可以划分成多个区块显示，且各个区块之间的关联不大（松耦合） 对SEO需求较弱 多种实现方式的对比 类型 请求数 服务器端压力 用户体验 网页加载速度 模块加载顺序 实现难度 后期维护难度 普通 1 小 差 慢 文档流顺序 简单 一般 Ajax 多 大 好 快 不确定 困难 困难 单线程BigPipe 1 小 好 慢 自定义 一般 一般 多线程BigPipe 1 一般（线程池引起） 好 最快 不确定 最困难 一般 开始线程池配置 属性 类型 是否必填 缺省值 说明 描述 core-size int 否 -1 核心线程数 最小空闲线程数，无论如何都会存活的最小线程数 max-size int 否 1024 最大线程数 Jpipe 能创建用来处理 pagelet 的最大线程数 queue-size int 否 1024 最大等待对列数 请求并发大于 max-size，则被放入队列等待 keep-alive long 否 60000 最大空闲时间(ms) 超过这个空闲时间，且线程数大于 core-size 的，被回收直到线程数等于core-size pre-start-all-core-threads boolean 否 false 预热线程池 是否预先启动 core-size 个线程 pepe 标签、指令 属性 类型 是否必填 缺省值 说明 描述 async boolean 否 true 是否异步执行pagelet任务 pagelet 标签、指令 属性 类型 是否必填 缺省值 说明 描述 domid string 是 html document Id bean string 是 spring bean name var string 是 variable 参数 uri string 否 uri 参数 jsmethod string 否 JP.view 包装数据的js函数 与Spring集成 通过JpipeThreadPoolFactoryBean类 1234567891011121314151617181920212223242526272829303132333435&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"&gt; &lt;bean class="top.ylonline.jpipe.spring.JpipeSpringFactoryBean"/&gt; &lt;bean id="pool-1" class="top.ylonline.jpipe.threadpool.common.Pool"&gt; &lt;property name="coreSize" value="-1"/&gt; &lt;property name="maxSize" value="20"/&gt; &lt;property name="preStartAllCoreThreads" value="false"/&gt; &lt;property name="keepAlive" value="12000000"/&gt; &lt;property name="queueSize" value="500"/&gt; &lt;/bean&gt; &lt;!-- 工场模式 --&gt; &lt;bean class="top.ylonline.jpipe.threadpool.util.JpipeThreadPoolFactoryBean"&gt; &lt;property name="pool" ref="pool-1"/&gt; &lt;/bean&gt; &lt;!-- 或者 &lt;bean class="top.ylonline.jpipe.threadpool.util.JpipeThreadPoolFactoryBean"&gt; &lt;property name="pool"&gt; &lt;bean class="top.ylonline.jpipe.threadpool.common.Pool"&gt; &lt;property name="coreSize" value="4"/&gt; &lt;property name="maxSize" value="10"/&gt; &lt;property name="preStartAllCoreThreads" value="true"/&gt; &lt;property name="keepAlive" value="60000"/&gt; &lt;property name="queueSize" value="500"/&gt; &lt;/bean&gt; &lt;/property&gt; &lt;/bean&gt; --&gt;&lt;/beans&gt; 通过JpipeThreadPoolBuilder类 12345678910111213141516171819202122&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"&gt; &lt;bean class="top.ylonline.jpipe.spring.JpipeSpringFactoryBean"/&gt; &lt;!-- builder 模式 --&gt; &lt;bean id="jpipeThreadPoolBuilder" class="top.ylonline.jpipe.threadpool.util.JpipeThreadPoolBuilder"&gt; &lt;property name="pool"&gt; &lt;bean class="top.ylonline.jpipe.threadpool.common.Pool"&gt; &lt;property name="coreSize" value="1"/&gt; &lt;property name="maxSize" value="1"/&gt; &lt;property name="preStartAllCoreThreads" value="true"/&gt; &lt;property name="keepAlive" value="1"/&gt; &lt;property name="queueSize" value="1"/&gt; &lt;/bean&gt; &lt;/property&gt; &lt;/bean&gt; &lt;bean id="jpipeThreadPool-3" factory-bean="jpipeThreadPoolBuilder" factory-method="build"/&gt;&lt;/beans&gt; 通过 JavaBean 方式 12345678910111213141516@Beanpublic JpipeSpringFactoryBean jpipeSpringFactoryBean()&#123; return new JpipeSpringFactoryBean();&#125;@Beanpublic JpipeThreadPoolExecutor jpipeThreadPoolExecutor() &#123; Pool pool = new Pool(); pool.setCoreSize(10); pool.setMaxSize(1024); pool.setPreStartAllCoreThreads(true); pool.getKeepAlive(60000); pool.getQueueSize(512); // return new EagerThreadPool().getExecutor(pool); return new JpipeThreadPoolBuilder(pool).build();&#125; 通过 spring-boot starter pom.xml 依赖 12345&lt;dependency&gt; &lt;groupId&gt;top.ylonline.jpipe&lt;/groupId&gt; &lt;artifactId&gt;jpipe-spring-boot-starter&lt;/artifactId&gt; &lt;version&gt;$&#123;version&#125;&lt;/version&gt;&lt;/dependency&gt; application.yml 配置 12345678jpipe: # enabled: true pool: pre-start-all-core-threads: true core-size: -1 max-size: 20 queue-size: 10 keep-alive: 10000 定义一个 pagelet使用 Spring 的 @Service 定义一个pagelet，实现 PageletBean 接口的 doExec 方法 1234567891011121314@Service("testPagelet1")public class PageletServiceTest implements PageletBean &#123; @Override public Map&lt;String, Object&gt; doExec(final Map&lt;String, String&gt; params) &#123; Map&lt;String, Object&gt; data = new HashMap&lt;&gt;(params); try &#123; TimeUnit.MILLISECONDS.sleep(new Random().nextInt(5000)); &#125; catch (InterruptedException e) &#123; e.printStackTrace(); &#125; return data; &#125;&#125; jpipe js jpipe.core.js12345678910111213141516171819;(function (root, factory) &#123; if (typeof exports === 'object') &#123; module.exports = exports = factory(); &#125; else if (typeof define === 'function' &amp;&amp; define.amd) &#123; define([], factory); &#125; else &#123; root.JP = factory(); &#125;&#125;(this, function () &#123; var JP = JP || (function (window) &#123; return &#123; view: function (json) &#123; var id = json['id']; document.getElementById(id).innerHTML = json['html']; &#125; &#125;; &#125;(window)); return JP;&#125;)); JSP 标签 引入标签 &lt;%@ taglib prefix=&quot;jp&quot; uri=&quot;http://java.yl-online.top/jsp/jpipe&quot; %&gt; 使用自定义标签，最好放到&lt;/body&gt;上面，这样就不会堵塞首屏dom的渲染123456789101112131415161718192021222324252627&lt;%@ page contentType="text/html;charset=UTF-8" trimDirectiveWhitespaces="true" %&gt;&lt;%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %&gt;&lt;%@ taglib prefix="jp" uri="http://java.yl-online.top/jsp/jpipe" %&gt;&lt;c:set var="ctx" value="$&#123;pageContext.request.contextPath&#125;"/&gt;&lt;html lang="en"&gt;&lt;head&gt; &lt;title&gt;index&lt;/title&gt; &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/&gt; &lt;meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"&gt; &lt;script type="text/javascript" src="$&#123;ctx&#125;/resources/jpipe.core.js"&gt;&lt;/script&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;index&lt;/h1&gt;&lt;div id="pagelet1"&gt;&lt;/div&gt;&lt;div id="pagelet2"&gt;&lt;/div&gt;&lt;jp:pipe&gt; &lt;jp:pagelet domid="pagelet1" bean="testPagelet1" var="item" uri="id=123&amp;name=forever杨"&gt; &lt;h1&gt;jspbody support&lt;/h1&gt; &lt;p&gt;$&#123;item.id&#125;&lt;/p&gt; &lt;/jp:pagelet&gt; &lt;jp:pagelet domid="pagelet2" bean="testPagelet2" var="item2" uri="id=456&amp;name=forever杨2"&gt; &lt;h1&gt;jspbody support&lt;/h1&gt; &lt;p&gt;$&#123;item2.name&#125;&lt;/p&gt; &lt;/jp:pagelet&gt;&lt;/jp:pipe&gt;&lt;/body&gt;&lt;/html&gt; 略：部署到 Tomcat、Jetty 等容器 FTL 指令 通过 freemarker Configuration 配置命名空间123456789101112@Configurationpublic class MvcWevConfig &#123; @Resource private freemarker.template.Configuration configuration; @PostConstruct public void setConfiguration() &#123; Version version = freemarker.template.Configuration.getVersion(); DefaultObjectWrapper wrapper = new DefaultObjectWrapperBuilder(version).build(); this.configuration.setSharedVariable("jp", new FmHashModel(wrapper)); &#125;&#125; 12345678910111213141516171819202122232425&lt;#--&lt;#assign pipe="top.ylonline.jpipe.freemarker.tag.PipeTag"?new() /&gt;--&gt;&lt;#--&lt;#assign pagelet="top.ylonline.jpipe.freemarker.tag.PageletTag"?new() /&gt;--&gt;&lt;html lang="en"&gt;&lt;head&gt; &lt;title&gt;index&lt;/title&gt; &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/&gt; &lt;meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"&gt; &lt;script type="text/javascript" src="jpipe.core.js"&gt;&lt;/script&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;index&lt;/h1&gt;&lt;div id="pagelet1"&gt;&lt;/div&gt;&lt;div id="pagelet2"&gt;&lt;/div&gt;&lt;@jp.pipe&gt; &lt;@jp.pagelet domid="pagelet1" bean="testPagelet1" var="item" uri="id=123&amp;name=forever杨"&gt; &lt;h1&gt;testPagelet1 jspbody support&lt;/h1&gt; &lt;p&gt;$&#123;item.id&#125;&lt;/p&gt; &lt;/@jp.pagelet&gt; &lt;@jp.pagelet domid="pagelet2" bean="testPagelet2" var="item2" uri="id=456&amp;name=forever杨2"&gt; &lt;h1&gt;testPagelet2 jspbody support&lt;/h1&gt; &lt;p&gt;$&#123;item2.name&#125;&lt;/p&gt; &lt;/@jp.pagelet&gt;&lt;/@jp.pipe&gt;&lt;/body&gt;&lt;/html&gt; 通过 assign 指令配置 12345678910111213141516171819202122232425&lt;#assign pipe="top.ylonline.jpipe.freemarker.tag.PipeTag"?new() /&gt;&lt;#assign pagelet="top.ylonline.jpipe.freemarker.tag.PageletTag"?new() /&gt;&lt;html lang="en"&gt;&lt;head&gt; &lt;title&gt;index&lt;/title&gt; &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/&gt; &lt;meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"&gt; &lt;script type="text/javascript" src="jpipe.core.js"&gt;&lt;/script&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;index&lt;/h1&gt;&lt;div id="pagelet1"&gt;&lt;/div&gt;&lt;div id="pagelet2"&gt;&lt;/div&gt;&lt;@jp.pipe&gt; &lt;@jp.pagelet domid="pagelet1" bean="testPagelet1" var="item" uri="id=123&amp;name=forever杨"&gt; &lt;h1&gt;testPagelet1 jspbody support&lt;/h1&gt; &lt;p&gt;$&#123;item.id&#125;&lt;/p&gt; &lt;/@jp.pagelet&gt; &lt;@jp.pagelet domid="pagelet2" bean="testPagelet2" var="item2" uri="id=456&amp;name=forever杨2"&gt; &lt;h1&gt;testPagelet2 jspbody support&lt;/h1&gt; &lt;p&gt;$&#123;item2.name&#125;&lt;/p&gt; &lt;/@jp.pagelet&gt;&lt;/@jp.pipe&gt;&lt;/body&gt;&lt;/html&gt; 在 FTL 中使用自定义 JSP 标签FTL 是支持使用 JSP 标签的。如果你的项目本来没有使用 JSP 模版，不推荐这种使用做法。因为自定义 JSP 标签是在 JSP 环境中来写作操作的，需要引入 支持 JSP 1.1或者 JSP 1.2的 Servlet 容器（Tomcat、Jetty等Servlet容器部署），而 FTL 可以在非 Servlet 等 Web 环境中使用。 更准确的解释是：尽管 Servlet 容器没有本地的JSP支持，你也可以在 FreeMarker 中使用JSP标签库。 只是确保对JSP 1.2版本(或更新)的 javax.servlet.jsp.* 包在Web应用程序中可用就行。如果你的servlet容器只对JSP 1.1支持， 那么你不得不将下面六个类(比如你可以从Tomcat 5.x或Tomcat 4.x的jar包中提取)复制到Web应用的 WEB-INF/classes/…目录下： javax.servlet.jsp.tagext.IterationTag， javax.servlet.jsp.tagext.TryCatchFinally， javax.servlet.ServletContextListener， javax.servlet.ServletContextAttributeListener， javax.servlet.http.HttpSessionAttributeListener， javax.servlet.http.HttpSessionListener。但是要注意， 因为容器只支持JSP 1.1，通常是使用较早的Servlet 2.3之前的版本，事件监听器可能就不支持，因此JSP 1.2标签库来注册事件监听器会正常工作。 截止发稿：JSP已经发布到 2.3版本 index.ftl 代码使用 &lt;#assign jp=JspTaglibs[&quot;http://java.yl-online.top/jsp/jpipe&quot;] /&gt; 引入自定义 JSP 标签123456789101112131415161718192021222324&lt;#assign jp=JspTaglibs["http://java.yl-online.top/jsp/jpipe"] /&gt;&lt;html lang="en"&gt;&lt;head&gt; &lt;title&gt;index&lt;/title&gt; &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/&gt; &lt;meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"&gt; &lt;script type="text/javascript" src="jpipe.core.js"&gt;&lt;/script&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;index&lt;/h1&gt;&lt;div id="pagelet1"&gt;&lt;/div&gt;&lt;div id="pagelet2"&gt;&lt;/div&gt;&lt;@jp.pipe&gt; &lt;@jp.pagelet domid="pagelet1" bean="testPagelet1" var="item" uri="id=123&amp;name=forever杨"&gt; &lt;h1&gt;testPagelet1 support&lt;/h1&gt; &lt;p&gt;$&#123;item.id&#125;&lt;/p&gt; &lt;/@jp.pagelet&gt; &lt;@jp.pagelet domid="pagelet2" bean="testPagelet2" var="item2" uri="id=456&amp;name=forever杨2"&gt; &lt;h1&gt;testPagelet2 support&lt;/h1&gt; &lt;p&gt;$&#123;item2.name&#125;&lt;/p&gt; &lt;/@jp.pagelet&gt;&lt;/@jp.pipe&gt;&lt;/body&gt;&lt;/html&gt; 部署到 undertow maven 依赖 123456789101112&lt;!-- undertow 部署 --&gt;&lt;dependency&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-starter-undertow&lt;/artifactId&gt;&lt;/dependency&gt;&lt;!-- undertow 部署 --&gt;&lt;dependency&gt; &lt;groupId&gt;javax.servlet.jsp&lt;/groupId&gt; &lt;artifactId&gt;javax.servlet.jsp-api&lt;/artifactId&gt; &lt;version&gt;2.3.3&lt;/version&gt;&lt;/dependency&gt; 由于 undertow 等容器没有 jsp-api 环境，所以需要依赖 javax.servlet.jsp-api 包，同时要通过 TaglibFactory 配置 freemarker 的 classpathTlds。没有这个配置，会报错：freemarker.ext.jsp.TaglibFactory$TaglibGettingException: No TLD was found for the “http://java.yl-online.top/jsp/jpipe&quot; JSP taglib URI. (TLD-s are searched according the JSP 2.2 specification. In development- and embedded-servlet-container setups you may also need the “MetaInfTldSources” and “ClasspathTlds” freemarker.ext.servlet.FreemarkerServlet init-params or the similar system properites.) Configuration 123456789101112@Configurationpublic class MvcWevConfig &#123; @Resource private FreeMarkerConfigurer freeMarkerConfigurer; @PostConstruct public void loadClassPathTlds() &#123; List&lt;String&gt; classpathTlds = new ArrayList&lt;&gt;(); classpathTlds.add("/META-INF/Jpipe.tld"); freeMarkerConfigurer.getTaglibFactory().setClasspathTlds(classpathTlds); &#125;&#125; 部署到 Tomcat maven 依赖 1234567891011121314151617&lt;!-- 外部 Tomcat 部署 --&gt;&lt;dependency&gt; &lt;groupId&gt;javax.servlet&lt;/groupId&gt; &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt; &lt;scope&gt;provided&lt;/scope&gt;&lt;/dependency&gt;&lt;dependency&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-starter-tomcat&lt;/artifactId&gt; &lt;scope&gt;provided&lt;/scope&gt;&lt;/dependency&gt;&lt;dependency&gt; &lt;groupId&gt;org.apache.tomcat.embed&lt;/groupId&gt; &lt;artifactId&gt;tomcat-embed-jasper&lt;/artifactId&gt; &lt;scope&gt;provided&lt;/scope&gt;&lt;/dependency&gt;&lt;!-- 外部 Tomcat 部署 --&gt; 由于 Tomcat、Jetty中已经有 jsp-api 环境了，这里不需要再依赖 javax.servlet.jsp-api 包]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>BigPipe</tag>
+        <tag>Facebook</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[BigPipe 分块输出遇到的问题]]></title>
     <url>%2Fposts%2Fb0407ea6.html</url>
     <content type="text"><![CDATA[buffer 问题由于“各路”buffer的存在，如果包比较小的话BigPipe的chunked输出很可能会被buffer住。 解决方案 填充空格：将一次flush的数据填充到 buffer_size。 调小buffer，让数据更容易达到 buffer_size。 关闭buffer。 Nginx 负载 buffer对于 Nginx 来说，会有 proxy_buffer 和 fastcgi_buffer。第一种方式，不用调整 buffer，但这种方式很不优雅，而且增加了带宽，并不是很合理。至于调小 buffer，这看起来是一个很好的思路，然而对于 gzip 过的数据来说，最小的 buffer 可能也比较大。 选择了关闭 proxy_buffer 和 fastcgi_buffer 关闭 proxy_buffer 的指令 proxy_buffering off 原生就支持。而关闭 fastcgi_buffer 的 fastcgi_buffering 需要1.5.6版本。 1234Syntax: fastcgi_buffering on | off;Default: fastcgi_buffering on;Context: http, server, locationThis directive appeared in version 1.5.6. 这种方式对所有请求都关闭 buffer 用 http header，用于关闭 buffer Buffering can also be enabled or disabled by passing “yes” or “no” in the “X-Accel-Buffering” response header field. This capability can be disabled using the fastcgi_ignore_headers directive. 因此，配置上完全不用关闭 buffer，只需要在代码中加 header 就好，顺利把 buffer 优雅关闭 1header(&apos;X-Accel-Buffering: no&apos;); 在需要关闭 nginx 的 buffer 的请求响应添加 X-Accel-Buffering 头：response.addHeader(“X-Accel-Buffering”, “no”); 其他问题 123456http &#123; .... fastcgi_buffer_size 1k; fastcgi_buffers 16 1k; ....&#125; 其实读可以这么理解上面的配置，nginx会在攒够一块儿缓冲区的量后，将一块儿数据发出去。上面我们配置了fastcgi_buffers 16 1k; 就是16块儿，大小为1K的缓存。 我们的数据量太小了，连默认的一块儿缓冲区都填不满，没法看到分块儿发送的效果，所以这里我们将缓冲区给调小为1K，这样就能1K为单位分块儿，1K一发，体现出实验效果了。 ios 系统 buffer 问题 经过 nginx 负载 首屏内容最少要 200 个字符（html标签、css样式、js代码不算在内），同时需要配置 X-Accel-Buffering 头才会分块 flush 不经过 nginx 负载 首屏内容最少要 200 个字符（html标签、css样式、js代码不算在内），无需配置 X-Accel-Buffering 头 android 系统 buffer 问题配置 X-Accel-Buffering 头，首屏内容超过 200 字符都不能分块 flush]]></content>
@@ -1022,18 +1034,6 @@
         <tag>BigPipe</tag>
         <tag>Facebook</tag>
         <tag>Nginx</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Jpipe - A Java implementation of Facebook's bigPipe technology.]]></title>
-    <url>%2Fposts%2F97f95e0.html</url>
-    <content type="text"><![CDATA[JpipeA Java implementation of Facebook’s bigPipe technology. Jpipe 是通过自定义标签实现的，所以对后端代码零侵入。 HTML 是完成前台页面的功能，而自定义标签可以在后台完成某些操作。 特性 jsp 标签支持 freemarker 指令支持 freemarker 中使用 jsp 标签 为什么使用 BigPipe 解决速度瓶颈 降低延迟时间 BigPipe 适合什么场景主要适用于： 请求时间较长，后端程序需要读取多个API获取数据 页面内容可以划分成多个区块显示，且各个区块之间的关联不大（松耦合） 对SEO需求较弱 多种实现方式的对比 类型 请求数 服务器端压力 用户体验 网页加载速度 模块加载顺序 实现难度 后期维护难度 普通 1 小 差 慢 文档流顺序 简单 一般 Ajax 多 大 好 快 不确定 困难 困难 单线程BigPipe 1 小 好 慢 自定义 一般 一般 多线程BigPipe 1 一般（线程池引起） 好 最快 不确定 最困难 一般 开始线程池配置 属性 类型 是否必填 缺省值 说明 描述 core-size int 否 -1 核心线程数 最小空闲线程数，无论如何都会存活的最小线程数 max-size int 否 1024 最大线程数 Jpipe 能创建用来处理 pagelet 的最大线程数 queue-size int 否 1024 最大等待对列数 请求并发大于 max-size，则被放入队列等待 keep-alive long 否 60000 最大空闲时间(ms) 超过这个空闲时间，且线程数大于 core-size 的，被回收直到线程数等于core-size pre-start-all-core-threads boolean 否 false 预热线程池 是否预先启动 core-size 个线程 pepe 标签、指令 属性 类型 是否必填 缺省值 说明 描述 async boolean 否 true 是否异步执行pagelet任务 pagelet 标签、指令 属性 类型 是否必填 缺省值 说明 描述 domid string 是 html document Id bean string 是 spring bean name var string 是 variable 参数 uri string 否 uri 参数 jsmethod string 否 JP.view 包装数据的js函数 与Spring集成 通过JpipeThreadPoolFactoryBean类 1234567891011121314151617181920212223242526272829303132333435&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"&gt; &lt;bean class="top.ylonline.jpipe.spring.JpipeSpringFactoryBean"/&gt; &lt;bean id="pool-1" class="top.ylonline.jpipe.threadpool.common.Pool"&gt; &lt;property name="coreSize" value="-1"/&gt; &lt;property name="maxSize" value="20"/&gt; &lt;property name="preStartAllCoreThreads" value="false"/&gt; &lt;property name="keepAlive" value="12000000"/&gt; &lt;property name="queueSize" value="500"/&gt; &lt;/bean&gt; &lt;!-- 工场模式 --&gt; &lt;bean class="top.ylonline.jpipe.threadpool.util.JpipeThreadPoolFactoryBean"&gt; &lt;property name="pool" ref="pool-1"/&gt; &lt;/bean&gt; &lt;!-- 或者 &lt;bean class="top.ylonline.jpipe.threadpool.util.JpipeThreadPoolFactoryBean"&gt; &lt;property name="pool"&gt; &lt;bean class="top.ylonline.jpipe.threadpool.common.Pool"&gt; &lt;property name="coreSize" value="4"/&gt; &lt;property name="maxSize" value="10"/&gt; &lt;property name="preStartAllCoreThreads" value="true"/&gt; &lt;property name="keepAlive" value="60000"/&gt; &lt;property name="queueSize" value="500"/&gt; &lt;/bean&gt; &lt;/property&gt; &lt;/bean&gt; --&gt;&lt;/beans&gt; 通过JpipeThreadPoolBuilder类 12345678910111213141516171819202122&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"&gt; &lt;bean class="top.ylonline.jpipe.spring.JpipeSpringFactoryBean"/&gt; &lt;!-- builder 模式 --&gt; &lt;bean id="jpipeThreadPoolBuilder" class="top.ylonline.jpipe.threadpool.util.JpipeThreadPoolBuilder"&gt; &lt;property name="pool"&gt; &lt;bean class="top.ylonline.jpipe.threadpool.common.Pool"&gt; &lt;property name="coreSize" value="1"/&gt; &lt;property name="maxSize" value="1"/&gt; &lt;property name="preStartAllCoreThreads" value="true"/&gt; &lt;property name="keepAlive" value="1"/&gt; &lt;property name="queueSize" value="1"/&gt; &lt;/bean&gt; &lt;/property&gt; &lt;/bean&gt; &lt;bean id="jpipeThreadPool-3" factory-bean="jpipeThreadPoolBuilder" factory-method="build"/&gt;&lt;/beans&gt; 通过 JavaBean 方式 12345678910111213141516@Beanpublic JpipeSpringFactoryBean jpipeSpringFactoryBean()&#123; return new JpipeSpringFactoryBean();&#125;@Beanpublic JpipeThreadPoolExecutor jpipeThreadPoolExecutor() &#123; Pool pool = new Pool(); pool.setCoreSize(10); pool.setMaxSize(1024); pool.setPreStartAllCoreThreads(true); pool.getKeepAlive(60000); pool.getQueueSize(512); // return new EagerThreadPool().getExecutor(pool); return new JpipeThreadPoolBuilder(pool).build();&#125; 通过 spring-boot starter pom.xml 依赖 12345&lt;dependency&gt; &lt;groupId&gt;top.ylonline.jpipe&lt;/groupId&gt; &lt;artifactId&gt;jpipe-spring-boot-starter&lt;/artifactId&gt; &lt;version&gt;$&#123;version&#125;&lt;/version&gt;&lt;/dependency&gt; application.yml 配置 12345678jpipe: # enabled: true pool: pre-start-all-core-threads: true core-size: -1 max-size: 20 queue-size: 10 keep-alive: 10000 定义一个 pagelet使用 Spring 的 @Service 定义一个pagelet，实现 PageletBean 接口的 doExec 方法 1234567891011121314@Service("testPagelet1")public class PageletServiceTest implements PageletBean &#123; @Override public Map&lt;String, Object&gt; doExec(final Map&lt;String, String&gt; params) &#123; Map&lt;String, Object&gt; data = new HashMap&lt;&gt;(params); try &#123; TimeUnit.MILLISECONDS.sleep(new Random().nextInt(5000)); &#125; catch (InterruptedException e) &#123; e.printStackTrace(); &#125; return data; &#125;&#125; jpipe js jpipe.core.js12345678910111213141516171819;(function (root, factory) &#123; if (typeof exports === 'object') &#123; module.exports = exports = factory(); &#125; else if (typeof define === 'function' &amp;&amp; define.amd) &#123; define([], factory); &#125; else &#123; root.JP = factory(); &#125;&#125;(this, function () &#123; var JP = JP || (function (window) &#123; return &#123; view: function (json) &#123; var id = json['id']; document.getElementById(id).innerHTML = json['html']; &#125; &#125;; &#125;(window)); return JP;&#125;)); JSP 标签 引入标签 &lt;%@ taglib prefix=&quot;jp&quot; uri=&quot;http://java.yl-online.top/jsp/jpipe&quot; %&gt; 使用自定义标签，最好放到&lt;/body&gt;上面，这样就不会堵塞首屏dom的渲染123456789101112131415161718192021222324252627&lt;%@ page contentType="text/html;charset=UTF-8" trimDirectiveWhitespaces="true" %&gt;&lt;%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %&gt;&lt;%@ taglib prefix="jp" uri="http://java.yl-online.top/jsp/jpipe" %&gt;&lt;c:set var="ctx" value="$&#123;pageContext.request.contextPath&#125;"/&gt;&lt;html lang="en"&gt;&lt;head&gt; &lt;title&gt;index&lt;/title&gt; &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/&gt; &lt;meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"&gt; &lt;script type="text/javascript" src="$&#123;ctx&#125;/resources/jpipe.core.js"&gt;&lt;/script&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;index&lt;/h1&gt;&lt;div id="pagelet1"&gt;&lt;/div&gt;&lt;div id="pagelet2"&gt;&lt;/div&gt;&lt;jp:pipe&gt; &lt;jp:pagelet domid="pagelet1" bean="testPagelet1" var="item" uri="id=123&amp;name=forever杨"&gt; &lt;h1&gt;jspbody support&lt;/h1&gt; &lt;p&gt;$&#123;item.id&#125;&lt;/p&gt; &lt;/jp:pagelet&gt; &lt;jp:pagelet domid="pagelet2" bean="testPagelet2" var="item2" uri="id=456&amp;name=forever杨2"&gt; &lt;h1&gt;jspbody support&lt;/h1&gt; &lt;p&gt;$&#123;item2.name&#125;&lt;/p&gt; &lt;/jp:pagelet&gt;&lt;/jp:pipe&gt;&lt;/body&gt;&lt;/html&gt; 略：部署到 Tomcat、Jetty 等容器 FTL 指令 通过 freemarker Configuration 配置命名空间123456789101112@Configurationpublic class MvcWevConfig &#123; @Resource private freemarker.template.Configuration configuration; @PostConstruct public void setConfiguration() &#123; Version version = freemarker.template.Configuration.getVersion(); DefaultObjectWrapper wrapper = new DefaultObjectWrapperBuilder(version).build(); this.configuration.setSharedVariable("jp", new FmHashModel(wrapper)); &#125;&#125; 12345678910111213141516171819202122232425&lt;#--&lt;#assign pipe="top.ylonline.jpipe.freemarker.tag.PipeTag"?new() /&gt;--&gt;&lt;#--&lt;#assign pagelet="top.ylonline.jpipe.freemarker.tag.PageletTag"?new() /&gt;--&gt;&lt;html lang="en"&gt;&lt;head&gt; &lt;title&gt;index&lt;/title&gt; &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/&gt; &lt;meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"&gt; &lt;script type="text/javascript" src="jpipe.core.js"&gt;&lt;/script&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;index&lt;/h1&gt;&lt;div id="pagelet1"&gt;&lt;/div&gt;&lt;div id="pagelet2"&gt;&lt;/div&gt;&lt;@jp.pipe&gt; &lt;@jp.pagelet domid="pagelet1" bean="testPagelet1" var="item" uri="id=123&amp;name=forever杨"&gt; &lt;h1&gt;testPagelet1 jspbody support&lt;/h1&gt; &lt;p&gt;$&#123;item.id&#125;&lt;/p&gt; &lt;/@jp.pagelet&gt; &lt;@jp.pagelet domid="pagelet2" bean="testPagelet2" var="item2" uri="id=456&amp;name=forever杨2"&gt; &lt;h1&gt;testPagelet2 jspbody support&lt;/h1&gt; &lt;p&gt;$&#123;item2.name&#125;&lt;/p&gt; &lt;/@jp.pagelet&gt;&lt;/@jp.pipe&gt;&lt;/body&gt;&lt;/html&gt; 通过 assign 指令配置 12345678910111213141516171819202122232425&lt;#assign pipe="top.ylonline.jpipe.freemarker.tag.PipeTag"?new() /&gt;&lt;#assign pagelet="top.ylonline.jpipe.freemarker.tag.PageletTag"?new() /&gt;&lt;html lang="en"&gt;&lt;head&gt; &lt;title&gt;index&lt;/title&gt; &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/&gt; &lt;meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"&gt; &lt;script type="text/javascript" src="jpipe.core.js"&gt;&lt;/script&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;index&lt;/h1&gt;&lt;div id="pagelet1"&gt;&lt;/div&gt;&lt;div id="pagelet2"&gt;&lt;/div&gt;&lt;@jp.pipe&gt; &lt;@jp.pagelet domid="pagelet1" bean="testPagelet1" var="item" uri="id=123&amp;name=forever杨"&gt; &lt;h1&gt;testPagelet1 jspbody support&lt;/h1&gt; &lt;p&gt;$&#123;item.id&#125;&lt;/p&gt; &lt;/@jp.pagelet&gt; &lt;@jp.pagelet domid="pagelet2" bean="testPagelet2" var="item2" uri="id=456&amp;name=forever杨2"&gt; &lt;h1&gt;testPagelet2 jspbody support&lt;/h1&gt; &lt;p&gt;$&#123;item2.name&#125;&lt;/p&gt; &lt;/@jp.pagelet&gt;&lt;/@jp.pipe&gt;&lt;/body&gt;&lt;/html&gt; 在 FTL 中使用自定义 JSP 标签FTL 是支持使用 JSP 标签的。如果你的项目本来没有使用 JSP 模版，不推荐这种使用做法。因为自定义 JSP 标签是在 JSP 环境中来写作操作的，需要引入 支持 JSP 1.1或者 JSP 1.2的 Servlet 容器（Tomcat、Jetty等Servlet容器部署），而 FTL 可以在非 Servlet 等 Web 环境中使用。 更准确的解释是：尽管 Servlet 容器没有本地的JSP支持，你也可以在 FreeMarker 中使用JSP标签库。 只是确保对JSP 1.2版本(或更新)的 javax.servlet.jsp.* 包在Web应用程序中可用就行。如果你的servlet容器只对JSP 1.1支持， 那么你不得不将下面六个类(比如你可以从Tomcat 5.x或Tomcat 4.x的jar包中提取)复制到Web应用的 WEB-INF/classes/…目录下： javax.servlet.jsp.tagext.IterationTag， javax.servlet.jsp.tagext.TryCatchFinally， javax.servlet.ServletContextListener， javax.servlet.ServletContextAttributeListener， javax.servlet.http.HttpSessionAttributeListener， javax.servlet.http.HttpSessionListener。但是要注意， 因为容器只支持JSP 1.1，通常是使用较早的Servlet 2.3之前的版本，事件监听器可能就不支持，因此JSP 1.2标签库来注册事件监听器会正常工作。 截止发稿：JSP已经发布到 2.3版本 index.ftl 代码使用 &lt;#assign jp=JspTaglibs[&quot;http://java.yl-online.top/jsp/jpipe&quot;] /&gt; 引入自定义 JSP 标签123456789101112131415161718192021222324&lt;#assign jp=JspTaglibs["http://java.yl-online.top/jsp/jpipe"] /&gt;&lt;html lang="en"&gt;&lt;head&gt; &lt;title&gt;index&lt;/title&gt; &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/&gt; &lt;meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"&gt; &lt;script type="text/javascript" src="jpipe.core.js"&gt;&lt;/script&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;index&lt;/h1&gt;&lt;div id="pagelet1"&gt;&lt;/div&gt;&lt;div id="pagelet2"&gt;&lt;/div&gt;&lt;@jp.pipe&gt; &lt;@jp.pagelet domid="pagelet1" bean="testPagelet1" var="item" uri="id=123&amp;name=forever杨"&gt; &lt;h1&gt;testPagelet1 support&lt;/h1&gt; &lt;p&gt;$&#123;item.id&#125;&lt;/p&gt; &lt;/@jp.pagelet&gt; &lt;@jp.pagelet domid="pagelet2" bean="testPagelet2" var="item2" uri="id=456&amp;name=forever杨2"&gt; &lt;h1&gt;testPagelet2 support&lt;/h1&gt; &lt;p&gt;$&#123;item2.name&#125;&lt;/p&gt; &lt;/@jp.pagelet&gt;&lt;/@jp.pipe&gt;&lt;/body&gt;&lt;/html&gt; 部署到 undertow maven 依赖 123456789101112&lt;!-- undertow 部署 --&gt;&lt;dependency&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-starter-undertow&lt;/artifactId&gt;&lt;/dependency&gt;&lt;!-- undertow 部署 --&gt;&lt;dependency&gt; &lt;groupId&gt;javax.servlet.jsp&lt;/groupId&gt; &lt;artifactId&gt;javax.servlet.jsp-api&lt;/artifactId&gt; &lt;version&gt;2.3.3&lt;/version&gt;&lt;/dependency&gt; 由于 undertow 等容器没有 jsp-api 环境，所以需要依赖 javax.servlet.jsp-api 包，同时要通过 TaglibFactory 配置 freemarker 的 classpathTlds。没有这个配置，会报错：freemarker.ext.jsp.TaglibFactory$TaglibGettingException: No TLD was found for the “http://java.yl-online.top/jsp/jpipe&quot; JSP taglib URI. (TLD-s are searched according the JSP 2.2 specification. In development- and embedded-servlet-container setups you may also need the “MetaInfTldSources” and “ClasspathTlds” freemarker.ext.servlet.FreemarkerServlet init-params or the similar system properites.) Configuration 123456789101112@Configurationpublic class MvcWevConfig &#123; @Resource private FreeMarkerConfigurer freeMarkerConfigurer; @PostConstruct public void loadClassPathTlds() &#123; List&lt;String&gt; classpathTlds = new ArrayList&lt;&gt;(); classpathTlds.add("/META-INF/Jpipe.tld"); freeMarkerConfigurer.getTaglibFactory().setClasspathTlds(classpathTlds); &#125;&#125; 部署到 Tomcat maven 依赖 1234567891011121314151617&lt;!-- 外部 Tomcat 部署 --&gt;&lt;dependency&gt; &lt;groupId&gt;javax.servlet&lt;/groupId&gt; &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt; &lt;scope&gt;provided&lt;/scope&gt;&lt;/dependency&gt;&lt;dependency&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-starter-tomcat&lt;/artifactId&gt; &lt;scope&gt;provided&lt;/scope&gt;&lt;/dependency&gt;&lt;dependency&gt; &lt;groupId&gt;org.apache.tomcat.embed&lt;/groupId&gt; &lt;artifactId&gt;tomcat-embed-jasper&lt;/artifactId&gt; &lt;scope&gt;provided&lt;/scope&gt;&lt;/dependency&gt;&lt;!-- 外部 Tomcat 部署 --&gt; 由于 Tomcat、Jetty中已经有 jsp-api 环境了，这里不需要再依赖 javax.servlet.jsp-api 包]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>BigPipe</tag>
-        <tag>Facebook</tag>
       </tags>
   </entry>
   <entry>
@@ -1058,8 +1058,8 @@
       </categories>
       <tags>
         <tag>spring-boot</tag>
-        <tag>alibaba</tag>
         <tag>Nacos</tag>
+        <tag>alibaba</tag>
       </tags>
   </entry>
   <entry>
@@ -1143,8 +1143,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>Apache</tag>
         <tag>spring-boot</tag>
+        <tag>Apache</tag>
         <tag>alibaba</tag>
         <tag>Dubbo</tag>
       </tags>
@@ -1197,9 +1197,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[docker-compose 安装和使用]]></title>
-    <url>%2Fposts%2F9bc29391.html</url>
-    <content type="text"><![CDATA[安装 12345# 注意 docker-compose 版本和 docker 版本有兼容要求$ sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose$ sudo curl --proxy 192.168.123.1:1234 -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose 可执行权限 1$ sudo chmod +x /usr/local/bin/docker-compose 验证安装 12345$ docker-compose --versiondocker-compose version 1.22.0, build 1719ceb# 安装后，如果提示 bash: docker-compose: command not found...，则执行一下命令$ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose 使用 1$ docker-compose -f grafana/docker-compose.yml up 如果Dockerfile中使用ENTRYPOINT执行启动应用命令，则docker-compose可以使用command和environment指定环境变量 如果Dockerfile中使用CMD执行启动应用命令，则docker-compose不能使用command，需要使用environment指定环境变量]]></content>
+    <title><![CDATA[安装 docker 环境]]></title>
+    <url>%2Fposts%2F2fff8f5e.html</url>
+    <content type="text"><![CDATA[安装 Docker 删除旧版本 123456789101112131415sudo yum remove docker \ docker-client \ docker-client-latest \ docker-common \ docker-latest \ docker-latest-logrotate \ docker-logrotate \ docker-selinux \ docker-engine-selinux \ docker-engine# 或者sudo yum remove flannel docker* -ysudo yum -y remove docker docker-common docker-selinux docker-engine docker-engine-selinux container-selinux docker-cesudo rm -rf /var/lib/docker 配置 repo 1234567891011121314151617sudo yum install -y yum-utils \ device-mapper-persistent-data \ lvm2 sudo yum-config-manager \ --add-repo \ https://download.docker.com/linux/centos/docker-ce.repo# 或者使用阿里云sudo yum-config-manager \ --add-repo \ https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo# Optionalsudo yum-config-manager --enable docker-ce-edgesudo yum-config-manager --enable docker-ce-testsudo yum-config-manager --disable docker-ce-edge yum 加速和代理 123456789101112131415161718192021222324252627# 加速配置（阿里云加速）## 备份原来的yum源cd /etc/yum.repos.d/sudo mv CentOS-Base.repo CentOS-Base.repo_bak## 获取阿里云yum源sudo wget -e "http_proxy=192.168.123.1:1234" -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo# 代理配置sudo sed -i '/^proxy=/d' /etc/yum.confsudo sh -c "echo proxy=http://192.168.123.1:1234 &gt;&gt; /etc/yum.conf"sudo cat /etc/yum.conf# 清除原有yum源缓存sudo yum clean all## 生成阿里云yum源缓存sudo yum makecache## 或者sudo rm -f /var/lib/rpm/__*sudo rpm --rebuilddb -v -vsudo yum clean dbcachesudo yum clean metadatasudo yum clean rpmdbsudo yum clean headerssudo yum clean allsudo rm -rf /var/cache/yum/timedhosts.txtsudo rm -rf /var/cache/yum/*sudo yum makecache 安装 docker 创建 docker 和 data 目录（可不创建，使用默认路径） 12345678# docker 默认下载目录 /var/lib/docker/sudo mkdir -p /data/docker/lib/docker# 创建软连接sudo ln -s /data/docker/lib/docker /var/lib/docker# 删除软连接（注意：最后没有/，否则会把/var/lib/docker下的内容全部删除）# rm /var/lib/docker# sudo chmod 770 -R /var/lib/docker/# sudo chmod 777 -R /data/docker 在线安装 1234567891011# 安装最新版本sudo yum install docker-ce#安装指定版本 docker# 可以查看所有仓库中所有docker版本，并选择特定版本安装yum list docker-ce --showduplicates | sort -rdocker-ce.x86_64 18.03.0.ce-1.el7.centos docker-ce-stablesudo yum install docker-ce-&lt;VERSION STRING&gt;# 或者sudo curl https://releases.rancher.com/install-docker/19.03.sh | shsudo curl --proxy 192.168.123.1:1234 https://releases.rancher.com/install-docker/19.03.sh | sh 离线安装 123sudo yum install -y docker-ce-cli-19.03.12-3.el7.x86_64.rpmsudo yum install -y containerd.io-1.3.7-3.1.el7.x86_64.rpmsudo yum install -y docker-ce-19.03.12-3.el7.x86_64.rpm 启动并加入开机启动 12345678910# 启动 dockersudo systemctl start docker# 重启sudo systemctl restart docker# 停止运行 dockersudo systemctl stop docker# 开机启动sudo systemctl enable docker# 禁止开机启动sudo systemctl disable docker 版本锁定 123sudo yum install yum-plugin-versionlocksudo yum versionlock add docker-ce docker-ce-clisudo yum versionlock list 将当前用户加入docker组，并重启docker 12sudo gpasswd -a $&#123;USER&#125; dockersudo systemctl restart docker 验证安装 12345678910111213141516171819$ docker versionClient: Version: 18.06.1-ce API version: 1.38 Go version: go1.10.3 Git commit: e68fc7a Built: Tue Aug 21 17:23:03 2018 OS/Arch: linux/amd64 Experimental: falseServer: Engine: Version: 18.06.1-ce API version: 1.38 (minimum version 1.12) Go version: go1.10.3 Git commit: e68fc7a Built: Tue Aug 21 17:25:29 2018 OS/Arch: linux/amd64 Experimental: false Docker 配置代理1234567891011# 配置 docker pull 代理# sudo rm -rf /etc/systemd/system/docker.service.d# cat /etc/systemd/system/docker.service.d/http-proxy.confsudo mkdir -p /etc/systemd/system/docker.service.dsudo tee /etc/systemd/system/docker.service.d/http-proxy.conf &lt;&lt;-'EOF'[Service]Environment="HTTP_PROXY=http://192.168.123.1:1234" "NO_PROXY=localhost,127.0.0.1,172.16.120.0/24"EOFsudo systemctl daemon-reloadsudo systemctl enable dockersudo systemctl restart docker 其中172.16.120.0/24为宿主机 ip Docker 配置加速源1234567891011# sudo rm -rf /etc/docker/daemon.jsonsudo mkdir -p /etc/dockersudo tee /etc/docker/daemon.json &lt;&lt;-'EOF'&#123;"registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"],"log-driver":"json-file","log-opts":&#123; "max-size" :"50m","max-file":"10"&#125;&#125;EOFsudo systemctl daemon-reloadsudo systemctl restart docker 安装 docker-compose123456789101112131415161718192021# 安装sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-`uname -s`-`uname -m`" -o /usr/local/bin/docker-composecurl -L https://github.com/docker/compose/releases/download/1.29.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose# https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64# sudo curl --proxy 192.168.123.1:1234 -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-`uname -s`-`uname -m`" -o /usr/local/bin/docker-compose# sudo curl --proxy 192.168.123.1:1234 -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose# 配置权限sudo chmod +x /usr/local/bin/docker-compose# sudo chmod 755 /usr/local/bin/docker-compose# sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose# 验证是否安装成功docker-compose --version# 安装后，如果提示 bash: docker-compose: command not found...，则执行一下命令sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose 进入容器 12345# centosdocker exec -it &lt;container-name&gt; /bin/bash# alpinedocker exec -it &lt;container-name&gt; sh]]></content>
       <categories>
         <category>docker</category>
       </categories>
@@ -1208,9 +1208,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[安装 docker 环境]]></title>
-    <url>%2Fposts%2F2fff8f5e.html</url>
-    <content type="text"><![CDATA[安装 Docker 删除旧版本 123456789101112131415sudo yum remove docker \ docker-client \ docker-client-latest \ docker-common \ docker-latest \ docker-latest-logrotate \ docker-logrotate \ docker-selinux \ docker-engine-selinux \ docker-engine# 或者sudo yum remove flannel docker* -ysudo yum -y remove docker docker-common docker-selinux docker-engine docker-engine-selinux container-selinux docker-cesudo rm -rf /var/lib/docker 配置 repo 1234567891011121314151617sudo yum install -y yum-utils \ device-mapper-persistent-data \ lvm2 sudo yum-config-manager \ --add-repo \ https://download.docker.com/linux/centos/docker-ce.repo# 或者使用阿里云sudo yum-config-manager \ --add-repo \ https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo# Optionalsudo yum-config-manager --enable docker-ce-edgesudo yum-config-manager --enable docker-ce-testsudo yum-config-manager --disable docker-ce-edge yum 加速和代理 123456789101112131415161718192021222324252627# 加速配置（阿里云加速）## 备份原来的yum源cd /etc/yum.repos.d/sudo mv CentOS-Base.repo CentOS-Base.repo_bak## 获取阿里云yum源sudo wget -e "http_proxy=192.168.123.1:1234" -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo# 代理配置sudo sed -i '/^proxy=/d' /etc/yum.confsudo sh -c "echo proxy=http://192.168.123.1:1234 &gt;&gt; /etc/yum.conf"sudo cat /etc/yum.conf# 清除原有yum源缓存sudo yum clean all## 生成阿里云yum源缓存sudo yum makecache## 或者sudo rm -f /var/lib/rpm/__*sudo rpm --rebuilddb -v -vsudo yum clean dbcachesudo yum clean metadatasudo yum clean rpmdbsudo yum clean headerssudo yum clean allsudo rm -rf /var/cache/yum/timedhosts.txtsudo rm -rf /var/cache/yum/*sudo yum makecache 安装 docker 创建 docker 和 data 目录（可不创建，使用默认路径） 12345678# docker 默认下载目录 /var/lib/docker/sudo mkdir -p /data/docker/lib/docker# 创建软连接sudo ln -s /data/docker/lib/docker /var/lib/docker# 删除软连接（注意：最后没有/，否则会把/var/lib/docker下的内容全部删除）# rm /var/lib/docker# sudo chmod 770 -R /var/lib/docker/# sudo chmod 777 -R /data/docker 在线安装 1234567891011# 安装最新版本sudo yum install docker-ce#安装指定版本 docker# 可以查看所有仓库中所有docker版本，并选择特定版本安装yum list docker-ce --showduplicates | sort -rdocker-ce.x86_64 18.03.0.ce-1.el7.centos docker-ce-stablesudo yum install docker-ce-&lt;VERSION STRING&gt;# 或者sudo curl https://releases.rancher.com/install-docker/19.03.sh | shsudo curl --proxy 192.168.123.1:1234 https://releases.rancher.com/install-docker/19.03.sh | sh 离线安装 123sudo yum install -y docker-ce-cli-19.03.12-3.el7.x86_64.rpmsudo yum install -y containerd.io-1.3.7-3.1.el7.x86_64.rpmsudo yum install -y docker-ce-19.03.12-3.el7.x86_64.rpm 启动并加入开机启动 12345678910# 启动 dockersudo systemctl start docker# 重启sudo systemctl restart docker# 停止运行 dockersudo systemctl stop docker# 开机启动sudo systemctl enable docker# 禁止开机启动sudo systemctl disable docker 版本锁定 123sudo yum install yum-plugin-versionlocksudo yum versionlock add docker-ce docker-ce-clisudo yum versionlock list 将当前用户加入docker组，并重启docker 12sudo gpasswd -a $&#123;USER&#125; dockersudo systemctl restart docker 验证安装 12345678910111213141516171819$ docker versionClient: Version: 18.06.1-ce API version: 1.38 Go version: go1.10.3 Git commit: e68fc7a Built: Tue Aug 21 17:23:03 2018 OS/Arch: linux/amd64 Experimental: falseServer: Engine: Version: 18.06.1-ce API version: 1.38 (minimum version 1.12) Go version: go1.10.3 Git commit: e68fc7a Built: Tue Aug 21 17:25:29 2018 OS/Arch: linux/amd64 Experimental: false Docker 配置代理1234567891011# 配置 docker pull 代理# sudo rm -rf /etc/systemd/system/docker.service.d# cat /etc/systemd/system/docker.service.d/http-proxy.confsudo mkdir -p /etc/systemd/system/docker.service.dsudo tee /etc/systemd/system/docker.service.d/http-proxy.conf &lt;&lt;-'EOF'[Service]Environment="HTTP_PROXY=http://192.168.123.1:1234" "NO_PROXY=localhost,127.0.0.1,172.16.120.0/24"EOFsudo systemctl daemon-reloadsudo systemctl enable dockersudo systemctl restart docker 其中172.16.120.0/24为宿主机 ip Docker 配置加速源1234567891011# sudo rm -rf /etc/docker/daemon.jsonsudo mkdir -p /etc/dockersudo tee /etc/docker/daemon.json &lt;&lt;-'EOF'&#123;"registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"],"log-driver":"json-file","log-opts":&#123; "max-size" :"50m","max-file":"10"&#125;&#125;EOFsudo systemctl daemon-reloadsudo systemctl restart docker 安装 docker-compose123456789101112131415161718192021# 安装sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-`uname -s`-`uname -m`" -o /usr/local/bin/docker-composecurl -L https://github.com/docker/compose/releases/download/1.29.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose# https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64# sudo curl --proxy 192.168.123.1:1234 -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-`uname -s`-`uname -m`" -o /usr/local/bin/docker-compose# sudo curl --proxy 192.168.123.1:1234 -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose# 配置权限sudo chmod +x /usr/local/bin/docker-compose# sudo chmod 755 /usr/local/bin/docker-compose# sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose# 验证是否安装成功docker-compose --version# 安装后，如果提示 bash: docker-compose: command not found...，则执行一下命令sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose 进入容器 12345# centosdocker exec -it &lt;container-name&gt; /bin/bash# alpinedocker exec -it &lt;container-name&gt; sh]]></content>
+    <title><![CDATA[docker-compose 安装和使用]]></title>
+    <url>%2Fposts%2F9bc29391.html</url>
+    <content type="text"><![CDATA[安装 12345# 注意 docker-compose 版本和 docker 版本有兼容要求$ sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose$ sudo curl --proxy 192.168.123.1:1234 -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose 可执行权限 1$ sudo chmod +x /usr/local/bin/docker-compose 验证安装 12345$ docker-compose --versiondocker-compose version 1.22.0, build 1719ceb# 安装后，如果提示 bash: docker-compose: command not found...，则执行一下命令$ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose 使用 1$ docker-compose -f grafana/docker-compose.yml up 如果Dockerfile中使用ENTRYPOINT执行启动应用命令，则docker-compose可以使用command和environment指定环境变量 如果Dockerfile中使用CMD执行启动应用命令，则docker-compose不能使用command，需要使用environment指定环境变量]]></content>
       <categories>
         <category>docker</category>
       </categories>
@@ -1311,18 +1311,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[spring cache 常用缓存注解介绍]]></title>
-    <url>%2Fposts%2F3bef8a86.html</url>
-    <content type="text"><![CDATA[spring-cache 常用缓存注解介绍 包地址 注解名 作用域 作用 org.springframework.cache.annotation CacheConfig 类级别 s设置缓存的公共配置 Cacheable 方法级别 缓存读取操作 CacheEvict 方法级别 缓存失效操作 CachePut 方法级别 缓存更新操作 Caching 方法级别 h混合读取、失效、更新操作 CacheConfig主要作用是全局配置，比如配置缓存名称（cacheNames），只需要在类上面使用这个注解配置一次，类下面的方法就默认使用全局配置了。 Cacheable这个注解是最重要的，主要实现的是功能在进行读操作的时候，先从缓存中查询，如果查询不到，再走业务流程获取数据，获取成功后，保存到缓存中。 属性 默认值 描述 value 缓存的名称，在 spring 配置文件中定义，必须指定至少一个 cacheNames 缓存的名称，在 spring 配置文件中定义，必须指定至少一个 key 缓存的 key，可以为空，如果指定要按照 SpEL 表达式编写，如果不指定，则缺省按照方法的所有参数进行组合 keyGenerator cacheManager cacheResolver condition 缓存的条件，可以为空，使用 SpEL 编写，返回 true 或者 false，只有为 true 才进行缓存。不能使用返回结果 unless 不缓存的条件，可以为空，使用 SpEL 编写，返回 true 或者 false，只有为 false才进行缓存。可以使用返回结果 sync CacheEvict这个注解主要是配合@Cacheable一起使用，它的主要作用是清除缓存。当进行一些更新、删除操作时，就需要删除缓存。如果不删除缓存就会出现读取不到最新数据的情况。它有一个重要的数据allEntries默认是false。当true是，会清除所有缓存，而不以指定的key为主。 CachePut 这个注解总是会把数据缓存，而不会每次检测缓存是否存在 Caching这个注解是Cacheable、CachePut、CacheEvict的综合体，可以使用这个注解包含以上3个注解。]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>spring</tag>
-        <tag>cache</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[spring retry 使用]]></title>
     <url>%2Fposts%2F9cd0a544.html</url>
     <content type="text"><![CDATA[@Retryable 被注解的方法发生异常时会重试 参数 默认值 说明 value 空 指定发生的异常，进行重试 include 空 指定异常重试。和value一样，默认空，当exclude也为空时，所有异常都重试 exclude 空 指定异常不重试。默认空，当include也为空时，所有异常都重试 maxAttemps 3 重试次数 backoff 空 重试补偿机制 @Backoff 参数 默认值 说明 delay 1000L 指定延迟时间 multiplier 0.0D 指定延迟的倍数。比如delay=5000l,multiplier=2时，第一次重试为5秒后，第二次为10秒，第三次为20秒 @Recover 当重试到达指定次数时，被注解的方法将被回调，可以在该方法中进行日志处理。需要注意的是发生的异常和入参类型一致时才会回调。 示例 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263import org.springframework.retry.annotation.Backoff;import org.springframework.retry.annotation.Recover;import org.springframework.retry.annotation.Retryable;import org.springframework.stereotype.Service;/** * @author Created by YL on 2018/7/18 */@Service@Slf4jpublic class RetryService &#123; @Retryable( value = &#123;Exception.class&#125;, maxAttempts = 10, backoff = @Backoff(delay = 10000L) ) public String retry() throws Exception &#123; throw new Exception("测试 spring retry"); &#125; @Recover public void exception(Exception e) &#123; log.error("errmsg: &#123;&#125;", e.getMessage(), e); &#125;&#125;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.boot.builder.SpringApplicationBuilder;import org.springframework.retry.annotation.EnableRetry;@SpringBootApplication@EnableRetrypublic class App &#123; /** * Common */ private static SpringApplicationBuilder configureSpringBuilder(SpringApplicationBuilder builder) &#123; //builder.application().addListeners(new EnvironmentPreparedEventListener()); builder.application().addPrimarySources(Collections.singletonList(App.class)); return builder.sources(App.class); &#125; // /** // * for WAR deploy // */ // @Override // protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) &#123; // // // 外部容器部署 web 环境要在这里配置 EnvironmentPreparedEvent 监听器才生效 // // builder.application().addListeners(new EnvironmentPreparedEventListener()); // // return builder.sources(Application.class); // return super.configure(configureSpringBuilder(builder)); // &#125; /** * for JAR deploy */ public static void main(String[] args) &#123; // SpringApplication.run(Application.class, args); SpringApplicationBuilder builder = configureSpringBuilder(new SpringApplicationBuilder()); builder.application().run(args); &#125;&#125;]]></content>
@@ -1332,6 +1320,18 @@
       <tags>
         <tag>spring</tag>
         <tag>retry</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[spring cache 常用缓存注解介绍]]></title>
+    <url>%2Fposts%2F3bef8a86.html</url>
+    <content type="text"><![CDATA[spring-cache 常用缓存注解介绍 包地址 注解名 作用域 作用 org.springframework.cache.annotation CacheConfig 类级别 s设置缓存的公共配置 Cacheable 方法级别 缓存读取操作 CacheEvict 方法级别 缓存失效操作 CachePut 方法级别 缓存更新操作 Caching 方法级别 h混合读取、失效、更新操作 CacheConfig主要作用是全局配置，比如配置缓存名称（cacheNames），只需要在类上面使用这个注解配置一次，类下面的方法就默认使用全局配置了。 Cacheable这个注解是最重要的，主要实现的是功能在进行读操作的时候，先从缓存中查询，如果查询不到，再走业务流程获取数据，获取成功后，保存到缓存中。 属性 默认值 描述 value 缓存的名称，在 spring 配置文件中定义，必须指定至少一个 cacheNames 缓存的名称，在 spring 配置文件中定义，必须指定至少一个 key 缓存的 key，可以为空，如果指定要按照 SpEL 表达式编写，如果不指定，则缺省按照方法的所有参数进行组合 keyGenerator cacheManager cacheResolver condition 缓存的条件，可以为空，使用 SpEL 编写，返回 true 或者 false，只有为 true 才进行缓存。不能使用返回结果 unless 不缓存的条件，可以为空，使用 SpEL 编写，返回 true 或者 false，只有为 false才进行缓存。可以使用返回结果 sync CacheEvict这个注解主要是配合@Cacheable一起使用，它的主要作用是清除缓存。当进行一些更新、删除操作时，就需要删除缓存。如果不删除缓存就会出现读取不到最新数据的情况。它有一个重要的数据allEntries默认是false。当true是，会清除所有缓存，而不以指定的key为主。 CachePut 这个注解总是会把数据缓存，而不会每次检测缓存是否存在 Caching这个注解是Cacheable、CachePut、CacheEvict的综合体，可以使用这个注解包含以上3个注解。]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>spring</tag>
+        <tag>cache</tag>
       </tags>
   </entry>
   <entry>
@@ -1614,18 +1614,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux crontab 命令]]></title>
-    <url>%2Fposts%2Fb0b79272.html</url>
-    <content type="text"><![CDATA[crontab 使用注意事项如果通过 crontab 执行1、crontab 无法获取 jdk 变量，要在 java 命令之前写入jdk绝对路径2、要把路径切换到要执行的 sh 路径下注意：二者缺一不可 查找 jdk 路径的方法 1 12$ echo $JAVA_HOME/usr/java/jdk1.6.0_45/bin/java 2 123456$ which java/usr/bin/java$ ls -lrt /usr/bin/java #/usr/bin/java是which java查出来的路径lrwxrwxrwx. 1 root root 22 Sep 16 2015 /usr/bin/java -&gt; /etc/alternatives/java$ ls -lrt /etc/alternatives/java #/etc/alternatives/java是ls -lrt /usr/bin/java查出来的路径 lrwxrwxrwx. 1 root root 46 Sep 16 2015 /etc/alternatives/java -&gt; /usr/lib/jvm/jre-1.6.0-openjdk.x86_64/bin/java 查询 crontab 定时器配置情况1crontab -l 编辑 crontab 定时器1234567891011crontab -e# 当 crontab 调用时，错误和标准输出会写成 mail 通知你* * * * * /opt/restart.sh# 标准输出重定向到 /dev/null，输出到这里就找不回来了* * * * * /opt/restart.sh &gt; /dev/null# 标准输出和错误输出都重定向到 /dev/null* * * * * /opt/restart.sh &gt; /dev/null 2&gt;&amp;1# 覆盖输出到指定日志文件* * * * * /opt/restart.sh &gt;/opt/logs/xxxxlog 2&gt;&amp;1# 追加输出到指定日志文件* * * * * /opt/restart.sh &gt;&gt;/opt/logs/xxxxlog 2&gt;&amp;1]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>crontab</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Linux du 命令]]></title>
     <url>%2Fposts%2F2e023d93.html</url>
     <content type="text"><![CDATA[du计算当前文件夹下占用空间，排序1du -sh * | sort -nr]]></content>
@@ -1638,6 +1626,30 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Linux crontab 命令]]></title>
+    <url>%2Fposts%2Fb0b79272.html</url>
+    <content type="text"><![CDATA[crontab 使用注意事项如果通过 crontab 执行1、crontab 无法获取 jdk 变量，要在 java 命令之前写入jdk绝对路径2、要把路径切换到要执行的 sh 路径下注意：二者缺一不可 查找 jdk 路径的方法 1 12$ echo $JAVA_HOME/usr/java/jdk1.6.0_45/bin/java 2 123456$ which java/usr/bin/java$ ls -lrt /usr/bin/java #/usr/bin/java是which java查出来的路径lrwxrwxrwx. 1 root root 22 Sep 16 2015 /usr/bin/java -&gt; /etc/alternatives/java$ ls -lrt /etc/alternatives/java #/etc/alternatives/java是ls -lrt /usr/bin/java查出来的路径 lrwxrwxrwx. 1 root root 46 Sep 16 2015 /etc/alternatives/java -&gt; /usr/lib/jvm/jre-1.6.0-openjdk.x86_64/bin/java 查询 crontab 定时器配置情况1crontab -l 编辑 crontab 定时器1234567891011crontab -e# 当 crontab 调用时，错误和标准输出会写成 mail 通知你* * * * * /opt/restart.sh# 标准输出重定向到 /dev/null，输出到这里就找不回来了* * * * * /opt/restart.sh &gt; /dev/null# 标准输出和错误输出都重定向到 /dev/null* * * * * /opt/restart.sh &gt; /dev/null 2&gt;&amp;1# 覆盖输出到指定日志文件* * * * * /opt/restart.sh &gt;/opt/logs/xxxxlog 2&gt;&amp;1# 追加输出到指定日志文件* * * * * /opt/restart.sh &gt;&gt;/opt/logs/xxxxlog 2&gt;&amp;1]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>crontab</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux grep 命令]]></title>
+    <url>%2Fposts%2F1f104b3f.html</url>
+    <content type="text"><![CDATA[grep统计出现次数1grep 'sign.*time.*openid' access_p80_weixinv3.log | awk '&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;' | sort -n 4 183.3.234.4510 183.3.234.5720 183.3.234.58 查询前后日志grep -5 ‘parttern’ inputfile //打印匹配行的前后5行grep -C 5 ‘parttern’ inputfile //打印匹配行的前后5行grep -A 5 ‘parttern’ inputfile //打印匹配行的后5行grep -B 5 ‘parttern’ inputfile //打印匹配行的前5行 正则：数字12# 正则匹配1802****269的手机号码grep '1802[0-9]\&#123;4\&#125;269' info.log]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>grep</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Linux curl 命令]]></title>
     <url>%2Fposts%2Faea02818.html</url>
     <content type="text"><![CDATA[查询出口IP1curl icanhazip.com GET 请求1curl https://www.baidu.com?q=xxxx POST 请求1curl http://ip:port/api/add_user -XPOST -d "send message..." 发送 POST JSON 请求1curl -H "Content-Type: application/json" -X POST --data '&#123;"data":"1"&#125;' http://127.0.0.1/ 使用代理1curl -x 192.168.2.5:3128 https://www.baidu.com?q=xxxx 输出请求信息12345678# http_code# time_connect# time_starttransfer# time_total# size_download# speed_download# 参考地址：curl http://www.baidu.com?q=xxxx -so /dev/null -w "%&#123;http_code&#125;\t%&#123;time_connect&#125;\t%&#123;time_starttransfer&#125;\t%&#123;time_total&#125;\t%&#123;size_download&#125;\t%&#123;speed_download&#125;\t" 下载文件并重命名12# culr -L &lt;url&gt; -o &lt;filename&gt;curl -L http://mirrors.aliyun.com/repo/Centos-7.repo -o /etc/yum.repos.d/CentOS-Base.repo \ 发送邮件1234567891011# mail.txt 内容tee ./mail.txt &lt;&lt;-'EOF'From:test01@163.comTo:test02@163.comSubject: test send emailtest send email!!!!!!EOF# 发送邮件curl -s --url "smtp://smtp.163.net" --mail-from "test01@163.com" --user "test01@163.com:123456" --mail-rcpt "test02@163.com" --upload-file mail.txt 参数说明 –url：邮箱服务 –mail-from：发送者邮箱 –user：发送正邮箱账号密码，账号密码使用冒号隔开 – mail-rcpt：接收者邮箱 –upload-file：邮件内容，写法参考 mail.txt]]></content>
@@ -1647,6 +1659,18 @@
       <tags>
         <tag>shell</tag>
         <tag>curl</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux netstat 命令]]></title>
+    <url>%2Fposts%2F6c05ba39.html</url>
+    <content type="text"><![CDATA[netstat netstat 通过进程查看占用端口12# netstat -nap | grep 9836netstat -anp | grep &lt;pid&gt;]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>netstat</tag>
+        <tag>shell</tag>
       </tags>
   </entry>
   <entry>
@@ -1674,27 +1698,15 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux grep 命令]]></title>
-    <url>%2Fposts%2F1f104b3f.html</url>
-    <content type="text"><![CDATA[grep统计出现次数1grep 'sign.*time.*openid' access_p80_weixinv3.log | awk '&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;' | sort -n 4 183.3.234.4510 183.3.234.5720 183.3.234.58 查询前后日志grep -5 ‘parttern’ inputfile //打印匹配行的前后5行grep -C 5 ‘parttern’ inputfile //打印匹配行的前后5行grep -A 5 ‘parttern’ inputfile //打印匹配行的后5行grep -B 5 ‘parttern’ inputfile //打印匹配行的前5行 正则：数字12# 正则匹配1802****269的手机号码grep '1802[0-9]\&#123;4\&#125;269' info.log]]></content>
+    <title><![CDATA[Linux sed 命令]]></title>
+    <url>%2Fposts%2Fb8ec468d.html</url>
+    <content type="text"><![CDATA[sed打印指定行数1sed -n '12457431, 12457440p' tomcat/logs/catalina.out]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>grep</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux netstat 命令]]></title>
-    <url>%2Fposts%2F6c05ba39.html</url>
-    <content type="text"><![CDATA[netstat netstat 通过进程查看占用端口12# netstat -nap | grep 9836netstat -anp | grep &lt;pid&gt;]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>netstat</tag>
-        <tag>shell</tag>
+        <tag>sed</tag>
       </tags>
   </entry>
   <entry>
@@ -1707,18 +1719,6 @@
       <tags>
         <tag>lsof</tag>
         <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux sed 命令]]></title>
-    <url>%2Fposts%2Fb8ec468d.html</url>
-    <content type="text"><![CDATA[sed打印指定行数1sed -n '12457431, 12457440p' tomcat/logs/catalina.out]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>sed</tag>
       </tags>
   </entry>
   <entry>
@@ -1874,18 +1874,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[hibernate显示sql中的参数值（logback）]]></title>
-    <url>%2Fposts%2F9eea8fb4.html</url>
-    <content type="text"><![CDATA[以下是 logback 的日志输出配置，只要是在 logback 的配置文件中添加以下配置 12&lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt;&lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt; 完整的 logback 配置如下 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;configuration scan="true" scanPeriod="60 seconds" debug="false"&gt; &lt;property name="logger.charset" value="UTF-8"/&gt; &lt;property name="logger.path" value="$&#123;catalina.home&#125;/logs"/&gt; &lt;property name="logger.pattern" value="[%d&#123;yyyy-MM-dd HH:mm:ss&#125; %highlight(%-5p)] %yellow(%t) %cyan(%c.%M\\(%L\\)) | %m%n"/&gt; &lt;property name="logger.maxHistory" value="15"/&gt; &lt;springProfile name="dev, local"&gt; &lt;appender name="stdout" class="ch.qos.logback.core.ConsoleAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;/appender&gt; &lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt; &lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt; &lt;!--&lt;logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="DEBUG"/&gt; &lt;logger name="org.hibernate.SQL" level="DEBUG"/&gt; &lt;logger name="org.hibernate.type" level="INFO"/&gt; &lt;logger name="org.hibernate.engine.QueryParameters" level="DEBUG"/&gt; &lt;logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG"/&gt;--&gt; &lt;!--&lt;logger name="org.apache.ibatis" level="debug"/&gt; &lt;logger name="java.sql.Connection" level="debug"/&gt; &lt;logger name="java.sql.Statement" level="debug"/&gt; &lt;logger name="java.sql.PreparedStatement" level="debug"/&gt;--&gt; &lt;root level="info"&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt; &lt;springProfile name="prod"&gt; &lt;!--See http://logback.qos.ch/manual/appenders.html#RollingFileAppender --&gt; &lt;!--and http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy --&gt; &lt;!--for further documentation --&gt; &lt;appender name="stdout" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;File&gt;$&#123;logger.path&#125;/info.log&lt;/File&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/info.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="warn" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/warn.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;WARN&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/warn.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/error.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;ERROR&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/error.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;logger name="warn" level="WARN"/&gt; &lt;logger name="error" level="ERROR"/&gt; &lt;root level="info"&gt; &lt;appender-ref ref="warn"/&gt; &lt;appender-ref ref="error"/&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt;&lt;/configuration&gt;]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>logback</tag>
-        <tag>Hibernate</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[hibernate格式化输出sql语句（spring-data-jpa）]]></title>
     <url>%2Fposts%2F723691b5.html</url>
     <content type="text"><![CDATA[以下配置是基于spring-boot的application.yml配置 123456789spring: jpa:# hibernate:# ddl-auto: create show-sql: true# database: mysql properties: hibernate: format_sql: true]]></content>
@@ -1895,6 +1883,18 @@
       <tags>
         <tag>Hibernate</tag>
         <tag>spring-data-jpa</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[hibernate显示sql中的参数值（logback）]]></title>
+    <url>%2Fposts%2F9eea8fb4.html</url>
+    <content type="text"><![CDATA[以下是 logback 的日志输出配置，只要是在 logback 的配置文件中添加以下配置 12&lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt;&lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt; 完整的 logback 配置如下 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;configuration scan="true" scanPeriod="60 seconds" debug="false"&gt; &lt;property name="logger.charset" value="UTF-8"/&gt; &lt;property name="logger.path" value="$&#123;catalina.home&#125;/logs"/&gt; &lt;property name="logger.pattern" value="[%d&#123;yyyy-MM-dd HH:mm:ss&#125; %highlight(%-5p)] %yellow(%t) %cyan(%c.%M\\(%L\\)) | %m%n"/&gt; &lt;property name="logger.maxHistory" value="15"/&gt; &lt;springProfile name="dev, local"&gt; &lt;appender name="stdout" class="ch.qos.logback.core.ConsoleAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;/appender&gt; &lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt; &lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt; &lt;!--&lt;logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="DEBUG"/&gt; &lt;logger name="org.hibernate.SQL" level="DEBUG"/&gt; &lt;logger name="org.hibernate.type" level="INFO"/&gt; &lt;logger name="org.hibernate.engine.QueryParameters" level="DEBUG"/&gt; &lt;logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG"/&gt;--&gt; &lt;!--&lt;logger name="org.apache.ibatis" level="debug"/&gt; &lt;logger name="java.sql.Connection" level="debug"/&gt; &lt;logger name="java.sql.Statement" level="debug"/&gt; &lt;logger name="java.sql.PreparedStatement" level="debug"/&gt;--&gt; &lt;root level="info"&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt; &lt;springProfile name="prod"&gt; &lt;!--See http://logback.qos.ch/manual/appenders.html#RollingFileAppender --&gt; &lt;!--and http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy --&gt; &lt;!--for further documentation --&gt; &lt;appender name="stdout" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;File&gt;$&#123;logger.path&#125;/info.log&lt;/File&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/info.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="warn" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/warn.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;WARN&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/warn.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/error.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;ERROR&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/error.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;logger name="warn" level="WARN"/&gt; &lt;logger name="error" level="ERROR"/&gt; &lt;root level="info"&gt; &lt;appender-ref ref="warn"/&gt; &lt;appender-ref ref="error"/&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt;&lt;/configuration&gt;]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>logback</tag>
+        <tag>Hibernate</tag>
       </tags>
   </entry>
   <entry>
