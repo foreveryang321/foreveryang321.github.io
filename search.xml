@@ -149,8 +149,8 @@
       </categories>
       <tags>
         <tag>docker</tag>
-        <tag>apisix</tag>
         <tag>etcd</tag>
+        <tag>apisix</tag>
       </tags>
   </entry>
   <entry>
@@ -162,9 +162,9 @@
       </categories>
       <tags>
         <tag>docker</tag>
+        <tag>etcd</tag>
         <tag>apisix</tag>
         <tag>apisix-dashboard</tag>
-        <tag>etcd</tag>
         <tag>keepalived</tag>
       </tags>
   </entry>
@@ -285,9 +285,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[tinymce 使用]]></title>
+    <title><![CDATA[tinymce 解决微信公众号图文消息图片跨域问题]]></title>
     <url>%2Fposts%2Fc3440175.html</url>
-    <content type="text"><![CDATA[配置自定义标签支持12// 配置自定义标签支持：小程序标签（mp-miniprogram）custom_elements: &apos;mp-miniprogram&apos;,]]></content>
+    <content type="text"><![CDATA[原理 原理是把请求头的referer去掉。 某些场景HTML文件增加&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot; /&gt;也可以解决跨域问题。 思路 通过Nginx反向代理微信图片的链接，并把请求的 referer 去掉。 Nginx反向代理 1234567891011121314server &#123; listen 8810; server_name localhost; # 指定字符集为 UTF-8 charset utf-8; # https://mmbiz.qpic.cn/mmbiz_gif/NefTdbK1pb3a06nvwCX5ROeNSsd2DVOGfwAEGgpT94ZnqlYNZgvEJTU9MVU7ExGAVCpWo3rIpU7rfA71PzKaJg/640?wx_fmt=gif location ~ /mmbiz_(.*)/ &#123; proxy_pass https://mmbiz.qpic.cn; proxy_set_header Host &quot;mmbiz.qpic.cn&quot;; proxy_set_header Referer &quot;&quot;; &#125;&#125; 访问地址 http://localhost:8810/mmbiz_gif/NefTdbK1pb3a06nvwCX5ROeNSsd2DVOGfwAEGgpT94ZnqlYNZgvEJTU9MVU7ExGAVCpWo3rIpU7rfA71PzKaJg/640?wx_fmt=gif]]></content>
       <categories>
         <category>tinymce</category>
       </categories>
@@ -297,9 +297,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[tinymce 解决微信公众号图文消息图片跨域问题]]></title>
+    <title><![CDATA[tinymce 使用]]></title>
     <url>%2Fposts%2Fc3440175.html</url>
-    <content type="text"><![CDATA[原理 原理是把请求头的referer去掉。 某些场景HTML文件增加&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot; /&gt;也可以解决跨域问题。 思路 通过Nginx反向代理微信图片的链接，并把请求的 referer 去掉。 Nginx反向代理 1234567891011121314server &#123; listen 8810; server_name localhost; # 指定字符集为 UTF-8 charset utf-8; # https://mmbiz.qpic.cn/mmbiz_gif/NefTdbK1pb3a06nvwCX5ROeNSsd2DVOGfwAEGgpT94ZnqlYNZgvEJTU9MVU7ExGAVCpWo3rIpU7rfA71PzKaJg/640?wx_fmt=gif location ~ /mmbiz_(.*)/ &#123; proxy_pass https://mmbiz.qpic.cn; proxy_set_header Host &quot;mmbiz.qpic.cn&quot;; proxy_set_header Referer &quot;&quot;; &#125;&#125; 访问地址 http://localhost:8810/mmbiz_gif/NefTdbK1pb3a06nvwCX5ROeNSsd2DVOGfwAEGgpT94ZnqlYNZgvEJTU9MVU7ExGAVCpWo3rIpU7rfA71PzKaJg/640?wx_fmt=gif]]></content>
+    <content type="text"><![CDATA[配置自定义标签支持12// 配置自定义标签支持：小程序标签（mp-miniprogram）custom_elements: &apos;mp-miniprogram&apos;,]]></content>
       <categories>
         <category>tinymce</category>
       </categories>
@@ -359,7 +359,7 @@
   <entry>
     <title><![CDATA[httpclient 使用]]></title>
     <url>%2Fposts%2F812c7f75.html</url>
-    <content type="text"><![CDATA[连接池配置12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061private static final int MAX_CONN_TOTAL = 500;private static final int MAX_CONN_PER_ROUTE = 50;private static final int TIMEOUT = 4000;private static CloseableHttpClient client;static &#123; Builder builder = RequestConfig.custom(); builder.setSocketTimeout(TIMEOUT).setConnectTimeout(TIMEOUT).setConnectionRequestTimeout(TIMEOUT); /* * 4.3以上版本推荐使用HttpClientBuilder来创建client * * &lt;pre&gt; * 1、HttpClientBuilder.setRetryHandler(HttpRequestRetryHandler retryHandler);请求重试处理。 * 2、HttpClientBuilder.setRedirectStrategy(RedirectStrategy redirectStrategy);设置重定向。 * 3、httpClientBuilder.setDefaultCookieStore(BasicCookieStore cookieStore);设置cookie store * 4、HttpClientBuilder.setProxy(HttpHost proxy);设置代理服务器。 * 5、HttpClientBuilder.setDefaultRequestConfig(RequestConfig config);在此亦可设置RequestConfig。 * 6、HttpClientBuilder.setUserAgetn(String userAgent);设置用户代理。 * &lt;/pre&gt; */ HttpClientBuilder clientBuilder = HttpClients.custom(); // 配置 SSL、TLS // httpClientBuilder.setSSLSocketFactory(sslSocketFactory); // builder.setExpectContinueEnabled(true).setStaleConnectionCheckEnabled(true) // .setTargetPreferredAuthSchemes(Arrays.asList(AuthSchemes.NTLM, // AuthSchemes.DIGEST)) // .setProxyPreferredAuthSchemes(Arrays.asList(AuthSchemes.BASIC)); builder.setCookieSpec(CookieSpecs.IGNORE_COOKIES); RequestConfig defaultRequestConfig = builder.build(); clientBuilder.setDefaultRequestConfig(defaultRequestConfig); // 主要连接池配置代码 // 默认是：20 clientBuilder.setMaxConnTotal(MAX_CONN_TOTAL); // 默认是：2 clientBuilder.setMaxConnPerRoute(MAX_CONN_PER_ROUTE); // SSL try &#123; // TLS SSLContext sc = SSLContext.getInstance("SSL"); MyX509TrustManager trustManager = new MyX509TrustManager(); sc.init(null, new TrustManager[]&#123;trustManager&#125;, new java.security.SecureRandom()); // // 设置协议http和https对应的处理socket链接工厂的对象 // Registry&lt;ConnectionSocketFactory&gt; registry = RegistryBuilder.&lt;ConnectionSocketFactory&gt;create() // .register("http", PlainConnectionSocketFactory.INSTANCE) // .register("https", new SSLConnectionSocketFactory(sc)).build(); // PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager(registry); // 主要连接池配置代码 // 默认是：20 // connManager.setMaxTotal(MAX_CONN_TOTAL); // 默认是：2 // connManager.setDefaultMaxPerRoute(MAX_CONN_PER_ROUTE); // clientBuilder.setConnectionManager(connManager); &#125; catch (Exception e) &#123; e.printStackTrace(); &#125; client = clientBuilder.build();&#125;]]></content>
+    <content type="text"><![CDATA[连接池配置1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859private static final int MAX_CONN_TOTAL = 500;private static final int MAX_CONN_PER_ROUTE = 50;private static final int TIMEOUT = 4000;private static CloseableHttpClient client;static &#123; Builder builder = RequestConfig.custom(); builder.setSocketTimeout(TIMEOUT).setConnectTimeout(TIMEOUT).setConnectionRequestTimeout(TIMEOUT); /* * 4.3以上版本推荐使用HttpClientBuilder来创建client * * &lt;pre&gt; * 1、HttpClientBuilder.setRetryHandler(HttpRequestRetryHandler retryHandler);请求重试处理。 * 2、HttpClientBuilder.setRedirectStrategy(RedirectStrategy redirectStrategy);设置重定向。 * 3、httpClientBuilder.setDefaultCookieStore(BasicCookieStore cookieStore);设置cookie store * 4、HttpClientBuilder.setProxy(HttpHost proxy);设置代理服务器。 * 5、HttpClientBuilder.setDefaultRequestConfig(RequestConfig config);在此亦可设置RequestConfig。 * 6、HttpClientBuilder.setUserAgetn(String userAgent);设置用户代理。 * &lt;/pre&gt; */ HttpClientBuilder clientBuilder = HttpClients.custom(); // builder.setExpectContinueEnabled(true).setStaleConnectionCheckEnabled(true) // .setTargetPreferredAuthSchemes(Arrays.asList(AuthSchemes.NTLM, // AuthSchemes.DIGEST)) // .setProxyPreferredAuthSchemes(Arrays.asList(AuthSchemes.BASIC)); builder.setCookieSpec(CookieSpecs.IGNORE_COOKIES); RequestConfig defaultRequestConfig = builder.build(); clientBuilder.setDefaultRequestConfig(defaultRequestConfig); // 主要连接池配置代码 // 默认是：20 clientBuilder.setMaxConnTotal(MAX_CONN_TOTAL); // 默认是：2 clientBuilder.setMaxConnPerRoute(MAX_CONN_PER_ROUTE); // SSL try &#123; // TLS SSLContext sc = SSLContext.getInstance("SSL"); MyX509TrustManager trustManager = new MyX509TrustManager(); sc.init(null, new TrustManager[]&#123;trustManager&#125;, new java.security.SecureRandom()); // // 设置协议http和https对应的处理socket链接工厂的对象 // Registry&lt;ConnectionSocketFactory&gt; registry = RegistryBuilder.&lt;ConnectionSocketFactory&gt;create() // .register("http", PlainConnectionSocketFactory.INSTANCE) // .register("https", new SSLConnectionSocketFactory(sc)).build(); // PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager(registry); // 主要连接池配置代码 // 默认是：20 // connManager.setMaxTotal(MAX_CONN_TOTAL); // 默认是：2 // connManager.setDefaultMaxPerRoute(MAX_CONN_PER_ROUTE); // clientBuilder.setConnectionManager(connManager); clientBuilder.setSSLSocketFactory(new SSLConnectionSocketFactory(sc)); &#125; catch (Exception e) &#123; e.printStackTrace(); &#125; client = clientBuilder.build();&#125;]]></content>
       <categories>
         <category>Java</category>
       </categories>
@@ -376,8 +376,8 @@
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>CentOS</tag>
         <tag>dns</tag>
+        <tag>CentOS</tag>
       </tags>
   </entry>
   <entry>
@@ -488,8 +488,8 @@
         <category>kettle</category>
       </categories>
       <tags>
-        <tag>pentaho-kettle</tag>
         <tag>docker</tag>
+        <tag>pentaho-kettle</tag>
       </tags>
   </entry>
   <entry>
@@ -544,20 +544,8 @@
         <category>kafka</category>
       </categories>
       <tags>
-        <tag>docker</tag>
         <tag>kafka</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[docker nexus3安装和配置]]></title>
-    <url>%2Fposts%2F5ed27d2e.html</url>
-    <content type="text"><![CDATA[nexus3 docker-compose.yml 123456789101112version: "3.8"services: nexus3: container_name: ts_nexus3 image: sonatype/nexus3:3.26.1 ports: - "8081:8081" volumes: - "./data:/nexus-data" - "/etc/localtime:/etc/localtime" restart: always 问题：Error creating bundle cache.Unable to update instance pid: Unable to create directory /nexus-data/instances 解决：sudo chmod -R 775 data/]]></content>
-      <categories>
-        <category>docker</category>
-      </categories>
-      <tags>
         <tag>docker</tag>
-        <tag>nexus3</tag>
       </tags>
   </entry>
   <entry>
@@ -570,6 +558,18 @@
       <tags>
         <tag>docker</tag>
         <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[docker nexus3安装和配置]]></title>
+    <url>%2Fposts%2F5ed27d2e.html</url>
+    <content type="text"><![CDATA[nexus3 docker-compose.yml 123456789101112version: "3.8"services: nexus3: container_name: ts_nexus3 image: sonatype/nexus3:3.26.1 ports: - "8081:8081" volumes: - "./data:/nexus-data" - "/etc/localtime:/etc/localtime" restart: always 问题：Error creating bundle cache.Unable to update instance pid: Unable to create directory /nexus-data/instances 解决：sudo chmod -R 775 data/]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+        <tag>nexus3</tag>
       </tags>
   </entry>
   <entry>
@@ -867,18 +867,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux traceroute 命令]]></title>
-    <url>%2Fposts%2F683fa9b1.html</url>
-    <content type="text"><![CDATA[traceroute1traceroute &lt;ip&gt; -nT -p &lt;port&gt; windows使用 12tracert &lt;ip&gt;tracert baidu.com]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>traceroute</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Linux telnet 命令]]></title>
     <url>%2Fposts%2F683fa9b1.html</url>
     <content type="text"><![CDATA[telnet1telnet &lt;ip&gt; &lt;port&gt; ctrl+c 不退出问题解决1234# 先输入$ ctrl+]# 在输入$ quit]]></content>
@@ -888,6 +876,18 @@
       <tags>
         <tag>shell</tag>
         <tag>telnet</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux traceroute 命令]]></title>
+    <url>%2Fposts%2F683fa9b1.html</url>
+    <content type="text"><![CDATA[traceroute1traceroute &lt;ip&gt; -nT -p &lt;port&gt; windows使用 12tracert &lt;ip&gt;tracert baidu.com]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>traceroute</tag>
       </tags>
   </entry>
   <entry>
@@ -980,8 +980,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>Apache</tag>
         <tag>spring-boot</tag>
+        <tag>Apache</tag>
         <tag>alibaba</tag>
         <tag>Dubbo</tag>
       </tags>
@@ -994,8 +994,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>Apache</tag>
         <tag>spring-boot</tag>
+        <tag>Apache</tag>
         <tag>alibaba</tag>
         <tag>Dubbo</tag>
       </tags>
@@ -1071,9 +1071,9 @@
       </categories>
       <tags>
         <tag>Oracle</tag>
-        <tag>spring-boot</tag>
         <tag>Hibernate</tag>
         <tag>DataJpaTest</tag>
+        <tag>spring-boot</tag>
         <tag>jpa</tag>
       </tags>
   </entry>
@@ -1143,8 +1143,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>Apache</tag>
         <tag>spring-boot</tag>
+        <tag>Apache</tag>
         <tag>alibaba</tag>
         <tag>Dubbo</tag>
       </tags>
@@ -1197,9 +1197,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[docker-compose 安装和使用]]></title>
-    <url>%2Fposts%2F9bc29391.html</url>
-    <content type="text"><![CDATA[安装 12345# 注意 docker-compose 版本和 docker 版本有兼容要求$ sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose$ sudo curl --proxy 192.168.123.1:1234 -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose 可执行权限 1$ sudo chmod +x /usr/local/bin/docker-compose 验证安装 12345$ docker-compose --versiondocker-compose version 1.22.0, build 1719ceb# 安装后，如果提示 bash: docker-compose: command not found...，则执行一下命令$ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose 使用 1$ docker-compose -f grafana/docker-compose.yml up 如果Dockerfile中使用ENTRYPOINT执行启动应用命令，则docker-compose可以使用command和environment指定环境变量 如果Dockerfile中使用CMD执行启动应用命令，则docker-compose不能使用command，需要使用environment指定环境变量]]></content>
+    <title><![CDATA[安装 docker 环境]]></title>
+    <url>%2Fposts%2F2fff8f5e.html</url>
+    <content type="text"><![CDATA[安装 Docker 删除旧版本 123456789101112131415sudo yum remove docker \ docker-client \ docker-client-latest \ docker-common \ docker-latest \ docker-latest-logrotate \ docker-logrotate \ docker-selinux \ docker-engine-selinux \ docker-engine# 或者sudo yum remove flannel docker* -ysudo yum -y remove docker docker-common docker-selinux docker-engine docker-engine-selinux container-selinux docker-cesudo rm -rf /var/lib/docker 配置 repo 1234567891011121314151617sudo yum install -y yum-utils \ device-mapper-persistent-data \ lvm2 sudo yum-config-manager \ --add-repo \ https://download.docker.com/linux/centos/docker-ce.repo# 或者使用阿里云sudo yum-config-manager \ --add-repo \ https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo# Optionalsudo yum-config-manager --enable docker-ce-edgesudo yum-config-manager --enable docker-ce-testsudo yum-config-manager --disable docker-ce-edge yum 加速和代理 123456789101112131415161718192021222324252627# 加速配置（阿里云加速）## 备份原来的yum源cd /etc/yum.repos.d/sudo mv CentOS-Base.repo CentOS-Base.repo_bak## 获取阿里云yum源sudo wget -e "http_proxy=192.168.123.1:1234" -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo# 代理配置sudo sed -i '/^proxy=/d' /etc/yum.confsudo sh -c "echo proxy=http://192.168.123.1:1234 &gt;&gt; /etc/yum.conf"sudo cat /etc/yum.conf# 清除原有yum源缓存sudo yum clean all## 生成阿里云yum源缓存sudo yum makecache## 或者sudo rm -f /var/lib/rpm/__*sudo rpm --rebuilddb -v -vsudo yum clean dbcachesudo yum clean metadatasudo yum clean rpmdbsudo yum clean headerssudo yum clean allsudo rm -rf /var/cache/yum/timedhosts.txtsudo rm -rf /var/cache/yum/*sudo yum makecache 安装 docker 创建 docker 和 data 目录（可不创建，使用默认路径） 12345678# docker 默认下载目录 /var/lib/docker/sudo mkdir -p /data/docker/lib/docker# 创建软连接sudo ln -s /data/docker/lib/docker /var/lib/docker# 删除软连接（注意：最后没有/，否则会把/var/lib/docker下的内容全部删除）# rm /var/lib/docker# sudo chmod 770 -R /var/lib/docker/# sudo chmod 777 -R /data/docker 在线安装 1234567891011# 安装最新版本sudo yum install docker-ce#安装指定版本 docker# 可以查看所有仓库中所有docker版本，并选择特定版本安装yum list docker-ce --showduplicates | sort -rdocker-ce.x86_64 18.03.0.ce-1.el7.centos docker-ce-stablesudo yum install docker-ce-&lt;VERSION STRING&gt;# 或者sudo curl https://releases.rancher.com/install-docker/19.03.sh | shsudo curl --proxy 192.168.123.1:1234 https://releases.rancher.com/install-docker/19.03.sh | sh 离线安装 123sudo yum install -y docker-ce-cli-19.03.12-3.el7.x86_64.rpmsudo yum install -y containerd.io-1.3.7-3.1.el7.x86_64.rpmsudo yum install -y docker-ce-19.03.12-3.el7.x86_64.rpm 启动并加入开机启动 12345678910# 启动 dockersudo systemctl start docker# 重启sudo systemctl restart docker# 停止运行 dockersudo systemctl stop docker# 开机启动sudo systemctl enable docker# 禁止开机启动sudo systemctl disable docker 版本锁定 123sudo yum install yum-plugin-versionlocksudo yum versionlock add docker-ce docker-ce-clisudo yum versionlock list 将当前用户加入docker组，并重启docker 12sudo gpasswd -a $&#123;USER&#125; dockersudo systemctl restart docker 验证安装 12345678910111213141516171819$ docker versionClient: Version: 18.06.1-ce API version: 1.38 Go version: go1.10.3 Git commit: e68fc7a Built: Tue Aug 21 17:23:03 2018 OS/Arch: linux/amd64 Experimental: falseServer: Engine: Version: 18.06.1-ce API version: 1.38 (minimum version 1.12) Go version: go1.10.3 Git commit: e68fc7a Built: Tue Aug 21 17:25:29 2018 OS/Arch: linux/amd64 Experimental: false Docker 配置代理1234567891011# 配置 docker pull 代理# sudo rm -rf /etc/systemd/system/docker.service.d# cat /etc/systemd/system/docker.service.d/http-proxy.confsudo mkdir -p /etc/systemd/system/docker.service.dsudo tee /etc/systemd/system/docker.service.d/http-proxy.conf &lt;&lt;-'EOF'[Service]Environment="HTTP_PROXY=http://192.168.123.1:1234" "NO_PROXY=localhost,127.0.0.1,172.16.120.0/24"EOFsudo systemctl daemon-reloadsudo systemctl enable dockersudo systemctl restart docker 其中172.16.120.0/24为宿主机 ip Docker 配置加速源1234567891011# sudo rm -rf /etc/docker/daemon.jsonsudo mkdir -p /etc/dockersudo tee /etc/docker/daemon.json &lt;&lt;-'EOF'&#123;"registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"],"log-driver":"json-file","log-opts":&#123; "max-size" :"50m","max-file":"10"&#125;&#125;EOFsudo systemctl daemon-reloadsudo systemctl restart docker 安装 docker-compose123456789101112131415161718192021# 安装sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-`uname -s`-`uname -m`" -o /usr/local/bin/docker-composecurl -L https://github.com/docker/compose/releases/download/1.29.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose# https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64# sudo curl --proxy 192.168.123.1:1234 -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-`uname -s`-`uname -m`" -o /usr/local/bin/docker-compose# sudo curl --proxy 192.168.123.1:1234 -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose# 配置权限sudo chmod +x /usr/local/bin/docker-compose# sudo chmod 755 /usr/local/bin/docker-compose# sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose# 验证是否安装成功docker-compose --version# 安装后，如果提示 bash: docker-compose: command not found...，则执行一下命令sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose 进入容器 12345# centosdocker exec -it &lt;container-name&gt; /bin/bash# alpinedocker exec -it &lt;container-name&gt; sh]]></content>
       <categories>
         <category>docker</category>
       </categories>
@@ -1208,9 +1208,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[安装 docker 环境]]></title>
-    <url>%2Fposts%2F2fff8f5e.html</url>
-    <content type="text"><![CDATA[安装 Docker 删除旧版本 123456789101112131415sudo yum remove docker \ docker-client \ docker-client-latest \ docker-common \ docker-latest \ docker-latest-logrotate \ docker-logrotate \ docker-selinux \ docker-engine-selinux \ docker-engine# 或者sudo yum remove flannel docker* -ysudo yum -y remove docker docker-common docker-selinux docker-engine docker-engine-selinux container-selinux docker-cesudo rm -rf /var/lib/docker 配置 repo 1234567891011121314151617sudo yum install -y yum-utils \ device-mapper-persistent-data \ lvm2 sudo yum-config-manager \ --add-repo \ https://download.docker.com/linux/centos/docker-ce.repo# 或者使用阿里云sudo yum-config-manager \ --add-repo \ https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo# Optionalsudo yum-config-manager --enable docker-ce-edgesudo yum-config-manager --enable docker-ce-testsudo yum-config-manager --disable docker-ce-edge yum 加速和代理 123456789101112131415161718192021222324252627# 加速配置（阿里云加速）## 备份原来的yum源cd /etc/yum.repos.d/sudo mv CentOS-Base.repo CentOS-Base.repo_bak## 获取阿里云yum源sudo wget -e "http_proxy=192.168.123.1:1234" -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo# 代理配置sudo sed -i '/^proxy=/d' /etc/yum.confsudo sh -c "echo proxy=http://192.168.123.1:1234 &gt;&gt; /etc/yum.conf"sudo cat /etc/yum.conf# 清除原有yum源缓存sudo yum clean all## 生成阿里云yum源缓存sudo yum makecache## 或者sudo rm -f /var/lib/rpm/__*sudo rpm --rebuilddb -v -vsudo yum clean dbcachesudo yum clean metadatasudo yum clean rpmdbsudo yum clean headerssudo yum clean allsudo rm -rf /var/cache/yum/timedhosts.txtsudo rm -rf /var/cache/yum/*sudo yum makecache 安装 docker 创建 docker 和 data 目录（可不创建，使用默认路径） 12345678# docker 默认下载目录 /var/lib/docker/sudo mkdir -p /data/docker/lib/docker# 创建软连接sudo ln -s /data/docker/lib/docker /var/lib/docker# 删除软连接（注意：最后没有/，否则会把/var/lib/docker下的内容全部删除）# rm /var/lib/docker# sudo chmod 770 -R /var/lib/docker/# sudo chmod 777 -R /data/docker 在线安装 1234567891011# 安装最新版本sudo yum install docker-ce#安装指定版本 docker# 可以查看所有仓库中所有docker版本，并选择特定版本安装yum list docker-ce --showduplicates | sort -rdocker-ce.x86_64 18.03.0.ce-1.el7.centos docker-ce-stablesudo yum install docker-ce-&lt;VERSION STRING&gt;# 或者sudo curl https://releases.rancher.com/install-docker/19.03.sh | shsudo curl --proxy 192.168.123.1:1234 https://releases.rancher.com/install-docker/19.03.sh | sh 离线安装 123sudo yum install -y docker-ce-cli-19.03.12-3.el7.x86_64.rpmsudo yum install -y containerd.io-1.3.7-3.1.el7.x86_64.rpmsudo yum install -y docker-ce-19.03.12-3.el7.x86_64.rpm 启动并加入开机启动 12345678910# 启动 dockersudo systemctl start docker# 重启sudo systemctl restart docker# 停止运行 dockersudo systemctl stop docker# 开机启动sudo systemctl enable docker# 禁止开机启动sudo systemctl disable docker 版本锁定 123sudo yum install yum-plugin-versionlocksudo yum versionlock add docker-ce docker-ce-clisudo yum versionlock list 将当前用户加入docker组，并重启docker 12sudo gpasswd -a $&#123;USER&#125; dockersudo systemctl restart docker 验证安装 12345678910111213141516171819$ docker versionClient: Version: 18.06.1-ce API version: 1.38 Go version: go1.10.3 Git commit: e68fc7a Built: Tue Aug 21 17:23:03 2018 OS/Arch: linux/amd64 Experimental: falseServer: Engine: Version: 18.06.1-ce API version: 1.38 (minimum version 1.12) Go version: go1.10.3 Git commit: e68fc7a Built: Tue Aug 21 17:25:29 2018 OS/Arch: linux/amd64 Experimental: false Docker 配置代理1234567891011# 配置 docker pull 代理# sudo rm -rf /etc/systemd/system/docker.service.d# cat /etc/systemd/system/docker.service.d/http-proxy.confsudo mkdir -p /etc/systemd/system/docker.service.dsudo tee /etc/systemd/system/docker.service.d/http-proxy.conf &lt;&lt;-'EOF'[Service]Environment="HTTP_PROXY=http://192.168.123.1:1234" "NO_PROXY=localhost,127.0.0.1,172.16.120.0/24"EOFsudo systemctl daemon-reloadsudo systemctl enable dockersudo systemctl restart docker 其中172.16.120.0/24为宿主机 ip Docker 配置加速源1234567891011# sudo rm -rf /etc/docker/daemon.jsonsudo mkdir -p /etc/dockersudo tee /etc/docker/daemon.json &lt;&lt;-'EOF'&#123;"registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"],"log-driver":"json-file","log-opts":&#123; "max-size" :"50m","max-file":"10"&#125;&#125;EOFsudo systemctl daemon-reloadsudo systemctl restart docker 安装 docker-compose123456789101112131415161718192021# 安装sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-`uname -s`-`uname -m`" -o /usr/local/bin/docker-composecurl -L https://github.com/docker/compose/releases/download/1.29.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose# https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64# sudo curl --proxy 192.168.123.1:1234 -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-`uname -s`-`uname -m`" -o /usr/local/bin/docker-compose# sudo curl --proxy 192.168.123.1:1234 -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose# 配置权限sudo chmod +x /usr/local/bin/docker-compose# sudo chmod 755 /usr/local/bin/docker-compose# sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose# 验证是否安装成功docker-compose --version# 安装后，如果提示 bash: docker-compose: command not found...，则执行一下命令sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose 进入容器 12345# centosdocker exec -it &lt;container-name&gt; /bin/bash# alpinedocker exec -it &lt;container-name&gt; sh]]></content>
+    <title><![CDATA[docker-compose 安装和使用]]></title>
+    <url>%2Fposts%2F9bc29391.html</url>
+    <content type="text"><![CDATA[安装 12345# 注意 docker-compose 版本和 docker 版本有兼容要求$ sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose$ sudo curl --proxy 192.168.123.1:1234 -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose 可执行权限 1$ sudo chmod +x /usr/local/bin/docker-compose 验证安装 12345$ docker-compose --versiondocker-compose version 1.22.0, build 1719ceb# 安装后，如果提示 bash: docker-compose: command not found...，则执行一下命令$ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose 使用 1$ docker-compose -f grafana/docker-compose.yml up 如果Dockerfile中使用ENTRYPOINT执行启动应用命令，则docker-compose可以使用command和environment指定环境变量 如果Dockerfile中使用CMD执行启动应用命令，则docker-compose不能使用command，需要使用environment指定环境变量]]></content>
       <categories>
         <category>docker</category>
       </categories>
@@ -1311,18 +1311,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[spring cache 常用缓存注解介绍]]></title>
-    <url>%2Fposts%2F3bef8a86.html</url>
-    <content type="text"><![CDATA[spring-cache 常用缓存注解介绍 包地址 注解名 作用域 作用 org.springframework.cache.annotation CacheConfig 类级别 s设置缓存的公共配置 Cacheable 方法级别 缓存读取操作 CacheEvict 方法级别 缓存失效操作 CachePut 方法级别 缓存更新操作 Caching 方法级别 h混合读取、失效、更新操作 CacheConfig主要作用是全局配置，比如配置缓存名称（cacheNames），只需要在类上面使用这个注解配置一次，类下面的方法就默认使用全局配置了。 Cacheable这个注解是最重要的，主要实现的是功能在进行读操作的时候，先从缓存中查询，如果查询不到，再走业务流程获取数据，获取成功后，保存到缓存中。 属性 默认值 描述 value 缓存的名称，在 spring 配置文件中定义，必须指定至少一个 cacheNames 缓存的名称，在 spring 配置文件中定义，必须指定至少一个 key 缓存的 key，可以为空，如果指定要按照 SpEL 表达式编写，如果不指定，则缺省按照方法的所有参数进行组合 keyGenerator cacheManager cacheResolver condition 缓存的条件，可以为空，使用 SpEL 编写，返回 true 或者 false，只有为 true 才进行缓存。不能使用返回结果 unless 不缓存的条件，可以为空，使用 SpEL 编写，返回 true 或者 false，只有为 false才进行缓存。可以使用返回结果 sync CacheEvict这个注解主要是配合@Cacheable一起使用，它的主要作用是清除缓存。当进行一些更新、删除操作时，就需要删除缓存。如果不删除缓存就会出现读取不到最新数据的情况。它有一个重要的数据allEntries默认是false。当true是，会清除所有缓存，而不以指定的key为主。 CachePut 这个注解总是会把数据缓存，而不会每次检测缓存是否存在 Caching这个注解是Cacheable、CachePut、CacheEvict的综合体，可以使用这个注解包含以上3个注解。]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>spring</tag>
-        <tag>cache</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[spring retry 使用]]></title>
     <url>%2Fposts%2F9cd0a544.html</url>
     <content type="text"><![CDATA[@Retryable 被注解的方法发生异常时会重试 参数 默认值 说明 value 空 指定发生的异常，进行重试 include 空 指定异常重试。和value一样，默认空，当exclude也为空时，所有异常都重试 exclude 空 指定异常不重试。默认空，当include也为空时，所有异常都重试 maxAttemps 3 重试次数 backoff 空 重试补偿机制 @Backoff 参数 默认值 说明 delay 1000L 指定延迟时间 multiplier 0.0D 指定延迟的倍数。比如delay=5000l,multiplier=2时，第一次重试为5秒后，第二次为10秒，第三次为20秒 @Recover 当重试到达指定次数时，被注解的方法将被回调，可以在该方法中进行日志处理。需要注意的是发生的异常和入参类型一致时才会回调。 示例 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263import org.springframework.retry.annotation.Backoff;import org.springframework.retry.annotation.Recover;import org.springframework.retry.annotation.Retryable;import org.springframework.stereotype.Service;/** * @author Created by YL on 2018/7/18 */@Service@Slf4jpublic class RetryService &#123; @Retryable( value = &#123;Exception.class&#125;, maxAttempts = 10, backoff = @Backoff(delay = 10000L) ) public String retry() throws Exception &#123; throw new Exception("测试 spring retry"); &#125; @Recover public void exception(Exception e) &#123; log.error("errmsg: &#123;&#125;", e.getMessage(), e); &#125;&#125;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.boot.builder.SpringApplicationBuilder;import org.springframework.retry.annotation.EnableRetry;@SpringBootApplication@EnableRetrypublic class App &#123; /** * Common */ private static SpringApplicationBuilder configureSpringBuilder(SpringApplicationBuilder builder) &#123; //builder.application().addListeners(new EnvironmentPreparedEventListener()); builder.application().addPrimarySources(Collections.singletonList(App.class)); return builder.sources(App.class); &#125; // /** // * for WAR deploy // */ // @Override // protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) &#123; // // // 外部容器部署 web 环境要在这里配置 EnvironmentPreparedEvent 监听器才生效 // // builder.application().addListeners(new EnvironmentPreparedEventListener()); // // return builder.sources(Application.class); // return super.configure(configureSpringBuilder(builder)); // &#125; /** * for JAR deploy */ public static void main(String[] args) &#123; // SpringApplication.run(Application.class, args); SpringApplicationBuilder builder = configureSpringBuilder(new SpringApplicationBuilder()); builder.application().run(args); &#125;&#125;]]></content>
@@ -1332,6 +1320,18 @@
       <tags>
         <tag>spring</tag>
         <tag>retry</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[spring cache 常用缓存注解介绍]]></title>
+    <url>%2Fposts%2F3bef8a86.html</url>
+    <content type="text"><![CDATA[spring-cache 常用缓存注解介绍 包地址 注解名 作用域 作用 org.springframework.cache.annotation CacheConfig 类级别 s设置缓存的公共配置 Cacheable 方法级别 缓存读取操作 CacheEvict 方法级别 缓存失效操作 CachePut 方法级别 缓存更新操作 Caching 方法级别 h混合读取、失效、更新操作 CacheConfig主要作用是全局配置，比如配置缓存名称（cacheNames），只需要在类上面使用这个注解配置一次，类下面的方法就默认使用全局配置了。 Cacheable这个注解是最重要的，主要实现的是功能在进行读操作的时候，先从缓存中查询，如果查询不到，再走业务流程获取数据，获取成功后，保存到缓存中。 属性 默认值 描述 value 缓存的名称，在 spring 配置文件中定义，必须指定至少一个 cacheNames 缓存的名称，在 spring 配置文件中定义，必须指定至少一个 key 缓存的 key，可以为空，如果指定要按照 SpEL 表达式编写，如果不指定，则缺省按照方法的所有参数进行组合 keyGenerator cacheManager cacheResolver condition 缓存的条件，可以为空，使用 SpEL 编写，返回 true 或者 false，只有为 true 才进行缓存。不能使用返回结果 unless 不缓存的条件，可以为空，使用 SpEL 编写，返回 true 或者 false，只有为 false才进行缓存。可以使用返回结果 sync CacheEvict这个注解主要是配合@Cacheable一起使用，它的主要作用是清除缓存。当进行一些更新、删除操作时，就需要删除缓存。如果不删除缓存就会出现读取不到最新数据的情况。它有一个重要的数据allEntries默认是false。当true是，会清除所有缓存，而不以指定的key为主。 CachePut 这个注解总是会把数据缓存，而不会每次检测缓存是否存在 Caching这个注解是Cacheable、CachePut、CacheEvict的综合体，可以使用这个注解包含以上3个注解。]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>spring</tag>
+        <tag>cache</tag>
       </tags>
   </entry>
   <entry>
@@ -1409,8 +1409,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>cxf</tag>
         <tag>spring-boot</tag>
+        <tag>cxf</tag>
       </tags>
   </entry>
   <entry>
@@ -1550,22 +1550,6 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[zookeeper重启脚本]]></title>
-    <url>%2Fposts%2F6c1ad93d.html</url>
-    <content type="text"><![CDATA[restart12345678910111213#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:10# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:30# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stopsleep 3./zkServer.sh start]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[zookeeper stop脚本]]></title>
-    <url>%2Fposts%2F7bd064dc.html</url>
-    <content type="text"><![CDATA[stop12345678910#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:00# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:49# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stop]]></content>
-      <categories>
-        <category>zookeeper</category>
-      </categories>
-  </entry>
-  <entry>
     <title><![CDATA[zookeeper 清理日志文件]]></title>
     <url>%2Fposts%2Fc0bbcacd.html</url>
     <content type="text"><![CDATA[clear123456789101112131415161718192021222324252627282930#!/usr/bin/env bash# @Author: YL# @Date: 2017-11-01 08:59:34# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:09# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`cd ..NODE_HOME=`pwd`# snapshotNODE_DATA_DIR=$NODE_HOME/data/version-2# snapshot logNODE_LOG_DIR=$NODE_HOME/logs/version-2# zk logNODE_LOGS=$NODE_HOME/logs# 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中count=3count=$[$count+1]ls -t $NODE_LOG_DIR/log.* | tail -n +$count | xargs rm -fls -t $NODE_DATA_DIR/snapshot.* | tail -n +$count | xargs rm -fls -t $NODE_LOGS/zookeeper.log.* | tail -n +$count | xargs rm -f# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"STDOUT_FILE=$NODE_LOGS/stdout.logecho "$DATE_PATTERN clear logs success" | tee -a $STDOUT_FILE]]></content>
@@ -1574,9 +1558,25 @@
       </categories>
   </entry>
   <entry>
+    <title><![CDATA[zookeeper重启脚本]]></title>
+    <url>%2Fposts%2F6c1ad93d.html</url>
+    <content type="text"><![CDATA[restart12345678910111213#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:10# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:30# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stopsleep 3./zkServer.sh start]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
     <title><![CDATA[zookeeper 启动脚本]]></title>
     <url>%2Fposts%2Faf01b9a2.html</url>
     <content type="text"><![CDATA[start12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-28 10:23:20# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:41# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`NODE_BIN_DIR=`pwd`NODE_LIB_DIR=$NODE_BIN_DIR/../lib/cd ..NODE_HOME=`pwd`# mkdir logs dirNODE_DATA_LOG_DIR=`sed '/dataLogDir/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`NODE_LOGS_DIR=""if [ -n "$NODE_DATA_LOG_DIR" ]; then NODE_LOGS_DIR=$NODE_DATA_LOG_DIRelse NODE_LOGS_DIR=$NODE_HOME/logsfiif [ ! -d $NODE_LOGS_DIR ]; then mkdir $NODE_LOGS_DIRfiSTDOUT_FILE=$NODE_LOGS_DIR/stdout.logecho "[$(date '+%Y-%m-%d %H:%M:%S')] NODE_BIN_DIR: $NODE_BIN_DIR" | tee -a $STDOUT_FILE# pidNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`if [ -n "$NODE_PID" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')] ERROR: The $NODE_LIB_DIR already started! pid: $NODE_PID" | tee -a $STDOUT_FILE exit 1fi# portNODE_PORT=`sed '/clientPort/!d;s/.*=//' conf/zoo.cfg | tr -d '\r'`if [ -n "$NODE_PORT" ]; then NODE_PORT_COUNT=`netstat -tln | grep $NODE_PORT | wc -l` if [ $NODE_PORT_COUNT -gt 0 ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')] ERROR: The $NODE_LIB_DIR port $NODE_PORT already used!" | tee -a $STDOUT_FILE exit 1 fifi# startingcd $NODE_BIN_DIR./zkServer.sh startNODE_PID=`ps -ef | grep "$NODE_LIB_DIR" | grep -v grep | awk '&#123;print $2&#125;'`echo "[$(date '+%Y-%m-%d %H:%M:%S')] The $NODE_LIB_DIR started OK! pid: $NODE_PID" | tee -a $STDOUT_FILE]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[zookeeper stop脚本]]></title>
+    <url>%2Fposts%2F7bd064dc.html</url>
+    <content type="text"><![CDATA[stop12345678910#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:00# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:49# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stop]]></content>
       <categories>
         <category>zookeeper</category>
       </categories>
@@ -1626,18 +1626,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux du 命令]]></title>
-    <url>%2Fposts%2F2e023d93.html</url>
-    <content type="text"><![CDATA[du计算当前文件夹下占用空间，排序1du -sh * | sort -nr]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>du</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Linux curl 命令]]></title>
     <url>%2Fposts%2Faea02818.html</url>
     <content type="text"><![CDATA[查询出口IP1curl icanhazip.com GET 请求1curl https://www.baidu.com?q=xxxx POST 请求1curl http://ip:port/api/add_user -XPOST -d "send message..." 发送 POST JSON 请求1curl -H "Content-Type: application/json" -X POST --data '&#123;"data":"1"&#125;' http://127.0.0.1/ 使用代理1curl -x 192.168.2.5:3128 https://www.baidu.com?q=xxxx 输出请求信息12345678# http_code# time_connect# time_starttransfer# time_total# size_download# speed_download# 参考地址：curl http://www.baidu.com?q=xxxx -so /dev/null -w "%&#123;http_code&#125;\t%&#123;time_connect&#125;\t%&#123;time_starttransfer&#125;\t%&#123;time_total&#125;\t%&#123;size_download&#125;\t%&#123;speed_download&#125;\t" 下载文件并重命名12# culr -L &lt;url&gt; -o &lt;filename&gt;curl -L http://mirrors.aliyun.com/repo/Centos-7.repo -o /etc/yum.repos.d/CentOS-Base.repo \ 发送邮件1234567891011# mail.txt 内容tee ./mail.txt &lt;&lt;-'EOF'From:test01@163.comTo:test02@163.comSubject: test send emailtest send email!!!!!!EOF# 发送邮件curl -s --url "smtp://smtp.163.net" --mail-from "test01@163.com" --user "test01@163.com:123456" --mail-rcpt "test02@163.com" --upload-file mail.txt 参数说明 –url：邮箱服务 –mail-from：发送者邮箱 –user：发送正邮箱账号密码，账号密码使用冒号隔开 – mail-rcpt：接收者邮箱 –upload-file：邮件内容，写法参考 mail.txt]]></content>
@@ -1650,27 +1638,15 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux find 命令]]></title>
-    <url>%2Fposts%2F7b744fec.html</url>
-    <content type="text"><![CDATA[查找文件并删除123456789101112# 删除指定时间前的 jpg 文件find /opt/upload/ -mtime +30 -type f -name *.jpg -exec rm -f &#123;&#125; \;# 删除隐藏文件（-fr）find /opt/upload/ -type d -name .svn -exec rm -fr &#123;&#125; \;# 删除30天前的文件find /opt/upload -mtime +30 -type f -name "*.jpg" -exec rm -rf &#123;&#125; \;# find: 路径必须在表达式之前，在*前加\find /opt/upload/ -mtime +15 -type f -name \*.log -exec rm -f &#123;&#125; \; 打印指定时间前的文件1find project/upload/ -mtime +30 -type f -print]]></content>
+    <title><![CDATA[Linux du 命令]]></title>
+    <url>%2Fposts%2F2e023d93.html</url>
+    <content type="text"><![CDATA[du计算当前文件夹下占用空间，排序1du -sh * | sort -nr]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>find</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux ls 命令]]></title>
-    <url>%2Fposts%2F53b5960c.html</url>
-    <content type="text"><![CDATA[ls12# 统计文件夹中文件数ls -l |grep "^-"|wc -l 保留最新的1个文件夹，删除其他文件夹（使用-d）1ls -t -d /home/yl/api-web-open/logs/undertow-* | tail -n +2 | xargs rm -rf]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>ls</tag>
+        <tag>du</tag>
       </tags>
   </entry>
   <entry>
@@ -1686,6 +1662,18 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Linux ls 命令]]></title>
+    <url>%2Fposts%2F53b5960c.html</url>
+    <content type="text"><![CDATA[ls12# 统计文件夹中文件数ls -l |grep "^-"|wc -l 保留最新的1个文件夹，删除其他文件夹（使用-d）1ls -t -d /home/yl/api-web-open/logs/undertow-* | tail -n +2 | xargs rm -rf]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>ls</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Linux netstat 命令]]></title>
     <url>%2Fposts%2F6c05ba39.html</url>
     <content type="text"><![CDATA[netstat netstat 通过进程查看占用端口12# netstat -nap | grep 9836netstat -anp | grep &lt;pid&gt;]]></content>
@@ -1698,15 +1686,15 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux lsof 命令]]></title>
-    <url>%2Fposts%2Ffc091577.html</url>
-    <content type="text"><![CDATA[检测端口未被占用1lsof -i:&lt;port&gt; 指定进程号，可以查看该进程打开的文件 1lsof -p &lt;pid&gt; 查询所有进程的 open files 数量12345678910psof_file=~/psof.txt# 每次执行前，清空 psof_file 文件内容echo "" &gt; $psof_file# $(ps -eo pid | grep -v PID) 获取所有进程 idfor pid in $(ps -eo pid | grep -v PID) # 查询进程的 open files 数量 do echo $pid":"$(lsof -p $pid|wc -l) &gt;&gt; $psof_file;done# 对结果进行排序sort -nrk 2 -t: $psof_file]]></content>
+    <title><![CDATA[Linux find 命令]]></title>
+    <url>%2Fposts%2F7b744fec.html</url>
+    <content type="text"><![CDATA[查找文件并删除123456789101112# 删除指定时间前的 jpg 文件find /opt/upload/ -mtime +30 -type f -name *.jpg -exec rm -f &#123;&#125; \;# 删除隐藏文件（-fr）find /opt/upload/ -type d -name .svn -exec rm -fr &#123;&#125; \;# 删除30天前的文件find /opt/upload -mtime +30 -type f -name "*.jpg" -exec rm -rf &#123;&#125; \;# find: 路径必须在表达式之前，在*前加\find /opt/upload/ -mtime +15 -type f -name \*.log -exec rm -f &#123;&#125; \; 打印指定时间前的文件1find project/upload/ -mtime +30 -type f -print]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>lsof</tag>
         <tag>shell</tag>
+        <tag>find</tag>
       </tags>
   </entry>
   <entry>
@@ -1722,6 +1710,18 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Linux lsof 命令]]></title>
+    <url>%2Fposts%2Ffc091577.html</url>
+    <content type="text"><![CDATA[检测端口未被占用1lsof -i:&lt;port&gt; 指定进程号，可以查看该进程打开的文件 1lsof -p &lt;pid&gt; 查询所有进程的 open files 数量12345678910psof_file=~/psof.txt# 每次执行前，清空 psof_file 文件内容echo "" &gt; $psof_file# $(ps -eo pid | grep -v PID) 获取所有进程 idfor pid in $(ps -eo pid | grep -v PID) # 查询进程的 open files 数量 do echo $pid":"$(lsof -p $pid|wc -l) &gt;&gt; $psof_file;done# 对结果进行排序sort -nrk 2 -t: $psof_file]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>lsof</tag>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Linux tail 命令]]></title>
     <url>%2Fposts%2F29bd046e.html</url>
     <content type="text"><![CDATA[tail]]></content>
@@ -1734,18 +1734,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux tar 命令]]></title>
-    <url>%2Fposts%2Fbd083454.html</url>
-    <content type="text"><![CDATA[tar 解压 1tar -zxvf xxx.tar.gz 打包 1tar -zcvf xxx.tar.gz 待压缩的文件名 解压 tar zxvf 文件名.tar.gz 压缩 tar zcvf 文件名.tar.gz 待压缩的文件名 tar -zcvf tomcat.tar.gz –exclude=.log –exclude=.log. –exclude=.out –exclude=.out. –exclude=.tgz.bak –exclude=.war tomcat/ 排除文件夹（注意排除的文件夹最后不能加/） tar -zcvf gitlab.source.tar.gz –exclude=node_modules –exclude=target gitlab/]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>tar</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Linux unzip 命令]]></title>
     <url>%2Fposts%2F64f75729.html</url>
     <content type="text"><![CDATA[unzip解压war、jar、zip、rar等文件1unzip -oq /opt/xxx.war -d /opt/ddd]]></content>
@@ -1755,6 +1743,18 @@
       <tags>
         <tag>shell</tag>
         <tag>unzip</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux tar 命令]]></title>
+    <url>%2Fposts%2Fbd083454.html</url>
+    <content type="text"><![CDATA[tar 解压 1tar -zxvf xxx.tar.gz 打包 1tar -zcvf xxx.tar.gz 待压缩的文件名 解压 tar zxvf 文件名.tar.gz 压缩 tar zcvf 文件名.tar.gz 待压缩的文件名 tar -zcvf tomcat.tar.gz –exclude=.log –exclude=.log. –exclude=.out –exclude=.out. –exclude=.tgz.bak –exclude=.war tomcat/ 排除文件夹（注意排除的文件夹最后不能加/） tar -zcvf gitlab.source.tar.gz –exclude=node_modules –exclude=target gitlab/]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>tar</tag>
       </tags>
   </entry>
   <entry>
@@ -1874,18 +1874,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[hibernate显示sql中的参数值（logback）]]></title>
-    <url>%2Fposts%2F9eea8fb4.html</url>
-    <content type="text"><![CDATA[以下是 logback 的日志输出配置，只要是在 logback 的配置文件中添加以下配置 12&lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt;&lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt; 完整的 logback 配置如下 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;configuration scan="true" scanPeriod="60 seconds" debug="false"&gt; &lt;property name="logger.charset" value="UTF-8"/&gt; &lt;property name="logger.path" value="$&#123;catalina.home&#125;/logs"/&gt; &lt;property name="logger.pattern" value="[%d&#123;yyyy-MM-dd HH:mm:ss&#125; %highlight(%-5p)] %yellow(%t) %cyan(%c.%M\\(%L\\)) | %m%n"/&gt; &lt;property name="logger.maxHistory" value="15"/&gt; &lt;springProfile name="dev, local"&gt; &lt;appender name="stdout" class="ch.qos.logback.core.ConsoleAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;/appender&gt; &lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt; &lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt; &lt;!--&lt;logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="DEBUG"/&gt; &lt;logger name="org.hibernate.SQL" level="DEBUG"/&gt; &lt;logger name="org.hibernate.type" level="INFO"/&gt; &lt;logger name="org.hibernate.engine.QueryParameters" level="DEBUG"/&gt; &lt;logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG"/&gt;--&gt; &lt;!--&lt;logger name="org.apache.ibatis" level="debug"/&gt; &lt;logger name="java.sql.Connection" level="debug"/&gt; &lt;logger name="java.sql.Statement" level="debug"/&gt; &lt;logger name="java.sql.PreparedStatement" level="debug"/&gt;--&gt; &lt;root level="info"&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt; &lt;springProfile name="prod"&gt; &lt;!--See http://logback.qos.ch/manual/appenders.html#RollingFileAppender --&gt; &lt;!--and http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy --&gt; &lt;!--for further documentation --&gt; &lt;appender name="stdout" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;File&gt;$&#123;logger.path&#125;/info.log&lt;/File&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/info.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="warn" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/warn.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;WARN&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/warn.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/error.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;ERROR&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/error.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;logger name="warn" level="WARN"/&gt; &lt;logger name="error" level="ERROR"/&gt; &lt;root level="info"&gt; &lt;appender-ref ref="warn"/&gt; &lt;appender-ref ref="error"/&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt;&lt;/configuration&gt;]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>logback</tag>
-        <tag>Hibernate</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[hibernate格式化输出sql语句（spring-data-jpa）]]></title>
     <url>%2Fposts%2F723691b5.html</url>
     <content type="text"><![CDATA[以下配置是基于spring-boot的application.yml配置 123456789spring: jpa:# hibernate:# ddl-auto: create show-sql: true# database: mysql properties: hibernate: format_sql: true]]></content>
@@ -1895,6 +1883,18 @@
       <tags>
         <tag>Hibernate</tag>
         <tag>spring-data-jpa</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[hibernate显示sql中的参数值（logback）]]></title>
+    <url>%2Fposts%2F9eea8fb4.html</url>
+    <content type="text"><![CDATA[以下是 logback 的日志输出配置，只要是在 logback 的配置文件中添加以下配置 12&lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt;&lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt; 完整的 logback 配置如下 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;configuration scan="true" scanPeriod="60 seconds" debug="false"&gt; &lt;property name="logger.charset" value="UTF-8"/&gt; &lt;property name="logger.path" value="$&#123;catalina.home&#125;/logs"/&gt; &lt;property name="logger.pattern" value="[%d&#123;yyyy-MM-dd HH:mm:ss&#125; %highlight(%-5p)] %yellow(%t) %cyan(%c.%M\\(%L\\)) | %m%n"/&gt; &lt;property name="logger.maxHistory" value="15"/&gt; &lt;springProfile name="dev, local"&gt; &lt;appender name="stdout" class="ch.qos.logback.core.ConsoleAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;/appender&gt; &lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt; &lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt; &lt;!--&lt;logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="DEBUG"/&gt; &lt;logger name="org.hibernate.SQL" level="DEBUG"/&gt; &lt;logger name="org.hibernate.type" level="INFO"/&gt; &lt;logger name="org.hibernate.engine.QueryParameters" level="DEBUG"/&gt; &lt;logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG"/&gt;--&gt; &lt;!--&lt;logger name="org.apache.ibatis" level="debug"/&gt; &lt;logger name="java.sql.Connection" level="debug"/&gt; &lt;logger name="java.sql.Statement" level="debug"/&gt; &lt;logger name="java.sql.PreparedStatement" level="debug"/&gt;--&gt; &lt;root level="info"&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt; &lt;springProfile name="prod"&gt; &lt;!--See http://logback.qos.ch/manual/appenders.html#RollingFileAppender --&gt; &lt;!--and http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy --&gt; &lt;!--for further documentation --&gt; &lt;appender name="stdout" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;File&gt;$&#123;logger.path&#125;/info.log&lt;/File&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/info.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="warn" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/warn.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;WARN&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/warn.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/error.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;ERROR&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/error.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;logger name="warn" level="WARN"/&gt; &lt;logger name="error" level="ERROR"/&gt; &lt;root level="info"&gt; &lt;appender-ref ref="warn"/&gt; &lt;appender-ref ref="error"/&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt;&lt;/configuration&gt;]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>logback</tag>
+        <tag>Hibernate</tag>
       </tags>
   </entry>
   <entry>
@@ -2191,9 +2191,9 @@
         <category>Linux</category>
       </categories>
       <tags>
+        <tag>CentOS</tag>
         <tag>vsftpd</tag>
         <tag>FTP</tag>
-        <tag>CentOS</tag>
       </tags>
   </entry>
   <entry>
