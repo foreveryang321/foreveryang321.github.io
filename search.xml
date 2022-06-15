@@ -149,8 +149,8 @@
       </categories>
       <tags>
         <tag>docker</tag>
-        <tag>etcd</tag>
         <tag>apisix</tag>
+        <tag>etcd</tag>
       </tags>
   </entry>
   <entry>
@@ -162,8 +162,8 @@
       </categories>
       <tags>
         <tag>docker</tag>
-        <tag>etcd</tag>
         <tag>apisix</tag>
+        <tag>etcd</tag>
         <tag>apisix-dashboard</tag>
         <tag>keepalived</tag>
       </tags>
@@ -227,7 +227,7 @@
   <entry>
     <title><![CDATA[gitlab-runner 配置]]></title>
     <url>%2Fposts%2F504f0829.html</url>
-    <content type="text"><![CDATA[安装 目录结构 123456789101112131415161718192021222324# 宿主机通过root登录，可以使用普通用户登录[root@yl-mac gitlab-runner]# tree.├── config│ └── config.toml├── ssh│ └── config│ └── id_rsa│ └── id_rsa.pub└── docker-compose.yml# 权限[root@yl-mac gitlab-runner]# lltotal 12drwxr-xr-x 2 root root 4096 Sep 9 11:49 config-rw-r--r-- 1 root root 343 Sep 13 08:33 docker-compose.ymldrwxrwxrwx 2 root root 4096 Sep 13 08:39 ssh[root@yl-mac gitlab-runner]# ll ssh/total 16-rw-r--r-- 1 100 65533 25 Sep 13 08:38 config-rw------- 1 100 65533 2622 Sep 13 08:38 id_rsa-rw-r--r-- 1 100 65533 581 Sep 13 08:38 id_rsa.pub-rw-r--r-- 1 100 65533 692 Sep 13 08:42 known_hosts docker-compose.xml 不需提前建config目录 提前建ssh目录，并配置权限chmod -R 777 ssh，755、766权限都不行 1234567891011121314version: '3.8' services: gitlab-runner: image: gitlab/gitlab-runner:alpine-v14.0.1 container_name: gitlab-runner hostname: gitlab-runner volumes: - ./config:/etc/gitlab-runner - ./ssh:/home/gitlab-runner/.ssh - /var/run/docker.sock:/var/run/docker.sock# ports:# - "8093:8083" restart: always 注册 runner 实例1234567891011121314151617181920212223# 进入容器docker exec -it gitlab-runner sh # 注册 java 编译类型实例，支持 maven 环境的编译gitlab-runner register --non-interactive --executor "docker" --docker-image maven:3.6.1-jdk-8-alpine --docker-volumes '/root/.m2:/root/.m2' --url "gitlab 服务地址" --registration-token "gitlab token" --description "maven" --tag-list "maven" --run-untagged="true" --locked="false" --output-limit="40960" --docker-pull-policy="if-not-present"# --docker-privileged# 注册 gradlegitlab-runner register --non-interactive --executor "docker" --docker-image gradle:7.1.1-jdk8 --docker-volumes '/root/.gradle:/home/gradle/.gradle' --docker-volumes '/var/run/docker.sock:/var/run/docker.sock' --url "gitlab 服务地址" --registration-token "gitlab token" --description "gradle" --tag-list "gradle" --run-untagged="true" --locked="false" --output-limit="40960" --docker-pull-policy="if-not-present"# 注册 docker 编译类型实例，支持 docker 镜像打包等环境的编译gitlab-runner register --non-interactive --executor "docker" --docker-image docker:20.10.7 --docker-volumes '/var/run/docker.sock:/var/run/docker.sock' --url "gitlab 服务地址" --registration-token "gitlab token" --description "docker" --tag-list "docker" --run-untagged="true" --locked="false" --output-limit="40960" --docker-pull-policy="if-not-present"# 注册 docker-compose 实例gitlab-runner register --non-interactive --executor "docker" --docker-image docker/compose:alpine-1.29.2 --docker-volumes '/var/run/docker.sock:/var/run/docker.sock' --url "gitlab 服务地址" --registration-token "gitlab token" --description "docker-compose" --tag-list "docker-compose" --run-untagged="true" --locked="false" -output-limit="40960" --docker-pull-policy="if-not-present"# 注册 shell 执行环境gitlab-runner register --non-interactive --executor "shell" --url "gitlab 服务地址" --registration-token "gitlab token" --description "shell" --tag-list "shell" --run-untagged="true" --locked="false" --output-limit="40960"# 取消注册：通过 name# gitlab-runner unregister --name docker# 取消所有注册# gitlab-runner unregister --all-runners 注册后，会生成以下gitlab-runner 的config.toml配置文件 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162concurrent = 1check_interval = 0[session_server] #listen_address = &quot;[::]:8093&quot; # listen on all available interfaces on port 8093 #advertise_address = &quot;ip:8093&quot; # gitlab-runner 服务 session_timeout = 1800[[runners]] name = &quot;maven&quot; url = &quot;gitlab 服务地址&quot; token = &quot;gitlab token&quot; executor = &quot;docker&quot; # 默认是4096 output_limit = 40960 [runners.custom_build_dir] [runners.cache] [runners.cache.s3] [runners.cache.gcs] [runners.cache.azure] [runners.docker] tls_verify = false image = &quot;maven:3.3.3-jdk-8&quot; privileged = false disable_entrypoint_overwrite = false oom_kill_disable = false disable_cache = false volumes = [&quot;/root/.m2:/root/.m2&quot;, &quot;/cache&quot;] shm_size = 0[[runners]] name = &quot;docker&quot; url = &quot;gitlab 服务地址&quot; token = &quot;gitlab token&quot; executor = &quot;docker&quot; # 默认是4096 output_limit = 40960 [runners.custom_build_dir] [runners.cache] [runners.cache.s3] [runners.cache.gcs] [runners.cache.azure] [runners.docker] tls_verify = false image = &quot;docker:stable&quot; privileged = false disable_entrypoint_overwrite = false oom_kill_disable = false disable_cache = false volumes = [&quot;/cache&quot;, &quot;/var/run/docker.sock:/var/run/docker.sock&quot;] shm_size = 0[[runners]] name = &quot;shell&quot; output_limit = 40960 url = &quot;gitlab 服务地址&quot; token = &quot;gitlab token&quot; executor = &quot;shell&quot; [runners.custom_build_dir] [runners.cache] [runners.cache.s3] [runners.cache.gcs] [runners.cache.azure] 下载 gitlab-runner 执行 .gitlab-ci.yml 流水线可能需要使用到的镜像 12345678# 必须docker pull gitlab/gitlab-runner-helper:x86_64-c1edb478docker pull registry.gitlab.com/gitlab-org/gitlab-runner/gitlab-runner-helper:x86_64-c1edb478# 可能使用到docker pull docker:20.10.7docker pull maven:3.6.1-jdk-8-alpinedocker pull node:xxxxdocker pull openjdk:xxxx gitlab-runner 容器 SSH 免密登录远程主机生成秘钥1234567# docker-compose 先做ssh目录的持久化，在进入容器执行构建秘钥命令# 解决权限问题，在宿主机执行chmod -R 777 ssh# 以 gilab-runner 用户登录容器（不能使用root）docker exec -it -u gitlab-runner gitlab-runner shcd ~ssh-keygen -t rsa 配置config解决 Pseudo-terminal will not be allocated because stdin is not a terminal 问题1234# 以 gilab-runner 用户登录容器（不能使用root）tee ~/.ssh/config &lt;&lt;-'EOF'StrictHostKeyChecking noEOF 受控主机将id_rsa.pub里面的内容追加到受控主机的~/.ssh/authorized_keys即可。 问题 Maven 持久化问题 解决：因为Maven容器默认的路径为：/root/.m2，所以gitlab-runner注册的时候，持久化这个路径就行了，使用--docker-volumes &#39;/root/.m2:/root/.m2&#39; Job’s log exceeded limit of 4194304 bytes. 解决：在gitlab-runner的config.toml加上output_limit配置，默认是4096（4MB） ERROR: Uploading artifacts as “archive” to coordinator… too large archive 解决：admin area -&gt; settings -&gt; ci/cd -&gt; Continuous Integration and Deployment -&gt; Maximum artifacts size (MB) Gradle 持久化问题 解决：因为Gradle容器默认的路径为：/home/gradle/.gradle，所以gitlab-runner注册的时候，持久化这个路径就行了，使用--docker-volumes &#39;/root/.gradle:/home/gradle/.gradle&#39;]]></content>
+    <content type="text"><![CDATA[安装 目录结构 123456789101112131415161718192021222324# 宿主机通过root登录，可以使用普通用户登录[root@yl-mac gitlab-runner]# tree.├── config│ └── config.toml├── ssh│ └── config│ └── id_rsa│ └── id_rsa.pub└── docker-compose.yml# 权限[root@yl-mac gitlab-runner]# lltotal 12drwxr-xr-x 2 root root 4096 Sep 9 11:49 config-rw-r--r-- 1 root root 343 Sep 13 08:33 docker-compose.ymldrwxrwxrwx 2 root root 4096 Sep 13 08:39 ssh[root@yl-mac gitlab-runner]# ll ssh/total 16-rw-r--r-- 1 100 65533 25 Sep 13 08:38 config-rw------- 1 100 65533 2622 Sep 13 08:38 id_rsa-rw-r--r-- 1 100 65533 581 Sep 13 08:38 id_rsa.pub-rw-r--r-- 1 100 65533 692 Sep 13 08:42 known_hosts docker-compose.xml 不需提前建config目录 提前建ssh目录，并配置权限chmod -R 777 ssh，755、766权限都不行 1234567891011121314version: '3.8' services: gitlab-runner: image: gitlab/gitlab-runner:alpine-v14.0.1 container_name: gitlab-runner hostname: gitlab-runner volumes: - ./config:/etc/gitlab-runner - ./ssh:/home/gitlab-runner/.ssh - /var/run/docker.sock:/var/run/docker.sock# ports:# - "8093:8083" restart: always 注册 runner 实例1234567891011121314151617181920212223# 进入容器docker exec -it gitlab-runner sh # 注册 java 编译类型实例，支持 maven 环境的编译gitlab-runner register --non-interactive --executor "docker" --docker-image maven:3.6.1-jdk-8-alpine --docker-volumes '/root/.m2:/root/.m2' --url "gitlab 服务地址" --registration-token "gitlab token" --description "maven" --tag-list "maven" --run-untagged="true" --locked="false" --output-limit="40960" --docker-pull-policy="if-not-present"# --docker-privileged# 注册 gradlegitlab-runner register --non-interactive --executor "docker" --docker-image gradle:7.1.1-jdk8 --docker-volumes '/root/.gradle:/home/gradle/.gradle' --docker-volumes '/var/run/docker.sock:/var/run/docker.sock' --url "gitlab 服务地址" --registration-token "gitlab token" --description "gradle" --tag-list "gradle" --run-untagged="true" --locked="false" --output-limit="40960" --docker-pull-policy="if-not-present"# 注册 docker 编译类型实例，支持 docker 镜像打包等环境的编译gitlab-runner register --non-interactive --executor "docker" --docker-image docker:20.10.7 --docker-volumes '/var/run/docker.sock:/var/run/docker.sock' --url "gitlab 服务地址" --registration-token "gitlab token" --description "docker" --tag-list "docker" --run-untagged="true" --locked="false" --output-limit="40960" --docker-pull-policy="if-not-present"# 注册 docker-compose 实例gitlab-runner register --non-interactive --executor "docker" --docker-image docker/compose:alpine-1.29.2 --docker-volumes '/var/run/docker.sock:/var/run/docker.sock' --url "gitlab 服务地址" --registration-token "gitlab token" --description "docker-compose" --tag-list "docker-compose" --run-untagged="true" --locked="false" -output-limit="40960" --docker-pull-policy="if-not-present"# 注册 shell 执行环境gitlab-runner register --non-interactive --executor "shell" --url "gitlab 服务地址" --registration-token "gitlab token" --description "shell" --tag-list "shell" --run-untagged="true" --locked="false" --output-limit="40960"# 取消注册：通过 name# gitlab-runner unregister --name docker# 取消所有注册# gitlab-runner unregister --all-runners 注册后，会生成以下gitlab-runner 的config.toml配置文件 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162concurrent = 1check_interval = 0[session_server] #listen_address = &quot;[::]:8093&quot; # listen on all available interfaces on port 8093 #advertise_address = &quot;ip:8093&quot; # gitlab-runner 服务 session_timeout = 1800[[runners]] name = &quot;maven&quot; url = &quot;gitlab 服务地址&quot; token = &quot;gitlab token&quot; executor = &quot;docker&quot; # 默认是4096 output_limit = 40960 [runners.custom_build_dir] [runners.cache] [runners.cache.s3] [runners.cache.gcs] [runners.cache.azure] [runners.docker] tls_verify = false image = &quot;maven:3.3.3-jdk-8&quot; privileged = false disable_entrypoint_overwrite = false oom_kill_disable = false disable_cache = false volumes = [&quot;/root/.m2:/root/.m2&quot;, &quot;/cache&quot;] shm_size = 0[[runners]] name = &quot;docker&quot; url = &quot;gitlab 服务地址&quot; token = &quot;gitlab token&quot; executor = &quot;docker&quot; # 默认是4096 output_limit = 40960 [runners.custom_build_dir] [runners.cache] [runners.cache.s3] [runners.cache.gcs] [runners.cache.azure] [runners.docker] tls_verify = false image = &quot;docker:stable&quot; privileged = false disable_entrypoint_overwrite = false oom_kill_disable = false disable_cache = false volumes = [&quot;/cache&quot;, &quot;/var/run/docker.sock:/var/run/docker.sock&quot;] shm_size = 0[[runners]] name = &quot;shell&quot; output_limit = 40960 url = &quot;gitlab 服务地址&quot; token = &quot;gitlab token&quot; executor = &quot;shell&quot; [runners.custom_build_dir] [runners.cache] [runners.cache.s3] [runners.cache.gcs] [runners.cache.azure] 下载 gitlab-runner 执行 .gitlab-ci.yml 流水线可能需要使用到的镜像 12345678# 必须docker pull gitlab/gitlab-runner-helper:x86_64-c1edb478docker pull registry.gitlab.com/gitlab-org/gitlab-runner/gitlab-runner-helper:x86_64-c1edb478# 可能使用到docker pull docker:20.10.7docker pull maven:3.6.1-jdk-8-alpinedocker pull node:xxxxdocker pull openjdk:xxxx gitlab-runner 容器 SSH 免密登录远程主机生成秘钥1234567# docker-compose 先做 ssh 目录的持久化，再进入容器执行构建秘钥命令# 解决权限问题，在宿主机执行chmod -R 777 ssh# 以 gilab-runner 用户登录容器（不能使用root）docker exec -it -u gitlab-runner gitlab-runner shcd ~ssh-keygen -t rsa 配置config解决 Pseudo-terminal will not be allocated because stdin is not a terminal 问题1234# 以 gilab-runner 用户登录容器（不能使用root）tee ~/.ssh/config &lt;&lt;-'EOF'StrictHostKeyChecking noEOF 受控主机将id_rsa.pub里面的内容追加到受控主机的~/.ssh/authorized_keys即可。 问题 Maven 持久化问题 解决：因为Maven容器默认的路径为：/root/.m2，所以gitlab-runner注册的时候，持久化这个路径就行了，使用--docker-volumes &#39;/root/.m2:/root/.m2&#39; Job’s log exceeded limit of 4194304 bytes. 解决：在gitlab-runner的config.toml加上output_limit配置，默认是4096（4MB） ERROR: Uploading artifacts as “archive” to coordinator… too large archive 解决：admin area -&gt; settings -&gt; ci/cd -&gt; Continuous Integration and Deployment -&gt; Maximum artifacts size (MB) Gradle 持久化问题 解决：因为Gradle容器默认的路径为：/home/gradle/.gradle，所以gitlab-runner注册的时候，持久化这个路径就行了，使用--docker-volumes &#39;/root/.gradle:/home/gradle/.gradle&#39;]]></content>
       <categories>
         <category>git</category>
       </categories>
@@ -403,6 +403,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Oracle 编码配置]]></title>
+    <url>%2Fposts%2Fa4a638d8.html</url>
+    <content type="text"><![CDATA[查编码1select userenv('language') from dual 编码配置123456789101112131415oracle数据库的编码select * from nls_database_parameters where parameter ='NLS_CHARACTERSET';oracle客户端编码select * from nls_instance_parameters where parameter='NLS_LANGUAGE';conn /as sysdba;shutdown immediate;startup mount;alter system enable restricted session;alter system set job_queue_processes=0;ALTER SYSTEM SET AQ_TM_PROCESSES=0;alter database open;ALTER DATABASE character set INTERNAL_USE AL32UTF8;shutdown immediate;startup;]]></content>
+      <categories>
+        <category>Oracle</category>
+      </categories>
+      <tags>
+        <tag>编码</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Oracle 整库迁移]]></title>
     <url>%2Fposts%2Fd5d4c80.html</url>
     <content type="text"><![CDATA[导出123456789101112expdp 用户名/密码 directory=DMP logfile=e_T_C_CNCM_EXTINFO.log dumpfile=T_C_CNCM_EXTINFO%U.dmp PARALLEL=6 cluster=no compression=ALL tables=(table1,table2)directory=DMP -- 这个是虚拟目录（日志文件和DMP文件存放路径）， 需求提前在数据库里面创建，需要DBA权限。create directory DMP as '/dmp/backup';grant read,write,EXECUTE on directory DMP to 用户名;logfile=e_T_C_CNCM_EXTINFO.log -- EXPDP日志dumpfile=T_C_CNCM_EXTINFO%U.dmp -- 输出的DMP文件，其中%U为并行导出产生的序号，如果开6个并行，就可能会有六个文件，自动从01-06编号PARALLEL=6 -- 并行导出，可以根据主机CPU增加，最好不要超过CODE数cluster=no -- 关闭cluster（防止非共享磁盘写文件问题）compression -- 压缩tables=() -- 可以写多个table 导入123456impdp 用户名/密码 directory=DMP logfile=i_T_C_APT_TEMPLATE_DETAIL.log dumpfile=T_C_APT_TEMPLATE_DETAIL%U.dmp PARALLEL=4 table_exists_action=truncate -- table_exists_action 可选参数：-- trauncate：导入时 trauncate 清空原表数据再导入-- replace：先 drop 表，然后创建表，最后插入数据 -- append：在原来数据的基础上增加数据 SELECT DIRECTORY_NAME ,DIRECTORY_PATH FROM DBA_DIRECTORIES; /data/app/oracle/admin/orcl/dpdump/ create directory DATA_PUMP_DIR as ‘/data/dmp’;]]></content>
@@ -412,17 +423,6 @@
       <tags>
         <tag>expdp</tag>
         <tag>impdp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Oracle 编码配置]]></title>
-    <url>%2Fposts%2Fa4a638d8.html</url>
-    <content type="text"><![CDATA[查编码1select userenv('language') from dual 编码配置123456789101112131415oracle数据库的编码select * from nls_database_parameters where parameter ='NLS_CHARACTERSET';oracle客户端编码select * from nls_instance_parameters where parameter='NLS_LANGUAGE';conn /as sysdba;shutdown immediate;startup mount;alter system enable restricted session;alter system set job_queue_processes=0;ALTER SYSTEM SET AQ_TM_PROCESSES=0;alter database open;ALTER DATABASE character set INTERNAL_USE AL32UTF8;shutdown immediate;startup;]]></content>
-      <categories>
-        <category>Oracle</category>
-      </categories>
-      <tags>
-        <tag>编码</tag>
       </tags>
   </entry>
   <entry>
@@ -488,8 +488,8 @@
         <category>kettle</category>
       </categories>
       <tags>
-        <tag>docker</tag>
         <tag>pentaho-kettle</tag>
+        <tag>docker</tag>
       </tags>
   </entry>
   <entry>
@@ -544,8 +544,8 @@
         <category>kafka</category>
       </categories>
       <tags>
-        <tag>kafka</tag>
         <tag>docker</tag>
+        <tag>kafka</tag>
       </tags>
   </entry>
   <entry>
@@ -867,18 +867,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux telnet 命令]]></title>
-    <url>%2Fposts%2F683fa9b1.html</url>
-    <content type="text"><![CDATA[telnet1telnet &lt;ip&gt; &lt;port&gt; ctrl+c 不退出问题解决1234# 先输入$ ctrl+]# 在输入$ quit]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>telnet</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Linux traceroute 命令]]></title>
     <url>%2Fposts%2F683fa9b1.html</url>
     <content type="text"><![CDATA[traceroute1traceroute &lt;ip&gt; -nT -p &lt;port&gt; windows使用 12tracert &lt;ip&gt;tracert baidu.com]]></content>
@@ -888,6 +876,18 @@
       <tags>
         <tag>shell</tag>
         <tag>traceroute</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux telnet 命令]]></title>
+    <url>%2Fposts%2F683fa9b1.html</url>
+    <content type="text"><![CDATA[telnet1telnet &lt;ip&gt; &lt;port&gt; ctrl+c 不退出问题解决1234# 先输入$ ctrl+]# 在输入$ quit]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>telnet</tag>
       </tags>
   </entry>
   <entry>
@@ -980,8 +980,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>spring-boot</tag>
         <tag>Apache</tag>
+        <tag>spring-boot</tag>
         <tag>alibaba</tag>
         <tag>Dubbo</tag>
       </tags>
@@ -994,8 +994,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>spring-boot</tag>
         <tag>Apache</tag>
+        <tag>spring-boot</tag>
         <tag>alibaba</tag>
         <tag>Dubbo</tag>
       </tags>
@@ -1071,9 +1071,9 @@
       </categories>
       <tags>
         <tag>Oracle</tag>
+        <tag>spring-boot</tag>
         <tag>Hibernate</tag>
         <tag>DataJpaTest</tag>
-        <tag>spring-boot</tag>
         <tag>jpa</tag>
       </tags>
   </entry>
@@ -1143,8 +1143,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>spring-boot</tag>
         <tag>Apache</tag>
+        <tag>spring-boot</tag>
         <tag>alibaba</tag>
         <tag>Dubbo</tag>
       </tags>
@@ -1199,7 +1199,7 @@
   <entry>
     <title><![CDATA[安装 docker 环境]]></title>
     <url>%2Fposts%2F2fff8f5e.html</url>
-    <content type="text"><![CDATA[安装 Docker 删除旧版本 123456789101112131415sudo yum remove docker \ docker-client \ docker-client-latest \ docker-common \ docker-latest \ docker-latest-logrotate \ docker-logrotate \ docker-selinux \ docker-engine-selinux \ docker-engine# 或者sudo yum remove flannel docker* -ysudo yum -y remove docker docker-common docker-selinux docker-engine docker-engine-selinux container-selinux docker-cesudo rm -rf /var/lib/docker 配置 repo 1234567891011121314151617sudo yum install -y yum-utils \ device-mapper-persistent-data \ lvm2 sudo yum-config-manager \ --add-repo \ https://download.docker.com/linux/centos/docker-ce.repo# 或者使用阿里云sudo yum-config-manager \ --add-repo \ https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo# Optionalsudo yum-config-manager --enable docker-ce-edgesudo yum-config-manager --enable docker-ce-testsudo yum-config-manager --disable docker-ce-edge yum 加速和代理 123456789101112131415161718192021222324252627# 加速配置（阿里云加速）## 备份原来的yum源cd /etc/yum.repos.d/sudo mv CentOS-Base.repo CentOS-Base.repo_bak## 获取阿里云yum源sudo wget -e "http_proxy=192.168.123.1:1234" -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo# 代理配置sudo sed -i '/^proxy=/d' /etc/yum.confsudo sh -c "echo proxy=http://192.168.123.1:1234 &gt;&gt; /etc/yum.conf"sudo cat /etc/yum.conf# 清除原有yum源缓存sudo yum clean all## 生成阿里云yum源缓存sudo yum makecache## 或者sudo rm -f /var/lib/rpm/__*sudo rpm --rebuilddb -v -vsudo yum clean dbcachesudo yum clean metadatasudo yum clean rpmdbsudo yum clean headerssudo yum clean allsudo rm -rf /var/cache/yum/timedhosts.txtsudo rm -rf /var/cache/yum/*sudo yum makecache 安装 docker 创建 docker 和 data 目录（可不创建，使用默认路径） 12345678# docker 默认下载目录 /var/lib/docker/sudo mkdir -p /data/docker/lib/docker# 创建软连接sudo ln -s /data/docker/lib/docker /var/lib/docker# 删除软连接（注意：最后没有/，否则会把/var/lib/docker下的内容全部删除）# rm /var/lib/docker# sudo chmod 770 -R /var/lib/docker/# sudo chmod 777 -R /data/docker 在线安装 1234567891011# 安装最新版本sudo yum install docker-ce#安装指定版本 docker# 可以查看所有仓库中所有docker版本，并选择特定版本安装yum list docker-ce --showduplicates | sort -rdocker-ce.x86_64 18.03.0.ce-1.el7.centos docker-ce-stablesudo yum install docker-ce-&lt;VERSION STRING&gt;# 或者sudo curl https://releases.rancher.com/install-docker/19.03.sh | shsudo curl --proxy 192.168.123.1:1234 https://releases.rancher.com/install-docker/19.03.sh | sh 离线安装 123sudo yum install -y docker-ce-cli-19.03.12-3.el7.x86_64.rpmsudo yum install -y containerd.io-1.3.7-3.1.el7.x86_64.rpmsudo yum install -y docker-ce-19.03.12-3.el7.x86_64.rpm 启动并加入开机启动 12345678910# 启动 dockersudo systemctl start docker# 重启sudo systemctl restart docker# 停止运行 dockersudo systemctl stop docker# 开机启动sudo systemctl enable docker# 禁止开机启动sudo systemctl disable docker 版本锁定 123sudo yum install yum-plugin-versionlocksudo yum versionlock add docker-ce docker-ce-clisudo yum versionlock list 将当前用户加入docker组，并重启docker 12sudo gpasswd -a $&#123;USER&#125; dockersudo systemctl restart docker 验证安装 12345678910111213141516171819$ docker versionClient: Version: 18.06.1-ce API version: 1.38 Go version: go1.10.3 Git commit: e68fc7a Built: Tue Aug 21 17:23:03 2018 OS/Arch: linux/amd64 Experimental: falseServer: Engine: Version: 18.06.1-ce API version: 1.38 (minimum version 1.12) Go version: go1.10.3 Git commit: e68fc7a Built: Tue Aug 21 17:25:29 2018 OS/Arch: linux/amd64 Experimental: false Docker 配置代理1234567891011# 配置 docker pull 代理# sudo rm -rf /etc/systemd/system/docker.service.d# cat /etc/systemd/system/docker.service.d/http-proxy.confsudo mkdir -p /etc/systemd/system/docker.service.dsudo tee /etc/systemd/system/docker.service.d/http-proxy.conf &lt;&lt;-'EOF'[Service]Environment="HTTP_PROXY=http://192.168.123.1:1234" "NO_PROXY=localhost,127.0.0.1,172.16.120.0/24"EOFsudo systemctl daemon-reloadsudo systemctl enable dockersudo systemctl restart docker 其中172.16.120.0/24为宿主机 ip Docker 配置加速源1234567891011# sudo rm -rf /etc/docker/daemon.jsonsudo mkdir -p /etc/dockersudo tee /etc/docker/daemon.json &lt;&lt;-'EOF'&#123;"registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"],"log-driver":"json-file","log-opts":&#123; "max-size" :"50m","max-file":"10"&#125;&#125;EOFsudo systemctl daemon-reloadsudo systemctl restart docker 安装 docker-compose123456789101112131415161718192021# 安装sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-`uname -s`-`uname -m`" -o /usr/local/bin/docker-composecurl -L https://github.com/docker/compose/releases/download/1.29.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose# https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64# sudo curl --proxy 192.168.123.1:1234 -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-`uname -s`-`uname -m`" -o /usr/local/bin/docker-compose# sudo curl --proxy 192.168.123.1:1234 -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose# 配置权限sudo chmod +x /usr/local/bin/docker-compose# sudo chmod 755 /usr/local/bin/docker-compose# sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose# 验证是否安装成功docker-compose --version# 安装后，如果提示 bash: docker-compose: command not found...，则执行一下命令sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose 进入容器 12345# centosdocker exec -it &lt;container-name&gt; /bin/bash# alpinedocker exec -it &lt;container-name&gt; sh]]></content>
+    <content type="text"><![CDATA[安装 Docker 删除旧版本 123456789101112131415sudo yum remove docker \ docker-client \ docker-client-latest \ docker-common \ docker-latest \ docker-latest-logrotate \ docker-logrotate \ docker-selinux \ docker-engine-selinux \ docker-engine# 或者sudo yum remove flannel docker* -ysudo yum -y remove docker docker-common docker-selinux docker-engine docker-engine-selinux container-selinux docker-cesudo rm -rf /var/lib/docker 配置 repo 1234567891011121314151617sudo yum install -y yum-utils \ device-mapper-persistent-data \ lvm2 sudo yum-config-manager \ --add-repo \ https://download.docker.com/linux/centos/docker-ce.repo# 或者使用阿里云sudo yum-config-manager \ --add-repo \ https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo# Optionalsudo yum-config-manager --enable docker-ce-edgesudo yum-config-manager --enable docker-ce-testsudo yum-config-manager --disable docker-ce-edge yum 加速和代理 123456789101112131415161718192021222324252627# 加速配置（阿里云加速）## 备份原来的yum源cd /etc/yum.repos.d/sudo mv CentOS-Base.repo CentOS-Base.repo_bak## 获取阿里云yum源sudo wget -e "http_proxy=192.168.123.1:1234" -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo# 代理配置sudo sed -i '/^proxy=/d' /etc/yum.confsudo sh -c "echo proxy=http://192.168.123.1:1234 &gt;&gt; /etc/yum.conf"sudo cat /etc/yum.conf# 清除原有yum源缓存sudo yum clean all## 生成阿里云yum源缓存sudo yum makecache## 或者sudo rm -f /var/lib/rpm/__*sudo rpm --rebuilddb -v -vsudo yum clean dbcachesudo yum clean metadatasudo yum clean rpmdbsudo yum clean headerssudo yum clean allsudo rm -rf /var/cache/yum/timedhosts.txtsudo rm -rf /var/cache/yum/*sudo yum makecache 安装 docker 创建 docker 和 data 目录（可不创建，使用默认路径） 12345678# docker 默认下载目录 /var/lib/docker/sudo mkdir -p /data/docker/lib/docker# 创建软连接sudo ln -s /data/docker/lib/docker /var/lib/docker# 删除软连接（注意：最后没有/，否则会把/var/lib/docker下的内容全部删除）# rm /var/lib/docker# sudo chmod 770 -R /var/lib/docker/# sudo chmod 777 -R /data/docker 在线安装 1234567891011# 安装最新版本sudo yum install docker-ce#安装指定版本 docker# 可以查看所有仓库中所有docker版本，并选择特定版本安装yum list docker-ce --showduplicates | sort -rdocker-ce.x86_64 18.03.0.ce-1.el7.centos docker-ce-stablesudo yum install docker-ce-&lt;VERSION STRING&gt;# 或者sudo curl https://releases.rancher.com/install-docker/19.03.sh | shsudo curl --proxy 192.168.123.1:1234 https://releases.rancher.com/install-docker/19.03.sh | sh 离线安装 12345sudo yum install -y docker-ce-cli-19.03.12-3.el7.x86_64.rpm# 下载路径：http://mirror.centos.org/centos/7/extras/x86_64/Packages/sudo yum install -y container-selinux-2.107-3.el7.noarch.rpmsudo yum install -y containerd.io-1.3.7-3.1.el7.x86_64.rpmsudo yum install -y docker-ce-19.03.12-3.el7.x86_64.rpm 启动并加入开机启动 12345678910# 启动 dockersudo systemctl start docker# 重启sudo systemctl restart docker# 停止运行 dockersudo systemctl stop docker# 开机启动sudo systemctl enable docker# 禁止开机启动sudo systemctl disable docker 版本锁定 123sudo yum install yum-plugin-versionlocksudo yum versionlock add docker-ce docker-ce-clisudo yum versionlock list 将当前用户加入docker组，并重启docker 12sudo gpasswd -a $&#123;USER&#125; dockersudo systemctl restart docker 验证安装 12345678910111213141516171819$ docker versionClient: Version: 18.06.1-ce API version: 1.38 Go version: go1.10.3 Git commit: e68fc7a Built: Tue Aug 21 17:23:03 2018 OS/Arch: linux/amd64 Experimental: falseServer: Engine: Version: 18.06.1-ce API version: 1.38 (minimum version 1.12) Go version: go1.10.3 Git commit: e68fc7a Built: Tue Aug 21 17:25:29 2018 OS/Arch: linux/amd64 Experimental: false Docker 配置代理1234567891011# 配置 docker pull 代理# sudo rm -rf /etc/systemd/system/docker.service.d# cat /etc/systemd/system/docker.service.d/http-proxy.confsudo mkdir -p /etc/systemd/system/docker.service.dsudo tee /etc/systemd/system/docker.service.d/http-proxy.conf &lt;&lt;-'EOF'[Service]Environment="HTTP_PROXY=http://192.168.123.1:1234" "NO_PROXY=localhost,127.0.0.1,172.16.120.0/24"EOFsudo systemctl daemon-reloadsudo systemctl enable dockersudo systemctl restart docker 其中172.16.120.0/24为宿主机 ip Docker 配置加速源1234567891011# sudo rm -rf /etc/docker/daemon.jsonsudo mkdir -p /etc/dockersudo tee /etc/docker/daemon.json &lt;&lt;-'EOF'&#123;"registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"],"log-driver":"json-file","log-opts":&#123; "max-size" :"50m","max-file":"10"&#125;&#125;EOFsudo systemctl daemon-reloadsudo systemctl restart docker 安装 docker-compose123456789101112131415161718192021# 安装sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-`uname -s`-`uname -m`" -o /usr/local/bin/docker-composecurl -L https://github.com/docker/compose/releases/download/1.29.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose# https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64# sudo curl --proxy 192.168.123.1:1234 -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-`uname -s`-`uname -m`" -o /usr/local/bin/docker-compose# sudo curl --proxy 192.168.123.1:1234 -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose# 配置权限sudo chmod +x /usr/local/bin/docker-compose# sudo chmod 755 /usr/local/bin/docker-compose# sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose# 验证是否安装成功docker-compose --version# 安装后，如果提示 bash: docker-compose: command not found...，则执行一下命令sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose 进入容器 12345# centosdocker exec -it &lt;container-name&gt; /bin/bash# alpinedocker exec -it &lt;container-name&gt; sh]]></content>
       <categories>
         <category>docker</category>
       </categories>
@@ -1311,18 +1311,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[spring retry 使用]]></title>
-    <url>%2Fposts%2F9cd0a544.html</url>
-    <content type="text"><![CDATA[@Retryable 被注解的方法发生异常时会重试 参数 默认值 说明 value 空 指定发生的异常，进行重试 include 空 指定异常重试。和value一样，默认空，当exclude也为空时，所有异常都重试 exclude 空 指定异常不重试。默认空，当include也为空时，所有异常都重试 maxAttemps 3 重试次数 backoff 空 重试补偿机制 @Backoff 参数 默认值 说明 delay 1000L 指定延迟时间 multiplier 0.0D 指定延迟的倍数。比如delay=5000l,multiplier=2时，第一次重试为5秒后，第二次为10秒，第三次为20秒 @Recover 当重试到达指定次数时，被注解的方法将被回调，可以在该方法中进行日志处理。需要注意的是发生的异常和入参类型一致时才会回调。 示例 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263import org.springframework.retry.annotation.Backoff;import org.springframework.retry.annotation.Recover;import org.springframework.retry.annotation.Retryable;import org.springframework.stereotype.Service;/** * @author Created by YL on 2018/7/18 */@Service@Slf4jpublic class RetryService &#123; @Retryable( value = &#123;Exception.class&#125;, maxAttempts = 10, backoff = @Backoff(delay = 10000L) ) public String retry() throws Exception &#123; throw new Exception("测试 spring retry"); &#125; @Recover public void exception(Exception e) &#123; log.error("errmsg: &#123;&#125;", e.getMessage(), e); &#125;&#125;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.boot.builder.SpringApplicationBuilder;import org.springframework.retry.annotation.EnableRetry;@SpringBootApplication@EnableRetrypublic class App &#123; /** * Common */ private static SpringApplicationBuilder configureSpringBuilder(SpringApplicationBuilder builder) &#123; //builder.application().addListeners(new EnvironmentPreparedEventListener()); builder.application().addPrimarySources(Collections.singletonList(App.class)); return builder.sources(App.class); &#125; // /** // * for WAR deploy // */ // @Override // protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) &#123; // // // 外部容器部署 web 环境要在这里配置 EnvironmentPreparedEvent 监听器才生效 // // builder.application().addListeners(new EnvironmentPreparedEventListener()); // // return builder.sources(Application.class); // return super.configure(configureSpringBuilder(builder)); // &#125; /** * for JAR deploy */ public static void main(String[] args) &#123; // SpringApplication.run(Application.class, args); SpringApplicationBuilder builder = configureSpringBuilder(new SpringApplicationBuilder()); builder.application().run(args); &#125;&#125;]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>spring</tag>
-        <tag>retry</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[spring cache 常用缓存注解介绍]]></title>
     <url>%2Fposts%2F3bef8a86.html</url>
     <content type="text"><![CDATA[spring-cache 常用缓存注解介绍 包地址 注解名 作用域 作用 org.springframework.cache.annotation CacheConfig 类级别 s设置缓存的公共配置 Cacheable 方法级别 缓存读取操作 CacheEvict 方法级别 缓存失效操作 CachePut 方法级别 缓存更新操作 Caching 方法级别 h混合读取、失效、更新操作 CacheConfig主要作用是全局配置，比如配置缓存名称（cacheNames），只需要在类上面使用这个注解配置一次，类下面的方法就默认使用全局配置了。 Cacheable这个注解是最重要的，主要实现的是功能在进行读操作的时候，先从缓存中查询，如果查询不到，再走业务流程获取数据，获取成功后，保存到缓存中。 属性 默认值 描述 value 缓存的名称，在 spring 配置文件中定义，必须指定至少一个 cacheNames 缓存的名称，在 spring 配置文件中定义，必须指定至少一个 key 缓存的 key，可以为空，如果指定要按照 SpEL 表达式编写，如果不指定，则缺省按照方法的所有参数进行组合 keyGenerator cacheManager cacheResolver condition 缓存的条件，可以为空，使用 SpEL 编写，返回 true 或者 false，只有为 true 才进行缓存。不能使用返回结果 unless 不缓存的条件，可以为空，使用 SpEL 编写，返回 true 或者 false，只有为 false才进行缓存。可以使用返回结果 sync CacheEvict这个注解主要是配合@Cacheable一起使用，它的主要作用是清除缓存。当进行一些更新、删除操作时，就需要删除缓存。如果不删除缓存就会出现读取不到最新数据的情况。它有一个重要的数据allEntries默认是false。当true是，会清除所有缓存，而不以指定的key为主。 CachePut 这个注解总是会把数据缓存，而不会每次检测缓存是否存在 Caching这个注解是Cacheable、CachePut、CacheEvict的综合体，可以使用这个注解包含以上3个注解。]]></content>
@@ -1332,6 +1320,18 @@
       <tags>
         <tag>spring</tag>
         <tag>cache</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[spring retry 使用]]></title>
+    <url>%2Fposts%2F9cd0a544.html</url>
+    <content type="text"><![CDATA[@Retryable 被注解的方法发生异常时会重试 参数 默认值 说明 value 空 指定发生的异常，进行重试 include 空 指定异常重试。和value一样，默认空，当exclude也为空时，所有异常都重试 exclude 空 指定异常不重试。默认空，当include也为空时，所有异常都重试 maxAttemps 3 重试次数 backoff 空 重试补偿机制 @Backoff 参数 默认值 说明 delay 1000L 指定延迟时间 multiplier 0.0D 指定延迟的倍数。比如delay=5000l,multiplier=2时，第一次重试为5秒后，第二次为10秒，第三次为20秒 @Recover 当重试到达指定次数时，被注解的方法将被回调，可以在该方法中进行日志处理。需要注意的是发生的异常和入参类型一致时才会回调。 示例 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263import org.springframework.retry.annotation.Backoff;import org.springframework.retry.annotation.Recover;import org.springframework.retry.annotation.Retryable;import org.springframework.stereotype.Service;/** * @author Created by YL on 2018/7/18 */@Service@Slf4jpublic class RetryService &#123; @Retryable( value = &#123;Exception.class&#125;, maxAttempts = 10, backoff = @Backoff(delay = 10000L) ) public String retry() throws Exception &#123; throw new Exception("测试 spring retry"); &#125; @Recover public void exception(Exception e) &#123; log.error("errmsg: &#123;&#125;", e.getMessage(), e); &#125;&#125;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.boot.builder.SpringApplicationBuilder;import org.springframework.retry.annotation.EnableRetry;@SpringBootApplication@EnableRetrypublic class App &#123; /** * Common */ private static SpringApplicationBuilder configureSpringBuilder(SpringApplicationBuilder builder) &#123; //builder.application().addListeners(new EnvironmentPreparedEventListener()); builder.application().addPrimarySources(Collections.singletonList(App.class)); return builder.sources(App.class); &#125; // /** // * for WAR deploy // */ // @Override // protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) &#123; // // // 外部容器部署 web 环境要在这里配置 EnvironmentPreparedEvent 监听器才生效 // // builder.application().addListeners(new EnvironmentPreparedEventListener()); // // return builder.sources(Application.class); // return super.configure(configureSpringBuilder(builder)); // &#125; /** * for JAR deploy */ public static void main(String[] args) &#123; // SpringApplication.run(Application.class, args); SpringApplicationBuilder builder = configureSpringBuilder(new SpringApplicationBuilder()); builder.application().run(args); &#125;&#125;]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>spring</tag>
+        <tag>retry</tag>
       </tags>
   </entry>
   <entry>
@@ -1409,8 +1409,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>spring-boot</tag>
         <tag>cxf</tag>
+        <tag>spring-boot</tag>
       </tags>
   </entry>
   <entry>
@@ -1542,14 +1542,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Tomcat 启动脚本]]></title>
-    <url>%2Fposts%2Fe22f47ab.html</url>
-    <content type="text"><![CDATA[Tomcat 启动脚本主 Tomcat + 应用部署 Tomcat 应用部署方式 12345678910111213141516171819[txrd@host-148 /data/]$ tree -af .├── ./apache-tomcat-8.5.57│ └── ./bin│ └── ./conf│ └── ./lib│ └── ./temp│ └── ./webapps│ └── ./work├── ./szim│ └── ./project │ └── ./szim.war │ └── ./tomcat │ └── ./conf│ └── ./temp│ └── ./webapps│ └── ./work│ └── ./logs.sh │ └── ./restart.sh restart.sh 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109#!/usr/bin/env bash# @Author: YL# @Date: 2020-08-17 09:33:43# @Last Modified by: YL# @Last Modified time: 2020-08-17 14:50:43export LANG=en_US.UTF-8# Tomcat 主目录export CATALINA_HOME=/data/apache-tomcat-8.5.57cd `dirname $0`PROJECT_HOME=`pwd`# Tomcat 应用部署目录TC_HOME="$PROJECT_HOME/tomcat"# Tomcat 应用部署目录export CATALINA_BASE=$TC_HOME# crontab 检测日记文件TC_STDOUT_FILE="$TC_HOME/logs/stdout.out"# 检测 Tomcat 是否启动（进程ID）PIDS=`ps -ef | grep $TC_HOME | grep -v grep | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`#===========================================================================================# JVM Configuration#===========================================================================================# export JAVA_HOME=/usr/java/jdk1.8.0_251# export PATH=$JAVA_HOME/bin:$PATH# export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHJVM_OPTS="$JVM_OPTS -server -Xms1g -Xmx1g -Xss256k"JVM_OPTS="$JVM_OPTS -XX:+DisableExplicitGC -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled"JVM_OPTS="$JVM_OPTS -Xloggc:$TC_HOME/logs/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M"JVM_OPTS="$JVM_OPTS -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$TC_HOME/logs/dump-`date +"%Y-%m-%d"`.hprof"JVM_OPTS="$JVM_OPTS -Dspring.profiles.active=pro"# Tomcat 启动参数配置export JAVA_OPTS="$JVM_OPTS"#===========================================================================================# log file delete#===========================================================================================function cleanLog()&#123; ls -d -t $TC_HOME/logs/catalina.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/host-manager.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/localhost.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/manager.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/*.hprof | tail -n +3 | xargs rm -rf&#125;cleanLog# 优雅停机function gracefulShutdown()&#123; if [ -z "$PIDS" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME does not started!" | tee -a $STDOUT_FILE else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PIDS begining" | tee -a $STDOUT_FILE for PID in $PIDS ; do kill $PID &gt; /dev/null 2&gt;&amp;1 echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PID success" | tee -a $STDOUT_FILE done # 检测是否停机成功 COUNT=0 while [ $COUNT -lt 1 ]; do sleep 1 COUNT=1 for PID in $PIDS ; do PID_EXIST=`ps -f -p $PID | grep java` if [ -n "$PID_EXIST" ]; then COUNT=0 break fi done done fi&#125;function operate()&#123; if [[ "$1" = "kill" ]] ; then gracefulShutdown elif [[ "$1" = "start" ]]; then cd $CATALINA_HOME/bin sh startup.sh else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" | tee -a $TC_STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$PIDS" = "" ]] ; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" &gt;&gt; $TC_STDOUT_FILE operate start else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME pid $PIDS" &gt;&gt; $TC_STDOUT_FILE fielse echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILEfi 单应用部署 Tomcat 应用部署方式 12345678910111213[txrd@host-148 /data/szim]$ tree -af .├── ./project │ └── ./szim.war └── ./tomcat │ └── ./bin│ └── ./conf│ └── ./lib│ └── ./temp│ └── ./webapps│ └── ./work├── ./logs.sh ├── ./restart.sh restart.sh 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109#!/usr/bin/env bash# @Author: YL# @Date: 2020-08-17 09:33:43# @Last Modified by: YL# @Last Modified time: 2020-08-17 14:50:43export LANG=en_US.UTF-8# Tomcat 主目录export CATALINA_HOME=/data/apache-tomcat-8.5.57cd `dirname $0`PROJECT_HOME=`pwd`# Tomcat 应用部署目录TC_HOME="$PROJECT_HOME/tomcat"# Tomcat 应用部署目录export CATALINA_BASE=$TC_HOME# crontab 检测日记文件TC_STDOUT_FILE="$TC_HOME/logs/stdout.out"# 检测 Tomcat 是否启动（进程ID）PIDS=`ps -ef | grep $TC_HOME | grep -v grep | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`#===========================================================================================# JVM Configuration#===========================================================================================# export JAVA_HOME=/usr/java/jdk1.8.0_251# export PATH=$JAVA_HOME/bin:$PATH# export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHJVM_OPTS="$JVM_OPTS -server -Xms1g -Xmx1g -Xss256k"JVM_OPTS="$JVM_OPTS -XX:+DisableExplicitGC -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled"JVM_OPTS="$JVM_OPTS -Xloggc:$TC_HOME/logs/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M"JVM_OPTS="$JVM_OPTS -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$TC_HOME/logs/dump-`date +"%Y-%m-%d"`.hprof"JVM_OPTS="$JVM_OPTS -Dspring.profiles.active=pro"# Tomcat 启动参数配置export JAVA_OPTS="$JVM_OPTS"#===========================================================================================# log file delete#===========================================================================================function cleanLog()&#123; ls -d -t $TC_HOME/logs/catalina.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/host-manager.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/localhost.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/manager.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/*.hprof | tail -n +3 | xargs rm -rf&#125;cleanLog# 优雅停机function gracefulShutdown()&#123; if [ -z "$PIDS" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME does not started!" | tee -a $STDOUT_FILE else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PIDS begining" | tee -a $STDOUT_FILE for PID in $PIDS ; do kill $PID &gt; /dev/null 2&gt;&amp;1 echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PID success" | tee -a $STDOUT_FILE done # 检测是否停机成功 COUNT=0 while [ $COUNT -lt 1 ]; do sleep 1 COUNT=1 for PID in $PIDS ; do PID_EXIST=`ps -f -p $PID | grep java` if [ -n "$PID_EXIST" ]; then COUNT=0 break fi done done fi&#125;function operate()&#123; if [[ "$1" = "kill" ]] ; then gracefulShutdown elif [[ "$1" = "start" ]]; then cd $CATALINA_HOME/bin sh startup.sh else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" | tee -a $TC_STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$PIDS" = "" ]] ; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" &gt;&gt; $TC_STDOUT_FILE operate start else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME pid $PIDS" &gt;&gt; $TC_STDOUT_FILE fielse echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILEfi 使用说明12345sh restart.sh start # 重启sh restart.sh # 重启sh restart.sh restart # 重启sh restart.sh check # 检测服务是否启动，没有启动，则启动之，否则不做其他操作sh restart.sh kill # kill掉已启动的服务进程]]></content>
-      <categories>
-        <category>Tomcat</category>
-      </categories>
-  </entry>
-  <entry>
     <title><![CDATA[zookeeper 清理日志文件]]></title>
     <url>%2Fposts%2Fc0bbcacd.html</url>
     <content type="text"><![CDATA[clear123456789101112131415161718192021222324252627282930#!/usr/bin/env bash# @Author: YL# @Date: 2017-11-01 08:59:34# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:09# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`cd ..NODE_HOME=`pwd`# snapshotNODE_DATA_DIR=$NODE_HOME/data/version-2# snapshot logNODE_LOG_DIR=$NODE_HOME/logs/version-2# zk logNODE_LOGS=$NODE_HOME/logs# 定义了删除对应目录中的文件，保留最新的 count 个文件，可以将他写到 crontab 中count=3count=$[$count+1]ls -t $NODE_LOG_DIR/log.* | tail -n +$count | xargs rm -fls -t $NODE_DATA_DIR/snapshot.* | tail -n +$count | xargs rm -fls -t $NODE_LOGS/zookeeper.log.* | tail -n +$count | xargs rm -f# date patternDATE_PATTERN="[$(date '+%Y-%m-%d %H:%M:%S')]"STDOUT_FILE=$NODE_LOGS/stdout.logecho "$DATE_PATTERN clear logs success" | tee -a $STDOUT_FILE]]></content>
@@ -1574,6 +1566,14 @@
       </categories>
   </entry>
   <entry>
+    <title><![CDATA[zookeeper evn 环境变量配置脚本]]></title>
+    <url>%2Fposts%2F57428144.html</url>
+    <content type="text"><![CDATA[zookeeper-env1234567891011121314151617181920#!/usr/bin/env bash# @Author: YL# @Date: 2017-10-31 10:27:16# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:43# 此文件放到 zookeeper 的 conf 目录下# java envexport JAVA_HOME=/usr/java/jdk1.8.0_131export PATH=$JAVA_HOME/bin:$PATHexport JVMFLAGS="-Xms1536m -Xmx1536m $JVMFLAGS"cd `dirname $0`cd ..NODE_HOME=`pwd`# zookeeper envZOO_LOG_DIR=$NODE_HOME/logsZOO_LOG4J_PROP="INFO,ROLLINGFILE"]]></content>
+      <categories>
+        <category>zookeeper</category>
+      </categories>
+  </entry>
+  <entry>
     <title><![CDATA[zookeeper stop脚本]]></title>
     <url>%2Fposts%2F7bd064dc.html</url>
     <content type="text"><![CDATA[stop12345678910#!/usr/bin/env bash# @Author: YL# @Date: 2017-06-29 09:00:00# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:37:49# 此文件放到 zookeeper 的 bin 目录下cd `dirname $0`./zkServer.sh stop]]></content>
@@ -1582,11 +1582,11 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[zookeeper evn 环境变量配置脚本]]></title>
-    <url>%2Fposts%2F57428144.html</url>
-    <content type="text"><![CDATA[zookeeper-env1234567891011121314151617181920#!/usr/bin/env bash# @Author: YL# @Date: 2017-10-31 10:27:16# @Last Modified by: YL# @Last Modified time: 2017-11-01 09:36:43# 此文件放到 zookeeper 的 conf 目录下# java envexport JAVA_HOME=/usr/java/jdk1.8.0_131export PATH=$JAVA_HOME/bin:$PATHexport JVMFLAGS="-Xms1536m -Xmx1536m $JVMFLAGS"cd `dirname $0`cd ..NODE_HOME=`pwd`# zookeeper envZOO_LOG_DIR=$NODE_HOME/logsZOO_LOG4J_PROP="INFO,ROLLINGFILE"]]></content>
+    <title><![CDATA[Tomcat 启动脚本]]></title>
+    <url>%2Fposts%2Fe22f47ab.html</url>
+    <content type="text"><![CDATA[Tomcat 启动脚本主 Tomcat + 应用部署 Tomcat 应用部署方式 12345678910111213141516171819[txrd@host-148 /data/]$ tree -af .├── ./apache-tomcat-8.5.57│ └── ./bin│ └── ./conf│ └── ./lib│ └── ./temp│ └── ./webapps│ └── ./work├── ./szim│ └── ./project │ └── ./szim.war │ └── ./tomcat │ └── ./conf│ └── ./temp│ └── ./webapps│ └── ./work│ └── ./logs.sh │ └── ./restart.sh restart.sh 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109#!/usr/bin/env bash# @Author: YL# @Date: 2020-08-17 09:33:43# @Last Modified by: YL# @Last Modified time: 2020-08-17 14:50:43export LANG=en_US.UTF-8# Tomcat 主目录export CATALINA_HOME=/data/apache-tomcat-8.5.57cd `dirname $0`PROJECT_HOME=`pwd`# Tomcat 应用部署目录TC_HOME="$PROJECT_HOME/tomcat"# Tomcat 应用部署目录export CATALINA_BASE=$TC_HOME# crontab 检测日记文件TC_STDOUT_FILE="$TC_HOME/logs/stdout.out"# 检测 Tomcat 是否启动（进程ID）PIDS=`ps -ef | grep $TC_HOME | grep -v grep | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`#===========================================================================================# JVM Configuration#===========================================================================================# export JAVA_HOME=/usr/java/jdk1.8.0_251# export PATH=$JAVA_HOME/bin:$PATH# export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHJVM_OPTS="$JVM_OPTS -server -Xms1g -Xmx1g -Xss256k"JVM_OPTS="$JVM_OPTS -XX:+DisableExplicitGC -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled"JVM_OPTS="$JVM_OPTS -Xloggc:$TC_HOME/logs/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M"JVM_OPTS="$JVM_OPTS -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$TC_HOME/logs/dump-`date +"%Y-%m-%d"`.hprof"JVM_OPTS="$JVM_OPTS -Dspring.profiles.active=pro"# Tomcat 启动参数配置export JAVA_OPTS="$JVM_OPTS"#===========================================================================================# log file delete#===========================================================================================function cleanLog()&#123; ls -d -t $TC_HOME/logs/catalina.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/host-manager.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/localhost.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/manager.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/*.hprof | tail -n +3 | xargs rm -rf&#125;cleanLog# 优雅停机function gracefulShutdown()&#123; if [ -z "$PIDS" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME does not started!" | tee -a $STDOUT_FILE else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PIDS begining" | tee -a $STDOUT_FILE for PID in $PIDS ; do kill $PID &gt; /dev/null 2&gt;&amp;1 echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PID success" | tee -a $STDOUT_FILE done # 检测是否停机成功 COUNT=0 while [ $COUNT -lt 1 ]; do sleep 1 COUNT=1 for PID in $PIDS ; do PID_EXIST=`ps -f -p $PID | grep java` if [ -n "$PID_EXIST" ]; then COUNT=0 break fi done done fi&#125;function operate()&#123; if [[ "$1" = "kill" ]] ; then gracefulShutdown elif [[ "$1" = "start" ]]; then cd $CATALINA_HOME/bin sh startup.sh else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" | tee -a $TC_STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$PIDS" = "" ]] ; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" &gt;&gt; $TC_STDOUT_FILE operate start else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME pid $PIDS" &gt;&gt; $TC_STDOUT_FILE fielse echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILEfi 单应用部署 Tomcat 应用部署方式 12345678910111213[txrd@host-148 /data/szim]$ tree -af .├── ./project │ └── ./szim.war └── ./tomcat │ └── ./bin│ └── ./conf│ └── ./lib│ └── ./temp│ └── ./webapps│ └── ./work├── ./logs.sh ├── ./restart.sh restart.sh 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109#!/usr/bin/env bash# @Author: YL# @Date: 2020-08-17 09:33:43# @Last Modified by: YL# @Last Modified time: 2020-08-17 14:50:43export LANG=en_US.UTF-8# Tomcat 主目录export CATALINA_HOME=/data/apache-tomcat-8.5.57cd `dirname $0`PROJECT_HOME=`pwd`# Tomcat 应用部署目录TC_HOME="$PROJECT_HOME/tomcat"# Tomcat 应用部署目录export CATALINA_BASE=$TC_HOME# crontab 检测日记文件TC_STDOUT_FILE="$TC_HOME/logs/stdout.out"# 检测 Tomcat 是否启动（进程ID）PIDS=`ps -ef | grep $TC_HOME | grep -v grep | awk '&#123;print $2&#125;'`# 执行检测的用户IP地址WHO_AM_I=`who am i | awk '&#123;print $5&#125;' | sed 's/(//g' | sed 's/)//g'`#===========================================================================================# JVM Configuration#===========================================================================================# export JAVA_HOME=/usr/java/jdk1.8.0_251# export PATH=$JAVA_HOME/bin:$PATH# export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATHJVM_OPTS="$JVM_OPTS -server -Xms1g -Xmx1g -Xss256k"JVM_OPTS="$JVM_OPTS -XX:+DisableExplicitGC -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled"JVM_OPTS="$JVM_OPTS -Xloggc:$TC_HOME/logs/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M"JVM_OPTS="$JVM_OPTS -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$TC_HOME/logs/dump-`date +"%Y-%m-%d"`.hprof"JVM_OPTS="$JVM_OPTS -Dspring.profiles.active=pro"# Tomcat 启动参数配置export JAVA_OPTS="$JVM_OPTS"#===========================================================================================# log file delete#===========================================================================================function cleanLog()&#123; ls -d -t $TC_HOME/logs/catalina.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/host-manager.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/localhost.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/manager.*.log | tail -n +3 | xargs rm -rf ls -d -t $TC_HOME/logs/*.hprof | tail -n +3 | xargs rm -rf&#125;cleanLog# 优雅停机function gracefulShutdown()&#123; if [ -z "$PIDS" ]; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME does not started!" | tee -a $STDOUT_FILE else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PIDS begining" | tee -a $STDOUT_FILE for PID in $PIDS ; do kill $PID &gt; /dev/null 2&gt;&amp;1 echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME kill $PID success" | tee -a $STDOUT_FILE done # 检测是否停机成功 COUNT=0 while [ $COUNT -lt 1 ]; do sleep 1 COUNT=1 for PID in $PIDS ; do PID_EXIST=`ps -f -p $PID | grep java` if [ -n "$PID_EXIST" ]; then COUNT=0 break fi done done fi&#125;function operate()&#123; if [[ "$1" = "kill" ]] ; then gracefulShutdown elif [[ "$1" = "start" ]]; then cd $CATALINA_HOME/bin sh startup.sh else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILE fi&#125;if [[ "$1" = "" || "$1" = "restart" || "$1" = "start" ]] ; then operate kill echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" | tee -a $TC_STDOUT_FILE operate startelif [[ "$1" = "kill" ]] ; then operate killelif [[ "$1" = "check" ]] ; then if [[ "$PIDS" = "" ]] ; then echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME starting" &gt;&gt; $TC_STDOUT_FILE operate start else echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME pid $PIDS" &gt;&gt; $TC_STDOUT_FILE fielse echo "[$(date '+%Y-%m-%d %H:%M:%S')]-[$1]-[$WHO_AM_I] $TC_HOME is not support $1" | tee -a $TC_STDOUT_FILEfi 使用说明12345sh restart.sh start # 重启sh restart.sh # 重启sh restart.sh restart # 重启sh restart.sh check # 检测服务是否启动，没有启动，则启动之，否则不做其他操作sh restart.sh kill # kill掉已启动的服务进程]]></content>
       <categories>
-        <category>zookeeper</category>
+        <category>Tomcat</category>
       </categories>
   </entry>
   <entry>
@@ -1602,18 +1602,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux cp 命令]]></title>
-    <url>%2Fposts%2F2835e3e.html</url>
-    <content type="text"><![CDATA[cp复制文件夹1234cp -r [old source] -d [new source]# -p 保持原有文件权限cp -r -p [old source] -d [new source]]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>cp</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Linux crontab 命令]]></title>
     <url>%2Fposts%2Fb0b79272.html</url>
     <content type="text"><![CDATA[crontab 使用注意事项如果通过 crontab 执行1、crontab 无法获取 jdk 变量，要在 java 命令之前写入jdk绝对路径2、要把路径切换到要执行的 sh 路径下注意：二者缺一不可 查找 jdk 路径的方法 1 12$ echo $JAVA_HOME/usr/java/jdk1.6.0_45/bin/java 2 123456$ which java/usr/bin/java$ ls -lrt /usr/bin/java #/usr/bin/java是which java查出来的路径lrwxrwxrwx. 1 root root 22 Sep 16 2015 /usr/bin/java -&gt; /etc/alternatives/java$ ls -lrt /etc/alternatives/java #/etc/alternatives/java是ls -lrt /usr/bin/java查出来的路径 lrwxrwxrwx. 1 root root 46 Sep 16 2015 /etc/alternatives/java -&gt; /usr/lib/jvm/jre-1.6.0-openjdk.x86_64/bin/java 查询 crontab 定时器配置情况1crontab -l 编辑 crontab 定时器1234567891011crontab -e# 当 crontab 调用时，错误和标准输出会写成 mail 通知你* * * * * /opt/restart.sh# 标准输出重定向到 /dev/null，输出到这里就找不回来了* * * * * /opt/restart.sh &gt; /dev/null# 标准输出和错误输出都重定向到 /dev/null* * * * * /opt/restart.sh &gt; /dev/null 2&gt;&amp;1# 覆盖输出到指定日志文件* * * * * /opt/restart.sh &gt;/opt/logs/xxxxlog 2&gt;&amp;1# 追加输出到指定日志文件* * * * * /opt/restart.sh &gt;&gt;/opt/logs/xxxxlog 2&gt;&amp;1]]></content>
@@ -1626,15 +1614,15 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux curl 命令]]></title>
-    <url>%2Fposts%2Faea02818.html</url>
-    <content type="text"><![CDATA[查询出口IP1curl icanhazip.com GET 请求1curl https://www.baidu.com?q=xxxx POST 请求1curl http://ip:port/api/add_user -XPOST -d "send message..." 发送 POST JSON 请求1curl -H "Content-Type: application/json" -X POST --data '&#123;"data":"1"&#125;' http://127.0.0.1/ 使用代理1curl -x 192.168.2.5:3128 https://www.baidu.com?q=xxxx 输出请求信息12345678# http_code# time_connect# time_starttransfer# time_total# size_download# speed_download# 参考地址：curl http://www.baidu.com?q=xxxx -so /dev/null -w "%&#123;http_code&#125;\t%&#123;time_connect&#125;\t%&#123;time_starttransfer&#125;\t%&#123;time_total&#125;\t%&#123;size_download&#125;\t%&#123;speed_download&#125;\t" 下载文件并重命名12# culr -L &lt;url&gt; -o &lt;filename&gt;curl -L http://mirrors.aliyun.com/repo/Centos-7.repo -o /etc/yum.repos.d/CentOS-Base.repo \ 发送邮件1234567891011# mail.txt 内容tee ./mail.txt &lt;&lt;-'EOF'From:test01@163.comTo:test02@163.comSubject: test send emailtest send email!!!!!!EOF# 发送邮件curl -s --url "smtp://smtp.163.net" --mail-from "test01@163.com" --user "test01@163.com:123456" --mail-rcpt "test02@163.com" --upload-file mail.txt 参数说明 –url：邮箱服务 –mail-from：发送者邮箱 –user：发送正邮箱账号密码，账号密码使用冒号隔开 – mail-rcpt：接收者邮箱 –upload-file：邮件内容，写法参考 mail.txt]]></content>
+    <title><![CDATA[Linux cp 命令]]></title>
+    <url>%2Fposts%2F2835e3e.html</url>
+    <content type="text"><![CDATA[cp复制文件夹1234cp -r [old source] -d [new source]# -p 保持原有文件权限cp -r -p [old source] -d [new source]]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>shell</tag>
-        <tag>curl</tag>
+        <tag>cp</tag>
       </tags>
   </entry>
   <entry>
@@ -1650,6 +1638,18 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Linux curl 命令]]></title>
+    <url>%2Fposts%2Faea02818.html</url>
+    <content type="text"><![CDATA[查询出口IP1curl icanhazip.com GET 请求1curl https://www.baidu.com?q=xxxx POST 请求1curl http://ip:port/api/add_user -XPOST -d "send message..." 发送 POST JSON 请求1curl -H "Content-Type: application/json" -X POST --data '&#123;"data":"1"&#125;' http://127.0.0.1/ 使用代理1curl -x 192.168.2.5:3128 https://www.baidu.com?q=xxxx 输出请求信息12345678# http_code# time_connect# time_starttransfer# time_total# size_download# speed_download# 参考地址：curl http://www.baidu.com?q=xxxx -so /dev/null -w "%&#123;http_code&#125;\t%&#123;time_connect&#125;\t%&#123;time_starttransfer&#125;\t%&#123;time_total&#125;\t%&#123;size_download&#125;\t%&#123;speed_download&#125;\t" 下载文件并重命名12# culr -L &lt;url&gt; -o &lt;filename&gt;curl -L http://mirrors.aliyun.com/repo/Centos-7.repo -o /etc/yum.repos.d/CentOS-Base.repo \ 发送邮件1234567891011# mail.txt 内容tee ./mail.txt &lt;&lt;-'EOF'From:test01@163.comTo:test02@163.comSubject: test send emailtest send email!!!!!!EOF# 发送邮件curl -s --url "smtp://smtp.163.net" --mail-from "test01@163.com" --user "test01@163.com:123456" --mail-rcpt "test02@163.com" --upload-file mail.txt 参数说明 –url：邮箱服务 –mail-from：发送者邮箱 –user：发送正邮箱账号密码，账号密码使用冒号隔开 – mail-rcpt：接收者邮箱 –upload-file：邮件内容，写法参考 mail.txt]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>curl</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Linux grep 命令]]></title>
     <url>%2Fposts%2F1f104b3f.html</url>
     <content type="text"><![CDATA[grep统计出现次数1grep 'sign.*time.*openid' access_p80_weixinv3.log | awk '&#123;a[$1]++&#125;END&#123;for(i in a)print a[i]"\t"i&#125;' | sort -n 4 183.3.234.4510 183.3.234.5720 183.3.234.58 查询前后日志grep -5 ‘parttern’ inputfile //打印匹配行的前后5行grep -C 5 ‘parttern’ inputfile //打印匹配行的前后5行grep -A 5 ‘parttern’ inputfile //打印匹配行的后5行grep -B 5 ‘parttern’ inputfile //打印匹配行的前5行 正则：数字12# 正则匹配1802****269的手机号码grep '1802[0-9]\&#123;4\&#125;269' info.log]]></content>
@@ -1659,54 +1659,6 @@
       <tags>
         <tag>shell</tag>
         <tag>grep</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux ls 命令]]></title>
-    <url>%2Fposts%2F53b5960c.html</url>
-    <content type="text"><![CDATA[ls12# 统计文件夹中文件数ls -l |grep "^-"|wc -l 保留最新的1个文件夹，删除其他文件夹（使用-d）1ls -t -d /home/yl/api-web-open/logs/undertow-* | tail -n +2 | xargs rm -rf]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>ls</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux netstat 命令]]></title>
-    <url>%2Fposts%2F6c05ba39.html</url>
-    <content type="text"><![CDATA[netstat netstat 通过进程查看占用端口12# netstat -nap | grep 9836netstat -anp | grep &lt;pid&gt;]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>netstat</tag>
-        <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux find 命令]]></title>
-    <url>%2Fposts%2F7b744fec.html</url>
-    <content type="text"><![CDATA[查找文件并删除123456789101112# 删除指定时间前的 jpg 文件find /opt/upload/ -mtime +30 -type f -name *.jpg -exec rm -f &#123;&#125; \;# 删除隐藏文件（-fr）find /opt/upload/ -type d -name .svn -exec rm -fr &#123;&#125; \;# 删除30天前的文件find /opt/upload -mtime +30 -type f -name "*.jpg" -exec rm -rf &#123;&#125; \;# find: 路径必须在表达式之前，在*前加\find /opt/upload/ -mtime +15 -type f -name \*.log -exec rm -f &#123;&#125; \; 打印指定时间前的文件1find project/upload/ -mtime +30 -type f -print]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>find</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux sed 命令]]></title>
-    <url>%2Fposts%2Fb8ec468d.html</url>
-    <content type="text"><![CDATA[sed打印指定行数1sed -n '12457431, 12457440p' tomcat/logs/catalina.out]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>sed</tag>
       </tags>
   </entry>
   <entry>
@@ -1722,6 +1674,42 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Linux netstat 命令]]></title>
+    <url>%2Fposts%2F6c05ba39.html</url>
+    <content type="text"><![CDATA[netstat netstat 通过进程查看占用端口12# netstat -nap | grep 9836netstat -anp | grep &lt;pid&gt;]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>netstat</tag>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux ls 命令]]></title>
+    <url>%2Fposts%2F53b5960c.html</url>
+    <content type="text"><![CDATA[ls12# 统计文件夹中文件数ls -l |grep "^-"|wc -l 保留最新的1个文件夹，删除其他文件夹（使用-d）1ls -t -d /home/yl/api-web-open/logs/undertow-* | tail -n +2 | xargs rm -rf]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>ls</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux sed 命令]]></title>
+    <url>%2Fposts%2Fb8ec468d.html</url>
+    <content type="text"><![CDATA[sed打印指定行数1sed -n '12457431, 12457440p' tomcat/logs/catalina.out]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>sed</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Linux tail 命令]]></title>
     <url>%2Fposts%2F29bd046e.html</url>
     <content type="text"><![CDATA[tail]]></content>
@@ -1731,18 +1719,6 @@
       <tags>
         <tag>shell</tag>
         <tag>tail</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux unzip 命令]]></title>
-    <url>%2Fposts%2F64f75729.html</url>
-    <content type="text"><![CDATA[unzip解压war、jar、zip、rar等文件1unzip -oq /opt/xxx.war -d /opt/ddd]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>unzip</tag>
       </tags>
   </entry>
   <entry>
@@ -1758,6 +1734,30 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Linux find 命令]]></title>
+    <url>%2Fposts%2F7b744fec.html</url>
+    <content type="text"><![CDATA[查找文件并删除123456789101112# 删除指定时间前的 jpg 文件find /opt/upload/ -mtime +30 -type f -name *.jpg -exec rm -f &#123;&#125; \;# 删除隐藏文件（-fr）find /opt/upload/ -type d -name .svn -exec rm -fr &#123;&#125; \;# 删除30天前的文件find /opt/upload -mtime +30 -type f -name "*.jpg" -exec rm -rf &#123;&#125; \;# find: 路径必须在表达式之前，在*前加\find /opt/upload/ -mtime +15 -type f -name \*.log -exec rm -f &#123;&#125; \; 打印指定时间前的文件1find project/upload/ -mtime +30 -type f -print]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>find</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux unzip 命令]]></title>
+    <url>%2Fposts%2F64f75729.html</url>
+    <content type="text"><![CDATA[unzip解压war、jar、zip、rar等文件1unzip -oq /opt/xxx.war -d /opt/ddd]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>unzip</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Linux vi 命令]]></title>
     <url>%2Fposts%2F87207300.html</url>
     <content type="text"><![CDATA[vilinux文件格式的问题（使用unix格式）123456789# 查看文件格式vi 文件名:set ff # :set fileencoding# 设置文件格式为unix:set ff=unix# 保存退出:wq# 也可以直接使用dos2unix 文件名]]></content>
@@ -1767,6 +1767,17 @@
       <tags>
         <tag>shell</tag>
         <tag>vi</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[spring boot 使用注意事项]]></title>
+    <url>%2Fposts%2F47aa1712.html</url>
+    <content type="text"><![CDATA[兼容问题spring-boot-starter-parent切换回1.5.2.RELEASE版本 因为1.5.4.RELEASE、1.5.5.RELEASE、1.5.6.RELEASE、1.5.7.RELEASE、2.0.0.M1、2.0.0.M2、2.0.0.M3都存在使用spring-boot-starter-data-redis时，会出现异常 java.lang.NoSuchMethodError: org.springframework.data.repository.config.AnnotationRepositoryConfigurationSource.&lt;init&gt;异常 请查看https://github.com/spring-projects/spring-boot/issues/9606 外部 Tomcat 容器部署 外部 Tomcat 等容器部署war，要继承 SpringBootServletInitializer 类 war部署要重写SpringBootServletInitializer的configure方法，可以不要main方法，main方法是jar部署时候会执行的 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.boot.builder.SpringApplicationBuilder;import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;import org.springframework.context.annotation.Bean;/** * 启动器 * * @author YL */@SpringBootApplication( excludeName = &#123; "org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration", // 数据库相关 "org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration", "org.springframework.boot.autoconfigure.jdbc.XADataSourceAutoConfiguration", "org.springframework.boot.autoconfigure.jdbc.JndiDataSourceAutoConfiguration", "org.springframework.boot.autoconfigure.transaction.jta.JtaAutoConfiguration", // jmx 相关 "org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration", // websocket 相关 "org.springframework.boot.autoconfigure.websocket.reactive.WebSocketReactiveAutoConfiguration", "org.springframework.boot.autoconfigure.websocket.servlet.WebSocketMessagingAutoConfiguration", "org.springframework.boot.autoconfigure.websocket.servlet.WebSocketServletAutoConfiguration", // mail相关 "org.springframework.boot.autoconfigure.mail.MailSenderAutoConfiguration", "org.springframework.boot.autoconfigure.mail.MailSenderValidatorAutoConfiguration", // 模版引擎 "org.springframework.boot.autoconfigure.groovy.template.GroovyTemplateAutoConfiguration", "org.springframework.boot.autoconfigure.mustache.MustacheAutoConfiguration", // actuate trace：保存最近100次请求记录在内容，没什么卵用 "org.springframework.boot.actuate.autoconfigure.TraceRepositoryAutoConfiguration", "org.springframework.boot.actuate.autoconfigure.TraceWebFilterAutoConfiguration", "org.springframework.boot.actuate.autoconfigure.MetricFilterAutoConfiguration", // 其他 "org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration" &#125;)public class App extends SpringBootServletInitializer &#123; /** * Common */ private static SpringApplicationBuilder configureSpringBuilder(SpringApplicationBuilder builder) &#123; // 自定义事件监听器，实现 ApplicationListener -- builder.listeners(new EnvironmentPreparedEventListener()); return builder.sources(App.class); &#125; /** * for WAR deploy */ @Override protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) &#123; return configureSpringBuilder(builder); &#125; /** * for JAR deploy */ public static void main(String[] args) &#123; configureSpringBuilder(new SpringApplicationBuilder()) .run(args); &#125;&#125; attach=false123456789101112131415&lt;plugin&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt; &lt;configuration&gt; &lt;layout&gt;ZIP&lt;/layout&gt; &lt;includes&gt; &lt;include&gt; &lt;groupId&gt;nothing&lt;/groupId&gt; &lt;artifactId&gt;nothing&lt;/artifactId&gt; &lt;/include&gt; &lt;/includes&gt; &lt;!-- 将原始的包作为 install 和 deploy 的对象，而不是包含了依赖的包 --&gt; &lt;attach&gt;false&lt;/attach&gt; &lt;/configuration&gt;&lt;/plugin&gt; spring-boot升级到2.0 弃用WebMvcConfigurerAdapter，替换成WebMvcConfigurer 12345678910@Configuratiionpublic class WebAdapter extends WebMvcConfigurerAdapter &#123; @Override public void addCorsMappings(CorsRegistry registry) &#123; registry.addMapping("/**") .allowedHeaders("*") .allowedOrigins("*") .allowedMethods("GET", "POST", "PUT"); &#125;&#125; 在 spring-boot 2.0 中需要注意，因为使用的是 spring 5，原先的方法是继承WebMvcConfigurerAdapter抽象类，现在是直接扩展 WebMvcConfigurer 这个接口。原先的方式很能生效，不过已经被 spring 5弃用了（@Deprecated） 12345678910111213141516171819@Configuratiionpublic class MyConfiguration &#123; @Bean public WebMvcConfigurer webMvcConfigurer() &#123; return new WebMvcConfigurer() &#123; // 跨域配置 @Override public void addCorsMappings(CorsRegistry registry) &#123; registry.addMapping("/api/**"); &#125; // 拦截器配置 @Override public void addInterceptors(InterceptorRegistry registry) &#123; &#125; // ... &#125;; &#125;&#125; 其他 @RequestBody 使用 @RequestBody 注解时，如果注解的参数没有传入，则会抛出org.springframework.http.converter.HttpMessageNotReadableException异常 配合hibernate-validator不起作用的问题 在参数前面使用org.springframework.validation.annotation.Validated注解，或者javax.validation.Valid注解均可 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051import lombok.AllArgsConstructor;import lombok.Data;import lombok.NoArgsConstructor;import org.hibernate.validator.constraints.Length;import org.hibernate.validator.constraints.NotBlank;import java.io.Serializable;/** * @author Created by YL on 2017/10/19 */@Data@AllArgsConstructor@NoArgsConstructorpublic class MarketRebateDTO implements Serializable &#123; @NotBlank(message = "营销活动 Id 不能为空") @Length(min = 5, max = 8, message = "营销活动 Id[$&#123;validatedValue&#125;] 长度必须在 &#123;min&#125; 和 &#123;max&#125; 之间") private String marketCfgId; private String productNo; private String rebateAmt; private String tradeType;&#125;import com.alibaba.dubbo.config.annotation.Reference;import org.springframework.validation.annotation.Validated;import org.springframework.web.bind.annotation.PostMapping;import org.springframework.web.bind.annotation.RequestBody;import org.springframework.web.bind.annotation.RequestMapping;import org.springframework.web.bind.annotation.RestController;import javax.validation.Valid;/** * 广东省营销接口 * * @author Created by YL on 2017/10/18 */@RestController@RequestMapping("/api/market")public class MarketController extends BaseRestController &#123; @Reference private MarketService marketService; @PostMapping("/rebate") public BaseResponse rebate(@RequestBody @Valid MarketRebateDTO rebate) throws CoreException, OkHttpException &#123; return marketService.doRebate(rebate); &#125;&#125; @RequestParam 使用 @RequestParam 注解时，如果注解的参数没有传入，则会抛出org.springframework.web.bind.MissingServletRequestParameterException异常 配合hibernate-validator不起作用的问题 要注册 MethodValidationPostProcessor Bean，并且在类上面使用org.springframework.validation.annotation.Validated注解 注意：使用javax.validation.Valid注解对RequestParam对应的参数进行注解，是无效的，需要使用@Validated注解来使得验证生效 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253@Beanpublic Validator validator() &#123; ValidatorFactory factory = Validation.byProvider(HibernateValidator.class) .configure() // 1、普通模式（默认是这个模式） // 普通模式(会校验完所有的属性，然后返回所有的验证失败信息) // 2、快速失败返回模式 // 快速失败返回模式(只要有一个验证失败，则返回) // .addProperty("hibernate.validator.fail_fast", "true") .failFast(true) .buildValidatorFactory(); return factory.getValidator();&#125;@Beanpublic MethodValidationPostProcessor methodValidationPostProcessor() &#123; MethodValidationPostProcessor postProcessor = new MethodValidationPostProcessor(); // 设置validator模式为快速失败返回 postProcessor.setValidator(validator()); return postProcessor;&#125;import com.alibaba.dubbo.config.annotation.Reference;import org.hibernate.validator.constraints.NotBlank;import org.springframework.validation.annotation.Validated;import org.springframework.web.bind.annotation.GetMapping;import org.springframework.web.bind.annotation.PostMapping;import org.springframework.web.bind.annotation.RequestMapping;import org.springframework.web.bind.annotation.RequestParam;import org.springframework.web.bind.annotation.RestController;/** * csp 平台接口封装 * * @author Created by YL on 2017/9/19 */@RestController@RequestMapping("/api/csp")@Validatedpublic class CspController extends BaseRestController &#123; @Reference private CspService cspService; @GetMapping public BaseResponse get(@RequestParam @NotBlank(message = "组件名不能为空") String func, @RequestParam @NotBlank(message = "参数值不能为空") String param) throws OkHttpException, OpenApiException &#123; return new BaseResponse(cspService.get(func, param)); &#125;&#125; 至此，Bean Validator 和 hibernate-validator的@Size、@Min、@Max、@Length、@NotBlank等注解就生效了]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>spring-boot</tag>
       </tags>
   </entry>
   <entry>
@@ -1780,17 +1791,6 @@
         <tag>spring-boot</tag>
         <tag>jpa</tag>
         <tag>hibernate</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[spring boot 使用注意事项]]></title>
-    <url>%2Fposts%2F47aa1712.html</url>
-    <content type="text"><![CDATA[兼容问题spring-boot-starter-parent切换回1.5.2.RELEASE版本 因为1.5.4.RELEASE、1.5.5.RELEASE、1.5.6.RELEASE、1.5.7.RELEASE、2.0.0.M1、2.0.0.M2、2.0.0.M3都存在使用spring-boot-starter-data-redis时，会出现异常 java.lang.NoSuchMethodError: org.springframework.data.repository.config.AnnotationRepositoryConfigurationSource.&lt;init&gt;异常 请查看https://github.com/spring-projects/spring-boot/issues/9606 外部 Tomcat 容器部署 外部 Tomcat 等容器部署war，要继承 SpringBootServletInitializer 类 war部署要重写SpringBootServletInitializer的configure方法，可以不要main方法，main方法是jar部署时候会执行的 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.boot.builder.SpringApplicationBuilder;import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;import org.springframework.context.annotation.Bean;/** * 启动器 * * @author YL */@SpringBootApplication( excludeName = &#123; "org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration", // 数据库相关 "org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration", "org.springframework.boot.autoconfigure.jdbc.XADataSourceAutoConfiguration", "org.springframework.boot.autoconfigure.jdbc.JndiDataSourceAutoConfiguration", "org.springframework.boot.autoconfigure.transaction.jta.JtaAutoConfiguration", // jmx 相关 "org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration", // websocket 相关 "org.springframework.boot.autoconfigure.websocket.reactive.WebSocketReactiveAutoConfiguration", "org.springframework.boot.autoconfigure.websocket.servlet.WebSocketMessagingAutoConfiguration", "org.springframework.boot.autoconfigure.websocket.servlet.WebSocketServletAutoConfiguration", // mail相关 "org.springframework.boot.autoconfigure.mail.MailSenderAutoConfiguration", "org.springframework.boot.autoconfigure.mail.MailSenderValidatorAutoConfiguration", // 模版引擎 "org.springframework.boot.autoconfigure.groovy.template.GroovyTemplateAutoConfiguration", "org.springframework.boot.autoconfigure.mustache.MustacheAutoConfiguration", // actuate trace：保存最近100次请求记录在内容，没什么卵用 "org.springframework.boot.actuate.autoconfigure.TraceRepositoryAutoConfiguration", "org.springframework.boot.actuate.autoconfigure.TraceWebFilterAutoConfiguration", "org.springframework.boot.actuate.autoconfigure.MetricFilterAutoConfiguration", // 其他 "org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration" &#125;)public class App extends SpringBootServletInitializer &#123; /** * Common */ private static SpringApplicationBuilder configureSpringBuilder(SpringApplicationBuilder builder) &#123; // 自定义事件监听器，实现 ApplicationListener -- builder.listeners(new EnvironmentPreparedEventListener()); return builder.sources(App.class); &#125; /** * for WAR deploy */ @Override protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) &#123; return configureSpringBuilder(builder); &#125; /** * for JAR deploy */ public static void main(String[] args) &#123; configureSpringBuilder(new SpringApplicationBuilder()) .run(args); &#125;&#125; attach=false123456789101112131415&lt;plugin&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt; &lt;configuration&gt; &lt;layout&gt;ZIP&lt;/layout&gt; &lt;includes&gt; &lt;include&gt; &lt;groupId&gt;nothing&lt;/groupId&gt; &lt;artifactId&gt;nothing&lt;/artifactId&gt; &lt;/include&gt; &lt;/includes&gt; &lt;!-- 将原始的包作为 install 和 deploy 的对象，而不是包含了依赖的包 --&gt; &lt;attach&gt;false&lt;/attach&gt; &lt;/configuration&gt;&lt;/plugin&gt; spring-boot升级到2.0 弃用WebMvcConfigurerAdapter，替换成WebMvcConfigurer 12345678910@Configuratiionpublic class WebAdapter extends WebMvcConfigurerAdapter &#123; @Override public void addCorsMappings(CorsRegistry registry) &#123; registry.addMapping("/**") .allowedHeaders("*") .allowedOrigins("*") .allowedMethods("GET", "POST", "PUT"); &#125;&#125; 在 spring-boot 2.0 中需要注意，因为使用的是 spring 5，原先的方法是继承WebMvcConfigurerAdapter抽象类，现在是直接扩展 WebMvcConfigurer 这个接口。原先的方式很能生效，不过已经被 spring 5弃用了（@Deprecated） 12345678910111213141516171819@Configuratiionpublic class MyConfiguration &#123; @Bean public WebMvcConfigurer webMvcConfigurer() &#123; return new WebMvcConfigurer() &#123; // 跨域配置 @Override public void addCorsMappings(CorsRegistry registry) &#123; registry.addMapping("/api/**"); &#125; // 拦截器配置 @Override public void addInterceptors(InterceptorRegistry registry) &#123; &#125; // ... &#125;; &#125;&#125; 其他 @RequestBody 使用 @RequestBody 注解时，如果注解的参数没有传入，则会抛出org.springframework.http.converter.HttpMessageNotReadableException异常 配合hibernate-validator不起作用的问题 在参数前面使用org.springframework.validation.annotation.Validated注解，或者javax.validation.Valid注解均可 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051import lombok.AllArgsConstructor;import lombok.Data;import lombok.NoArgsConstructor;import org.hibernate.validator.constraints.Length;import org.hibernate.validator.constraints.NotBlank;import java.io.Serializable;/** * @author Created by YL on 2017/10/19 */@Data@AllArgsConstructor@NoArgsConstructorpublic class MarketRebateDTO implements Serializable &#123; @NotBlank(message = "营销活动 Id 不能为空") @Length(min = 5, max = 8, message = "营销活动 Id[$&#123;validatedValue&#125;] 长度必须在 &#123;min&#125; 和 &#123;max&#125; 之间") private String marketCfgId; private String productNo; private String rebateAmt; private String tradeType;&#125;import com.alibaba.dubbo.config.annotation.Reference;import org.springframework.validation.annotation.Validated;import org.springframework.web.bind.annotation.PostMapping;import org.springframework.web.bind.annotation.RequestBody;import org.springframework.web.bind.annotation.RequestMapping;import org.springframework.web.bind.annotation.RestController;import javax.validation.Valid;/** * 广东省营销接口 * * @author Created by YL on 2017/10/18 */@RestController@RequestMapping("/api/market")public class MarketController extends BaseRestController &#123; @Reference private MarketService marketService; @PostMapping("/rebate") public BaseResponse rebate(@RequestBody @Valid MarketRebateDTO rebate) throws CoreException, OkHttpException &#123; return marketService.doRebate(rebate); &#125;&#125; @RequestParam 使用 @RequestParam 注解时，如果注解的参数没有传入，则会抛出org.springframework.web.bind.MissingServletRequestParameterException异常 配合hibernate-validator不起作用的问题 要注册 MethodValidationPostProcessor Bean，并且在类上面使用org.springframework.validation.annotation.Validated注解 注意：使用javax.validation.Valid注解对RequestParam对应的参数进行注解，是无效的，需要使用@Validated注解来使得验证生效 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253@Beanpublic Validator validator() &#123; ValidatorFactory factory = Validation.byProvider(HibernateValidator.class) .configure() // 1、普通模式（默认是这个模式） // 普通模式(会校验完所有的属性，然后返回所有的验证失败信息) // 2、快速失败返回模式 // 快速失败返回模式(只要有一个验证失败，则返回) // .addProperty("hibernate.validator.fail_fast", "true") .failFast(true) .buildValidatorFactory(); return factory.getValidator();&#125;@Beanpublic MethodValidationPostProcessor methodValidationPostProcessor() &#123; MethodValidationPostProcessor postProcessor = new MethodValidationPostProcessor(); // 设置validator模式为快速失败返回 postProcessor.setValidator(validator()); return postProcessor;&#125;import com.alibaba.dubbo.config.annotation.Reference;import org.hibernate.validator.constraints.NotBlank;import org.springframework.validation.annotation.Validated;import org.springframework.web.bind.annotation.GetMapping;import org.springframework.web.bind.annotation.PostMapping;import org.springframework.web.bind.annotation.RequestMapping;import org.springframework.web.bind.annotation.RequestParam;import org.springframework.web.bind.annotation.RestController;/** * csp 平台接口封装 * * @author Created by YL on 2017/9/19 */@RestController@RequestMapping("/api/csp")@Validatedpublic class CspController extends BaseRestController &#123; @Reference private CspService cspService; @GetMapping public BaseResponse get(@RequestParam @NotBlank(message = "组件名不能为空") String func, @RequestParam @NotBlank(message = "参数值不能为空") String param) throws OkHttpException, OpenApiException &#123; return new BaseResponse(cspService.get(func, param)); &#125;&#125; 至此，Bean Validator 和 hibernate-validator的@Size、@Min、@Max、@Length、@NotBlank等注解就生效了]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>spring-boot</tag>
       </tags>
   </entry>
   <entry>
@@ -1874,18 +1874,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[hibernate格式化输出sql语句（spring-data-jpa）]]></title>
-    <url>%2Fposts%2F723691b5.html</url>
-    <content type="text"><![CDATA[以下配置是基于spring-boot的application.yml配置 123456789spring: jpa:# hibernate:# ddl-auto: create show-sql: true# database: mysql properties: hibernate: format_sql: true]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Hibernate</tag>
-        <tag>spring-data-jpa</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[hibernate显示sql中的参数值（logback）]]></title>
     <url>%2Fposts%2F9eea8fb4.html</url>
     <content type="text"><![CDATA[以下是 logback 的日志输出配置，只要是在 logback 的配置文件中添加以下配置 12&lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt;&lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt; 完整的 logback 配置如下 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;configuration scan="true" scanPeriod="60 seconds" debug="false"&gt; &lt;property name="logger.charset" value="UTF-8"/&gt; &lt;property name="logger.path" value="$&#123;catalina.home&#125;/logs"/&gt; &lt;property name="logger.pattern" value="[%d&#123;yyyy-MM-dd HH:mm:ss&#125; %highlight(%-5p)] %yellow(%t) %cyan(%c.%M\\(%L\\)) | %m%n"/&gt; &lt;property name="logger.maxHistory" value="15"/&gt; &lt;springProfile name="dev, local"&gt; &lt;appender name="stdout" class="ch.qos.logback.core.ConsoleAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;/appender&gt; &lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&gt; &lt;logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/&gt; &lt;!--&lt;logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="DEBUG"/&gt; &lt;logger name="org.hibernate.SQL" level="DEBUG"/&gt; &lt;logger name="org.hibernate.type" level="INFO"/&gt; &lt;logger name="org.hibernate.engine.QueryParameters" level="DEBUG"/&gt; &lt;logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG"/&gt;--&gt; &lt;!--&lt;logger name="org.apache.ibatis" level="debug"/&gt; &lt;logger name="java.sql.Connection" level="debug"/&gt; &lt;logger name="java.sql.Statement" level="debug"/&gt; &lt;logger name="java.sql.PreparedStatement" level="debug"/&gt;--&gt; &lt;root level="info"&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt; &lt;springProfile name="prod"&gt; &lt;!--See http://logback.qos.ch/manual/appenders.html#RollingFileAppender --&gt; &lt;!--and http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy --&gt; &lt;!--for further documentation --&gt; &lt;appender name="stdout" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;File&gt;$&#123;logger.path&#125;/info.log&lt;/File&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/info.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="warn" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/warn.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;WARN&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/warn.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt; &lt;encoder charset="$&#123;logger.charset&#125;"&gt; &lt;pattern&gt;$&#123;logger.pattern&#125;&lt;/pattern&gt; &lt;/encoder&gt; &lt;File&gt;$&#123;logger.path&#125;/error.log&lt;/File&gt; &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt; &lt;level&gt;ERROR&lt;/level&gt; &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt; &lt;onMismatch&gt;DENY&lt;/onMismatch&gt; &lt;/filter&gt; &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt; &lt;fileNamePattern&gt; $&#123;logger.path&#125;/error.log.%d&#123;yyyy.MM.dd&#125; &lt;/fileNamePattern&gt; &lt;maxHistory&gt;$&#123;logger.maxHistory&#125;&lt;/maxHistory&gt; &lt;/rollingPolicy&gt; &lt;/appender&gt; &lt;logger name="warn" level="WARN"/&gt; &lt;logger name="error" level="ERROR"/&gt; &lt;root level="info"&gt; &lt;appender-ref ref="warn"/&gt; &lt;appender-ref ref="error"/&gt; &lt;appender-ref ref="stdout"/&gt; &lt;/root&gt; &lt;/springProfile&gt;&lt;/configuration&gt;]]></content>
@@ -1895,6 +1883,18 @@
       <tags>
         <tag>logback</tag>
         <tag>Hibernate</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[hibernate格式化输出sql语句（spring-data-jpa）]]></title>
+    <url>%2Fposts%2F723691b5.html</url>
+    <content type="text"><![CDATA[以下配置是基于spring-boot的application.yml配置 123456789spring: jpa:# hibernate:# ddl-auto: create show-sql: true# database: mysql properties: hibernate: format_sql: true]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Hibernate</tag>
+        <tag>spring-data-jpa</tag>
       </tags>
   </entry>
   <entry>
@@ -2184,6 +2184,18 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[CentOS安装JDK]]></title>
+    <url>%2Fposts%2Fd08f134.html</url>
+    <content type="text"><![CDATA[1、准备创建目录12$ mkdir /usr/java$ cd /usr/java 下载 jdk-8u73-linux-x64.tar.gz，解压1$ tar -zxvf jdk-8u73-linux-x64.tar.gz 会解压到 /usr/java/jdk1.8.0_73 下 2、配置环境变量(两种方式二选一配置即可)2.1 编辑 /etc/profile 文件修改 /etc/profile 文件当本机仅仅作为开发使用时推荐使用这种方法，因为此种配置时所有用户的 shell 都有权使用这些环境变量，可能会给系统带来安全性问题。1$ vi /etc/profile 增加如下内容123export JAVA_HOME=/usr/java/jdkexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH 保存退出 :wq12$ . /etc/profile$ echo $JAVA_HOME 2.2 编辑用户目录下的 .bash_profile修改 .bash_profile 文件这种方法更为安全，它可以把使用这些环境变量的权限控制到用户级别，如果需要给某个用户权限使用这些环境变量，只需要修改其个人用户主目录下的 .bash_profile 文件就可以了123export JAVA_HOME=/usr/java/jdkexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH 然后执行使之生效1source .bash_profile 可以看到 JAVA_HOME 不是指向真实的 jdk 目录 /usr/java/jdk1.8.0_73，而是指向 /usr/java/jdk 3、创建软链接为jdk真实目录创建一个命名更加间洁快捷方式123$ ln -s /usr/java/jdk1.8.0_73 /usr/java/jdk$ source /etc/profile#$ source .bash_profile 至此，配置完成]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>JDK</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[CentOS 部署 FTP 服务]]></title>
     <url>%2Fposts%2F9c4dd72b.html</url>
     <content type="text"><![CDATA[安装vsftpd 检测是否已经安装vsftpd 123$ rpm -qa|grep vsftpd# 有打印信息说明已经安装，信息格式如下：vsftpd-3.0.2-27.el7.x86_64 如果已经安装，则可以更新，或者删除重新安装 安装 123456# 使用 yum 安装 vsftpd$ yum install vsftpd# 设置开机启动vsftpd服务$ chkconfig vsftpd on# 启动vsftpd服务$ service vsftpd start 配置防火墙 123456# 打开/etc/sysconfig/iptables文件vi /etc/sysconfig/iptables # 在REJECT行之前添加如下代码-A RH-Firewall-1-INPUT -m state --state NEW -m tcp -p tcp --dport 21 -j ACCEPT# 保存和关闭文件，重启防火墙service iptables restart vsftpd配置 在/etc/vsftpd/vsftpd.conf文件修改以下配置 123456# 禁止匿名用户anonymous登录anonymous_enable=NO# 设置的文件里，是被chroot的用户(无法向上改变目录)chroot_local_user=YES# 500 OOPS: vsftpd: refusing to run with writable root inside chroot()错误解决allow_writeable_chroot=YES 创建用户12345678910111213# 创建用户sudo useradd test_user -s /sbin/nologin# 为用户配置密码，按提示输入两遍密码即可sudo passwd test_user# 查看默认密码过期时间vi /etc/login.defs# 修改密码过期时间sudo chage -M 99999 test_user# 在用户目录下创建目录文件，并赋权给用户sudo mkdir -p /home/test_user/test_dirsudo chown test_user:test_user /home/test_user/test_dir 删除用户12# 删除用户，会连带/home/test_user目录一起删除userdel -rf test_user 常用命令12345678910111213141516171819202122# 启动 ftp 服务sudoservice vsftpd start# 查看 ftp 服务状态sudoservice vsftpd status # 重启 ftp 服务sudoservice vsftpd restart# 关闭 ftp 服务sudoservice vsftpd stop# 在 CentOS 7.x版本使用以下命令# 启动 ftp 服务sudo systemctl start vsftpd.service# 查看 ftp 服务状态sudo systemctl status vsftpd.service# 重启 ftp 服务sudo systemctl restart vsftpd.service# 关闭 ftp 服务sudo systemctl stop vsftpd.service# 开机启动sudo systemctl enable vsftpd.service# 禁止开机启动sudo systemctl disable vsftpd.service]]></content>
@@ -2194,18 +2206,6 @@
         <tag>CentOS</tag>
         <tag>vsftpd</tag>
         <tag>FTP</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[CentOS安装JDK]]></title>
-    <url>%2Fposts%2Fd08f134.html</url>
-    <content type="text"><![CDATA[1、准备创建目录12$ mkdir /usr/java$ cd /usr/java 下载 jdk-8u73-linux-x64.tar.gz，解压1$ tar -zxvf jdk-8u73-linux-x64.tar.gz 会解压到 /usr/java/jdk1.8.0_73 下 2、配置环境变量(两种方式二选一配置即可)2.1 编辑 /etc/profile 文件修改 /etc/profile 文件当本机仅仅作为开发使用时推荐使用这种方法，因为此种配置时所有用户的 shell 都有权使用这些环境变量，可能会给系统带来安全性问题。1$ vi /etc/profile 增加如下内容123export JAVA_HOME=/usr/java/jdkexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH 保存退出 :wq12$ . /etc/profile$ echo $JAVA_HOME 2.2 编辑用户目录下的 .bash_profile修改 .bash_profile 文件这种方法更为安全，它可以把使用这些环境变量的权限控制到用户级别，如果需要给某个用户权限使用这些环境变量，只需要修改其个人用户主目录下的 .bash_profile 文件就可以了123export JAVA_HOME=/usr/java/jdkexport PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$CLASSPATH 然后执行使之生效1source .bash_profile 可以看到 JAVA_HOME 不是指向真实的 jdk 目录 /usr/java/jdk1.8.0_73，而是指向 /usr/java/jdk 3、创建软链接为jdk真实目录创建一个命名更加间洁快捷方式123$ ln -s /usr/java/jdk1.8.0_73 /usr/java/jdk$ source /etc/profile#$ source .bash_profile 至此，配置完成]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>JDK</tag>
       </tags>
   </entry>
 </search>
