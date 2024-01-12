@@ -1,0 +1,1930 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#fff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=6.6.0" color="#fff">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Assert 断言123456789101112131415161718// 要求参数 object 必须为非空（Not Null），否则抛出异常，不予放行// 参数 message 参数用于定制异常信息。void notNull(Object object, String message)// 要求参数必须空（Null），否则抛出异常，不予『放行』。// 和 notNull() 方法断言规则相反">
+<meta name="keywords" content="spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常用 spring 框架工具类">
+<meta property="og:url" content="https://blog.yl-online.top/posts/3378bcc3.html">
+<meta property="og:site_name" content="forever杨的个人博客">
+<meta property="og:description" content="Assert 断言123456789101112131415161718// 要求参数 object 必须为非空（Not Null），否则抛出异常，不予放行// 参数 message 参数用于定制异常信息。void notNull(Object object, String message)// 要求参数必须空（Null），否则抛出异常，不予『放行』。// 和 notNull() 方法断言规则相反">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2022-04-26T11:29:47.062Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="常用 spring 框架工具类">
+<meta name="twitter:description" content="Assert 断言123456789101112131415161718// 要求参数 object 必须为非空（Not Null），否则抛出异常，不予放行// 参数 message 参数用于定制异常信息。void notNull(Object object, String message)// 要求参数必须空（Null），否则抛出异常，不予『放行』。// 和 notNull() 方法断言规则相反">
+
+
+
+
+
+
+  <link rel="canonical" href="https://blog.yl-online.top/posts/3378bcc3.html">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>常用 spring 框架工具类 | forever杨的个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c5afc60a2d499784ee0c21d2d21be420";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">forever杨的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">I want to be forever young!</h1>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>文章<span class="badge">201</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">31</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">175</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/404.html" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/about/index.html" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/3378bcc3.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">常用 spring 框架工具类
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-12-18 16:43:05" itemprop="dateCreated datePublished" datetime="2021-12-18T16:43:05+08:00">2021-12-18</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2022-04-26 19:29:47" itemprop="dateModified" datetime="2022-04-26T19:29:47+08:00">2022-04-26</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数：</span>
+                
+                <span title="字数">5.5k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">5 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/spring/" rel="tag" class="color1">spring</a>
+        
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Assert-断言"><a href="#Assert-断言" class="headerlink" title="Assert 断言"></a>Assert 断言</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 要求参数 object 必须为非空（Not Null），否则抛出异常，不予放行</span></span><br><span class="line"><span class="comment">// 参数 message 参数用于定制异常信息。</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">notNull</span><span class="params">(Object object, String message)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 要求参数必须空（Null），否则抛出异常，不予『放行』。</span></span></span><br><span class="line"><span class="function"><span class="comment">// 和 notNull() 方法断言规则相反</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">isNull</span><span class="params">(Object object, String message)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 要求参数必须为真（True），否则抛出异常，不予『放行』。</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">isTrue</span><span class="params">(<span class="keyword">boolean</span> expression, String message)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 要求参数（List/Set）必须非空（Not Empty），否则抛出异常，不予放行</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">notEmpty</span><span class="params">(Collection collection, String message)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 要求参数（String）必须有长度（即，Not Empty），否则抛出异常，不予放行</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">hasLength</span><span class="params">(String text, String message)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 要求参数（String）必须有内容（即，Not Blank），否则抛出异常，不予放行</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">hasText</span><span class="params">(String text, String message)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 要求参数是指定类型的实例，否则抛出异常，不予放行</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">isInstanceOf</span><span class="params">(Class type, Object obj, String message)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 要求参数 `subType` 必须是参数 superType 的子类或实现类，否则抛出异常，不予放行</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">isAssignable</span><span class="params">(Class superType, Class subType, String message)</span></span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="ObjectUtils-对象、数组、集合操作"><a href="#ObjectUtils-对象、数组、集合操作" class="headerlink" title="ObjectUtils 对象、数组、集合操作"></a>ObjectUtils 对象、数组、集合操作</h2><blockquote>
+<p>获取对象的基本信息</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取对象的类名。参数为 null 时，返回字符串："null" </span></span><br><span class="line"><span class="function">String <span class="title">nullSafeClassName</span><span class="params">(Object obj)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 参数为 null 时，返回 0</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">nullSafeHashCode</span><span class="params">(Object object)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 参数为 null 时，返回字符串："null"</span></span></span><br><span class="line"><span class="function">String <span class="title">nullSafeToString</span><span class="params">(<span class="keyword">boolean</span>[] array)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 获取对象 HashCode（十六进制形式字符串）。参数为 null 时，返回 0 </span></span></span><br><span class="line"><span class="function">String <span class="title">getIdentityHexString</span><span class="params">(Object obj)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 获取对象的类名和 HashCode。参数为 null 时，返回字符串："" </span></span></span><br><span class="line"><span class="function">String <span class="title">identityToString</span><span class="params">(Object obj)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 相当于 toString()方法，但参数为 null 时，返回字符串：""</span></span></span><br><span class="line"><span class="function">String <span class="title">getDisplayString</span><span class="params">(Object obj)</span></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>判断工具</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 判断数组是否为空</span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">(Object[] array)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 判断参数对象是否是数组</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">isArray</span><span class="params">(Object obj)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 判断数组中是否包含指定元素</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">containsElement</span><span class="params">(Object[] array, Object element)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 相等，或同为 null时，返回 true</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">nullSafeEquals</span><span class="params">(Object o1, Object o2)</span></span></span><br><span class="line"><span class="function"><span class="comment">/*</span></span></span><br><span class="line"><span class="function"><span class="comment">判断参数对象是否为空，判断标准为：</span></span></span><br><span class="line"><span class="function"><span class="comment">    Optional: Optional.empty()</span></span></span><br><span class="line"><span class="function"><span class="comment">       Array: length == 0</span></span></span><br><span class="line"><span class="function"><span class="comment">CharSequence: length == 0</span></span></span><br><span class="line"><span class="function"><span class="comment">  Collection: Collection.isEmpty()</span></span></span><br><span class="line"><span class="function"><span class="comment">         Map: Map.isEmpty()</span></span></span><br><span class="line"><span class="function"><span class="comment"> */</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">(Object obj)</span></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>其他</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 向参数数组的末尾追加新元素，并返回一个新数组</span></span><br><span class="line">&lt;A, O extends A&gt; A[] addObjectToArray(A[] array, O obj)</span><br><span class="line"><span class="comment">// 原生基础类型数组 --&gt; 包装类数组</span></span><br><span class="line">Object[] toObjectArray(Object source)</span><br></pre></td></tr></table></figure>
+<h1 id="StringUtils"><a href="#StringUtils" class="headerlink" title="StringUtils"></a>StringUtils</h1><blockquote>
+<p>字符串判断工具</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 判断字符串是否为 null，或 ""。注意，包含空白符的字符串为非空</span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">(Object str)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 判断字符串是否是以指定内容结束。忽略大小写</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">endsWithIgnoreCase</span><span class="params">(String str, String suffix)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 判断字符串是否已指定内容开头。忽略大小写</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">startsWithIgnoreCase</span><span class="params">(String str, String prefix)</span> </span></span><br><span class="line"><span class="function"><span class="comment">// 是否包含空白符</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">containsWhitespace</span><span class="params">(String str)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 判断字符串非空且长度不为 0，即，Not Empty</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">hasLength</span><span class="params">(CharSequence str)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 判断字符串是否包含实际内容，即非仅包含空白符，也就是 Not Blank</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">hasText</span><span class="params">(CharSequence str)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 判断字符串指定索引处是否包含一个子串。</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">substringMatch</span><span class="params">(CharSequence str, <span class="keyword">int</span> index, CharSequence substring)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 计算一个字符串中指定子串的出现次数</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">countOccurrencesOf</span><span class="params">(String str, String sub)</span></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>字符串操作工具</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 查找并替换指定子串</span></span><br><span class="line"><span class="function">String <span class="title">replace</span><span class="params">(String inString, String oldPattern, String newPattern)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 去除尾部的特定字符</span></span></span><br><span class="line"><span class="function">String <span class="title">trimTrailingCharacter</span><span class="params">(String str, <span class="keyword">char</span> trailingCharacter)</span> </span></span><br><span class="line"><span class="function"><span class="comment">// 去除头部的特定字符</span></span></span><br><span class="line"><span class="function">String <span class="title">trimLeadingCharacter</span><span class="params">(String str, <span class="keyword">char</span> leadingCharacter)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 去除头部的空白符</span></span></span><br><span class="line"><span class="function">String <span class="title">trimLeadingWhitespace</span><span class="params">(String str)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 去除头部的空白符</span></span></span><br><span class="line"><span class="function">String <span class="title">trimTrailingWhitespace</span><span class="params">(String str)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 去除头部和尾部的空白符</span></span></span><br><span class="line"><span class="function">String <span class="title">trimWhitespace</span><span class="params">(String str)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 删除开头、结尾和中间的空白符</span></span></span><br><span class="line"><span class="function">String <span class="title">trimAllWhitespace</span><span class="params">(String str)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 删除指定子串</span></span></span><br><span class="line"><span class="function">String <span class="title">delete</span><span class="params">(String inString, String pattern)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 删除指定字符（可以是多个）</span></span></span><br><span class="line"><span class="function">String <span class="title">deleteAny</span><span class="params">(String inString, String charsToDelete)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 对数组的每一项执行 trim() 方法</span></span></span><br><span class="line"><span class="function">String[] <span class="title">trimArrayElements</span><span class="params">(String[] array)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 将 URL 字符串进行解码</span></span></span><br><span class="line"><span class="function">String <span class="title">uriDecode</span><span class="params">(String source, Charset charset)</span></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>路径相关工具方法</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 解析路径字符串，优化其中的 “..” </span></span><br><span class="line"><span class="function">String <span class="title">cleanPath</span><span class="params">(String path)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 解析路径字符串，解析出文件名部分</span></span></span><br><span class="line"><span class="function">String <span class="title">getFilename</span><span class="params">(String path)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 解析路径字符串，解析出文件后缀名</span></span></span><br><span class="line"><span class="function">String <span class="title">getFilenameExtension</span><span class="params">(String path)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 比较两个两个字符串，判断是否是同一个路径。会自动处理路径中的 “..” </span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">pathEquals</span><span class="params">(String path1, String path2)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 删除文件路径名中的后缀部分</span></span></span><br><span class="line"><span class="function">String <span class="title">stripFilenameExtension</span><span class="params">(String path)</span> </span></span><br><span class="line"><span class="function"><span class="comment">// 以 “. 作为分隔符，获取其最后一部分</span></span></span><br><span class="line"><span class="function">String <span class="title">unqualify</span><span class="params">(String qualifiedName)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 以指定字符作为分隔符，获取其最后一部分</span></span></span><br><span class="line"><span class="function">String <span class="title">unqualify</span><span class="params">(String qualifiedName, <span class="keyword">char</span> separator)</span></span></span><br></pre></td></tr></table></figure>
+<h1 id="CollectionUtils"><a href="#CollectionUtils" class="headerlink" title="CollectionUtils"></a>CollectionUtils</h1><blockquote>
+<p>集合判断工具</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 判断 List/Set 是否为空</span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">(Collection&lt;?&gt; collection)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 判断 Map 是否为空</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">(Map&lt;?,?&gt; map)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 判断 List/Set 中是否包含某个对象</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">containsInstance</span><span class="params">(Collection&lt;?&gt; collection, Object element)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 以迭代器的方式，判断 List/Set 中是否包含某个对象</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">contains</span><span class="params">(Iterator&lt;?&gt; iterator, Object element)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 判断 List/Set 是否包含某些对象中的任意一个</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">containsAny</span><span class="params">(Collection&lt;?&gt; source, Collection&lt;?&gt; candidates)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 判断 List/Set 中的每个元素是否唯一。即 List/Set 中不存在重复元素</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">hasUniqueObject</span><span class="params">(Collection&lt;?&gt; collection)</span></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>集合操作工具</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将 Array 中的元素都添加到 List/Set 中</span></span><br><span class="line">&lt;E&gt; <span class="function"><span class="keyword">void</span> <span class="title">mergeArrayIntoCollection</span><span class="params">(Object array, Collection&lt;E&gt; collection)</span>  </span></span><br><span class="line"><span class="function"><span class="comment">// 将 Properties 中的键值对都添加到 Map 中</span></span></span><br><span class="line"><span class="function">&lt;K,V&gt; <span class="keyword">void</span> <span class="title">mergePropertiesIntoMap</span><span class="params">(Properties props, Map&lt;K,V&gt; map)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 返回 List 中最后一个元素</span></span></span><br><span class="line"><span class="function">&lt;T&gt; T <span class="title">lastElement</span><span class="params">(List&lt;T&gt; list)</span>  </span></span><br><span class="line"><span class="function"><span class="comment">// 返回 Set 中最后一个元素</span></span></span><br><span class="line"><span class="function">&lt;T&gt; T <span class="title">lastElement</span><span class="params">(Set&lt;T&gt; set)</span> </span></span><br><span class="line"><span class="function"><span class="comment">// 返回参数 candidates 中第一个存在于参数 source 中的元素</span></span></span><br><span class="line"><span class="function">&lt;E&gt; E <span class="title">findFirstMatch</span><span class="params">(Collection&lt;?&gt; source, Collection&lt;E&gt; candidates)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 返回 List/Set 中指定类型的元素。</span></span></span><br><span class="line"><span class="function">&lt;T&gt; T <span class="title">findValueOfType</span><span class="params">(Collection&lt;?&gt; collection, Class&lt;T&gt; type)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 返回 List/Set 中指定类型的元素。如果第一种类型未找到，则查找第二种类型，以此类推</span></span></span><br><span class="line"><span class="function">Object <span class="title">findValueOfType</span><span class="params">(Collection&lt;?&gt; collection, Class&lt;?&gt;[] types)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 返回 List/Set 中元素的类型</span></span></span><br><span class="line"><span class="function">Class&lt;?&gt; <span class="title">findCommonElementType</span><span class="params">(Collection&lt;?&gt; collection)</span></span></span><br></pre></td></tr></table></figure>
+<h1 id="FileCopyUtils"><a href="#FileCopyUtils" class="headerlink" title="FileCopyUtils"></a>FileCopyUtils</h1><blockquote>
+<p>输入</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 从文件中读入到字节数组中</span></span><br><span class="line"><span class="keyword">byte</span>[] copyToByteArray(File in)</span><br><span class="line"><span class="comment">// 从输入流中读入到字节数组中</span></span><br><span class="line"><span class="keyword">byte</span>[] copyToByteArray(InputStream in)</span><br><span class="line"><span class="comment">// 从输入流中读入到字符串中</span></span><br><span class="line"><span class="function">String <span class="title">copyToString</span><span class="params">(Reader in)</span></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>输出</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 从字节数组到文件</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">copy</span><span class="params">(<span class="keyword">byte</span>[] in, File out)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 从文件到文件</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">copy</span><span class="params">(File in, File out)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 从字节数组到输出流</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">copy</span><span class="params">(<span class="keyword">byte</span>[] in, OutputStream out)</span> </span></span><br><span class="line"><span class="function"><span class="comment">// 从输入流到输出流</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">copy</span><span class="params">(InputStream in, OutputStream out)</span> </span></span><br><span class="line"><span class="function"><span class="comment">// 从输入流到输出流</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">copy</span><span class="params">(Reader in, Writer out)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 从字符串到输出流</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">copy</span><span class="params">(String in, Writer out)</span></span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+      <div>
+        
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>forever杨</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    
+    <a href="https://blog.yl-online.top/posts/3378bcc3.html" title="常用 spring 框架工具类">https://blog.yl-online.top/posts/3378bcc3.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。如果文章内容对你有用，请记录到你的笔记中。本博客站点随时会停止服务，请不要收藏、转载！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/spring/" rel="tag"># spring</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/583c9124.html" rel="next" title="PasswordEncoder 配置">
+                <i class="fa fa-chevron-left"></i> PasswordEncoder 配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/1f7d4723.html" rel="prev" title="父子关系树或列表排序">
+                父子关系树或列表排序 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div id="gitalk-container">
+    </div>
+    
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/avatar.jpg" alt="forever杨">
+            
+              <p class="site-author-name" itemprop="name">forever杨</p>
+              <p class="site-description motion-element" itemprop="description">开心又过一日，唔开心又过一日</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/index.html">
+                
+                    <span class="site-state-item-count">201</span>
+                    <span class="site-state-item-name">文章</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">31</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">175</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/foreveryang321" title="GitHub &rarr; https://github.com/foreveryang321" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://tidyko.com/" title="https://tidyko.com/" rel="noopener" target="_blank">Tidy的个人博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Assert-断言"><span class="nav-number">1.</span> <span class="nav-text">Assert 断言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ObjectUtils-对象、数组、集合操作"><span class="nav-number">1.1.</span> <span class="nav-text">ObjectUtils 对象、数组、集合操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#StringUtils"><span class="nav-number">2.</span> <span class="nav-text">StringUtils</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CollectionUtils"><span class="nav-number">3.</span> <span class="nav-text">CollectionUtils</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FileCopyUtils"><span class="nav-number">4.</span> <span class="nav-text">FileCopyUtils</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">forever杨</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点总字数：</span>
+    
+    <span title="站点总字数">648k</span>
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/reading_progress/reading_progress.js"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+
+  
+  
+    
+  
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+
+  
+  
+  <script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+  <script>
+    var gitalk = new Gitalk({
+      clientID: '105db2a541a87c6d8a8a',
+      clientSecret: '0b16c78377f367f4af98cb3e1b6db08a85a06740',
+      repo: 'foreveryang321.github.io',
+      owner: 'foreveryang321',
+      admin: ['foreveryang321'],
+      id: md5(location.pathname),
+      distractionFreeMode: 'true',
+      body: location.href
+    })
+    gitalk.render('gitalk-container')
+  </script>
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap');
+      $(e).after($wrap);
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text();
+        }).toArray().join('\n');
+        var ta = document.createElement('textarea');
+        var range = document.createRange(); //For Chrome
+        var sel = window.getSelection(); //For Chrome
+        var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+        ta.style.top = yPosition + 'px'; //Prevent page scroll
+        ta.style.position = 'absolute';
+        ta.style.opacity = '0';
+        ta.value = code;
+        ta.textContent = code; //For FireFox
+        ta.contentEditable = true;
+        ta.readOnly = false;
+        document.body.appendChild(ta);
+        range.selectNode(ta);
+        sel.removeAllRanges();
+        sel.addRange(range);
+        ta.setSelectionRange(0, code.length);
+        var result = document.execCommand('copy');
+        
+          if (result) $(this).text('复制成功');
+          else $(this).text('复制失败');
+        
+        ta.blur(); //For iOS
+        $(this).blur();
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn');
+        setTimeout(function () {
+          $b.text('复制');
+        }, 300);
+      }).append(e);
+    })
+  </script>
+
+
+  
+
+</body>
+</html>
