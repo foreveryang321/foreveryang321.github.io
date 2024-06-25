@@ -417,7 +417,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/aea02818.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/2e023d93.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="forever杨">
@@ -437,7 +437,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/posts/aea02818.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/11/index.html">Linux curl 命令</a>
+                <a href="/posts/2e023d93.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/11/index.html">Linux du 命令</a>
               
             
           </h2>
@@ -479,7 +479,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-12-07 15:34:26" itemprop="dateModified" datetime="2021-12-07T15:34:26+08:00">2021-12-07</time>
+                <time title="修改时间：2024-05-06 09:38:27" itemprop="dateModified" datetime="2024-05-06T09:38:27+08:00">2024-05-06</time>
               
             
           </span>
@@ -526,7 +526,7 @@
                 
                   <span class="post-meta-item-text">字数：</span>
                 
-                <span title="字数">1.2k</span>
+                <span title="字数">87</span>
               
 
               
@@ -560,7 +560,7 @@
         
            <a href="/tags/shell/" rel="tag" class="color1">shell</a>
         
-           <a href="/tags/curl/" rel="tag" class="color2">curl</a>
+           <a href="/tags/du/" rel="tag" class="color2">du</a>
         
       </div>
     
@@ -576,24 +576,223 @@
       
         
           
-            <h1 id="查询出口IP"><a href="#查询出口IP" class="headerlink" title="查询出口IP"></a>查询出口IP</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl icanhazip.com</span><br></pre></td></tr></table></figure>
-<h1 id="GET-请求"><a href="#GET-请求" class="headerlink" title="GET 请求"></a>GET 请求</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://www.baidu.com?q=xxxx</span><br></pre></td></tr></table></figure>
-<h2 id="POST-请求"><a href="#POST-请求" class="headerlink" title="POST 请求"></a>POST 请求</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://ip:port/api/add_user -XPOST -d <span class="string">"send message..."</span></span><br></pre></td></tr></table></figure>
-<h2 id="发送-POST-JSON-请求"><a href="#发送-POST-JSON-请求" class="headerlink" title="发送 POST JSON 请求"></a>发送 POST JSON 请求</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -H <span class="string">"Content-Type: application/json"</span> -X POST  --data <span class="string">'&#123;"data":"1"&#125;'</span> http://127.0.0.1/</span><br></pre></td></tr></table></figure>
-<h2 id="使用代理"><a href="#使用代理" class="headerlink" title="使用代理"></a>使用代理</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -x 192.168.2.5:3128 https://www.baidu.com?q=xxxx</span><br></pre></td></tr></table></figure>
-<h2 id="输出请求信息"><a href="#输出请求信息" class="headerlink" title="输出请求信息"></a>输出请求信息</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># http_code</span></span><br><span class="line"><span class="comment"># time_connect</span></span><br><span class="line"><span class="comment"># time_starttransfer</span></span><br><span class="line"><span class="comment"># time_total</span></span><br><span class="line"><span class="comment"># size_download</span></span><br><span class="line"><span class="comment"># speed_download</span></span><br><span class="line"><span class="comment"># 参考地址：</span></span><br><span class="line">curl http://www.baidu.com?q=xxxx -so /dev/null -w <span class="string">"%&#123;http_code&#125;\t%&#123;time_connect&#125;\t%&#123;time_starttransfer&#125;\t%&#123;time_total&#125;\t%&#123;size_download&#125;\t%&#123;speed_download&#125;\t"</span></span><br></pre></td></tr></table></figure>
-<h1 id="下载文件并重命名"><a href="#下载文件并重命名" class="headerlink" title="下载文件并重命名"></a>下载文件并重命名</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> culr -L &lt;url&gt; -o &lt;filename&gt;</span></span><br><span class="line">curl -L http://mirrors.aliyun.com/repo/Centos-7.repo -o /etc/yum.repos.d/CentOS-Base.repo \</span><br></pre></td></tr></table></figure>
-<h1 id="发送邮件"><a href="#发送邮件" class="headerlink" title="发送邮件"></a>发送邮件</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> mail.txt 内容</span></span><br><span class="line">tee ./mail.txt &lt;&lt;-'EOF'</span><br><span class="line">From:test01@163.com</span><br><span class="line">To:test02@163.com</span><br><span class="line">Subject: test send email</span><br><span class="line"></span><br><span class="line">test send email!!!!!!</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 发送邮件</span></span><br><span class="line">curl -s --url "smtp://smtp.163.net" --mail-from "test01@163.com" --user "test01@163.com:123456" --mail-rcpt "test02@163.com" --upload-file mail.txt</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>参数说明</p>
-</blockquote>
-<ul>
-<li>–url：邮箱服务</li>
-<li>–mail-from：发送者邮箱</li>
-<li>–user：发送正邮箱账号密码，账号密码使用冒号隔开</li>
-<li>– mail-rcpt：接收者邮箱</li>
-<li>–upload-file：邮件内容，写法参考 mail.txt</li>
-</ul>
+            <h1 id="du"><a href="#du" class="headerlink" title="du"></a>du</h1><h2 id="计算当前文件夹下占用空间，排序"><a href="#计算当前文件夹下占用空间，排序" class="headerlink" title="计算当前文件夹下占用空间，排序"></a>计算当前文件夹下占用空间，排序</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">du -sh /* | sort -nr</span><br><span class="line"><span class="comment"># 排除某个目录</span></span><br><span class="line">du -sh /* --exclude=<span class="string">"/data"</span> | sort -nr</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/2835e3e.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/2835e3e.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/11/index.html">Linux cp 命令</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-02-06 09:35:05" itemprop="dateCreated datePublished" datetime="2018-02-06T09:35:05+08:00">2018-02-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-10-19 15:13:02" itemprop="dateModified" datetime="2020-10-19T15:13:02+08:00">2020-10-19</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数：</span>
+                
+                <span title="字数">96</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/shell/" rel="tag" class="color1">shell</a>
+        
+           <a href="/tags/cp/" rel="tag" class="color2">cp</a>
+        
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h1><h2 id="复制文件夹"><a href="#复制文件夹" class="headerlink" title="复制文件夹"></a>复制文件夹</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cp -r [old <span class="built_in">source</span>] -d [new <span class="built_in">source</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># -p 保持原有文件权限</span></span><br><span class="line">cp -r -p [old <span class="built_in">source</span>] -d [new <span class="built_in">source</span>]</span><br></pre></td></tr></table></figure>
 
           
         
@@ -1526,6 +1725,225 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/6c05ba39.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/6c05ba39.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/11/index.html">Linux netstat 命令</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-02-06 09:35:05" itemprop="dateCreated datePublished" datetime="2018-02-06T09:35:05+08:00">2018-02-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2022-06-29 08:28:15" itemprop="dateModified" datetime="2022-06-29T08:28:15+08:00">2022-06-29</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数：</span>
+                
+                <span title="字数">1.3k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/netstat/" rel="tag" class="color1">netstat</a>
+        
+           <a href="/tags/shell/" rel="tag" class="color2">shell</a>
+        
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h1><blockquote>
+<p>netstat</p>
+</blockquote>
+<h2 id="通过进程查看占用端口"><a href="#通过进程查看占用端口" class="headerlink" title="通过进程查看占用端口"></a>通过进程查看占用端口</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># netstat -nap | grep 9836</span></span><br><span class="line">$ netstat -anp | grep &lt;pid&gt;</span><br><span class="line">tcp        0      0 0.0.0.0:8880            0.0.0.0:*               LISTEN      15910/java          </span><br><span class="line">tcp        0      0 0.0.0.0:8881            0.0.0.0:*               LISTEN      20854/java          </span><br><span class="line">tcp        0      0 0.0.0.0:8883            0.0.0.0:*               LISTEN      18394/docker-proxy         </span><br><span class="line">tcp6       0      0 :::8883                 :::*                    LISTEN      18400/docker-proxy  </span><br><span class="line">unix  2      [ ACC ]     STREAM     LISTENING     230283   17888/containerd-sh  /run/containerd/s/f54f5c6b3963ea8fcec7d3c2baefa7fcb70884d50299148a00d747cc3c59980d</span><br><span class="line">unix  3      [ ]         STREAM     CONNECTED     234595   17888/containerd-sh  </span><br><span class="line">unix  3      [ ]         STREAM     CONNECTED     229049   17888/containerd-sh  /run/containerd/s/f54f5c6b3963ea8fcec7d3c2baefa7fcb70884d50299148a00d747cc3c59980d</span><br><span class="line"></span><br><span class="line">$ netstat -anl|grep 888</span><br><span class="line">tcp        0      0 0.0.0.0:8880            0.0.0.0:*               LISTEN     </span><br><span class="line">tcp        0      0 0.0.0.0:8881            0.0.0.0:*               LISTEN     </span><br><span class="line">tcp        0      0 0.0.0.0:8883            0.0.0.0:*               LISTEN     </span><br><span class="line">tcp6       0      0 :::8883                 :::*                    LISTEN</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/fc091577.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1695,225 +2113,6 @@
 <p>第一列是打开的句柄数，第二列是进程ID。</p>
 <p>查看打开句柄总数<br>lsof -n|awk ‘{print $2}’|wc -l<br>查看系统中进程占用的句柄数，根据打开文件句柄的数量降序排列，其中第二列为进程ID：<br>lsof -n|awk ‘{print $2}’|sort|uniq -c|sort -nr|more<br>查询系统中指定进程占用的句柄数<br>lsof -n | grep [PID]| wc -l</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">[root@grg-zhtest1 ~]# lsof -h</span><br><span class="line">lsof 4.87</span><br><span class="line"> latest revision: ftp://lsof.itap.purdue.edu/pub/tools/unix/lsof/</span><br><span class="line"> latest FAQ: ftp://lsof.itap.purdue.edu/pub/tools/unix/lsof/FAQ</span><br><span class="line"> latest man page: ftp://lsof.itap.purdue.edu/pub/tools/unix/lsof/lsof_man</span><br><span class="line"> usage: [-?abhKlnNoOPRtUvVX] [+|-c c] [+|-d s] [+D D] [+|-f[gG]] [+|-e s]</span><br><span class="line"> [-F [f]] [-g [s]] [-i [i]] [+|-L [l]] [+m [m]] [+|-M] [-o [o]] [-p s]</span><br><span class="line">[+|-r [t]] [-s [p:s]] [-S [t]] [-T [t]] [-u s] [+|-w] [-x [fl]] [--] [names]</span><br><span class="line">Defaults in parentheses; comma-separated set (s) items; dash-separated ranges.</span><br><span class="line">  -?|-h list help          -a AND selections (OR)     -b avoid kernel blocks</span><br><span class="line">  -c c  cmd c ^c /c/[bix]  +c w  COMMAND width (9)    +d s  dir s files</span><br><span class="line">  -d s  select by FD set   +D D  dir D tree *SLOW?*   +|-e s  exempt s *RISKY*</span><br><span class="line">  -i select IPv[46] files  -K list tasKs (threads)    -l list UID numbers</span><br><span class="line">  -n no host names         -N select NFS files        -o list file offset</span><br><span class="line">  -O no overhead *RISKY*   -P no port names           -R list paRent PID</span><br><span class="line">  -s list file size        -t terse listing           -T disable TCP/TPI info</span><br><span class="line">  -U select Unix socket    -v list version info       -V verbose search</span><br><span class="line">  +|-w  Warnings (+)       -X skip TCP&amp;UDP* files     -Z Z  context [Z]</span><br><span class="line">  -- end option scan     </span><br><span class="line">  +f|-f  +filesystem or -file names     +|-f[gG] flaGs </span><br><span class="line">  -F [f] select fields; -F? for help  </span><br><span class="line">  +|-L [l] list (+) suppress (-) link counts &lt; l (0 = all; default = 0)</span><br><span class="line">                                        +m [m] use|create mount supplement</span><br><span class="line">  +|-M   portMap registration (-)       -o o   o 0t offset digits (8)</span><br><span class="line">  -p s   exclude(^)|select PIDs         -S [t] t second stat timeout (15)</span><br><span class="line">  -T qs TCP/TPI Q,St (s) info</span><br><span class="line">  -g [s] exclude(^)|select and print process group IDs</span><br><span class="line">  -i i   select by IPv[46] address: [46][proto][@host|addr][:svc_list|port_list]</span><br><span class="line">  +|-r [t[m&lt;fmt&gt;]] repeat every t seconds (15);  + until no files, - forever.</span><br><span class="line">       An optional suffix to t is m&lt;fmt&gt;; m must separate t from &lt;fmt&gt; and</span><br><span class="line">      &lt;fmt&gt; is an strftime(3) format for the marker line.</span><br><span class="line">  -s p:s  exclude(^)|select protocol (p = TCP|UDP) states by name(s).</span><br><span class="line">  -u s   exclude(^)|select login|UID set s</span><br><span class="line">  -x [fl] cross over +d|+D File systems or symbolic Links</span><br><span class="line">  names  select named files or files on named file systems</span><br><span class="line">Anyone can list all files; /dev warnings disabled; kernel ID check disabled.</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/6c05ba39.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/6c05ba39.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/11/index.html">Linux netstat 命令</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-02-06 09:35:05" itemprop="dateCreated datePublished" datetime="2018-02-06T09:35:05+08:00">2018-02-06</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2022-06-29 08:28:15" itemprop="dateModified" datetime="2022-06-29T08:28:15+08:00">2022-06-29</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数：</span>
-                
-                <span title="字数">1.3k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
-        <span class="post-meta-item-icon">
-          <i class="fa fa-tags"></i>
-        </span>
-        <span class="post-meta-item-text">标签</span>
-        
-           <a href="/tags/netstat/" rel="tag" class="color1">netstat</a>
-        
-           <a href="/tags/shell/" rel="tag" class="color2">shell</a>
-        
-      </div>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h1><blockquote>
-<p>netstat</p>
-</blockquote>
-<h2 id="通过进程查看占用端口"><a href="#通过进程查看占用端口" class="headerlink" title="通过进程查看占用端口"></a>通过进程查看占用端口</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># netstat -nap | grep 9836</span></span><br><span class="line">$ netstat -anp | grep &lt;pid&gt;</span><br><span class="line">tcp        0      0 0.0.0.0:8880            0.0.0.0:*               LISTEN      15910/java          </span><br><span class="line">tcp        0      0 0.0.0.0:8881            0.0.0.0:*               LISTEN      20854/java          </span><br><span class="line">tcp        0      0 0.0.0.0:8883            0.0.0.0:*               LISTEN      18394/docker-proxy         </span><br><span class="line">tcp6       0      0 :::8883                 :::*                    LISTEN      18400/docker-proxy  </span><br><span class="line">unix  2      [ ACC ]     STREAM     LISTENING     230283   17888/containerd-sh  /run/containerd/s/f54f5c6b3963ea8fcec7d3c2baefa7fcb70884d50299148a00d747cc3c59980d</span><br><span class="line">unix  3      [ ]         STREAM     CONNECTED     234595   17888/containerd-sh  </span><br><span class="line">unix  3      [ ]         STREAM     CONNECTED     229049   17888/containerd-sh  /run/containerd/s/f54f5c6b3963ea8fcec7d3c2baefa7fcb70884d50299148a00d747cc3c59980d</span><br><span class="line"></span><br><span class="line">$ netstat -anl|grep 888</span><br><span class="line">tcp        0      0 0.0.0.0:8880            0.0.0.0:*               LISTEN     </span><br><span class="line">tcp        0      0 0.0.0.0:8881            0.0.0.0:*               LISTEN     </span><br><span class="line">tcp        0      0 0.0.0.0:8883            0.0.0.0:*               LISTEN     </span><br><span class="line">tcp6       0      0 :::8883                 :::*                    LISTEN</span><br></pre></td></tr></table></figure>
 
           
         
@@ -2186,221 +2385,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/29bd046e.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/29bd046e.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/11/index.html">Linux tail 命令</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-02-06 09:35:05" itemprop="dateCreated datePublished" datetime="2018-02-06T09:35:05+08:00">2018-02-06</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-05-17 10:50:44" itemprop="dateModified" datetime="2018-05-17T10:50:44+08:00">2018-05-17</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数：</span>
-                
-                <span title="字数">4</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
-        <span class="post-meta-item-icon">
-          <i class="fa fa-tags"></i>
-        </span>
-        <span class="post-meta-item-text">标签</span>
-        
-           <a href="/tags/shell/" rel="tag" class="color1">shell</a>
-        
-           <a href="/tags/tail/" rel="tag" class="color2">tail</a>
-        
-      </div>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h1>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/bd083454.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2574,6 +2558,221 @@
 <p>排除文件夹（注意排除的文件夹最后不能加/）</p>
 <p>tar -zcvf gitlab.source.tar.gz –exclude=node_modules –exclude=target gitlab/</p>
 
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/29bd046e.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="forever杨">
+      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="forever杨的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/29bd046e.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/11/index.html">Linux tail 命令</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-02-06 09:35:05" itemprop="dateCreated datePublished" datetime="2018-02-06T09:35:05+08:00">2018-02-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-05-17 10:50:44" itemprop="dateModified" datetime="2018-05-17T10:50:44+08:00">2018-05-17</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数：</span>
+                
+                <span title="字数">4</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
+        <span class="post-meta-item-icon">
+          <i class="fa fa-tags"></i>
+        </span>
+        <span class="post-meta-item-text">标签</span>
+        
+           <a href="/tags/shell/" rel="tag" class="color1">shell</a>
+        
+           <a href="/tags/tail/" rel="tag" class="color2">tail</a>
+        
+      </div>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h1>
           
         
       
@@ -3005,222 +3204,6 @@
         
           
             <h1 id="vi"><a href="#vi" class="headerlink" title="vi"></a>vi</h1><p>linux文件格式的问题（使用unix格式）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看文件格式</span></span><br><span class="line">vi 文件名</span><br><span class="line">:<span class="built_in">set</span> ff <span class="comment"># :set fileencoding</span></span><br><span class="line"><span class="comment"># 设置文件格式为unix</span></span><br><span class="line">:<span class="built_in">set</span> ff=unix</span><br><span class="line"><span class="comment"># 保存退出</span></span><br><span class="line">:wq</span><br><span class="line"><span class="comment"># 也可以直接使用</span></span><br><span class="line">dos2unix 文件名</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.yl-online.top/posts/2e023d93.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="forever杨">
-      <meta itemprop="description" content="开心又过一日，唔开心又过一日">
-      <meta itemprop="image" content="/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="forever杨的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/2e023d93.html" class="post-title-link" itemprop="https://blog.yl-online.top/page/11/index.html">Linux du 命令</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-02-06 09:35:05" itemprop="dateCreated datePublished" datetime="2018-02-06T09:35:05+08:00">2018-02-06</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2024-05-06 09:38:27" itemprop="dateModified" datetime="2024-05-06T09:38:27+08:00">2024-05-06</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数：</span>
-                
-                <span title="字数">87</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">时长 &asymp;</span>
-                
-                <span title="时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-      <div class="post-tags custom" style="margin-top: 0; margin-bottom: 20px; text-align: left">
-        <span class="post-meta-item-icon">
-          <i class="fa fa-tags"></i>
-        </span>
-        <span class="post-meta-item-text">标签</span>
-        
-           <a href="/tags/shell/" rel="tag" class="color1">shell</a>
-        
-           <a href="/tags/du/" rel="tag" class="color2">du</a>
-        
-      </div>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="du"><a href="#du" class="headerlink" title="du"></a>du</h1><h2 id="计算当前文件夹下占用空间，排序"><a href="#计算当前文件夹下占用空间，排序" class="headerlink" title="计算当前文件夹下占用空间，排序"></a>计算当前文件夹下占用空间，排序</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">du -sh /* | sort -nr</span><br><span class="line"><span class="comment"># 排除某个目录</span></span><br><span class="line">du -sh /* --exclude=<span class="string">"/data"</span> | sort -nr</span><br></pre></td></tr></table></figure>
 
           
         
